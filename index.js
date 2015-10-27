@@ -6,7 +6,18 @@ import Root from './containers/Root'
 
 const store = configureStore()
 
-render(
-  <Root store={store} />,
-  document.getElementById('root')
-)
+
+class APIExplorer {
+  load() {
+    return this
+  }
+
+  render(domAnchor = 'root') {
+    render(<Root store={store} />, document.getElementById(domAnchor))
+    return this
+  }
+
+}
+
+const explorer = new APIExplorer()
+module.exports = window.APIExplorer = explorer
