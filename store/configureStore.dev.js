@@ -3,7 +3,7 @@ import { persistState } from 'redux-devtools'
 import rootReducer from '../reducers'
 import DevTools from '../containers/DevTools'
 import { routerStateReducer, reduxReactRouter } from 'redux-router'
-import createHistory from 'history/lib/createBrowserHistory';
+import createHistory from 'history/lib/createHashHistory'
 
 
 const finalCreateStore = compose(
