@@ -1,7 +1,7 @@
 {
-  "name": "redux-todomvc-example",
+  "name": "api-explorer",
   "version": "0.0.0",
-  "description": "Redux TodoMVC example",
+  "description": "API Explorer (live documentation) for Swagger",
   "scripts": {
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
@@ -9,13 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rackt/redux.git"
+    "url": "https://github.com/sky-uk/api-explorer.git"
   },
-  "license": "MIT",
+  "author": "Sky UK Limited",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
   "bugs": {
-    "url": "https://github.com/rackt/redux/issues"
+    "url": "https://github.com/sky-uk/api-explorer/issues"
   },
-  "homepage": "http://rackt.github.io/redux",
   "dependencies": {
     "classnames": "^2.1.2",
     "history": "^1.12.6",
@@ -43,7 +44,6 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "style-loader": "^0.12.3",
-    "todomvc-app-css": "^2.0.1",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0"

@@ -2,7 +2,7 @@ import 'babel-core/polyfill'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import App from './App'
-import 'todomvc-app-css/index.css'
+import OtherPage from './OtherPage'
 
 import { Route } from 'react-router'
 import { ReduxRouter } from 'redux-router'
