@@ -1,9 +1,9 @@
 import { createStore, compose, combineReducers } from 'redux'
 import { persistState } from 'redux-devtools'
-import rootReducer from '../reducers'
+import reducers from '../reducers'
 import DevTools from '../containers/DevTools'
 import { routerStateReducer, reduxReactRouter } from 'redux-router'
-import createHistory from 'history/lib/createHashHistory'
+import createHistory from 'history/lib/createBrowserHistory' // history/lib/createHashHistory
 
 
 const finalCreateStore = compose(
@@ -13,7 +13,7 @@ const finalCreateStore = compose(
 )(createStore)
 
 export default function configureStore(initialState) {
-  const store = finalCreateStore(rootReducer, initialState)
+  const store = finalCreateStore(reducers, initialState)
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

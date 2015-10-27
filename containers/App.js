@@ -8,17 +8,23 @@ import { Link } from 'react-router'
 
 @connect(
   state => ({ todos: state.todos }),
-  dispatch => ({ actions: bindActionCreators(TodoActions, dispatch) })
+  dispatch => ({
+    addTodo: (...args) => dispatch(TodoActions.addTodo(...args)),
+    actions: bindActionCreators(TodoActions, dispatch)
+   })
 )
 export default class App extends Component {
   render() {
-    const { todos, actions } = this.props;
+    const { todos, actions, addTodo } = this.props;
     return (
       <div>
-        <Header addTodo={actions.addTodo} />
+        <Header addTodo={addTodo} />
         <MainSection todos={todos} actions={actions} />
         <hr />
-        <Link to='/other'>other page</Link>
+        <ul>
+          <li><Link to='/other'>other page</Link></li>
+          <li><Link to='/settings'>Settings</Link></li>
+        </ul>
       </div>
     )
   }
