@@ -26,7 +26,7 @@ class App extends Component {
 App.propTypes = {
   todos: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  addTodo: PropTypes.function.isRequired
+  addTodo: PropTypes.func.isRequired
 }
 
 export default connect(
