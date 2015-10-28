@@ -14,7 +14,7 @@ API Explorer is a live documentation client for Swagger. It provides a nice and 
 ```
 npm install
 npm start
-open http://localhost:8888
+open http://localhost:3000
 ```
 
 ## Linting
