@@ -6,7 +6,6 @@ import Root from './containers/Root'
 
 const store = configureStore()
 
-
 class APIExplorer {
   load() {
     return this
