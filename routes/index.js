@@ -5,8 +5,7 @@ import App from '../containers/App'
 import OtherPage from '../containers/OtherPage'
 import Settings from '../containers/SettingsPage'
 
-export default function()
-{
+export default function () {
   return (
     <Route>
       <Route path='/' component={App} />

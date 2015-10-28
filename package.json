@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
+    "test:watch": "npm test -- --watch",
     "lint": "standard --verbose | snazzy",
-    "test:watch": "npm test -- --watch"
+    "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,9 @@
     "parser": "babel-eslint",
     "globals": [
       "APIExplorer",
-      "fetch"
+      "fetch",
+      "describe",
+      "it"
     ]
   },
   "dependencies": {
@@ -46,6 +49,7 @@
     "jsdom": "^5.6.1",
     "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
+    "nodemon": "^1.8.0",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^0.14.0",
     "react-transform-hmr": "^1.0.0",

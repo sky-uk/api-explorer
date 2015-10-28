@@ -1,21 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Header from '../components/Header';
-import MainSection from '../components/MainSection';
-import * as TodoActions from '../actions/todos';
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import Header from '../components/Header'
+import MainSection from '../components/MainSection'
+import * as TodoActions from '../actions/todos'
 import { Link } from 'react-router'
 
-@connect(
-  state => ({ todos: state.todos }),
-  dispatch => ({
-    addTodo: (...args) => dispatch(TodoActions.addTodo(...args)),
-    actions: bindActionCreators(TodoActions, dispatch)
-   })
-)
-export default class App extends Component {
-  render() {
-    const { todos, actions, addTodo } = this.props;
+class App extends Component {
+  render () {
+    const { todos, actions, addTodo } = this.props
     return (
       <div>
         <Header addTodo={addTodo} />
@@ -29,3 +22,17 @@ export default class App extends Component {
     )
   }
 }
+
+App.propTypes = {
+  todos: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
+  addTodo: PropTypes.function.isRequired
+}
+
+export default connect(
+  state => ({ todos: state.todos }),
+  dispatch => ({
+    addTodo: (...args) => dispatch(TodoActions.addTodo(...args)),
+    actions: bindActionCreators(TodoActions, dispatch)
+  })
+)(App)

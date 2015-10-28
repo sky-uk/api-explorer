@@ -7,11 +7,11 @@ import Root from './containers/Root'
 const store = configureStore()
 
 class APIExplorer {
-  load() {
+  load () {
     return this
   }
 
-  render(domAnchor = 'root') {
+  render (domAnchor = 'root') {
     render(<Root store={store} />, document.getElementById(domAnchor))
     return this
   }

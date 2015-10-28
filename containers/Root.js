@@ -1,7 +1,6 @@
 import 'babel-core/polyfill'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Provider } from 'react-redux'
-import { Route } from 'react-router'
 import { ReduxRouter } from 'redux-router'
 
 import getRoutes from '../routes'
@@ -13,13 +12,17 @@ export default class Root extends Component {
     const DevTools = injectDevTools()
     return (
       <Provider store={store}>
-      	<div>
-	        <ReduxRouter>
-	        	{getRoutes()}
-	        </ReduxRouter>
-	        <DevTools />
+        <div>
+          <ReduxRouter>
+            {getRoutes()}
+          </ReduxRouter>
+          <DevTools />
         </div>
       </Provider>
     )
   }
+}
+
+Root.propTypes = {
+  store: PropTypes.object.isRequired
 }

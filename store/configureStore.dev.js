@@ -1,8 +1,8 @@
-import { createStore, compose, combineReducers } from 'redux'
+import { createStore, compose } from 'redux'
 import { persistState } from 'redux-devtools'
 import reducers from '../reducers'
 import injectDevTools from '../components/DevTools'
-import { routerStateReducer, reduxReactRouter } from 'redux-router'
+import { reduxReactRouter } from 'redux-router'
 import createHistory from 'history/lib/createBrowserHistory' // history/lib/createHashHistory
 
 let DevTools = injectDevTools()
@@ -13,7 +13,7 @@ const finalCreateStore = compose(
   persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore)
 
-export default function configureStore(initialState) {
+export default function configureStore (initialState) {
   const store = finalCreateStore(reducers, initialState)
 
   if (module.hot) {
