@@ -4,7 +4,7 @@
   "description": "API Explorer (live documentation) for Swagger",
   "scripts": {
     "start": "node server.js",
-    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
+    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
     "test:watch": "npm test -- --watch",
     "lint": "standard --verbose | snazzy",
     "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
