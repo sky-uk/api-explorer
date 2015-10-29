@@ -1,6 +1,7 @@
 import expect from 'expect'
-import * as types from '../../constants/ActionTypes'
-import * as actions from '../../actions/todos'
+
+import * as types from '../../src/constants/ActionTypes'
+import * as actions from '../../src/actions/todos'
 
 describe('todo actions', () => {
   it('addTodo should create ADD_TODO action', () => {

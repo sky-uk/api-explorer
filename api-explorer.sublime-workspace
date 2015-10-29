@@ -528,9 +528,13 @@
 	"command_palette":
 	{
 		"height": 368.0,
-		"last_filter": "list",
+		"last_filter": "lint",
 		"selected_items":
 		[
+			[
+				"lint",
+				"SublimeLinter: Lint This View"
+			],
 			[
 				"list",
 				"Package Control: List Packages"
@@ -917,30 +921,40 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2"
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/src",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/actions",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/reducers"
 	],
 	"file_history":
 	[
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/actions/todos.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/TodoItem.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/TodoTextInput.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/reducers/todos.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/MainSection.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/Footer.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/Header.spec.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/src/index.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/webpack.config.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/server.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/containers/App.js",
+		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/README.md",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/api-explorer.sublime-project",
 		"/Users/cguedes/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/package.json",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/containers/App.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/containers/SettingsPage.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/containers/Root.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/containers/OtherPage.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/components/Header.js",
 		"/Users/cguedes/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/TodoTextInput.spec.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/Header.spec.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/routes/index.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/reducers/todos.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/TodoItem.spec.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/index.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/store/configureStore.dev.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/components/TodoTextInput.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/server.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/MainSection.spec.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/components/Footer.spec.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/store/configureStore.prod.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/store/configureStore.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/reducers/settings.js",
@@ -953,15 +967,12 @@
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/components/Footer.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/components/DevTools.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/actions/todos.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/reducers/todos.spec.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/setup.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/test/actions/todos.spec.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/ssp-api-explorer/webapi.explorer.sublime-project",
 		"/Users/cguedes/Documents/cguedes/Sky/git/react-redux-universal-hot-example/node_modules/webpack-isomorphic-tools/project.sublime-project",
 		"/Users/cguedes/Documents/cguedes/Sky/git/ssp-api-explorer/webapi.explorer.sublime-workspace",
 		"/Users/cguedes/Documents/cguedes/Projects/ThothJS/thothjs.sublime-project",
 		"/Users/cguedes/Documents/cguedes/ISEL/Docencia/1415_2/DAW/1415v-public/react/10-react-router/react.sublime-project",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/webpack.config.js",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer/README.md",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer/package.json",
 		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer-2/LICENSE",
@@ -1046,9 +1057,7 @@
 		"/Users/cguedes/Documents/cguedes/Projects/Toptal/screening/project-carlos-guedes/client/js/components/Meal.jsx",
 		"/Users/cguedes/Documents/cguedes/Projects/Toptal/screening/project-carlos-guedes/client/js/components/Header.jsx",
 		"/Users/cguedes/Documents/cguedes/Projects/Toptal/screening/project-carlos-guedes/client/js/views/HomePage.jsx",
-		"/Users/cguedes/Documents/cguedes/Projects/Toptal/screening/project-carlos-guedes/server/api/index.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/api-explorer/webpack/dist/app.min.js",
-		"/Users/cguedes/Documents/cguedes/Sky/git/experiments/my-new-project/src/components/Main.js"
+		"/Users/cguedes/Documents/cguedes/Projects/Toptal/screening/project-carlos-guedes/server/api/index.js"
 	],
 	"find":
 	{
@@ -1059,6 +1068,8 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"test/**/*.js",
+			"test",
 			"",
 			"/Users/cguedes/Documents/cguedes/Projects/react/skystore-react-flux,-build/*.js",
 			"/Users/cguedes/Documents/cguedes/Projects/react/skystore-react-flux,-build\\*.js",
@@ -1076,6 +1087,13 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"'../../..",
+			"'../../../",
+			"'../../..",
+			"'../../../",
+			"../../../",
+			"'../../",
+			" '../../",
 			"\"",
 			";",
 			"routerStateReducer",
@@ -1196,14 +1214,7 @@
 			"components",
 			"eventKey=",
 			"<NavItem",
-			"\"",
-			"HomePage",
-			"NotFound",
-			"views",
-			"domHook",
-			"\"",
-			"APIExplorer",
-			"rootInstance"
+			"\""
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1286,6 +1297,10 @@
 		"selected_items":
 		[
 			[
+				"app",
+				"containers/App.js"
+			],
+			[
 				"pa",
 				"package.json"
 			],
@@ -1296,10 +1311,6 @@
 			[
 				"root",
 				"containers/Root.js"
-			],
-			[
-				"app",
-				"containers/App.js"
 			],
 			[
 				"header",
@@ -1830,7 +1841,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 283.0,
+	"side_bar_width": 232.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

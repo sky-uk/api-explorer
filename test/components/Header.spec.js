@@ -1,8 +1,8 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import Header from '../../components/Header'
-import TodoTextInput from '../../components/TodoTextInput'
+import Header from '../../src/components/Header'
+import TodoTextInput from '../../src/components/TodoTextInput'
 
 function setup () {
   const props = {

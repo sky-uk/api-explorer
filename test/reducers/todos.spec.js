@@ -1,6 +1,6 @@
 import expect from 'expect'
-import todos from '../../reducers/todos'
-import * as types from '../../constants/ActionTypes'
+import todos from '../../src/reducers/todos'
+import * as types from '../../src/constants/ActionTypes'
 
 describe('todos reducer', () => {
   it('should handle initial state', () => {
