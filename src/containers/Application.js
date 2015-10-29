@@ -2,9 +2,9 @@ import './Application.css'
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as TodoActions from '../actions/todos'
+import * as TodoActions from 'actions/todos'
 import { Link } from 'react-router'
-import { ExplorerHeader } from '../components'
+import { ExplorerHeader } from 'components'
 
 class Application extends Component {
   render () {
