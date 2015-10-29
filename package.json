@@ -5,9 +5,14 @@
   "scripts": {
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
+    "test-win": "set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
     "test:watch": "npm test -- --watch",
     "lint": "standard --verbose | snazzy",
     "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
+  },
+  "engines": {
+    "node" : ">=4.2.1",
+    "npm" : ">=2.14.7"
   },
   "repository": {
     "type": "git",
