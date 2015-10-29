@@ -36,6 +36,7 @@
   "dependencies": {
     "classnames": "^2.1.2",
     "history": "^1.12.6",
+    "immutable": "^3.7.5",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",
@@ -50,6 +51,7 @@
     "babel-plugin-react-transform": "^1.1.0",
     "babel-runtime": "^5.8.29",
     "chai": "^3.4.0",
+    "chai-immutable": "^1.4.0",
     "expect": "^1.8.0",
     "express": "^4.13.3",
     "jsdom": "^7.0.2",
