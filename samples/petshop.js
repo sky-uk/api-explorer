@@ -1,4 +1,4 @@
-export default {
+export default const  {
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
