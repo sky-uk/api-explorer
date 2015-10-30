@@ -8,7 +8,6 @@ import { ExplorerHeader } from '../components'
 
 class Application extends Component {
   render () {
-    const { todos, actions, addTodo } = this.props
     return (
       <div id='content'>
         <div id='sidebar'>

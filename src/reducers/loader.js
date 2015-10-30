@@ -1,7 +1,7 @@
-import {List, Map} from 'immutable';
+import {List, Map} from 'immutable'
 import * as types from '../constants/ActionTypes'
 
-let INITIAL_STATE = Map({ 'progress' : List([])})
+let INITIAL_STATE = Map({ 'progress': List([]) })
 
 export default function loaderReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -12,7 +12,7 @@ export default function loaderReducer (state = INITIAL_STATE, action) {
                 state.get('progress').push(action.currentStep)
               )
     case types.LOAD_COMPLETE:
-      return state.set('apis', action.apis);
+      return state.set('apis', action.apis)
   }
-  return state;
+  return state
 }

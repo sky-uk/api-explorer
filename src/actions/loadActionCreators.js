@@ -14,17 +14,17 @@ export function load (url, specType) {
     const loadState = {
       url,
       specType,
-      updateProgress(status) {
+      updateProgress (status) {
         dispatch(progress(status))
       },
-      error(errorMessage) {
-        dispatch(progress(status))
+      error (errorMessage) {
+        dispatch(progress(errorMessage))
       },
-      loadComplete(apis){
+      loadComplete (apis) {
         dispatch(loadComplete(apis))
       }
     }
 
-    loader(loadState);
+    loader(loadState)
   }
 }
