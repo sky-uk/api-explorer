@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
-    "test-win": "set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
     "test:watch": "npm test -- --watch",
+    "test-win": "set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
+    "test-win:watch": "npm run test-win -- --watch",
     "lint": "standard --verbose | snazzy",
     "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
   },
@@ -37,12 +38,14 @@
     "classnames": "^2.1.2",
     "history": "^1.12.6",
     "immutable": "^3.7.5",
+    "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
     "redux": "^3.0.0",
-    "redux-router": "^1.0.0-beta3"
+    "redux-router": "^1.0.0-beta3",
+    "redux-thunk": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^5.8.33",

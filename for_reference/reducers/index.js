@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
+import todos from './todos'
+import settings from './settings'
 import { routerStateReducer } from 'redux-router'
-import loaderReducer from './loader'
 
 const rootReducer = combineReducers({
-  loader: loaderReducer,
+  todos: todos,
+  settings: settings,
   router: routerStateReducer
 })
 

@@ -1,0 +1,185 @@
+/*****************************************************************************
+ * top content
+ *
+ * Inspiration for two cols with scrollbars: http://jsfiddle.net/wQ6WQ/1/
+ *****************************************************************************/
+#content, html, body {
+    height: 100%;
+}
+
+
+/*****************************************************************************
+ * sidebar
+ *****************************************************************************/
+#sidebar {
+    float: left;
+    position: absolute;
+    width: 350px;
+    height: 100%;
+    background-color: #222;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-bottom: 50px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#sidebar .api-explorer-logo { text-align:center; }
+#sidebar .api-explorer-logo img { height:64px; }
+
+#sidebar ul.nav-second-level li a { padding-top: 4px; padding-bottom: 4px; padding-left: 25px; }
+#sidebar ul.nav-third-level li a { padding-top: 1px; padding-bottom: 1px;  padding-left: 20px; }
+
+#sidebar ul li   { border: none; DISABLEoverflow: hidden; }
+#sidebar ul li a { background-color: #222; color: white; }
+
+#sidebar .operation-container { color: #ccc; }
+#sidebar .operation-container.selected { color: black; background-color: #F8F8F8 }
+
+#sidebar .nav>li.lioperation a{
+    -webkit-transition: background-color 400ms linear;
+    -moz-transition: background-color 400ms linear;
+    -o-transition: background-color 400ms linear;
+    -ms-transition: background-color 400ms linear;
+    transition: background-color 400ms linear;
+}
+
+#sidebar .nav>li.lioperation>a:hover,
+#sidebar .nav>li.lioperation>a:focus  { background-color: #4A4A4A; color:white; }
+#sidebar .nav>li.lioperation.active>a
+{
+    background-color: #C6C6C6;
+    color: black;
+}
+#sidebar .nav>li.lioperation:hover>.btn {
+    color: #fff;
+}
+
+#sidebar .nav>li.lioperation.active .btn-outline.btn-primary,
+#sidebar .nav>li.lioperation:hover  .btn-outline.btn-primary { background-color:#337ab7; color: white; }
+#sidebar .nav>li.lioperation.active .btn-outline.btn-success,
+#sidebar .nav>li.lioperation:hover  .btn-outline.btn-success { background-color:#5cb85c; color: white; }
+#sidebar .nav>li.lioperation.active .btn-outline.btn-info,
+#sidebar .nav>li.lioperation:hover  .btn-outline.btn-info { background-color:#5bc0de; color: white; }
+#sidebar .nav>li.lioperation.active .btn-outline.btn-warning,
+#sidebar .nav>li.lioperation:hover  .btn-outline.btn-warning { background-color:#f0ad4e; color: white; }
+#sidebar .nav>li.lioperation.active .btn-outline.btn-danger,
+#sidebar .nav>li.lioperation:hover  .btn-outline.btn-danger { background-color:#d9534f; color: white; }
+
+
+
+#sidebar span.operation { border: solid 1px transparent; font-family: verdana; font-size: smaller; }
+#sidebar span.operation .btn { width:50px; font-size: 10px }
+
+#sidebar::-webkit-scrollbar {
+    width: .7em;
+}
+
+#sidebar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+/*****************************************************************************
+ * main-content
+ *****************************************************************************/
+#main-content {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-left: 350px;
+}
+
+/*****************************************************************************
+ * main (sidebar / main-content) resizable
+ *****************************************************************************/
+#main-content .ui-resizable-w {
+  background-color: rgb(98, 98, 98);
+  width:8px;
+}
+#main-content .ui-resizable-w:hover {
+  background-color: rgb(98, 98, 98);
+}
+
+
+
+/*****************************************************************************
+ * others
+ *****************************************************************************/
+.tab-pane { padding-top: 10px; }
+.tab-pane .tab-pane-content { width: 100% }
+
+div.panel-heading       > a.bookmark { opacity: 0.5; color: white; text-decoration: none }
+div.panel-heading:hover > a.bookmark { opacity: 1 }
+
+div.panel-heading       > a.go-to-top { opacity: 0.5; color: white; text-decoration: none }
+div.panel-heading:hover > a.go-to-top { opacity: 1  }
+
+div.panel-heading strong { margin-left: 1ch; }
+
+img { max-width:100% }
+
+/* parameters table */
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
+.table>tfoot>tr>td  {
+    padding: 4px;
+}
+
+.white-text, .white-text:hover { color: white; }
+
+/* ###############################################################################
+    Lateral Menu
+############################################################################### */
+#lateral-menu {
+    border-top:dashed 1px gray;
+    margin-top:1em;
+    padding-top:1em;
+}
+
+#lateral-menu #filter-by-operation {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#lateral-menu .api-key-warning {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+/* ###############################################################################
+    Header
+############################################################################### */
+.page-header {
+    font-size:32px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.page-header .beta-label {
+    background-color: #f0ad4e;
+    color: white;
+    margin: 10px;
+    padding:4px;
+    font-size:80%;
+    font-weight: bold;
+}
+.page-header .documentation-version output {
+    font-size:40%;
+}
+
+.page-header.mini {
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom: none;
+}
