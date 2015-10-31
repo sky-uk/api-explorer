@@ -32,6 +32,9 @@ export function loader (loaderState) {
       })
       .then(json => {
         loaderState.updateProgress('Parsing Api Spec Response')
-        loaderState.loadComplete(parseResponse(loaderState.specType, json))
+        setTimeout(_ => {
+          loaderState.updateProgress('Load completed')
+          loaderState.loadComplete(parseResponse(loaderState.specType, json))
+        }, 1) // Just to simulate a long loading...
       })
 }
