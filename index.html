@@ -13,8 +13,10 @@
     <script src="/static/bundle.js"></script>
     <script>
       APIExplorer
-        .load('https://raw.githubusercontent.com/swagger-api/swagger-spec/master/examples/v2.0/json/petstore-with-external-docs.json','Swagger2.0')
-        .render('root')
+        .config(c => {
+          c.swagger2API('petshop', 'https://raw.githubusercontent.com/swagger-api/swagger-spec/master/examples/v2.0/json/petstore-with-external-docs.json')
+        })
+        .start()
     </script>
   </body>
 </html>
