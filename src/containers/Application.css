@@ -183,3 +183,156 @@ img { max-width:100% }
     margin-bottom: 10px;
     border-bottom: none;
 }
+
+/* ###############################################################################
+    FIXED FOOTER
+############################################################################### */
+#fixed-footer {
+  position: fixed;
+  background-color: #222;
+  vertical-align: center;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+  padding:2px;
+  color: white;
+  font-size: 12px;
+  opacity: .7;
+  text-align: center;
+  -webkit-transition: opacity 400ms linear;
+  -moz-transition: opacity 400ms linear;
+  -o-transition: opacity 400ms linear;
+  -ms-transition: opacity 400ms linear;
+  transition: opacity 400ms linear;
+}
+
+#fixed-footer:hover { opacity: 1; }
+
+#fixed-footer .copyright {
+}
+
+
+#fixed-footer .reset
+{
+  margin-right: 10px;
+}
+
+
+/*****************************************************************************
+ * documentation widget
+ *****************************************************************************/
+
+.documentation-widget .doc-w-nickname {
+  color: rgba(255, 255, 255, 0.5);
+  margin:3px 6px;
+
+  /* text crop styles */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width:300px;
+  overflow: hidden;
+  text-align: right;
+}
+
+.documentation-widget .panel-heading:hover .doc-w-nickname {
+  color:whitesmoke;
+}
+
+.documentation-widget .doc-w-secured {
+  width: 1em;
+  display: inline-block;
+  opacity: .8;
+  margin-left:  5px;
+  color: yellow;
+}
+
+.documentation-widget .doc-w-param-value {
+  word-break: break-word;
+}
+
+.documentation-widget .doc-w-param-datatype {
+}
+
+.documentation-widget .cm-links {
+  font-weight: bold;
+}
+
+.documentation-widget .linkOptions{
+  xbackground-color: #F7F7F7;
+  overflow-y: hidden;
+}
+
+.documentation-widget .linkOptions .center {
+ margin-left: 15ch;
+ display: inline-block;
+}
+
+
+.documentation-widget .linkOptions span {
+  margin-left: 3ch;
+  cursor: pointer;
+  font-size:12px;
+  padding: 1px 4px;
+  border: solid 1px lightgray;
+  background-color: #F7F7F7;
+  border-radius: 2px;
+}
+.documentation-widget .linkOptions span:hover {
+  background-color: lightgray;
+}
+
+.documentation-widget .secured {
+  width: 14px;
+  display: inline-block;
+  margin-left: 1ch;
+  background-position: 0px;
+  background-size: 14px;
+  background-repeat: no-repeat;
+}
+
+.documentation-widget .executeRequest{
+  font-weight: bolder;
+}
+
+.CodeMirror-fullscreen {
+  z-index: 91;
+}
+
+.documentation-widget .CodeMirror.ui-resizable{
+  width: 100% !important;
+}
+
+.documentation-widget .try-it-out .parameters {
+  clear:both;
+  overflow: hidden;
+  max-height: 1000px; /* In order to transition work we need to use max-height */
+  -webkit-transition: max-height 1s ease;
+     -moz-transition: max-height 1s ease;
+       -o-transition: max-height 1s ease;
+      -ms-transition: max-height 1s ease;
+          transition: max-height 1s ease;
+
+}
+
+.documentation-widget .try-it-out .parameters.hide-parameters
+{
+  max-height: 0;
+}
+
+.documentation-widget .tab-pane.response-model pre {
+  max-height: 600px;
+  overflow-y: scroll;
+  background-color: transparent !important;
+}
+
+.documentation-widget .try-it-out .parameters input,
+.documentation-widget .try-it-out .parameters select,
+.documentation-widget .try-it-out .parameters textarea
+{
+  font-family: monospace;
+  font-size:12px;
+  padding-left: 0;
+}

@@ -3,7 +3,6 @@
   <head>
     <title>API Explorer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
     <style>body { padding: 0; margin: 0; background-color: #222 }</style>
   </head>
   <body>
@@ -14,7 +13,8 @@
     <script>
       APIExplorer
         .config(c => {
-          c.swagger2API('petshop', 'https://raw.githubusercontent.com/swagger-api/swagger-spec/master/examples/v2.0/json/petstore-with-external-docs.json')
+          //c.swagger2API('petshopx', 'https://raw.githubusercontent.com/swagger-api/swagger-spec/master/examples/v2.0/json/petstore-with-external-docs.json')
+          c.swagger2API('petshop', 'http://petstore.swagger.io/v2/swagger.json')
         })
         .start()
     </script>
