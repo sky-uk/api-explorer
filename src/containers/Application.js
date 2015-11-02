@@ -1,11 +1,26 @@
+import './BaseStyles.css'
 import './Application.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { ExplorerHeader } from 'components'
+import { ExplorerHeader, ApplicationLoading, LateralMenu } from 'components'
 
 class Application extends Component {
   render () {
+    const loaded = this.props.loader.get('loaded')
+    return loaded ? this.renderApplication() : this.renderLoadingScreen()
+  }
+
+  renderLoadingScreen () {
+    const { currentStep, progress } = this.props.loader.toJS()
+    return (
+      <ApplicationLoading currentStep={currentStep} progressMessages={progress} />
+    )
+  }
+
+  renderApplication () {
+    const api = this.props.apis.get('byName').toJSON()['petshop']
+    const { title, description, version } = api.info
     return (
       <div id='content'>
         <div id='sidebar'>
@@ -21,18 +36,20 @@ class Application extends Component {
               </Link>
             </li>
           </ul>
-          <div id='lateral-menu'>
-            LATERAL MENU
-          </div>
+          <LateralMenu operations={this.props.operations.toJS()} />
         </div>
         <div id='main-content'>
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
-                <ExplorerHeader api={{ apiName: 'Sample API', apiVersion: '1.0.0', productVersion: 'asdasd12' }} />
+                <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
+                <p>{ description }</p>
+
                 {this.props.children}
-                <div>FOOTER</div>
+
+                <div id='fixed-footer'>
                   Copyright &copy; API Explorer 2015
+                </div>
               </div>
             </div>
           </div>
@@ -47,5 +64,11 @@ Application.propTypes = {
 }
 
 export default connect(
-  state => ({})
+  state => {
+    return {
+      loader: state.loader,
+      apis: state.apis,
+      operations: state.operations
+    }
+  }
 )(Application)

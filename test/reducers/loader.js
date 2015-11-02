@@ -9,20 +9,23 @@ describe('reducers', () => {
 
     expect(nextState.loader).to.equal(
       fromJS({
-        'progress': [ 'Current Step' ],
-        'currentStep': 'Current Step'
+        loaded: false,
+        progress: [ 'Current Step' ],
+        currentStep: 'Current Step'
       })
     )
   })
 
   it('handles LOAD_COMPLETE', () => {
-    const action = { 'type': 'LOAD_COMPLETE', 'apis': 'something' }
+    const action = { 'type': 'LOAD_COMPLETE', 'apis': 'Load completed with success' }
     const nextState = loaderReducer(undefined, action)
 
     expect(nextState.loader).to.equal(
       fromJS({
-        'progress': [],
-        'apis': 'something'
+        loaded: true,
+        progress: [ ],
+        currentStep: '',
+        apis: 'Load completed with success'
       })
     )
   })
