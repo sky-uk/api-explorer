@@ -5,6 +5,10 @@ import { Link } from 'react-router'
 
 class OperationWidget extends Component {
   render () {
+    if (this.props.operation === null) {
+      return <div>No operation was found.</div>
+    }
+
     const httpMethod = this.props.operation.spec.httpMethod
     const panelCx = cx('documentation-widget panel panel-default', {
       'panel-primary': httpMethod === 'get',
@@ -28,9 +32,9 @@ class OperationWidget extends Component {
         </div>
         <div className='panel-body' >
           <ul className='nav nav-tabs' >
-            {APIExplorer.widgetTabs.map( widgetTab => {
-              const url = `/operation/${this.props.operation.id}/${widgetTab.slug}`
-              return (<li key={widgetTab.slug} className={this.props.history.isActive(url)?'active':''}>
+            {APIExplorer.widgetTabs.map(widgetTab => {
+              const url = `/operation/${ this.props.operation.id}/${widgetTab.slug}`
+              return (<li key={widgetTab.slug} className={this.props.history.isActive(url) ? 'active' : ''}>
                 <Link to={`/operation/${this.props.operation.id}/${widgetTab.slug}`} className='operation-container' >{widgetTab.name}</Link>
               </li>)
             })}
@@ -44,7 +48,8 @@ class OperationWidget extends Component {
 
 OperationWidget.propTypes = {
   children: PropTypes.element,
-  operation: PropTypes.object
+  operation: PropTypes.object,
+  history: PropTypes.element
 }
 
 export default connect(

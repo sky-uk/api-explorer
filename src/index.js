@@ -11,8 +11,6 @@ import TryOutWidgetTab from 'components/widgets/TryOutWidgetTab'
 import SpecWidgetTab from 'components/widgets/SpecWidgetTab'
 import SchemaWidgetTab from 'components/widgets/SchemaWidgetTab'
 
-
-
 const store = configureStore()
 
 class APIExplorerConfigurator {
@@ -105,7 +103,7 @@ class APIExplorer {
    * @param {[type]} widgetTab Component Name of the operation
    */
   addWidgetTab (name, component) {
-    this.widgetTabs.push({ name, component, slug : uslug(name) })
+    this.widgetTabs.push({ name, component, slug: uslug(name) })
   }
 
 }
