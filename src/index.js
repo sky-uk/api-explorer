@@ -1,10 +1,17 @@
 import 'babel-core/polyfill'
 import React from 'react'
+import uslug from 'uslug'
 import { render } from 'react-dom'
 import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
 import { load as loadSpec } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
+
+import TryOutWidgetTab from 'components/widgets/TryOutWidgetTab'
+import SpecWidgetTab from 'components/widgets/SpecWidgetTab'
+import SchemaWidgetTab from 'components/widgets/SchemaWidgetTab'
+
+
 
 const store = configureStore()
 
@@ -19,6 +26,17 @@ class APIExplorerConfigurator {
   }
 }
 
+class APIExplorerWidgetTabConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  addWidgetTab (name, component) {
+    this.apiExplorer.addWidgetTab(name, component)
+    return this
+  }
+}
+
 class APIExplorer {
   constructor () {
     this.Loaders = {
@@ -26,6 +44,11 @@ class APIExplorer {
     }
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
+    this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
+
+    this.addWidgetTab('Try It', TryOutWidgetTab)
+    this.addWidgetTab('Spec', SpecWidgetTab)
+    this.addWidgetTab('Schema', SchemaWidgetTab)
   }
 
   /**
@@ -36,6 +59,17 @@ class APIExplorer {
   config (configurator) {
     const apiExplorerConfigurator = new APIExplorerConfigurator(this)
     configurator(apiExplorerConfigurator)
+    return this
+  }
+
+  /*
+   * Method of the fluent API used to configure APIExplorer with API Operations
+   * @param  {[function]} configurator    A function used to configure API Explorer
+   * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
+   */
+  configWidgetTabs (configurator) {
+    const apiExplorerWidgetTabConfigurator = new APIExplorerWidgetTabConfigurator(this)
+    configurator(apiExplorerWidgetTabConfigurator)
     return this
   }
 
@@ -64,6 +98,16 @@ class APIExplorer {
   addConfiguration (friendlyName, loader, props) {
     this.apiConfigurations.push({ friendlyName, loader, props })
   }
+
+  /**
+   * Adds an API configuration
+   * @param {[type]} name      friendly name of the operation
+   * @param {[type]} widgetTab Component Name of the operation
+   */
+  addWidgetTab (name, component) {
+    this.widgetTabs.push({ name, component, slug : uslug(name) })
+  }
+
 }
 
 const explorer = new APIExplorer()

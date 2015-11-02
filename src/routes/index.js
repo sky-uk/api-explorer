@@ -3,19 +3,21 @@ import { Route, IndexRoute } from 'react-router'
 
 import Application from 'containers/Application'
 import Welcome from 'containers/Welcome'
-import OperationWidget from 'containers/OperationWidget'
+import OperationWidget from 'components/OperationWidget'
 
-export default function () {
+import TryOutWidgetTab from 'components/widgets/TryOutWidgetTab'
+import SpecWidgetTab from 'components/widgets/SpecWidgetTab'
+import SchemaWidgetTab from 'components/widgets/SchemaWidgetTab'
+
+export default function (store) {
   return (
     <Route path='/' component={Application}>
       <IndexRoute component={Welcome} />
-      <Route path='operation/:id' component={OperationWidget} />
-        {/*
-          check: https://github.com/rackt/react-router/blob/master/examples/huge-apps/app.js#L61
-        <Route path='spec' component={OperationWidgetSpec} />
-        <Route path='try' component={OperationWidgetTry} />
-        <Route path='resp' component={OperationWidgetResp} />
-        */}
+      <Route path='operation/:id' component={OperationWidget} >
+        {APIExplorer.widgetTabs.map( widgetTab =>
+          <Route key={widgetTab.slug} path={widgetTab.slug} component={widgetTab.component} />
+        )}
+        </Route>
     </Route>
   )
 }
