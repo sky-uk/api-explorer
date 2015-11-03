@@ -16,6 +16,9 @@
           //c.swagger2API('petshopx', 'https://raw.githubusercontent.com/swagger-api/swagger-spec/master/examples/v2.0/json/petstore-with-external-docs.json')
           c.swagger2API('petshop', 'http://petstore.swagger.io/v2/swagger.json')
         })
+        .configWidgetTabs(c => {
+          //c.addWidgetTab('HATEOAS', SSPAPIExplorer.HATEOASWidget)
+        })
         .start()
     </script>
   </body>

@@ -3,7 +3,14 @@ import chai from 'chai'
 import chaiImmutable from 'chai-immutable'
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>')
-const win = doc.defaultView
+let win = doc.defaultView
+
+win.APIExplorer = {
+  widgetTabs: [{
+    slug: 'test-widget',
+    name: 'Test Widget'
+  }]
+}
 
 global.document = doc
 global.window = win

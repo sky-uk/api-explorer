@@ -14,7 +14,7 @@ export default class Root extends Component {
       <Provider store={store}>
         <div>
           <ReduxRouter>
-            {getRoutes()}
+            {getRoutes(store)}
           </ReduxRouter>
           <DevTools />
         </div>
