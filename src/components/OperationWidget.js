@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import cx from 'classnames'
 import { Link } from 'react-router'
 
@@ -19,16 +18,11 @@ class OperationWidget extends Component {
     return (
       <div className={panelCx} >
         <div className='panel-heading' id='POST-v2-user-session-skyid-ac' >
-          <small className='pull-right doc-w-nickname' title='Logins the user with sky id ac token' >Logins the user with sky id ac token
-          </small>
-          <strong >{this.props.operation.spec.httpMethod.toUpperCase()}
-          </strong>
-          <span >&nbsp;
-          </span>
-          <samp >{this.props.operation.spec.url}
-          </samp>
-          <span className='doc-w-secured' >
-          </span>
+          <small className='pull-right doc-w-nickname' title='Logins the user with sky id ac token' >Logins the user with sky id ac token</small>
+          <strong >{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
+          <span >&nbsp;</span>
+          <samp >{this.props.operation.spec.url}</samp>
+          <span className='doc-w-secured' ></span>
         </div>
         <div className='panel-body' >
           <ul className='nav nav-tabs' >
@@ -52,11 +46,4 @@ OperationWidget.propTypes = {
   history: PropTypes.element
 }
 
-export default connect(
-  state => {
-    const operation = state.operations.filter(op => op.get('id') === state.router.params.id).first()
-    return {
-      operation: operation.size > 0 ? operation.toJS() : null
-    }
-  }
-)(OperationWidget)
+export default OperationWidget

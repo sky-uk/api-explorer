@@ -1,15 +1,14 @@
 import 'babel-core/polyfill'
 import React from 'react'
-import uslug from 'uslug'
+import slug from 'slug'
 import { render } from 'react-dom'
 import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
 import { load as loadSpec } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
+import widgetWrapper from 'infrastructure/WidgetWrapper'
 
-import TryOutWidgetTab from 'components/widgets/TryOutWidgetTab'
-import SpecWidgetTab from 'components/widgets/SpecWidgetTab'
-import SchemaWidgetTab from 'components/widgets/SchemaWidgetTab'
+import { TryOutWidgetTab, SpecWidgetTab, SchemaWidgetTab } from 'components'
 
 const store = configureStore()
 
@@ -61,8 +60,8 @@ class APIExplorer {
   }
 
   /*
-   * Method of the fluent API used to configure APIExplorer with API Operations
-   * @param  {[function]} configurator    A function used to configure API Explorer
+   * Method of the fluent API used to configure The widgets of APIExplorer
+   * @param  {[function]} configurator    A function used to configure the widgets
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
    */
   configWidgetTabs (configurator) {
@@ -98,12 +97,12 @@ class APIExplorer {
   }
 
   /**
-   * Adds an API configuration
-   * @param {[type]} name      friendly name of the operation
-   * @param {[type]} widgetTab Component Name of the operation
+   * Adds a new Widget
+   * @param {[type]} name      friendly name of the Widget (to appear in the wodgets tab)
+   * @param {[type]} widgetTab Object that represents the component do add to the widgets tab
    */
   addWidgetTab (name, component) {
-    this.widgetTabs.push({ name, component, slug: uslug(name) })
+    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug(name) })
   }
 
 }
