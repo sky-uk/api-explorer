@@ -15,10 +15,11 @@ class OperationWidget extends Component {
       'panel-red': httpMethod === 'delete',
       'panel-yellow': httpMethod === 'put'
     })
+
+    // <small className='pull-right doc-w-nickname' title='Logins the user with sky id ac token' >Logins the user with sky id ac token</small>
     return (
       <div className={panelCx} >
         <div className='panel-heading' id='POST-v2-user-session-skyid-ac' >
-          <small className='pull-right doc-w-nickname' title='Logins the user with sky id ac token' >Logins the user with sky id ac token</small>
           <strong >{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
           <span >&nbsp;</span>
           <samp >{this.props.operation.spec.url}</samp>

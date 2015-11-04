@@ -1,87 +1,70 @@
 import React, { Component, PropTypes } from 'react'
 
 class SpecWidgetTab extends Component {
+  renderParameter (parameter) {
+    return (<tr >
+      <td >
+        <span className='label label-default' >{parameter.in}</span>
+      </td>
+      <td className='col-md-2' ><span >{parameter.name}</span></td>
+      <td className='col-md-8' >
+        <span className='doc-w-param-value' >{parameter.description}</span>
+      </td>
+      <td className='col-md-2' >
+        <span className='doc-w-param-datatype' >{parameter.type}
+        </span>
+      </td>
+    </tr>)
+  }
+
+  renderStatusCodes (statusCode, description) {
+    return (
+      <tr >
+        <td className='col-md-2' >{statusCode}</td>
+        <td className='col-md-10' >{description}</td>
+      </tr>)
+  }
+
   render () {
     return (
       <div className='tab-content' >
-        <noscript ></noscript>
         <div >
-          <span >
-          </span>
           <div className='tab-pane fade in' >
-            <p >SPEEEEECCCCCCCCCCCCC Logins the user with sky id ac token</p>
-            <p className='text-muted' >This action calls the Sky iD service.</p>
+            <p>{this.props.operation.spec.summary}</p>
+            <p className='text-muted' >{this.props.operation.spec.description}</p>
             <div >
               <div >
                 <h4 >Parameters</h4>
                 <table className='table table-striped' >
                   <tbody className='operation-params' >
-                    <tr >
-                      <td >
-                        <span className='label label-default' >body
-                        </span>
-                      </td>
-                      <td className='col-md-2' >
-                        <span >token
-                        </span>
-                      </td>
-                      <td className='col-md-8' >
-                        <span className='doc-w-param-value' >Login on skyid to get a sso token
-                        (Example:
-                        Go to https://demo.id.bskyb.com/signin/skystore
-                        Login with following credentials username: skystoredev, password: abcdefg
-                        Then come back and try out without the parameter token)
-                        You can also pass the token as AuthorizationCode=AuthorizationCode_value in the body
-                        </span>
-                      </td>
-                      <td className='col-md-2' >
-                        <span className='doc-w-param-datatype' >AuthorizationCodeBodyContent
-                        </span>
-                      </td>
-                    </tr>
+                    {this.props.operation.spec.parameters.map(parameter =>
+                      this.renderParameter(parameter)
+                    )}
                   </tbody>
                 </table>
               </div>
-              <noscript >
-              </noscript>
             </div>
-            <div >
-              <h4 >Response Status Codes
-              </h4>
+            <div>
+              <h4>Response Status Codes</h4>
               <table className='table table-bordered table-striped' >
                 <tbody className='operation-status' >
-                  <tr >
-                    <td className='col-md-2' >204
-                    </td>
-                    <td className='col-md-10' >Ok
-                    </td>
-                  </tr>
-                  <tr >
-                    <td className='col-md-2' >401
-                    </td>
-                    <td className='col-md-10' >Unauthorized access
-                    </td>
-                  </tr>
-                  <tr >
-                    <td className='col-md-2' >403
-                    </td>
-                    <td className='col-md-10' >Invalid credentials
-                    </td>
-                  </tr>
+                  {Object.keys(this.props.operation.spec.responses).map(statusCode =>
+                    this.renderStatusCodes(
+                      statusCode,
+                      this.props.operation.spec.responses[statusCode].description
+                    )
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-        <noscript >
-        </noscript>
       </div>
     )
   }
 }
 
 SpecWidgetTab.propTypes = {
-  children: PropTypes.element,
   operation: PropTypes.object.isRequired
 }
 
