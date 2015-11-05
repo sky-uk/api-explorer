@@ -38,12 +38,12 @@ class LateralMenu extends Component {
     })
     return (
       <li key={operation.id} id={operation.id} className='lioperation' title={operation.spec.description}>
-        <Link to={`/operation/${operation.id}/spec`} className='operation-container' >
+        <Link to={`/operation/${operation.id}/response-schema`} className='operation-container' >
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
             <span className='pull-right'>
-            {operation.spec.tags.map(tag => <span key={tag} className='label'>{tag.toUpperCase()}</span>)}
+            {operation.spec.tags && operation.spec.tags.map(tag => <span key={tag} className='label'>{tag.toUpperCase()}</span>)}
             </span>
             <span>{operation.spec.url}</span>
           </span>

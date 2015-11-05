@@ -8,7 +8,7 @@ import { load as loadSpec } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
 import widgetWrapper from 'infrastructure/WidgetWrapper'
 
-import { TryOutWidgetTab, SpecWidgetTab, SchemaWidgetTab } from 'components'
+import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from 'components'
 
 const store = configureStore()
 
@@ -45,7 +45,7 @@ class APIExplorer {
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
-    this.addWidgetTab('Schema', SchemaWidgetTab)
+    this.addWidgetTab('Response Schema', ResponseSchemaWidgetTab)
   }
 
   /**
@@ -102,7 +102,7 @@ class APIExplorer {
    * @param {[type]} widgetTab Object that represents the component do add to the widgets tab
    */
   addWidgetTab (name, component) {
-    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug(name) })
+    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug(name).toLowerCase() })
   }
 
 }

@@ -44,7 +44,7 @@ class OperationWidget extends Component {
 OperationWidget.propTypes = {
   children: PropTypes.element,
   operation: PropTypes.object,
-  history: PropTypes.element
+  history: PropTypes.object
 }
 
 export default OperationWidget

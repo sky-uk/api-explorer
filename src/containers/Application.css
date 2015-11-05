@@ -336,3 +336,13 @@ img { max-width:100% }
   font-size:12px;
   padding-left: 0;
 }
+
+/*****************************************************************************
+ * response schema widget tab
+ *****************************************************************************/
+
+div.panel-body > pre {
+  border: 0px;
+  padding: 0px;
+  overflow: auto !important;
+}

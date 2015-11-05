@@ -19,7 +19,10 @@ class Application extends Component {
   }
 
   renderApplication () {
-    const api = this.props.apis.get('byName').toJSON()['petshop']
+    // TO DO: Hardcoded to support only the first element
+    const apis = this.props.apis.get('byName').toJSON()
+    const api = apis[Object.keys(apis)[0]]
+
     const { title, description, version } = api.info
     return (
       <div id='content'>

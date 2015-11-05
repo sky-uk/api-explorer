@@ -1,6 +1,6 @@
 export ApplicationLoading from './ApplicationLoading'
 export ExplorerHeader from './ExplorerHeader'
 export LateralMenu from './LateralMenu'
-export SchemaWidgetTab from './widgets/SchemaWidgetTab'
+export ResponseSchemaWidgetTab from './widgets/ResponseSchemaWidgetTab'
 export SpecWidgetTab from './widgets/SpecWidgetTab'
 export TryOutWidgetTab from './widgets/TryOutWidgetTab'
