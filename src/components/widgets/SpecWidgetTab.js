@@ -37,7 +37,7 @@ class SpecWidgetTab extends Component {
                 <h4 >Parameters</h4>
                 <table className='table table-striped' >
                   <tbody className='operation-params' >
-                    {this.props.operation.spec.parameters.map(parameter =>
+                    {this.props.operation.spec.parameters && this.props.operation.spec.parameters.map(parameter =>
                       this.renderParameter(parameter)
                     )}
                   </tbody>
