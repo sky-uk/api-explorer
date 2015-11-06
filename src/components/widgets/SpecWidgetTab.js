@@ -26,6 +26,10 @@ class SpecWidgetTab extends Component {
   }
 
   render () {
+    if (!this.props.operation) {
+      return (<div>Operation not found</div>)
+    }
+
     return (
       <div className='tab-content' >
         <div >
