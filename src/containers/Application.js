@@ -55,7 +55,7 @@ class Application extends Component {
             <LateralMenu operations={this.props.operations.toJS()} apis={this.props.apis} />
           </div>
         </Dock>
-        <div id='main-content' style={{marginLeft: this.state.dockSize }}>
+        <div id='main-content' style={{ marginLeft: this.state.dockSize }}>
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
