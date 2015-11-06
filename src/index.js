@@ -17,8 +17,16 @@ class APIExplorerConfigurator {
     this.apiExplorer = apiExplorer
   }
 
-  swagger2API (friendlyName, url) {
-    this.apiExplorer.addConfiguration(friendlyName, this.apiExplorer.Loaders.Swagger2Loader, { url })
+  proxyfy (url) {
+    return `http://localhost:9000/?url=${url}`
+  }
+
+  swagger2API (friendlyName, url, useProxy = false) {
+    this.apiExplorer.addConfiguration(
+      friendlyName,
+      this.apiExplorer.Loaders.Swagger2Loader,
+      useProxy ? {url: this.proxyfy(url)} : { url }
+    )
     return this
   }
 }
@@ -107,7 +115,6 @@ class APIExplorer {
   addWidgetTab (name, component) {
     this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug(name).toLowerCase() })
   }
-
 }
 
 const explorer = new APIExplorer()
