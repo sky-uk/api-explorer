@@ -59,7 +59,6 @@
     "babel-runtime": "^5.8.29",
     "chai": "^3.4.0",
     "chai-immutable": "^1.4.0",
-    "cors-anywhere": "^0.2.5",
     "expect": "^1.8.0",
     "express": "^4.13.3",
     "highlight.js": "^8.9.1",
