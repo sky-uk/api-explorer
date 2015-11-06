@@ -26,6 +26,10 @@ class SpecWidgetTab extends Component {
   }
 
   render () {
+    if (!this.props.operation) {
+      return (<div>Operation not found</div>)
+    }
+
     return (
       <div className='tab-content' >
         <div >
@@ -37,7 +41,7 @@ class SpecWidgetTab extends Component {
                 <h4 >Parameters</h4>
                 <table className='table table-striped' >
                   <tbody className='operation-params' >
-                    {this.props.operation.spec.parameters.map(parameter =>
+                    {this.props.operation.spec.parameters && this.props.operation.spec.parameters.map(parameter =>
                       this.renderParameter(parameter)
                     )}
                   </tbody>
