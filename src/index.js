@@ -18,7 +18,7 @@ class APIExplorerConfigurator {
   }
 
   proxyfy (url) {
-    return `http://localhost:9000/?url=${url}`
+    return `http://localhost:9000/{url}`
   }
 
   swagger2API (friendlyName, url, useProxy = false) {
