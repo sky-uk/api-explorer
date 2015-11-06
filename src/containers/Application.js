@@ -3,6 +3,7 @@ import './Application.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import marked from 'marked'
 import { ExplorerHeader, ApplicationLoading, LateralMenu } from 'components'
 
 class Application extends Component {
@@ -19,8 +20,7 @@ class Application extends Component {
   }
 
   renderApplication () {
-    const api = this.props.apis.get('byName').toJSON()['petshop']
-    const { title, description, version } = api.info
+    const numberOfAPIs = this.props.apis.get('byOrder').size
     return (
       <div id='content'>
         <div id='sidebar'>
@@ -36,15 +36,13 @@ class Application extends Component {
               </Link>
             </li>
           </ul>
-          <LateralMenu operations={this.props.operations.toJS()} />
+          <LateralMenu operations={this.props.operations.toJS()} apis={this.props.apis} />
         </div>
         <div id='main-content'>
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
-                <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
-                <p>{ description }</p>
-
+                <h1>API Explorer <span className='badge'>{numberOfAPIs} API{numberOfAPIs > 1 ? 's' : ''}</span></h1>
                 {this.props.children}
 
                 <div id='fixed-footer'>
@@ -57,6 +55,30 @@ class Application extends Component {
       </div>
     )
   }
+
+  renderMultipleAPIContent (apis) {
+    const apisArray = this.props.apis.get('byOrder').map(a => this.props.apis.get('byName').get(a)).toArray()
+    return (
+      <div>
+        {apisArray.map(api => this.renderSingleAPIContent(api))}
+      </div>
+    )
+  }
+
+  renderSingleAPIContent (api) {
+    const { title, description, version } = api.info
+    return (
+      <div key={title}>
+        <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
+        <p dangerouslySetInnerHTML={this.getHtmlDescription(description)} />
+      </div>
+    )
+  }
+
+  getHtmlDescription (description) {
+    return { __html: marked(description || '') }
+  }
+
 }
 
 Application.propTypes = {

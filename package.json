@@ -39,6 +39,8 @@
     "history": "^1.12.6",
     "immutable": "^3.7.5",
     "isomorphic-fetch": "^2.2.0",
+    "linq": "^3.0.5",
+    "marked": "^0.3.5",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",

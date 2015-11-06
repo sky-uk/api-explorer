@@ -9,9 +9,10 @@ let INITIAL_STATE = Map({
 
 export default function apisReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
+    case types.API_CONFIGURATIONS:
+      return state.set('byOrder', List(action.payload.map(config => config.friendlyName)))
     case types.NEW_API:
-      return state.set('byOrder', List([action.config.friendlyName]))
-                  .set('byName', Map({ [action.config.friendlyName]: action.api }))
+      return state.set('byName', state.get('byName').set(action.config.friendlyName, action.api))
   }
   return state
 }

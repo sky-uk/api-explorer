@@ -1,5 +1,12 @@
 import * as types from 'constants/ActionTypes'
 
+export function apiConfigurations (apiConfigurations) {
+  return {
+    type: types.API_CONFIGURATIONS,
+    payload: apiConfigurations
+  }
+}
+
 export function load (config) {
   return dispatch => {
     const onLoadProgress = status => dispatch(progress(config, `[${config.friendlyName}] ${status}`))

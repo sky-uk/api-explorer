@@ -1,31 +1,48 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import cx from 'classnames'
+import Enumerable from 'linq'
 
 class LateralMenu extends Component {
 
   render () {
-    const operations = this.props.operations
+    const apiOperationsArray = this.props.apis.get('byOrder')
+                                              .map(name => this.props.operations.filter(o => o.apiname === name))
+                                              .toArray()
     return (
     <div id='lateral-menu'>
       <ul className='nav'>
-        <li>
-          <a href='#'>
-            <i className='fa fa-fw fa-user'></i>
-            <span></span>
-            <strong>{operations[0].apiname}</strong><span> API</span>
-          </a>
-          <ul className='nav nav-second-level'>
-            <li>
-              <a href='#'></a>
-              <ul className='nav nav-third-level'>
-                {operations.map(this.renderOperation)}
-              </ul>
-            </li>
-          </ul>
-        </li>
+        {apiOperationsArray.map(operations => this.renderAPI(operations))}
       </ul>
     </div>
+    )
+  }
+
+  renderAPI (operations) {
+    const tags = Enumerable.from(operations).selectMany(o => o.spec.tags).distinct().toArray()
+    return (
+      <li key={operations[0].apiname}>
+        <a href='#'>
+          <i className='fa fa-fw fa-user'></i>
+          <span></span>
+          <strong>{operations[0].apiname}</strong><span> API</span>
+        </a>
+        <ul className='nav nav-second-level'>
+        {tags.map(tag => this.renderOperationsWithTag(operations, tag))}
+        </ul>
+      </li>
+    )
+  }
+
+  renderOperationsWithTag (operations, tag) {
+    const visibleOperations = Enumerable.from(operations).where(o => (o.spec.tags).indexOf(tag) !== -1).toArray()
+    return (
+      <li key={tag}>
+        <a href='#'>{tag.toUpperCase()}</a>
+        <ul className='nav nav-third-level'>
+          {visibleOperations.map(this.renderOperation)}
+        </ul>
+      </li>
     )
   }
 
@@ -42,9 +59,6 @@ class LateralMenu extends Component {
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
-            <span className='pull-right'>
-            {operation.spec.tags.map(tag => <span key={tag} className='label'>{tag.toUpperCase()}</span>)}
-            </span>
             <span>{operation.spec.url}</span>
           </span>
         </Link>
@@ -54,7 +68,8 @@ class LateralMenu extends Component {
 }
 
 LateralMenu.propTypes = {
-  operations: PropTypes.array.isRequired
+  operations: PropTypes.array.isRequired,
+  apis: PropTypes.object.isRequired
 }
 
 export default LateralMenu
