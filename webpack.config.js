@@ -5,11 +5,11 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './src/index'
+    './sampleapp/index-sampleapp.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'apiexplorer.js',
     publicPath: '/static/'
   },
   plugins: [
