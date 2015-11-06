@@ -25,7 +25,7 @@ class APIExplorerConfigurator {
     this.apiExplorer.addConfiguration(
       friendlyName,
       this.apiExplorer.Loaders.Swagger2Loader,
-      useProxy ? this.proxyfy(url) : { url }
+      useProxy ? {url: this.proxyfy(url)} : { url }
     )
     return this
   }
