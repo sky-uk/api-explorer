@@ -1,5 +1,6 @@
 // Loader
 
+export const API_CONFIGURATIONS = 'API_CONFIGURATIONS'
 export const LOAD_START = 'LOAD_START'
 export const UPDATE_PROGRESS = 'UPDATE_PROGRESS'
 export const LOAD_COMPLETE = 'LOAD_COMPLETE'

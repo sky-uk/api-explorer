@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Highlight from 'react-highlight'
-// import 'highlight.js/styles/tomorrow.css' see issue #26
+import 'highlight.js/styles/tomorrow.css'
 
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {

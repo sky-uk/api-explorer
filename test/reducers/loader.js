@@ -10,6 +10,8 @@ describe('reducers', () => {
     expect(nextState.loader).to.equal(
       fromJS({
         loaded: false,
+        totalApis: 0,
+        loadedApis: 0,
         progress: [ 'Current Step' ],
         currentStep: 'Current Step'
       })
@@ -22,10 +24,11 @@ describe('reducers', () => {
 
     expect(nextState.loader).to.equal(
       fromJS({
-        loaded: true,
+        loaded: false,
+        totalApis: 0,
+        loadedApis: 1,
         progress: [ ],
-        currentStep: '',
-        apis: 'Load completed with success'
+        currentStep: ''
       })
     )
   })
