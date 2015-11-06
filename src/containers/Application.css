@@ -12,19 +12,26 @@
  * sidebar
  *****************************************************************************/
 #sidebar {
-    float: left;
-    position: absolute;
-    width: 350px;
-    height: 100%;
     background-color: #222;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-bottom: 50px;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    padding-bottom: 40px;
 }
 
-#sidebar .api-explorer-logo { text-align:center; }
+#sidebar .close-button {
+  color: white;
+  margin-right: 10px;
+  margin-top: 10px;
+  font-family: Verdana;
+  cursor: pointer;
+  opacity: .5;
+}
+
+#sidebar .close-button:hover {
+  opacity: 1;
+}
+
+
+#sidebar .api-explorer-logo { text-align:center;  }
 #sidebar .api-explorer-logo img { height:64px; }
 
 #sidebar ul.nav-second-level li a { padding-top: 4px; padding-bottom: 4px; padding-left: 25px; }
