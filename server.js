@@ -1,15 +1,31 @@
 var webpack = require('webpack')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware = require('webpack-hot-middleware')
+var https = require('https')
+var url = require('url')
+var httpProxy = require('http-proxy')
 var config = require('./webpack.config')
 
 var Express = require('express')
 var app = new Express()
 var port = process.env.PORT || 3000
 
+var proxy = httpProxy.createProxyServer({})
+
 var compiler = webpack(config)
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
+
+app.get('/proxy/*', function (req, res) {
+  // req.query
+  proxy.web(req, res, {
+    target: 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0',
+    agent: https.globalAgent,
+    headers: {
+      host: 'api.swaggerhub.com'
+    }
+  })
+})
 
 app.get('/samples/*', function (req, res) {
   res.sendFile(__dirname + req.path)
@@ -27,18 +43,20 @@ app.listen(port, function (error) {
   }
 })
 
-var http = require('http'),
-    httpProxy = require('http-proxy')
-//
-// Create your proxy server and set the target in the options.
-//
-httpProxy.createProxyServer({target:'http://localhost:3000'}).listen(8000)
+require('http').createServer(function (req, res) {
+  var queryData = url.parse(req.url, true).query
 
-//
-// Create your target server
-//
-http.createServer(function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/plain' })
-  res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2))
-  res.end()
+  if (queryData.url) {
+    console.log('Using proxy to make a request to "' + queryData.url + '"')
+
+    proxy.web(req, res, {
+      target: queryData.url,
+      agent: https.globalAgent,
+      headers: {
+        host: 'api.swaggerhub.com'
+      }
+    })
+  } else {
+    console.log('No url found in query string... discarting')
+  }
 }).listen(9000)
