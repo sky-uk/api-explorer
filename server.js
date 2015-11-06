@@ -1,10 +1,7 @@
 var webpack = require('webpack')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware = require('webpack-hot-middleware')
-var https = require('https')
-var url = require('url')
 var config = require('./webpack.config')
-var proxy = require('http-proxy').createProxyServer({})
 
 var Express = require('express')
 var app = new Express()
@@ -30,20 +27,11 @@ app.listen(port, function (error) {
   }
 })
 
-require('http').createServer(function (req, res) {
-  var queryData = url.parse(req.url, true).query
-  var hostname = url.parse(queryData.url).hostname
+var cors_proxy = require('cors-anywhere')
 
-  if (queryData.url) {
-    console.log('Using proxy to make a request to ' + queryData.url)
-    proxy.web(req, res, {
-      target: queryData.url,
-      agent: https.globalAgent,
-      headers: {
-        host: hostname
-      }
-    })
-  } else {
-    console.log('No url found in query string... discarting')
-  }
-}).listen(9000)
+cors_proxy.createServer({
+  originWhitelist: [], // Allow all origins
+  removeHeaders: ['cookie', 'cookie2']
+}).listen(9000, '127.0.0.1', function () {
+  console.log('Running CORS Anywhere on localhost:9000')
+})
