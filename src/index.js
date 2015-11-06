@@ -4,7 +4,7 @@ import slug from 'slug'
 import { render } from 'react-dom'
 import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
-import { load as loadSpec } from 'actions/loadActionCreators'
+import { load as loadSpec, apiConfigurations } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
 import widgetWrapper from 'infrastructure/WidgetWrapper'
 
@@ -77,6 +77,8 @@ class APIExplorer {
    * @return {[APIExplorer]}      APIExplorer instance to provide a fluent interface
    */
   start (domAnchor = 'root') {
+    store.dispatch(apiConfigurations(this.apiConfigurations))
+
     // Dispatch actions to load configurations
     for (const config of this.apiConfigurations) {
       store.dispatch(loadSpec(config))
@@ -94,6 +96,7 @@ class APIExplorer {
    */
   addConfiguration (friendlyName, loader, props) {
     this.apiConfigurations.push({ friendlyName, loader, props })
+    console.log(this.apiConfigurations)
   }
 
   /**

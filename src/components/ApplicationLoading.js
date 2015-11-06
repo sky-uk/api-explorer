@@ -24,7 +24,7 @@ class ApplicationLoading extends Component {
             { currentStep }
           </p>
           <pre style={{ textAlign: 'left', fontSize: 10, marginLeft: '20%', marginRight: '20%' }}>
-            { progressMessages.map(p => <div key={p}>{p}</div>) }
+            { progressMessages.reverse().map(p => <div key={p}>{(new Date()).toLocaleTimeString()} {p}</div>) }
           </pre>
         </div>
         <div style={{ position: 'fixed', bottom: 10, right: 10 }} >
