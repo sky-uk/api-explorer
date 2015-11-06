@@ -5,7 +5,8 @@ const rootReducer = combineReducers({
   router: routerStateReducer,
   loader: require('./loader'),
   apis: require('./apis'),
-  operations: require('./operations')
+  operations: require('./operations'),
+  definitions: require('./definitions')
 })
 
 export default rootReducer

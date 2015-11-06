@@ -11,7 +11,6 @@ class TryOutWidgetTab extends Component {
 }
 
 TryOutWidgetTab.propTypes = {
-  children: PropTypes.element,
   operation: PropTypes.object.isRequired
 }
 

@@ -14,9 +14,10 @@ export function load (config) {
     const onLoadError = errorMessage => dispatch(progress(config, `[${config.friendlyName}] ${errorMessage}`))
     const onNewAPI = api => dispatch(newAPI(config, api))
     const onNewOperation = operation => dispatch(newOperation(config, operation))
+    const onNewDefinition = definition => dispatch(newDefinition(config, definition))
 
     dispatch({ type: types.LOAD_START, config })
-    config.loader(config, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
+    config.loader(config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
   }
 }
 
@@ -34,4 +35,8 @@ function newAPI (config, api) {
 
 function newOperation (config, operation) {
   return { type: types.NEW_OPERATION, config, operation }
+}
+
+function newDefinition (config, definition) {
+  return { type: types.NEW_DEFINITION, config, definition }
 }

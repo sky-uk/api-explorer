@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 class SpecWidgetTab extends Component {
   renderParameter (parameter) {
-    return (<tr >
+    return (<tr key={parameter.name}>
       <td >
         <span className='label label-default' >{parameter.in}</span>
       </td>
@@ -19,7 +19,7 @@ class SpecWidgetTab extends Component {
 
   renderStatusCodes (statusCode, description) {
     return (
-      <tr >
+      <tr key={statusCode}>
         <td className='col-md-2' >{statusCode}</td>
         <td className='col-md-10' >{description}</td>
       </tr>)

@@ -5,7 +5,8 @@ export default function widgetWrapper (widgetTab) {
           state => {
             const operation = state.operations.filter(op => op.get('id') === state.router.params.id).first()
             return {
-              operation: operation.size > 0 ? operation.toJS() : null
+              operation: operation.size > 0 ? operation.toJS() : null,
+              definitions: state.definitions.size > 0 ? state.definitions.toJS() : {}
             }
           }
         )(widgetTab)
