@@ -18,14 +18,14 @@ class APIExplorerConfigurator {
   }
 
   proxyfy (url) {
-    return `http://localhost:9000/{url}`
+    return `/proxy/?url=${url}`
   }
 
   swagger2API (friendlyName, url, useProxy = false) {
     this.apiExplorer.addConfiguration(
       friendlyName,
       this.apiExplorer.Loaders.Swagger2Loader,
-      useProxy ? {url: this.proxyfy(url)} : { url }
+      useProxy ? { url: this.proxyfy(url) } : { url }
     )
     return this
   }
