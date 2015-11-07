@@ -2,33 +2,83 @@ import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import cx from 'classnames'
 import Enumerable from 'linq'
+import { OperationsFilter } from '.'
 
 class LateralMenu extends Component {
+  constructor () {
+    super()
+    this.state = { filter: this.getFilterState('') }
+  }
 
+  // ----------------------------------------------------------------------------------------
+  // Filtering
+  // ----------------------------------------------------------------------------------------
+  getFilterState (filterText) {
+    // Convert filterText into a regex
+    // EX: "GET u ent    vi" -> "GETuentvi" -> /G.*E.*T.*u.*e.*n.*t.*v.*i/i
+    return {
+      text: filterText,
+      regex: new RegExp(filterText.replace(/\s/g, '').split('').join('.*'), 'i')
+    }
+  }
+
+  handleFilterUpdate (text) {
+    this.setState({ filter: this.getFilterState(text) })
+  }
+
+  matchFilterRegex (text) {
+    return this.state.filter.regex.test(text)
+  }
+
+  isApiVisible (api, operations) {
+    if (this.state.filter.text === '') return true
+    return operations.some(o => this.isOperationVisible(o))
+  }
+
+  isTagVisible (tag, operations) {
+    if (this.state.filter.text === '') return true
+    if (this.matchFilterRegex(tag)) return true
+    return operations.some(o => this.isOperationVisible(o))
+  }
+
+  isOperationVisible (operation) {
+    if (this.state.filter.text === '') return true
+    if (operation.spec.tags.some(tag => this.matchFilterRegex(tag))) return true
+    return this.matchFilterRegex(operation.spec.httpMethod + operation.spec.url)
+  }
+
+  // ----------------------------------------------------------------------------------------
+  // Render
+  // ----------------------------------------------------------------------------------------
   render () {
-    const apiOperationsArray = this.props.apis.get('byOrder')
-                                              .map(name => this.props.operations.filter(o => o.apiname === name))
-                                              .toArray()
+    const operationsByApi = this.props.apis.get('byOrder')
+                                .map(name => this.props.operations.filter(o => o.apiname === name))
+                                .toArray()
     return (
     <div id='lateral-menu'>
       <ul className='nav'>
-        {apiOperationsArray.map(operations => this.renderAPI(operations))}
+        <OperationsFilter placeholder='e.g. getusersession'
+        onFilter={text => this.handleFilterUpdate(text)} />
+
+        {operationsByApi.map(apiOperations => this.renderAPI(apiOperations))}
       </ul>
     </div>
     )
   }
 
-  renderAPI (operations) {
-    const tags = Enumerable.from(operations).selectMany(o => o.spec.tags).distinct().toArray()
+  renderAPI (apiOperations) {
+    if (!this.isApiVisible(apiOperations[0].apiname, apiOperations)) return
+
+    const tags = Enumerable.from(apiOperations).selectMany(o => o.spec.tags).distinct().toArray()
     return (
-      <li key={operations[0].apiname}>
+      <li key={apiOperations[0].apiname}>
         <a href='#'>
           <i className='fa fa-fw fa-user'></i>
           <span></span>
-          <strong>{operations[0].apiname}</strong><span> API</span>
+          <strong>{apiOperations[0].apiname}</strong><span> API</span>
         </a>
         <ul className='nav nav-second-level'>
-        {tags.map(tag => this.renderOperationsWithTag(operations, tag))}
+        {tags.map(tag => this.renderOperationsWithTag(apiOperations, tag))}
         </ul>
       </li>
     )
@@ -36,17 +86,22 @@ class LateralMenu extends Component {
 
   renderOperationsWithTag (operations, tag) {
     const visibleOperations = Enumerable.from(operations).where(o => (o.spec.tags).indexOf(tag) !== -1).toArray()
+
+    if (!this.isTagVisible(tag, visibleOperations)) return
+
     return (
       <li key={tag}>
         <a href='#'>{tag.toUpperCase()}</a>
         <ul className='nav nav-third-level'>
-          {visibleOperations.map(this.renderOperation)}
+          {visibleOperations.map(o => this.renderOperation(o))}
         </ul>
       </li>
     )
   }
 
   renderOperation (operation) {
+    if (!this.isOperationVisible(operation)) return
+
     const httpMethodCx = cx('btn btn-outline btn-xs', {
       'btn-success': operation.spec.httpMethod === 'post',
       'btn-info': operation.spec.httpMethod === 'get',
@@ -65,6 +120,7 @@ class LateralMenu extends Component {
       </li>
     )
   }
+
 }
 
 LateralMenu.propTypes = {

@@ -37,7 +37,7 @@ class Application extends Component {
     const numberOfAPIs = this.props.apis.get('byOrder').size
     return (
       <div id='content'>
-        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none'>
+        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
           <div id='sidebar'>
             <span className='pull-right close-button' onClick={() => this.handleCloseDock()} >X</span>
             <div className='api-explorer-logo'>
@@ -52,6 +52,7 @@ class Application extends Component {
                 </Link>
               </li>
             </ul>
+
             <LateralMenu operations={this.props.operations.toJS()} apis={this.props.apis} />
           </div>
         </Dock>
