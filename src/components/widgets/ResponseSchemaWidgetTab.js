@@ -5,7 +5,7 @@ import Highlight from 'react-highlight'
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {
     const definitions = this.props.definitions
-
+debugger
     function getModelFor (schemaReference, deep = 0) {
       if (deep === 5) {
         return schemaReference
@@ -44,10 +44,11 @@ class ResponseSchemaWidgetTab extends Component {
         return JSON.stringify([getModelFor(responseSchema.items.$ref)], null, 2)
       }
 
-      if (responseSchema.hasOwnProperty('$ref')) {
-        return JSON.stringify(getModelFor(responseSchema.$ref), null, 2)
-      }
       return responseSchema.type
+    }
+
+    if (responseSchema.hasOwnProperty('$ref')) {
+      return JSON.stringify(getModelFor(responseSchema.$ref), null, 2)
     }
 
     return 'void'
@@ -57,7 +58,6 @@ class ResponseSchemaWidgetTab extends Component {
     const responses = this.props.operation.spec.responses
     const definitions = this.props.definitions
     let responseSchemas = []
-
     Object.keys(responses || {}).forEach(statusCode => {
       const response = responses[statusCode]
       if (response && response.schema) {
@@ -68,17 +68,19 @@ class ResponseSchemaWidgetTab extends Component {
     })
 
     function getSchemaName (response) {
-      if (response.hasOwnProperty('schema') && response.schema.hasOwnProperty('type')) {
-        if (response.schema.type === 'array') {
-          if (response.schema.items.hasOwnProperty('$ref')) {
-            return `[${definitions[response.schema.items.$ref].name.toLowerCase()}]`
+      if (response.hasOwnProperty('schema')) {
+        if (response.schema.hasOwnProperty('type')) {
+          if (response.schema.type === 'array') {
+            if (response.schema.items.hasOwnProperty('$ref')) {
+              return `[${definitions[response.schema.items.$ref].name.toLowerCase()}]`
+            }
+            return `[${response.schema.items.type.toLowerCase()}]`
           }
-          return `[${response.schema.items.type.toLowerCase()}]`
+          return response.schema.type
         }
         if (response.schema.hasOwnProperty('$ref')) {
-          return definitions[response.schema.items.$ref].name.toLowerCase()
+          return definitions[response.schema.$ref].name.toLowerCase()
         }
-        return response.schema.type
       }
       return 'void'
     }
