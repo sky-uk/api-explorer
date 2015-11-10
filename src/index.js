@@ -7,6 +7,7 @@ import Root from 'containers/Root'
 import { load as loadSpec, apiConfigurations } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
 import widgetWrapper from 'infrastructure/WidgetWrapper'
+import Url from 'infrastructure/Url'
 
 import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from 'components'
 
@@ -17,15 +18,20 @@ class APIExplorerConfigurator {
     this.apiExplorer = apiExplorer
   }
 
-  proxyfy (url) {
-    return `/proxy/?url=${url}`
+  swagger1API (friendlyName, url, useProxy = false) {
+    this.apiExplorer.addConfiguration(
+      friendlyName,
+      this.apiExplorer.Loaders.Swagger1Loader,
+      new Url(url, useProxy)
+    )
+    return this
   }
 
   swagger2API (friendlyName, url, useProxy = false) {
     this.apiExplorer.addConfiguration(
       friendlyName,
       this.apiExplorer.Loaders.Swagger2Loader,
-      useProxy ? { url: this.proxyfy(url) } : { url }
+      new Url(url, useProxy)
     )
     return this
   }
@@ -45,6 +51,7 @@ class APIExplorerWidgetTabConfigurator {
 class APIExplorer {
   constructor () {
     this.Loaders = {
+      Swagger1Loader: Loaders.Swagger1Loader,
       Swagger2Loader: Loaders.Swagger2Loader
     }
 
@@ -102,9 +109,8 @@ class APIExplorer {
    * @param {[type]} loader     The loaded used to parse the api description
    * @param {[type]} extraProps Extra properties specific to the loader
    */
-  addConfiguration (friendlyName, loader, props) {
-    this.apiConfigurations.push({ friendlyName, loader, props })
-    console.log(this.apiConfigurations)
+  addConfiguration (friendlyName, loader, url) {
+    this.apiConfigurations.push({ friendlyName, loader, url })
   }
 
   /**

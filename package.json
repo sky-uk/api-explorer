@@ -31,11 +31,14 @@
       "APIExplorer",
       "fetch",
       "describe",
-      "it"
+      "it",
+      "SwaggerConverter"
     ]
   },
   "dependencies": {
+    "async": "^1.5.0",
     "classnames": "^2.1.2",
+    "commonjs": "0.0.1",
     "history": "^1.12.6",
     "immutable": "^3.7.5",
     "isomorphic-fetch": "^2.2.0",
@@ -51,6 +54,7 @@
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
     "slug": "^0.9.1",
+    "swagger-converter": "^0.2.0",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
