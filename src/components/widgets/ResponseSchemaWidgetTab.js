@@ -5,7 +5,6 @@ import Highlight from 'react-highlight'
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {
     const definitions = this.props.definitions
-debugger
     function getModelFor (schemaReference, deep = 0) {
       if (deep === 5) {
         return schemaReference

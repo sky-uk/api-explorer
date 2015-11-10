@@ -23,10 +23,14 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
                       })
                       .toArray()
       async.map(apis, executeFetch, (err, result) => {
-        let apiDeclarations = {}
-        result.forEach(element => apiDeclarations [element.path] = element.result)
-        const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)
-        swagger2JsonLoader(swagger2Document, config.friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+        if (err) {
+          console.log(`An error has occured: ${err}`)
+        } else {
+          let apiDeclarations = {}
+          result.forEach(element => apiDeclarations [element.path] = element.result)
+          const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)
+          swagger2JsonLoader(swagger2Document, config.friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+        }
       })
     })
 }
