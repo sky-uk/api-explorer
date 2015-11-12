@@ -21,7 +21,6 @@ class HttpRequest {
   }
 
   doRequest (params) {
-    debugger
     const callback = this.callback
     let currentUrl = params.url
 

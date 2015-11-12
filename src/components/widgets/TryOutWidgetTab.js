@@ -63,7 +63,13 @@ class TryOutWidgetTab extends Component {
 // ###############################################################################################################
 
   render () {
-    const requestFormats = this.props.operation.spec.produces
+    const textCropStyles = {
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
+      display: 'inline-block',
+      width: '100%',
+      overflow: 'hidden'
+    }
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
@@ -72,13 +78,16 @@ class TryOutWidgetTab extends Component {
         />
         <div className={ this.state.requestPanelClassName }>
           <TryOutWidgetTabExecuter
-            requestFormats={requestFormats}
+            requestFormats={this.props.operation.spec.produces}
             validateParameters={ () => this.validateParameters() }
             executeRequest={ (requestFormat) => this.executeRequest(requestFormat) }
             requestInProgress={this.state.requestInProgress}
           />
-          <Display when={!this.state.requestInProgress}>
-            <TryOutWidgetTabExecuterResponsePanel response={this.state.response} />
+          <Display when={!this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''}>
+            <div className='panel-body'>
+              <a href={this.state.response.url} target='_blank' title={this.state.response.url} style={textCropStyles}>{this.state.response.url}</a>
+              <TryOutWidgetTabExecuterResponsePanel response={this.state.response} />
+            </div>
           </Display>
         </div>
       </div>

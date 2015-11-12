@@ -53,36 +53,33 @@ class TryOutWidgetTabExecuterResponsePanel extends Component {
     }
 
     CodeMirror.defaults.gutters = ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
+
+    /* let httpResponse = props.operation.httpResponse || { status: 0, statusText: '', responseText: '', headers: [] };
+    let requestUrl = props.operation.httpRequestUrl || '';
+    return {
+      requestInProgress: false,
+      showRequestUI: httpResponse.status != 0,
+      requestUrl: requestUrl,
+      requestPanelClassName: 'panel panel-http-response panel-default',
+      res: httpResponse,
+      tempAcceptsType : 'json',
+      codeMirrorID : 'codemirror'+ new Date().getTime(),
+      refresh : httpResponse.status != 0,
+      mockProfiles: mockProfiles,
+      mockProfile: mockProfiles[0],
+      hateoasLinks: []
+    }*/
+  }
+
+  componentDidMount () {
+    const elem = this.refs.codemirror
+    CodeMirror.fromTextArea(elem)
   }
 
   render () {
-    if (this.props.response && this.props.response.data && this.props.response.data !== '') {
-      const textCropStyles = {
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        display: 'inline-block',
-        width: '100%',
-        overflow: 'hidden'
-      }
-
-      const url = this.props.response.url
-
-      return (
-          <div className='panel-body'>
-            <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
-            <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={this.props.response.data} />
-          </div>
-      )
-    } else {
-      return <div />
-    }
-  }
-
-  componentDidUpdate () {
-    const elem = this.refs.codemirror
-    if (elem) {
-      CodeMirror.fromTextArea(elem)
-    }
+    return (
+      <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={this.props.response.data} />
+    )
   }
 }
 
