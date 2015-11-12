@@ -1,5 +1,5 @@
 import React from 'react/addons'
-import SpecWidgetTab from '../../../src/components/Widgets/SpecWidgetTab'
+import SpecWidgetTab from '../../../src/components/widgets/SpecWidgetTab'
 import {expect} from 'chai'
 
 const {renderIntoDocument, scryRenderedDOMComponentsWithTag} = React.addons.TestUtils
