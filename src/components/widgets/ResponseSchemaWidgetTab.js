@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Highlight from 'react-highlight'
+// import Highlight from 'react-highlight'
 // import 'highlight.js/styles/tomorrow.css' see issue #26
 
 class ResponseSchemaWidgetTab extends Component {
@@ -94,9 +94,9 @@ class ResponseSchemaWidgetTab extends Component {
           <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''} <code>{responseSchema.returnType}</code>
         </div>
         <div className='panel-body'>
-          <Highlight>
+
             {this.getDefinitions(responseSchema.schema)}
-          </Highlight>
+
         </div>
       </div>
     )
@@ -105,7 +105,7 @@ class ResponseSchemaWidgetTab extends Component {
   render () {
     const responseSchemas = this.getResponseSchemas()
     return (
-    <div className='response-model tab-pane fade in'>
+      <div className='response-model tab-pane fade in'>
         <h4>Http Status Codes</h4>
         {responseSchemas.map(responseSchema => this.renderResponseSchema(responseSchema))}
       </div>
