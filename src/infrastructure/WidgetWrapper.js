@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 export default function widgetWrapper (widgetTab) {
   return connect(
           state => {
-            const operation = state.operations.filter(op => op.get('id') === state.router.params.id).first()
+            let operation = state.operations.filter(op => op.get('id') === state.router.params.id).first()
+            operation = operation.size > 0 ? operation.toJS() : null
             return {
-              operation: operation.size > 0 ? operation.toJS() : null,
-              definitions: state.definitions.size > 0 ? state.definitions.toJS() : {}
+              operation: operation,
+              definitions: state.definitions.size > 0 ? state.definitions.toJS() : {},
+              apis: state.apis.get('byName').get(operation.apiname)
             }
           }
         )(widgetTab)

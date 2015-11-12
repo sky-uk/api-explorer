@@ -21,7 +21,7 @@ class OperationWidget extends Component {
       <div className={panelCx} >
         <div className='panel-heading' id='POST-v2-user-session-skyid-ac' >
           <div className='pull-right'>
-            {(this.props.operation.spec.tags || []).map(tag => <span><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
+            {(this.props.operation.spec.tags || []).map((tag, i) => <span key={i}><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
           </div>
           <strong >{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
           <span >&nbsp;</span>
@@ -30,10 +30,10 @@ class OperationWidget extends Component {
         </div>
         <div className='panel-body' >
           <ul className='nav nav-tabs' >
-            {APIExplorer.widgetTabs.map(widgetTab => {
+            {APIExplorer.widgetTabs.map((widgetTab, i) => {
               const url = `/operation/${ this.props.operation.id}/${widgetTab.slug}`
-              return (<li key={widgetTab.slug} className={this.props.history.isActive(url) ? 'active' : ''}>
-                <Link to={`/operation/${this.props.operation.id}/${widgetTab.slug}`} className='operation-container' >{widgetTab.name}</Link>
+              return (<li key={i} className={this.props.history.isActive(url) ? 'active' : ''}>
+                <Link key={i} to={`/operation/${this.props.operation.id}/${widgetTab.slug}`} className='operation-container' >{widgetTab.name}</Link>
               </li>)
             })}
           </ul>

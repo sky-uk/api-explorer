@@ -305,7 +305,7 @@ img { max-width:100% }
 }
 
 .CodeMirror-fullscreen {
-  z-index: 91;
+  z-index: 100000000 !important;
 }
 
 .documentation-widget .CodeMirror.ui-resizable{
