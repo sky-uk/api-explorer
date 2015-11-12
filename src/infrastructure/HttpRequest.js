@@ -57,7 +57,7 @@ class HttpRequest {
 
     console.log('Body: ' + body)
 
-    if ( querystring && querystring !== '') {
+    if (querystring && querystring !== '') {
       currentUrl += `?${querystring}`
     }
 
