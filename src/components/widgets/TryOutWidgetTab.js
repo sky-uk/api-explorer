@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react'
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
 import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabExecuterResponsePanel from './TryOutWidgetTabExecuterResponsePanel'
-import Display from '../Display'
 
 import { Map } from 'immutable'
 import { HttpRequest } from 'infrastructure'
@@ -11,14 +10,23 @@ import { HttpRequest } from 'infrastructure'
 class TryOutWidgetTab extends Component {
   constructor () {
     super()
-    this.state = {
+    this.state = this.getState()
+
+    this.httpRequest = new HttpRequest((resp) => this.requestCallback(resp))
+  }
+
+  componentWillReceiveProps () {
+    this.setState(this.getState())
+  }
+
+  getState () {
+    return {
+      ...this.state,
       requestInProgress: false,
       operationParameters: Map({}),
       response: {},
       requestPanelClassName: 'panel panel-http-response panel-default'
     }
-
-    this.httpRequest = new HttpRequest((resp) => this.requestCallback(resp))
   }
 
   getUrl (path) {
@@ -29,22 +37,22 @@ class TryOutWidgetTab extends Component {
 // Events
 // ###############################################################################################################
 
-  handleParametersOnChange (name, value) {
+  onHandleParametersChange (name, value) {
     const newParameters = this.state.operationParameters.set(name, value)
 
-    this.setState({...this.state, operationParameters: newParameters})
+    this.setState({operationParameters: newParameters})
     console.log(`ParametersChange: ${name} - ${value} `)
   }
 
-  validateParameters () {
+  onValidateParameters () {
     return this.httpRequest.validateParameters(
       this.props.operation.spec.parameters,
       this.state.operationParameters.toObject()
     )
   }
 
-  executeRequest (requestFormat) {
-    this.setState({...this.state, requestInProgress: true})
+  onExecuteRequest (requestFormat) {
+    this.setState({requestInProgress: true})
 
     this.httpRequest.doRequest({
       url: this.getUrl(this.props.operation.spec.url),
@@ -55,7 +63,7 @@ class TryOutWidgetTab extends Component {
   }
 
   requestCallback (response) {
-    this.setState({...this.state, requestInProgress: false, response: response})
+    this.setState({requestInProgress: false, response: response})
   }
 
 // ###############################################################################################################
@@ -70,25 +78,26 @@ class TryOutWidgetTab extends Component {
       width: '100%',
       overflow: 'hidden'
     }
+
+    const showResponse = !this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
           operation={this.props.operation}
-          handleParametersOnChange={ (name, value) => this.handleParametersOnChange(name, value) }
+          onHandleParametersChange={ (name, value) => this.onHandleParametersChange(name, value) }
         />
         <div className={ this.state.requestPanelClassName }>
           <TryOutWidgetTabExecuter
             requestFormats={this.props.operation.spec.produces}
-            validateParameters={ () => this.validateParameters() }
-            executeRequest={ (requestFormat) => this.executeRequest(requestFormat) }
             requestInProgress={this.state.requestInProgress}
+            onValidateParameters={ () => this.onValidateParameters() }
+            onExecuteRequest={ (requestFormat) => this.onExecuteRequest(requestFormat) }
           />
-          <Display when={!this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''}>
-            <div className='panel-body'>
+          {showResponse && <div className='panel-body'>
               <a href={this.state.response.url} target='_blank' title={this.state.response.url} style={textCropStyles}>{this.state.response.url}</a>
               <TryOutWidgetTabExecuterResponsePanel response={this.state.response} />
             </div>
-          </Display>
+          }
         </div>
       </div>
     )

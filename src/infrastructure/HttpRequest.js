@@ -57,7 +57,9 @@ class HttpRequest {
 
     console.log('Body: ' + body)
 
-    currentUrl += `currentUrl?${querystring}`
+    if ( querystring && querystring !== '') {
+      currentUrl += `?${querystring}`
+    }
 
     /* fetch(params.currentPath, {
       method: 'post',
@@ -68,7 +70,51 @@ class HttpRequest {
       body: body
     })
     .then(response => callback(response))*/
-    setTimeout(() => callback({url: currentUrl, data: 'dummy response'}), 1500)
+
+    setTimeout(() => callback({url: currentUrl, data: this.getDummyResponse()}), 1500)
+  }
+
+  getDummyResponse () {
+    return `[
+    {
+      "id": 1446833771076,
+      "category": {
+        "id": 0,
+        "name": "really-happy"
+      },
+      "name": "programmer",
+      "photoUrls": [
+        "http://foo.bar.com/1",
+        "http://foo.bar.com/2"
+      ],
+      "status": "available"
+    },
+    {
+      "id": 1446833772232,
+      "category": {
+        "id": 0,
+        "name": "really-happy"
+      },
+      "name": "gorilla",
+      "photoUrls": [
+        "http://foo.bar.com/1",
+        "http://foo.bar.com/2"
+      ],
+      "status": "available"
+    },
+    {
+      "id": 1446833772864,
+      "category": {
+        "id": 0,
+        "name": "really-happy"
+      },
+      "name": "furt",
+      "photoUrls": [
+        "http://foo.bar.com/1",
+        "http://foo.bar.com/2"
+      ],
+      "status": "available"
+    }]`
   }
 }
 

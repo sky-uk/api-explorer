@@ -1,29 +1,28 @@
 import React, { Component, PropTypes } from 'react'
-import Display from '../Display'
 
 class TryOutWidgetTabExecuter extends Component {
   constructor () {
     super()
-    this.state = {requestFormat: '', isValid: true}
+    this.state = { ...this.state, requestFormat: '', isValid: true }
   }
 
   handleRequestFormatChange (e) {
-    this.setState({...this.state, requestFormat: e.currentTarget.value})
+    this.setState({ requestFormat: e.currentTarget.value })
   }
 
   executeRequest () {
-    if (this.props.validateParameters()) {
-      this.setState({...this.state, isValid: true})
-      this.props.executeRequest(this.state.requestFormat)
+    if (this.props.onValidateParameters()) {
+      this.setState({ isValid: true })
+      this.props.onExecuteRequest(this.state.requestFormat)
     } else {
-      this.setState({...this.state, isValid: false})
+      this.setState({ isValid: false })
     }
   }
 
   renderRequestFormats () {
     if (this.props.requestFormats.length > 0) {
       return (
-        <select onChange={ (e) => this.handleRequestFormatOnChange(e)} >
+        <select onChange={ (e) => this.handleRequestFormatChange(e)} >
           {this.props.requestFormats.map((format, i) =>
             <option key={i} value={format}>{format}</option>
           )}
@@ -40,22 +39,19 @@ class TryOutWidgetTabExecuter extends Component {
           &nbsp;
           <button
             className='btn btn-primary btn-sm executeRequest'
-            onClick={() => this.executeRequest() }
+            onClick={() => this.executeRequest()}
           >
             Execute request
             &nbsp;&nbsp;
             <i className='fa fa-angle-double-right' />
             &nbsp;
           </button>
-          <Display when={this.props.requestInProgress} inline>
-            <span>&nbsp;<i className='fa fa-spinner fa-spin'></i></span>
-          </Display>
-          <Display when={!this.state.isValid} inline>
+          {this.props.requestInProgress && <span>&nbsp;<i className='fa fa-spinner fa-spin'></i></span>}
+          {!this.state.isValid &&
             <strong>
               &nbsp;<i className='fa fa-exclamation'></i>&nbsp;
               <span>Required fields (*) missing</span>
-            </strong>
-          </Display>
+            </strong>}
         </div>
     )
   }
@@ -63,9 +59,9 @@ class TryOutWidgetTabExecuter extends Component {
 
 TryOutWidgetTabExecuter.propTypes = {
   requestFormats: PropTypes.array.isRequired,
-  executeRequest: PropTypes.func.isRequired,
-  validateParameters: PropTypes.func.isRequired,
-  requestInProgress: PropTypes.bool.isRequired
+  requestInProgress: PropTypes.bool.isRequired,
+  onExecuteRequest: PropTypes.func.isRequired,
+  onValidateParameters: PropTypes.func.isRequired
 }
 
 export default TryOutWidgetTabExecuter

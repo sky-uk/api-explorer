@@ -1,13 +1,18 @@
 import React, { Component, PropTypes } from 'react'
+import Enumerable from 'linq'
 
 class TryOutWidgetTabParameters extends Component {
+
+  componentWillReceiveProps () {
+    this.setState({})
+  }
 
 // ###############################################################################################################
 // Editors renders
 // ###############################################################################################################
 
   editorForInput (param) {
-    const handleParametersOnChange = this.props.handleParametersOnChange
+    const handleParametersOnChange = this.props.onHandleParametersChange
     const style = { border: 'solid 1px #AAA', padding: '2px' }
 
     if (param.paramType === 'body') {
@@ -29,12 +34,27 @@ class TryOutWidgetTabParameters extends Component {
   }
 
   editorForSelect (param) {
-    const handleParametersOnChange = this.props.handleParametersOnChange
+    const handleParametersOnChange = this.props.onHandleParametersChange
     return (
         <select className='col-md-12'
                 value={param.value || param.defaultValue}
                 onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} >
             {param.enum.map((text, i) => <option key={i}>{text}</option>)}
+        </select>
+    )
+  }
+
+  editorForMultipleSelect (param) {
+    const handleParametersOnChange = this.props.onHandleParametersChange
+    return (
+        <select multiple='multiple'
+                className='col-md-12'
+                onChange={(evt) => {
+                  const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
+                  handleParametersOnChange(param.name, selectedValues)
+                }
+                } >
+            {param.items.enum.map((text, i) => <option key={i}>{text}</option>)}
         </select>
     )
   }
@@ -47,6 +67,11 @@ class TryOutWidgetTabParameters extends Component {
     if (param.enum) {
       return this.editorForSelect(param)
     }
+
+    if (param.type === 'array' && param.items && param.items.enum) {
+      return this.editorForMultipleSelect(param)
+    }
+
     return this.editorForInput(param)
   }
 
@@ -90,7 +115,7 @@ class TryOutWidgetTabParameters extends Component {
 
 TryOutWidgetTabParameters.propTypes = {
   operation: PropTypes.object.isRequired,
-  handleParametersOnChange: PropTypes.func.isRequired
+  onHandleParametersChange: PropTypes.func.isRequired
 }
 
 export default TryOutWidgetTabParameters
