@@ -6,7 +6,8 @@ const rootReducer = combineReducers({
   loader: require('./loader'),
   apis: require('./apis'),
   operations: require('./operations'),
-  definitions: require('./definitions')
+  definitions: require('./definitions'),
+  configs: require('./configs')
 })
 
 export default rootReducer

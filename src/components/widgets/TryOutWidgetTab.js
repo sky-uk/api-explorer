@@ -30,7 +30,7 @@ class TryOutWidgetTab extends Component {
   }
 
   getUrl (path) {
-    return `${this.props.apis.schemes[0]}://${this.props.apis.host}${path}`
+    return `${this.props.apis.schemes[0]}://${this.props.apis.host}${this.props.apis.basePath}${path}`
   }
 
 // ###############################################################################################################
@@ -52,11 +52,14 @@ class TryOutWidgetTab extends Component {
   }
 
   onExecuteRequest (requestFormat) {
+    console.log("Try Out RequestFormat:" + requestFormat)
     this.setState({requestInProgress: true})
 
     this.httpRequest.doRequest({
       url: this.getUrl(this.props.operation.spec.url),
-      requestFormat: requestFormat,
+      useProxy: this.props.config.useProxy,
+      headers: this.props.config.headers,
+      requestFormat: requestFormat && requestFormat !== '' ? requestFormat : this.props.operation.spec.produces[0],
       spec: this.props.operation.spec,
       parameters: this.state.operationParameters.toObject()
     })
@@ -107,7 +110,8 @@ class TryOutWidgetTab extends Component {
 TryOutWidgetTab.propTypes = {
   operation: PropTypes.object.isRequired,
   definitions: PropTypes.object.isRequired,
-  apis: PropTypes.object.isRequired
+  apis: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 }
 
 export default TryOutWidgetTab
