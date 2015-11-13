@@ -52,7 +52,6 @@ class TryOutWidgetTab extends Component {
   }
 
   onExecuteRequest (requestFormat) {
-    console.log("Try Out RequestFormat:" + requestFormat)
     this.setState({requestInProgress: true})
 
     this.httpRequest.doRequest({
