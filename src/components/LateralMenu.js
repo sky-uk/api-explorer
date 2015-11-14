@@ -110,7 +110,7 @@ class LateralMenu extends Component {
     })
     return (
       <li key={operation.id} id={operation.id} className='lioperation' title={operation.spec.description}>
-        <Link to={`/operation/${operation.id}/spec`} className='operation-container' >
+        <Link to={`/operation/${operation.id}/try-it`} className='operation-container' >
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
