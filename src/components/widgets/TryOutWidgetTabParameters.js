@@ -96,7 +96,7 @@ class TryOutWidgetTabParameters extends Component {
 
   render () {
     const parameters = this.props.operation.spec.parameters
-    if (parameters) {
+    if (parameters && parameters.length > 0) {
       return (
         <div>
           <h4>Parameters</h4>
@@ -108,7 +108,13 @@ class TryOutWidgetTabParameters extends Component {
         </div>
       )
     } else {
-      return 'This operation does not have any parameters.'
+      return (
+        <div>
+          <h4>Parameters</h4>
+          <div>This operation does not have any parameters.</div>
+          <br/>
+        </div>
+      )
     }
   }
 }

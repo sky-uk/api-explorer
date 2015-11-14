@@ -53,32 +53,31 @@ class TryOutWidgetTabExecuterResponsePanel extends Component {
     }
 
     CodeMirror.defaults.gutters = ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
-
-    /* let httpResponse = props.operation.httpResponse || { status: 0, statusText: '', responseText: '', headers: [] };
-    let requestUrl = props.operation.httpRequestUrl || '';
-    return {
-      requestInProgress: false,
-      showRequestUI: httpResponse.status != 0,
-      requestUrl: requestUrl,
-      requestPanelClassName: 'panel panel-http-response panel-default',
-      res: httpResponse,
-      tempAcceptsType : 'json',
-      codeMirrorID : 'codemirror'+ new Date().getTime(),
-      refresh : httpResponse.status != 0,
-      mockProfiles: mockProfiles,
-      mockProfile: mockProfiles[0],
-      hateoasLinks: []
-    }*/
   }
 
   componentDidMount () {
     const elem = this.refs.codemirror
     CodeMirror.fromTextArea(elem)
+
+    CodeMirror.defaults.mode = this.props.response.requestFormat.indexOf('json') > 0 ? 'linksJS' : 'linksXML'
+
+    if (this.props.response && this.props.response.data && this.props.response.data !== '') {
+      this.props.response.data = this.props.response.data.replace('\\"', '\"')
+    }
   }
 
   render () {
     return (
-      <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={this.props.response.data} />
+      <div>
+        <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={this.props.response.data} />
+        <small className='text-muted'>
+          <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
+          <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;
+          <strong>Fold: </strong>: To fold all lines press <mark>Ctrl-Y</mark>, and <mark>Ctrl-Alt-Y</mark> to unfold.&nbsp;
+          <em>Note that in OSX you should use Cmd instead of Ctrl.</em>
+        </small>
+        <br/>
+      </div>
     )
   }
 }
