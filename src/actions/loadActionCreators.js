@@ -1,10 +1,11 @@
 import * as types from 'constants/ActionTypes'
 
 export function apiConfigurations (apiConfigurations) {
-  return {
-    type: types.API_CONFIGURATIONS,
-    payload: apiConfigurations
-  }
+  return { type: types.API_CONFIGURATIONS, payload: apiConfigurations }
+}
+
+export function headers (headers) {
+  return { type: types.CONFIG_HEADERS, headers }
 }
 
 export function load (config) {
@@ -17,6 +18,7 @@ export function load (config) {
     const onNewDefinition = definition => dispatch(newDefinition(config, definition))
 
     dispatch({ type: types.LOAD_START, config })
+    dispatch({ type: types.CONFIG_URL, url: config.url })
     config.loader(config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
   }
 }

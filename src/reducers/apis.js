@@ -3,8 +3,7 @@ import * as types from '../constants/ActionTypes'
 
 let INITIAL_STATE = Map({
   byOrder: List([]),
-  byName: Map({
-  })
+  byName: Map({})
 })
 
 export default function apisReducer (state = INITIAL_STATE, action) {

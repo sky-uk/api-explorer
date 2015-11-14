@@ -8,7 +8,8 @@ export default function widgetWrapper (widgetTab) {
             return {
               operation: operation,
               definitions: state.definitions.size > 0 ? state.definitions.toJS() : {},
-              apis: state.apis.get('byName').get(operation.apiname)
+              apis: state.apis.get('byName').get(operation.apiname),
+              config: { useProxy: state.configs.get('url').useProxy, headers: state.configs.get('headers') }
             }
           }
         )(widgetTab)

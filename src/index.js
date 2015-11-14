@@ -4,7 +4,7 @@ import slug from 'slug'
 import { render } from 'react-dom'
 import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
-import { load as loadSpec, apiConfigurations } from 'actions/loadActionCreators'
+import { load as loadSpec, apiConfigurations, headers } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
 import widgetWrapper from 'infrastructure/WidgetWrapper'
 import Url from 'infrastructure/Url'
@@ -48,6 +48,17 @@ class APIExplorerWidgetTabConfigurator {
   }
 }
 
+class APIExplorerHeaderConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  addHeader (name, value) {
+    this.apiExplorer.addHeader(name, value)
+    return this
+  }
+}
+
 class APIExplorer {
   constructor () {
     this.Loaders = {
@@ -57,6 +68,7 @@ class APIExplorer {
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
+    this.headers = [] // This will store all the headers needed
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
@@ -85,6 +97,12 @@ class APIExplorer {
     return this
   }
 
+  configHeaders (configurator) {
+    const apiExplorerHeaderConfigurator = new APIExplorerHeaderConfigurator(this)
+    configurator(apiExplorerHeaderConfigurator)
+    return this
+  }
+
   /**
    * Method of the fluent API used to start APIExplorer.
    * Will dispach actions to process the configurations, and render the UI
@@ -98,6 +116,8 @@ class APIExplorer {
     for (const config of this.apiConfigurations) {
       store.dispatch(loadSpec(config))
     }
+
+    store.dispatch(headers(this.headers))
 
     // Render UI
     render(<Root store={store} />, document.getElementById(domAnchor))
@@ -120,6 +140,15 @@ class APIExplorer {
    */
   addWidgetTab (name, component) {
     this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug(name).toLowerCase() })
+  }
+
+  /**
+   * Adds a new Header
+   * @param {[type]} name  Name of the Header
+   * @param {[type]} value Value of the Header
+   */
+  addHeader (name, value) {
+    this.headers.push({ name, value })
   }
 }
 
