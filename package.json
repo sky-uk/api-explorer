@@ -3,13 +3,17 @@
   "version": "0.0.0",
   "description": "API Explorer (live documentation) for Swagger",
   "scripts": {
-    "start": "node server.js",
+    "prestart": "npm run build",
     "build": "NODE_ENV=production webpack --config webpack.prod.config",
-    "start:prod": "node server-prod.js",
+    "start": "NODE_ENV=production node server-prod.js",
+
+    "start:dev": "node server.js",
+
     "test": "npm run lint && NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
     "test:watch": "npm test -- --watch",
     "test-win": "npm run lint && set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
     "test-win:watch": "npm run test-win -- --watch",
+
     "lint": "standard --verbose | snazzy",
     "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
   },
