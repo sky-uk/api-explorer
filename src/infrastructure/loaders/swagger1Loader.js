@@ -23,6 +23,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
                       })
                       .toArray()
       async.map(apis, executeFetch, (err, result) => {
+        if (err) throw err
         let apiDeclarations = {}
         result.forEach(element => apiDeclarations [element.path] = element.result)
         const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)

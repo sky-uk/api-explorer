@@ -21,7 +21,7 @@ class OperationWidget extends Component {
       <div className={panelCx} >
         <div className='panel-heading' id='POST-v2-user-session-skyid-ac' >
           <div className='pull-right'>
-            {(this.props.operation.spec.tags || []).map(tag => <span><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
+            {(this.props.operation.spec.tags || []).map(tag => <span key={tag} ><span className='badge'>{tag}</span>&nbsp;</span>)}
           </div>
           <strong >{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
           <span >&nbsp;</span>

@@ -1,6 +1,5 @@
 import 'babel-core/polyfill'
 import React from 'react'
-import slug from 'slug'
 import { render } from 'react-dom'
 import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
@@ -119,7 +118,8 @@ class APIExplorer {
    * @param {[type]} widgetTab Object that represents the component do add to the widgets tab
    */
   addWidgetTab (name, component) {
-    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug(name).toLowerCase() })
+    const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
+    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug })
   }
 }
 

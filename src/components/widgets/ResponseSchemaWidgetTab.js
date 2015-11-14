@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react'
-import Highlight from 'react-highlight'
+// import Highlight from 'react-highlight'
 // import 'highlight.js/styles/tomorrow.css' see issue #26
 
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {
     const definitions = this.props.definitions
-debugger
     function getModelFor (schemaReference, deep = 0) {
       if (deep === 5) {
         return schemaReference
@@ -95,9 +94,9 @@ debugger
           <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''} <code>{responseSchema.returnType}</code>
         </div>
         <div className='panel-body'>
-          <Highlight>
+
             {this.getDefinitions(responseSchema.schema)}
-          </Highlight>
+
         </div>
       </div>
     )
@@ -106,7 +105,7 @@ debugger
   render () {
     const responseSchemas = this.getResponseSchemas()
     return (
-    <div className='response-model tab-pane fade in'>
+      <div className='response-model tab-pane fade in'>
         <h4>Http Status Codes</h4>
         {responseSchemas.map(responseSchema => this.renderResponseSchema(responseSchema))}
       </div>
