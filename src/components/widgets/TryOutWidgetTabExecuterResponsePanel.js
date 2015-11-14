@@ -4,7 +4,7 @@ import CodeMirror from 'codemirror'
 
 import 'codemirror/lib/codemirror.css'
 
-import 'codemirror/addon/display/fullScreen'
+import 'codemirror/addon/display/fullscreen'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/mode/xml/xml'
 import 'codemirror/addon/mode/overlay'
