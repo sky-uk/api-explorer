@@ -90,7 +90,7 @@ class LateralMenu extends Component {
     if (!this.isTagVisible(tag, visibleOperations)) return
 
     return (
-      <li key={tag}>
+      <li key={visibleOperations[0].apiname + tag}>
         <a href='#'>{tag.toUpperCase()}</a>
         <ul className='nav nav-third-level'>
           {visibleOperations.map(o => this.renderOperation(o))}
