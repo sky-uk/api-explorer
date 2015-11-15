@@ -67,9 +67,13 @@ class TryOutWidgetTabExecuterResponsePanel extends Component {
   }
 
   render () {
+    let data = this.props.response.data
+    if (this.props.response.requestFormat.indexOf('json') > 0) {
+      data = JSON.stringify(JSON.parse(data), null, 2)
+    }
     return (
       <div>
-        <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={this.props.response.data} />
+        <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={data} />
         <small className='text-muted'>
           <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
           <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;

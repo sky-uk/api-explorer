@@ -6,14 +6,11 @@
     "prestart": "npm run build",
     "build": "NODE_ENV=production webpack --config webpack.prod.config",
     "start": "NODE_ENV=production node server-prod.js",
-
     "start:dev": "node server.js",
-
     "test": "npm run lint && NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
     "test:watch": "npm test -- --watch",
     "test-win": "npm run lint && set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
     "test-win:watch": "npm run test-win -- --watch",
-
     "lint": "standard --verbose | snazzy",
     "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
   },
@@ -37,8 +34,7 @@
       "APIExplorer",
       "fetch",
       "describe",
-      "it",
-      "SwaggerConverter"
+      "it"
     ]
   },
   "dependencies": {
@@ -60,7 +56,7 @@
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
     "speakingurl": "^7.0.0",
-    "swagger-converter": "^0.2.0",
+    "swagger-converter": "^1.0.1",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {

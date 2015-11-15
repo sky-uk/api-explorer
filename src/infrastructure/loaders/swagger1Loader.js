@@ -1,6 +1,6 @@
 import Enumerable from 'linq'
 import { swagger2JsonLoader } from './swagger2Loader'
-import 'swagger-converter'
+import SwaggerConverter from 'swagger-converter'
 
 function executeFetch (req, callback) {
   req.onLoadProgress(`Starting getting new api path from '${req.url}'`)
@@ -39,6 +39,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
           onLoadProgress('Started to convert Swagger 1.x to Swagger 2.0....')
           const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)
           onLoadProgress('Convertion from Swagger 1.x to Swagger 2.0 completed!')
+          swagger2Document.info.title = swagger2Document.info.title === 'Title was not specified' ? 'API' : swagger2Document.info.title
           swagger2JsonLoader(swagger2Document, config.friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
         }
       })

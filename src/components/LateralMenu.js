@@ -91,7 +91,7 @@ class LateralMenu extends Component {
 
     return (
       <li key={visibleOperations[0].apiname + tag}>
-        <a href='#'>{tag.toUpperCase()}</a>
+        <a href='#'>{tag}</a>
         <ul className='nav nav-third-level'>
           {visibleOperations.map(o => this.renderOperation(o))}
         </ul>

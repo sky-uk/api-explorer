@@ -26,7 +26,8 @@ class HttpRequest {
       url: params.url
     }
 
-    params.spec.parameters
+    const parameters = params.spec.parameters || []
+    parameters
       .filter(param => param.in === 'path')
       .forEach(param => {
         const value = params.parameters[param.name]
@@ -35,7 +36,7 @@ class HttpRequest {
         }
       })
 
-    const querystring = params.spec.parameters
+    const querystring = parameters
             .filter(param => param.in === 'query')
             .filter(param => params.parameters[param.name] || params.parameters[param.name] !== '' || param.default || param.default !== '')
             .map(param => {
@@ -53,7 +54,7 @@ class HttpRequest {
       result.url += `?${querystring}`
     }
 
-    result.body = params.spec.parameters
+    result.body = parameters
             .filter(param => param.in === 'body')
             .map(param => params.parameters[param.name] || param.default)[0]
 

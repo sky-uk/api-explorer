@@ -82,6 +82,7 @@ class TryOutWidgetTab extends Component {
     }
 
     const showResponse = !this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''
+
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
@@ -90,7 +91,7 @@ class TryOutWidgetTab extends Component {
         />
         <div className={ this.state.requestPanelClassName }>
           <TryOutWidgetTabExecuter
-            requestFormats={this.props.operation.spec.produces}
+            requestFormats={this.props.operation.spec.produces || []}
             requestInProgress={this.state.requestInProgress}
             onValidateParameters={ () => this.onValidateParameters() }
             onExecuteRequest={ (requestFormat) => this.onExecuteRequest(requestFormat) }
