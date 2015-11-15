@@ -12,21 +12,78 @@ API Explorer is a live documentation client for Swagger. It provides a nice and 
 
 ## Sample Application (development)
 
-https://apiexplorer-app.herokuapp.com
+You can try the application in our online development sandbox.
 
-## Usage
+[https://apiexplorer-app.herokuapp.com](https://apiexplorer-app.herokuapp.com)
+
+## Features
+
+* Clean UI
+* Multiple APIs
+* Loaders for Swagger version 1.0 and 2.0
+* Custom HTTP Headers
+* Extensible tab widgets
+* Built-in proxy for bypass CORS restrictions
+
+
+## Development
+
+### Build
+
+To build this project you need to clone the repo and then:
 
 ```
 npm install
-npm start
+npm run start:dev
 open http://localhost:3000
 ```
 
-## Linting
+You can change the port number using the `PORT` environment variable.
+
+
+### Production build
+
+To generate a production build you need to run the following commands:
+
+
+```
+npm install
+npm run build
+```
+
+The output files are stored in the `dist` folder. You can grab the files and place then in your application server.
+
+You can also use a local server to run this application using `npm start`
+
+
+### Linting
 
 This project uses [StandardJS](http://standardjs.com/) for linting the code.
 
 ```
 npm run lint
+```
+
+### Customization
+
+You can customize APIExplorer using the following fluent configuration:
+
+```html
+<script src="/apiexplorer.js?s=2317557"></script>
+```
+
+```javascript
+APIExplorer
+  .config(c => {
+  	c.swagger2API('petshop', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', true)
+    }
+  })
+  .configWidgetTabs(c => {
+    // c.addWidgetTab('HATEOAS', APIExplorer.HATEOASWidget)
+  })
+  .configHeaders(c => {
+    c.addHeader('HeaderName', 'HeaderValue')
+  })
+  .start()
 ```
 
