@@ -5,11 +5,12 @@ export default function widgetWrapper (widgetTab) {
           state => {
             let operation = state.operations.filter(op => op.get('id') === state.router.params.id).first()
             operation = operation.size > 0 ? operation.toJS() : null
+            let defaultScheme = /([a-z]+):\/\//.exec(state.configs.get('url').url).splice(1).toString()
             return {
               operation: operation,
               definitions: state.definitions.size > 0 ? state.definitions.toJS() : {},
               apis: state.apis.get('byName').get(operation.apiname),
-              config: { useProxy: state.configs.get('url').useProxy, headers: state.configs.get('headers') }
+              config: { defaultScheme: defaultScheme, useProxy: state.configs.get('url').useProxy, headers: state.configs.get('headers') }
             }
           }
         )(widgetTab)

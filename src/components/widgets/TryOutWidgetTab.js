@@ -30,7 +30,7 @@ class TryOutWidgetTab extends Component {
   }
 
   getUrl (path) {
-    let scheme = this.props.apis.schemes ? this.props.apis.schemes[0] : 'http'
+    let scheme = this.props.apis.schemes ? this.props.apis.schemes[0] : this.props.config.defaultScheme
     return `${scheme}://${this.props.apis.host}${this.props.apis.basePath}${path}`
   }
 
