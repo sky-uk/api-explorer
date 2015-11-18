@@ -75,6 +75,8 @@ class HttpRequest {
       result.url += '?' + queryString
     }
 
+    result.url = encodeURIComponent(result.url)
+
     result.body = parameters
       .filter(param => param.in === 'body')
       .map(param => params.parameters[param.name] || param.default)[0]

@@ -2,7 +2,7 @@ var request = require('request')
 
 module.exports = function (app, port, basePath) {
   app.all('/proxy/*', function (req, res) {
-    var url = req.query.url
+    var url = decodeURIComponent(req.query.url)
     req.pipe(request(url)).pipe(res)
   })
 

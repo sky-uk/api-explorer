@@ -28,10 +28,10 @@ class Url {
   resolveChildUrl (childUrl) {
     let url = ''
     if (this.useProxy) {
-      url = '/proxy/?url='
+      url = '/proxy/?url=' + encodeURIComponent(childUrl)
+    } else {
+      url = childUrl
     }
-
-    url += childUrl
 
     if (this.queryString !== '') {
       url += `?${this.queryString}`
