@@ -14,6 +14,9 @@ function setup (propOverrides) {
     },
     history: {
       isActive (value) { return true }
+    },
+    config: {
+      useProxy: false
     }
   }, propOverrides)
 

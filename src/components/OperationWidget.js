@@ -16,10 +16,9 @@ class OperationWidget extends Component {
       'panel-yellow': httpMethod === 'put'
     })
 
-    // <small className='pull-right doc-w-nickname' title='Logins the user with sky id ac token' >Logins the user with sky id ac token</small>
     return (
       <div className={panelCx} >
-        <div className='panel-heading' id='POST-v2-user-session-skyid-ac' >
+        <div className='panel-heading' id={this.props.operation.id}>
           <div className='pull-right'>
             {(this.props.operation.spec.tags || []).map((tag, i) => <span key={i}><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
           </div>
@@ -27,6 +26,7 @@ class OperationWidget extends Component {
           <span >&nbsp;</span>
           <samp >{this.props.operation.spec.url}</samp>
           <span className='doc-w-secured' ></span>
+          { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy'></i>}
         </div>
         <div className='panel-body' >
           <ul className='nav nav-tabs' >
@@ -47,7 +47,8 @@ class OperationWidget extends Component {
 OperationWidget.propTypes = {
   children: PropTypes.element,
   operation: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  config: PropTypes.object
 }
 
 export default OperationWidget

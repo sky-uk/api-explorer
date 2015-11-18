@@ -17,6 +17,10 @@ class Url {
     this.protocol = URI_PROTOCOL_REGEX.exec(url).splice(1).toString()
   }
 
+  getQueryString () {
+    return this.queryString
+  }
+
   getUrl () {
     return this.resolveChildUrl(this.url)
   }

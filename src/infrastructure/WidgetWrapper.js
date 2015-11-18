@@ -12,7 +12,9 @@ export default function widgetWrapper (widgetTab) {
               config: {
                 defaultScheme: state.configs.get('url').protocol,
                 useProxy: state.configs.get('url').useProxy,
-                headers: state.configs.get('headers') }
+                headers: state.configs.get('headers'),
+                queryString: state.configs.get('url').getQueryString()
+              }
             }
           }
         )(widgetTab)

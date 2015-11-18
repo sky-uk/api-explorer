@@ -25,7 +25,7 @@ import 'codemirror/addon/dialog/dialog.css'
 /* import '../../vendor/codemirror/codemirror-mode-links'
 import '../../vendor/codemirror/codemirror-extension-foldall'*/
 
-class TryOutWidgetTabExecuterResponsePanel extends Component {
+class TryOutWidgetTabResponsePanel extends Component {
   constructor () {
     super()
 
@@ -57,9 +57,9 @@ class TryOutWidgetTabExecuterResponsePanel extends Component {
 
   componentDidMount () {
     const elem = this.refs.codemirror
-    CodeMirror.fromTextArea(elem)
 
-    CodeMirror.defaults.mode = this.props.response.requestFormat.indexOf('json') > 0 ? 'linksJS' : 'linksXML'
+    const mode = this.props.response.requestFormat.indexOf('json') > 0 ? 'application/json' : 'text/html'
+    CodeMirror.fromTextArea(elem, { mode: mode })
 
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
       this.props.response.data = this.props.response.data.replace('\\"', '\"')
@@ -86,8 +86,8 @@ class TryOutWidgetTabExecuterResponsePanel extends Component {
   }
 }
 
-TryOutWidgetTabExecuterResponsePanel.propTypes = {
+TryOutWidgetTabResponsePanel.propTypes = {
   response: PropTypes.object
 }
 
-export default TryOutWidgetTabExecuterResponsePanel
+export default TryOutWidgetTabResponsePanel
