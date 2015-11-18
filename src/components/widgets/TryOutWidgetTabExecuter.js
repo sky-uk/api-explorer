@@ -1,9 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 
+const requestDefaultFormats = [
+  'application/json',
+  'application/xml'
+]
+
 class TryOutWidgetTabExecuter extends Component {
   constructor () {
     super()
-    this.state = { ...this.state, requestFormat: '', isValid: true }
+    this.state = { ...this.state, isValid: true, requestDefaultFormats }
   }
 
   handleRequestFormatChange (e) {
@@ -19,21 +24,36 @@ class TryOutWidgetTabExecuter extends Component {
     }
   }
 
-  renderRequestFormats () {
-    if (this.props.requestFormats.length > 0) {
-      return (
-        <select onChange={ (e) => this.handleRequestFormatChange(e)} >
-          {this.props.requestFormats.map((format, i) =>
-            <option key={i} value={format}>{format}</option>
-          )}
-        </select>
-      )
+  setRequestFormats (props) {
+    let requestFormats = requestDefaultFormats
+    if (this.props.requestFormats && this.props.requestFormats.length > 0) {
+      requestFormats = this.props.requestFormats
     }
+
+    this.setState({ requestFormat: this.props.requestFormat || requestFormats[0], requestFormats: requestFormats })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setRequestFormats(nextProps)
+  }
+
+  componentWillMount () {
+    this.setRequestFormats(this.props)
+  }
+
+  renderRequestFormats () {
+    return (
+      <select value={this.state.requestFormat || this.state.requestFormats[0]} onChange={ (e) => this.handleRequestFormatChange(e)} >
+        {this.state.requestFormats.map((format, i) =>
+          <option key={i} value={format}>{format}</option>
+        )}
+      </select>
+    )
   }
 
   render () {
     return (
-        <div className='panel-heading'>
+        <span>
           <span>Accept </span>
           {this.renderRequestFormats()}
           &nbsp;
@@ -52,13 +72,14 @@ class TryOutWidgetTabExecuter extends Component {
               &nbsp;<i className='fa fa-exclamation'></i>&nbsp;
               <span>Required fields (*) missing</span>
             </strong>}
-        </div>
+        </span>
     )
   }
 }
 
 TryOutWidgetTabExecuter.propTypes = {
-  requestFormats: PropTypes.array.isRequired,
+  requestFormat: PropTypes.string,
+  requestFormats: PropTypes.array,
   requestInProgress: PropTypes.bool.isRequired,
   onExecuteRequest: PropTypes.func.isRequired,
   onValidateParameters: PropTypes.func.isRequired

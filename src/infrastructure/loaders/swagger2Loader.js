@@ -1,7 +1,8 @@
 export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
-  onLoadProgress(`Loading API Spec from ${config.url.getUrl()}`)
+  const url = config.url.getUrl()
+  onLoadProgress(`Loading API Spec from ${url}`)
 
-  fetch(config.url.getUrl())
+  fetch(url)
     .then(response => response.json())
     .then(apiSpec => {
       swagger2JsonLoader(apiSpec, config.friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })

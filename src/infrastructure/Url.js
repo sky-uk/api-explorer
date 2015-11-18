@@ -14,6 +14,10 @@ class Url {
     this.useProxy = useProxy
   }
 
+  getQueryString () {
+    return this.queryString
+  }
+
   getUrl () {
     return this.resolveChildUrl(this.url)
   }

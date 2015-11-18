@@ -21,12 +21,46 @@ class HttpRequest {
     return true
   }
 
+  getRequestQueryString (params) {
+    const parameters = params.spec.parameters || []
+
+    // Query string parameters that come in the spec
+    let queryString = parameters
+      .filter(param => param.in === 'query')
+      .filter(param => params.parameters[param.name] || params.parameters[param.name] !== '' || param.default || param.default !== '')
+      .map(param => {
+        let value = params.parameters[param.name]
+        if (!value || value === '') {
+          value = param.default
+        }
+        if (value) {
+          return param.name + '=' + encodeURIComponent(value)
+        }
+      })
+      .join('&')
+
+    if (queryString && queryString !== '') {
+      if (params.queryString && queryString !== '') {
+        // add the default query string parameters
+        return `${queryString}&${params.queryString}`
+      }
+      return queryString
+    } else {
+      if (params.queryString) {
+        // Because the spec does not have parameters, return the default query string
+        return params.queryString
+      }
+    }
+    return ''
+  }
+
   getRequestInformation (params) {
     let result = {
       url: params.url
     }
 
     const parameters = params.spec.parameters || []
+
     parameters
       .filter(param => param.in === 'path')
       .forEach(param => {
@@ -36,27 +70,14 @@ class HttpRequest {
         }
       })
 
-    const querystring = parameters
-            .filter(param => param.in === 'query')
-            .filter(param => params.parameters[param.name] || params.parameters[param.name] !== '' || param.default || param.default !== '')
-            .map(param => {
-              let value = params.parameters[param.name]
-              if (!value || value === '') {
-                value = param.default
-              }
-              if (value) {
-                return param.name + '=' + encodeURIComponent(value)
-              }
-            })
-            .join('&')
-
-    if (querystring && querystring !== '') {
-      result.url += `?${querystring}`
+    const queryString = this.getRequestQueryString(params)
+    if (queryString !== '') {
+      result.url += '?' + queryString
     }
 
     result.body = parameters
-            .filter(param => param.in === 'body')
-            .map(param => params.parameters[param.name] || param.default)[0]
+      .filter(param => param.in === 'body')
+      .map(param => params.parameters[param.name] || param.default)[0]
 
     result.httpMethod = params.spec.httpMethod
     result.requestFormat = params.requestFormat
