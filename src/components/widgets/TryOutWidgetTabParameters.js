@@ -15,8 +15,8 @@ class TryOutWidgetTabParameters extends Component {
     const handleParametersOnChange = this.props.onHandleParametersChange
     const style = { border: 'solid 1px #AAA', padding: '2px' }
 
-    if (param.paramType === 'body') {
-      const value = param.value === undefined ? param.defaultValue : param. value
+    if (param.in === 'body') {
+      const value = param.value === undefined ? param['x-defaultValue'] : param. value
       return (
         <textarea className='col-md-12' rows={Math.max(4, value.split('\n').length + 1)}
                   style={style} required={param.required} value={value}
@@ -27,7 +27,7 @@ class TryOutWidgetTabParameters extends Component {
     }
     return (
         <input type='text' className='col-md-12' style={style} required={param.required}
-               value={param.value === undefined ? param.defaultValue : param.value}
+               value={param.value === undefined ? param['x-defaultValue'] : param.value}
                onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value) }
         />
     )
@@ -37,7 +37,7 @@ class TryOutWidgetTabParameters extends Component {
     const handleParametersOnChange = this.props.onHandleParametersChange
     return (
         <select className='col-md-12'
-                value={param.value || param.defaultValue}
+                value={param.value || param['x-defaultValue']}
                 onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} >
             {param.enum.map((text, i) => <option key={i}>{text}</option>)}
         </select>
