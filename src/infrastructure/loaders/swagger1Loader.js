@@ -2,13 +2,30 @@ import Enumerable from 'linq'
 import { swagger2JsonLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
 
+// hack to suport default values
+function setDefaultValues (apiSpec) {
+  apiSpec.apis.forEach(api => {
+    api.operations.forEach(operation => {
+      operation.parameters.forEach(parameter => {
+        if (parameter.defaultValue) {
+          const value = parameter.defaultValue
+          delete parameter.defaultValue
+          parameter['x-defaultValue'] = value
+        }
+      })
+    })
+  })
+  return apiSpec
+}
+
 function executeFetch (req, callback) {
   req.onLoadProgress(`Starting getting new api path from '${req.url}'`)
   fetch(req.url)
     .then(response => response.json())
     .then(apiSpec => {
+      const changedApiSpec = setDefaultValues(apiSpec)
       req.onLoadProgress(`New api definition from path '${req.url}' completed`)
-      callback(null, {path: req.path, result: apiSpec})
+      callback(null, {path: req.path, result: changedApiSpec})
     }).catch(ex => callback(`Error loading url ${req.url}: ${ex}`))
 }
 
