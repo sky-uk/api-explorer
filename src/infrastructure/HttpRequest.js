@@ -31,7 +31,7 @@ class HttpRequest {
       .map(param => {
         let value = params.parameters[param.name]
         if (!value || value === '') {
-          value = param.default
+          value = param['x-defaultValue']
         }
         if (value) {
           return param.name + '=' + encodeURIComponent(value)
@@ -65,8 +65,8 @@ class HttpRequest {
       .filter(param => param.in === 'path')
       .forEach(param => {
         const value = params.parameters[param.name]
-        if (value || param.default) {
-          result.url = result.url.replace('{' + param.name + '}', value || param.default)
+        if (value || param['x-defaultValue']) {
+          result.url = result.url.replace('{' + param.name + '}', value || param['x-defaultValue'])
         }
       })
 
