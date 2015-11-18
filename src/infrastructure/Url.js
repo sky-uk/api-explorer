@@ -1,3 +1,5 @@
+const URI_PROTOCOL_REGEX = /([a-z]+):\/\//
+
 class Url {
   constructor (url, useProxy) {
     this.url = ''
@@ -12,6 +14,7 @@ class Url {
       this.queryString = ''
     }
     this.useProxy = useProxy
+    this.protocol = URI_PROTOCOL_REGEX.exec(url).splice(1).toString()
   }
 
   getQueryString () {
