@@ -94,9 +94,9 @@ class ResponseSchemaWidgetTab extends Component {
           <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''} <code>{responseSchema.returnType}</code>
         </div>
         <div className='panel-body'>
-
+          <pre>
             {this.getDefinitions(responseSchema.schema)}
-
+          </pre>
         </div>
       </div>
     )

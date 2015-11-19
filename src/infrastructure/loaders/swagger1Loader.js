@@ -24,7 +24,7 @@ function executeFetch (req, callback) {
     .then(response => response.json())
     .then(apiSpec => {
       const changedApiSpec = setDefaultValues(apiSpec)
-      req.onLoadProgress(`New api definition from path '${req.url}' completed`)
+      req.onLoadProgress(`New api definition from path '${decodeURIComponent(req.url)}' completed`)
       callback(null, {path: req.path, result: changedApiSpec})
     }).catch(ex => callback(`Error loading url ${req.url}: ${ex}`))
 }

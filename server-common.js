@@ -1,6 +1,9 @@
 var request = require('request')
+var Express = require('express')
 
 module.exports = function (app, port, basePath) {
+  app.use(Express.static(__dirname + '/public'))
+
   app.all('/proxy/*', function (req, res) {
     var url = decodeURIComponent(req.query.url)
     req.pipe(request(url)).pipe(res)
