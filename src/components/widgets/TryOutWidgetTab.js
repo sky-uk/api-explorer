@@ -5,7 +5,7 @@ import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
 import TryOutWidgetTabHttpHeadersPanel from './TryOutWidgetTabHttpHeadersPanel'
 
-import { Map } from 'immutable'
+// import { Map } from 'immutable'
 import { HttpRequest } from 'infrastructure'
 
 class TryOutWidgetTab extends Component {
@@ -16,15 +16,31 @@ class TryOutWidgetTab extends Component {
     this.httpRequest = new HttpRequest((resp) => this.requestCallback(resp))
   }
 
-  componentWillReceiveProps () {
-    this.setState(this.getState())
+  setOperationParameters (props) {
+    let newParameters = {}
+    props.operation.spec.parameters && props.operation.spec.parameters.forEach(param => {
+      const value = param['x-defaultValue']
+      if (value) {
+        newParameters[param.name] = value
+      }
+    })
+
+    this.setState({operationParameters: newParameters})
+  }
+
+  componentWillMount () {
+    this.setOperationParameters(this.props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setOperationParameters(nextProps)
   }
 
   getState () {
     return {
       ...this.state,
       requestInProgress: false,
-      operationParameters: Map({}),
+      operationParameters: {},
       response: {},
       requestPanelClassName: 'panel panel-http-response panel-default'
     }
@@ -40,16 +56,15 @@ class TryOutWidgetTab extends Component {
 // ###############################################################################################################
 
   onHandleParametersChange (name, value) {
-    const newParameters = this.state.operationParameters.set(name, value)
-
+    let newParameters = this.state.operationParameters
+    newParameters[name] = value
     this.setState({operationParameters: newParameters})
-    console.log(`ParametersChange: ${name} - ${value} `)
   }
 
   onValidateParameters () {
     return this.httpRequest.validateParameters(
       this.props.operation.spec.parameters,
-      this.state.operationParameters.toObject()
+      this.state.operationParameters
     )
   }
 
@@ -62,7 +77,7 @@ class TryOutWidgetTab extends Component {
       queryString: this.props.config.queryString,
       requestFormat: requestFormat && requestFormat !== '' ? requestFormat : this.props.operation.spec.produces[0],
       spec: this.props.operation.spec,
-      parameters: this.state.operationParameters.toObject()
+      parameters: this.state.operationParameters
     })
   }
 
@@ -100,6 +115,7 @@ class TryOutWidgetTab extends Component {
       <div className='tab-content'>
         <TryOutWidgetTabParameters
           operation={this.props.operation}
+          operationParameters={this.state.operationParameters}
           onHandleParametersChange={ (name, value) => this.onHandleParametersChange(name, value) }
         />
         <div className={ this.state.requestPanelClassName }>

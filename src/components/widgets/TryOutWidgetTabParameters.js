@@ -11,12 +11,10 @@ class TryOutWidgetTabParameters extends Component {
 // Editors renders
 // ###############################################################################################################
 
-  editorForInput (param) {
+  editorForInput (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     const style = { border: 'solid 1px #AAA', padding: '2px' }
-
     if (param.in === 'body') {
-      const value = param.value === undefined ? param['x-defaultValue'] : param. value
       return (
         <textarea className='col-md-12' rows={Math.max(4, value.split('\n').length + 1)}
                   style={style} required={param.required} value={value}
@@ -27,28 +25,29 @@ class TryOutWidgetTabParameters extends Component {
     }
     return (
         <input type='text' className='col-md-12' style={style} required={param.required}
-               value={param.value === undefined ? param['x-defaultValue'] : param.value}
+               value={value}
                onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value) }
         />
     )
   }
 
-  editorForSelect (param) {
+  editorForSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     return (
         <select className='col-md-12'
-                value={param.value || param['x-defaultValue']}
+                value={value}
                 onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} >
             {param.enum.map((text, i) => <option key={i}>{text}</option>)}
         </select>
     )
   }
 
-  editorForMultipleSelect (param) {
+  editorForMultipleSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     return (
         <select multiple='multiple'
                 className='col-md-12'
+                value={value}
                 onChange={(evt) => {
                   const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
                   handleParametersOnChange(param.name, selectedValues)
@@ -64,15 +63,17 @@ class TryOutWidgetTabParameters extends Component {
 // ###############################################################################################################
 
   renderEditorFor (param) {
+    const value = this.props.operationParameters[param.name]
+
     if (param.enum) {
-      return this.editorForSelect(param)
+      return this.editorForSelect(param, value)
     }
 
     if (param.type === 'array' && param.items && param.items.enum) {
-      return this.editorForMultipleSelect(param)
+      return this.editorForMultipleSelect(param, value)
     }
 
-    return this.editorForInput(param)
+    return this.editorForInput(param, value)
   }
 
   renderParameters (parameters) {
@@ -121,6 +122,7 @@ class TryOutWidgetTabParameters extends Component {
 
 TryOutWidgetTabParameters.propTypes = {
   operation: PropTypes.object.isRequired,
+  operationParameters: PropTypes.object,
   onHandleParametersChange: PropTypes.func.isRequired
 }
 
