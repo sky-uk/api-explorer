@@ -100,7 +100,9 @@ class LateralMenu extends Component {
   }
 
   renderOperation (operation) {
-    if (!this.isOperationVisible(operation)) return
+    if (!this.isOperationVisible(operation)) {
+      return
+    }
 
     const httpMethodCx = cx('btn btn-outline btn-xs', {
       'btn-success': operation.spec.httpMethod === 'post',
@@ -114,9 +116,11 @@ class LateralMenu extends Component {
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
+            {operation.spec.security && (<span key={`security${operation.id}`} style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>)}
             <span>{operation.spec.url}</span>
           </span>
         </Link>
+
       </li>
     )
   }

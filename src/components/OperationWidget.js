@@ -15,7 +15,7 @@ class OperationWidget extends Component {
       'panel-red': httpMethod === 'delete',
       'panel-yellow': httpMethod === 'put'
     })
-
+    const hasSecurity = this.props.operation.spec.security !== undefined
     return (
       <div className={panelCx} >
         <div className='panel-heading' id={this.props.operation.id}>
@@ -23,9 +23,9 @@ class OperationWidget extends Component {
             {(this.props.operation.spec.tags || []).map((tag, i) => <span key={i}><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
           </div>
           <strong >{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
-          <span >&nbsp;</span>
+          &nbsp;
           <samp >{this.props.operation.spec.url}</samp>
-          <span className='doc-w-secured' ></span>
+          { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow', marginLeft: '5px'}}><i className='fa fa-lock' title='Secured'></i></span>) }
           { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy'></i>}
         </div>
         <div className='panel-body' >

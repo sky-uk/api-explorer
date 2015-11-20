@@ -122,7 +122,7 @@ class TryOutWidgetTab extends Component {
           <div className='panel-heading'>
             <TryOutWidgetTabExecuter
               requestFormat={this.state.requestFormat}
-              requestFormats={this.props.operation.spec.produces}
+              requestFormats={this.props.operation.spec.consumes}
               requestInProgress={this.state.requestInProgress}
               onValidateParameters={ () => this.onValidateParameters() }
               onExecuteRequest={ requestFormat => this.onExecuteRequest(requestFormat) }

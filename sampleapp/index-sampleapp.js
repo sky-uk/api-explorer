@@ -19,4 +19,23 @@ APIExplorer
   .configHeaders(c => {
     c.addHeader('Test', 'test')
   })
+  .configInterceptors(c => {
+    // c.swagger2Interceptor(interceptor)
+    c.swagger1Interceptor(interceptor)
+  })
   .start()
+
+function interceptor (apiSpec) {
+  apiSpec.apis.forEach(api => {
+    api.operations.forEach(operation => {
+      operation.parameters.forEach(parameter => {
+        if (parameter.defaultValue) {
+          const value = parameter.defaultValue
+          delete parameter.defaultValue
+          parameter['x-defaultValue'] = value
+        }
+      })
+    })
+  })
+  return apiSpec
+}
