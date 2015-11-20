@@ -33,12 +33,12 @@ class TryOutWidgetTab extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    this.state = this.getState()
     this.setOperationParameters(nextProps)
   }
 
   getState () {
     return {
-      ...this.state,
       requestInProgress: false,
       operationParameters: {},
       response: {},
@@ -110,7 +110,7 @@ class TryOutWidgetTab extends Component {
     }
 
     const showResponse = !this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''
-
+    const url = this.state.response.url
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
@@ -137,7 +137,7 @@ class TryOutWidgetTab extends Component {
             </div>}
           </div>
           {showResponse && <div className='panel-body'>
-            <a href={this.state.response.url} target='_blank' title={this.state.response.url} style={textCropStyles}>{this.state.response.url}</a>
+            <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
             <TryOutWidgetTabResponsePanel response={this.state.response} />
             <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers} responseHeaders={this.state.response.headers} />
           </div>}

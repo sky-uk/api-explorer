@@ -37,6 +37,7 @@ class HttpRequest {
           return param.name + '=' + encodeURIComponent(value)
         }
       })
+      .filter(param => param && param !== '')
       .join('&')
 
     if (queryString && queryString !== '') {
@@ -75,7 +76,7 @@ class HttpRequest {
       result.url += '?' + queryString
     }
 
-    result.url = encodeURIComponent(result.url)
+    result.url = result.url
 
     result.body = parameters
       .filter(param => param.in === 'body')
@@ -94,7 +95,7 @@ class HttpRequest {
 
     let finalUrl = requestInformation.url
     if (params.useProxy) {
-      finalUrl = `/proxy/?url=${requestInformation.url}`
+      finalUrl = `/proxy/?url=${encodeURIComponent(requestInformation.url)}`
     }
 
     let headers = {
