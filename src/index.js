@@ -68,6 +68,7 @@ class APIExplorer {
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
     this.headers = [] // This will store all the headers needed
+    this.queryStringLoadEnabled = false
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
@@ -82,6 +83,28 @@ class APIExplorer {
   config (configurator) {
     const apiExplorerConfigurator = new APIExplorerConfigurator(this)
     configurator(apiExplorerConfigurator)
+    return this
+  }
+
+  enableQueryStringConfig () {
+    const queryString = { }
+    document.location.search.substr(1)
+          .split('&')
+          .map(_ => _.split('='))
+          .forEach(a => queryString[decodeURIComponent(a[0]).replace('[]', '')] = decodeURIComponent(a[1]))
+
+    // If a specification exists in the query string
+    if (queryString.hasOwnProperty('swaggerSpec')) {
+      const specLoader = queryString.swaggerLoader || 'Swagger2Loader'
+      const swaggerUseProxy = queryString.swaggerUseProxy === 'on'
+      var loader = this.Loaders[specLoader]
+      this.addConfiguration(
+        'url',
+        loader,
+        new Url(queryString.swaggerSpec, swaggerUseProxy)
+      )
+    }
+
     return this
   }
 

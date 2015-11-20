@@ -37,13 +37,13 @@ class ApplicationAskForAPI extends Component {
                   <b>Swagger Loader: </b>
                   <div className='radio'>
                     <label>
-                      <input type='radio' name='swaggerLoader' defaultValue='swagger1API' defaultChecked />
+                      <input type='radio' name='swaggerLoader' defaultValue='Swagger1Loader' defaultChecked />
                       &nbsp;Swagger 1
                     </label>
                   </div>&nbsp;&nbsp;&nbsp;
                   <div className='radio'>
                     <label>
-                      <input type='radio' name='swaggerLoader' defaultValue='swagger2API' />
+                      <input type='radio' name='swaggerLoader' defaultValue='Swagger2Loader' />
                       &nbsp;Swagger 2
                     </label>
                   </div>
