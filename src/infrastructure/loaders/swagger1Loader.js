@@ -4,7 +4,7 @@ import SwaggerConverter from 'swagger-converter'
 
 function executeInterceptor (config, apiSpec) {
   if (config.interceptor) {
-    return config.interceptor(apiSpec)
+    return config.interceptor(config, apiSpec)
   }
   return apiSpec
 }
