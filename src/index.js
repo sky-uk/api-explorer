@@ -20,7 +20,7 @@ class APIExplorerConfigurator {
   swagger1API (friendlyName, url, useProxy = false) {
     this.apiExplorer.addConfiguration(
       friendlyName,
-      this.apiExplorer.Loaders.Swagger1Loader,
+      'Swagger1Loader',
       new Url(url, useProxy)
     )
     return this
@@ -29,8 +29,30 @@ class APIExplorerConfigurator {
   swagger2API (friendlyName, url, useProxy = false) {
     this.apiExplorer.addConfiguration(
       friendlyName,
-      this.apiExplorer.Loaders.Swagger2Loader,
+      'Swagger2Loader',
       new Url(url, useProxy)
+    )
+    return this
+  }
+}
+
+class APIExplorerInterceptorConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  swagger1Interceptor (interceptor) {
+    this.apiExplorer.addInterceptor(
+      this.apiExplorer.SupportedLoaders.Swagger1Loader,
+      interceptor
+    )
+    return this
+  }
+
+  swagger2Interceptor (interceptor) {
+    this.apiExplorer.addInterceptor(
+      this.apiExplorer.SupportedLoaders.Swagger2Loader,
+      interceptor
     )
     return this
   }
@@ -60,15 +82,20 @@ class APIExplorerHeaderConfigurator {
 
 class APIExplorer {
   constructor () {
-    this.Loaders = {
-      Swagger1Loader: Loaders.Swagger1Loader,
-      Swagger2Loader: Loaders.Swagger2Loader
+    this.SupportedLoaders = {
+      Swagger1Loader: 'Swagger1Loader',
+      Swagger2Loader: 'Swagger2Loader'
     }
+
+    this.Loaders = {}
+    this.Loaders[this.SupportedLoaders.Swagger1Loader] = Loaders.Swagger1Loader
+    this.Loaders[this.SupportedLoaders.Swagger2Loader] = Loaders.Swagger2Loader
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
     this.headers = [] // This will store all the headers needed
     this.queryStringLoadEnabled = false
+    this.interceptors = {}
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
@@ -86,7 +113,15 @@ class APIExplorer {
     return this
   }
 
-  enableQueryStringConfig () {
+  /**
+   * Enables the API configuration through QueryString parameters 'swaggerSpec', 'swaggerLoader' and 'swaggerUseProxy'
+   *  - swaggerSpec is the URL for a swagger specification
+   *  - swaggerLoader is the loaded to use for the given specification (Swagger1Loader or Swagger2Loader)
+   *  - swaggerUseProxy indicate if we should proxy calls (because CORS) - it is actived with value 'on'
+   * @param  {String} friendlyName [description]
+   * @return {[type]}              [description]
+   */
+  enableQueryStringConfig (friendlyName = 'url') {
     const queryString = { }
     document.location.search.substr(1)
           .split('&')
@@ -97,10 +132,9 @@ class APIExplorer {
     if (queryString.hasOwnProperty('swaggerSpec')) {
       const specLoader = queryString.swaggerLoader || 'Swagger2Loader'
       const swaggerUseProxy = queryString.swaggerUseProxy === 'on'
-      var loader = this.Loaders[specLoader]
       this.addConfiguration(
-        'url',
-        loader,
+        friendlyName,
+        specLoader,
         new Url(queryString.swaggerSpec, swaggerUseProxy)
       )
     }
@@ -116,6 +150,17 @@ class APIExplorer {
   configWidgetTabs (configurator) {
     const apiExplorerWidgetTabConfigurator = new APIExplorerWidgetTabConfigurator(this)
     configurator(apiExplorerWidgetTabConfigurator)
+    return this
+  }
+
+    /*
+   * Method of the fluent API used to configure the interceptors of APIExplorer
+   * @param  {[function]} configurator    A function used to configure the interceptors
+   * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
+   */
+  configInterceptors (configurator) {
+    const apiExplorerInterceptorConfigurator = new APIExplorerInterceptorConfigurator(this)
+    configurator(apiExplorerInterceptorConfigurator)
     return this
   }
 
@@ -136,6 +181,10 @@ class APIExplorer {
 
     // Dispatch actions to load configurations
     for (const config of this.apiConfigurations) {
+      const interceptor = this.interceptors[config.loaderType]
+      if (interceptor) {
+        config.interceptor = interceptor
+      }
       store.dispatch(loadSpec(config))
     }
 
@@ -148,11 +197,25 @@ class APIExplorer {
 
   /**
    * Adds an API configuration
-   * @param {[type]} loader     The loaded used to parse the api description
+   * @param {[type]} loaderType The type of loader used to parse the api description
    * @param {[type]} extraProps Extra properties specific to the loader
    */
-  addConfiguration (friendlyName, loader, url) {
-    this.apiConfigurations.push({ friendlyName, loader, url })
+  addConfiguration (friendlyName, loaderType, url) {
+    const loader = this.Loaders[loaderType]
+    this.apiConfigurations.push({ friendlyName, loaderType, loader, url })
+  }
+
+  /**
+   * Adds a new interceptor to make changes to the swagger spec before usage
+   * Only one interceptor per type is supported
+   * @param {[type]} loaderType The type of loader to associate this interceptor with
+   * @param {[function]} interceptor A function to change the properties of swagger spec
+   */
+  addInterceptor (loaderType, interceptor) {
+    if (this.interceptors[loaderType]) {
+      console.warn(`The register of the interceptor for type '${loaderType}' will overlap the previous register. Only one interceptor is supported for each loader type.`)
+    }
+    this.interceptors[loaderType] = interceptor
   }
 
   /**

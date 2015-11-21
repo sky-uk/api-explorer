@@ -18,7 +18,7 @@ class HttpRequest {
       return valid
     }
 
-    return true
+    return false
   }
 
   getRequestQueryString (params) {

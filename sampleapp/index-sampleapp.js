@@ -1,7 +1,7 @@
 import APIExplorer from './../src'
 
 APIExplorer
-  .enableQueryStringConfig()
+  .enableQueryStringConfig('url')
   .config(c => {
     // Otherwise use the pre-configured settings
     // c.swagger2API('petshop', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', true)
@@ -19,4 +19,25 @@ APIExplorer
   .configHeaders(c => {
     c.addHeader('Test', 'test')
   })
+  .configInterceptors(c => {
+    // c.swagger2Interceptor(interceptor)
+    c.swagger1Interceptor(interceptor)
+  })
   .start()
+
+function interceptor (config, apiSpec) {
+  if (config.friendlyName !== 'url') return // 'url' is the friendlyName of APIs configured via QueryString
+
+  apiSpec.apis.forEach(api => {
+    api.operations.forEach(operation => {
+      operation.parameters.forEach(parameter => {
+        if (parameter.defaultValue) {
+          const value = parameter.defaultValue
+          delete parameter.defaultValue
+          parameter['x-defaultValue'] = value
+        }
+      })
+    })
+  })
+  return apiSpec
+}

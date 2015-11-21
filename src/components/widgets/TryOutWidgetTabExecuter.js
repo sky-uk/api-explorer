@@ -8,7 +8,7 @@ const requestDefaultFormats = [
 class TryOutWidgetTabExecuter extends Component {
   constructor () {
     super()
-    this.state = { ...this.state, isValid: true, requestDefaultFormats }
+    this.state = { isValid: true, requestDefaultFormats }
   }
 
   handleRequestFormatChange (e) {
@@ -34,6 +34,7 @@ class TryOutWidgetTabExecuter extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    this.setState({ isValid: true, requestDefaultFormats })
     this.setRequestFormats(nextProps)
   }
 

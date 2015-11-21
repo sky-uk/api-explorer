@@ -2,19 +2,10 @@ import Enumerable from 'linq'
 import { swagger2JsonLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
 
-// hack to suport default values
-function setDefaultValues (apiSpec) {
-  apiSpec.apis.forEach(api => {
-    api.operations.forEach(operation => {
-      operation.parameters.forEach(parameter => {
-        if (parameter.defaultValue) {
-          const value = parameter.defaultValue
-          delete parameter.defaultValue
-          parameter['x-defaultValue'] = value
-        }
-      })
-    })
-  })
+function executeInterceptor (config, apiSpec) {
+  if (config.interceptor) {
+    return config.interceptor(config, apiSpec)
+  }
   return apiSpec
 }
 
@@ -23,9 +14,8 @@ function executeFetch (req, callback) {
   fetch(req.url)
     .then(response => response.json())
     .then(apiSpec => {
-      const changedApiSpec = setDefaultValues(apiSpec)
       req.onLoadProgress(`New api definition from path '${decodeURIComponent(req.url)}' completed`)
-      callback(null, {path: req.path, result: changedApiSpec})
+      callback(null, {path: req.path, result: executeInterceptor(req.config, apiSpec)})
     }).catch(ex => callback(`Error loading url ${req.url}: ${ex}`))
 }
 
@@ -37,11 +27,13 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
   fetch(url)
     .then(response => response.json())
     .then(apiSpec => {
+      let newApiSpec = executeInterceptor(config, apiSpec)
+
       onLoadProgress(`Loading content from '${url}' completed`)
       const apis = Enumerable
-                      .from(apiSpec.apis)
+                      .from(newApiSpec.apis)
                       .select(api => {
-                        return { path: api.path, url: config.url.resolveChildUrl(`${apiSpec.basePath}${api.path}`), onLoadProgress: onLoadProgress }
+                        return { path: api.path, url: config.url.resolveChildUrl(`${apiSpec.basePath}${api.path}`), onLoadProgress: onLoadProgress, config }
                       })
                       .toArray()
       async.map(apis, executeFetch, (err, result) => {
