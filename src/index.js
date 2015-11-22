@@ -113,7 +113,15 @@ class APIExplorer {
     return this
   }
 
-  enableQueryStringConfig () {
+  /**
+   * Enables the API configuration through QueryString parameters 'swaggerSpec', 'swaggerLoader' and 'swaggerUseProxy'
+   *  - swaggerSpec is the URL for a swagger specification
+   *  - swaggerLoader is the loaded to use for the given specification (Swagger1Loader or Swagger2Loader)
+   *  - swaggerUseProxy indicate if we should proxy calls (because CORS) - it is actived with value 'on'
+   * @param  {String} friendlyName [description]
+   * @return {[type]}              [description]
+   */
+  enableQueryStringConfig (friendlyName = 'url') {
     const queryString = { }
     document.location.search.substr(1)
           .split('&')
@@ -125,7 +133,7 @@ class APIExplorer {
       const specLoader = queryString.swaggerLoader || 'Swagger2Loader'
       const swaggerUseProxy = queryString.swaggerUseProxy === 'on'
       this.addConfiguration(
-        'url',
+        friendlyName,
         specLoader,
         new Url(queryString.swaggerSpec, swaggerUseProxy)
       )
@@ -146,8 +154,8 @@ class APIExplorer {
   }
 
     /*
-   * Method of the fluent API used to configure The widgets of APIExplorer
-   * @param  {[function]} configurator    A function used to configure the widgets
+   * Method of the fluent API used to configure the interceptors of APIExplorer
+   * @param  {[function]} configurator    A function used to configure the interceptors
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
    */
   configInterceptors (configurator) {
