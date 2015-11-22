@@ -42,3 +42,7 @@ function newOperation (config, operation) {
 function newDefinition (config, definition) {
   return { type: types.NEW_DEFINITION, config, definition }
 }
+
+export function selectedOperation (operationId) {
+  return { type: types.SELECTED_OPERATION, operationId }
+}
