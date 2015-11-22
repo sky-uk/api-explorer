@@ -110,9 +110,15 @@ class LateralMenu extends Component {
       'btn-danger': operation.spec.httpMethod === 'delete',
       'btn-warning': operation.spec.httpMethod === 'put'
     })
+
+    let liClass = 'lioperation'
+    if (this.props.selectedOperationId && operation.id === this.props.selectedOperationId) {
+      liClass = `${liClass} active`
+    }
+
     return (
-      <li key={operation.id} id={operation.id} className='lioperation' title={operation.spec.description}>
-        <Link to={`/operation/${operation.id}/try-it`} className='operation-container' >
+      <li key={operation.id} id={operation.id} className={liClass} title={operation.spec.description}>
+        <Link to={`/operation/${operation.id}/try-it`} className='operation-container' onClick={ () => this.props.onOperationClick(operation.id) }>
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
@@ -129,7 +135,9 @@ class LateralMenu extends Component {
 
 LateralMenu.propTypes = {
   operations: PropTypes.array.isRequired,
-  apis: PropTypes.object.isRequired
+  apis: PropTypes.object.isRequired,
+  selectedOperationId: PropTypes.string,
+  onOperationClick: PropTypes.func.isRequired
 }
 
 export default LateralMenu

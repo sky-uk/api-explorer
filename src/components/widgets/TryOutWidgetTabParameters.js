@@ -16,7 +16,7 @@ class TryOutWidgetTabParameters extends Component {
     const style = { border: 'solid 1px #AAA', padding: '2px' }
     if (param.in === 'body') {
       return (
-        <textarea className='col-md-12' rows={Math.max(4, value.split('\n').length + 1)}
+        <textarea className='col-md-12' rows={ value ? Math.max(4, value.split('\n').length + 1) : 4 }
                   style={style} required={param.required} value={value}
                   onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)
                 }
@@ -47,13 +47,13 @@ class TryOutWidgetTabParameters extends Component {
     return (
         <select multiple='multiple'
                 className='col-md-12'
-                value={value}
+                defaultValue={value}
                 onChange={(evt) => {
                   const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
                   handleParametersOnChange(param.name, selectedValues)
                 }
                 } >
-            {param.items.enum.map((text, i) => <option key={i}>{text}</option>)}
+            {param.items.enum.map((text, i) => <option key={i} selected={value && value.indexOf(text) > 0}>{text}</option>)}
         </select>
     )
   }

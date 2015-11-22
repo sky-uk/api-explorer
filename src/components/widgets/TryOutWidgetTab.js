@@ -108,9 +108,8 @@ class TryOutWidgetTab extends Component {
       width: '100%',
       overflow: 'hidden'
     }
-
     const showResponse = !this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''
-    const url = this.state.response.url
+    const url = this.state.response && this.state.response.url
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
@@ -127,7 +126,7 @@ class TryOutWidgetTab extends Component {
               onValidateParameters={ () => this.onValidateParameters() }
               onExecuteRequest={ requestFormat => this.onExecuteRequest(requestFormat) }
             />
-            {showResponse && <small>&nbsp;&nbsp;<a href='about:black' onClick={ e => this.hideResponse(e) }>Hide Response</a></small>}
+            {showResponse && <span>&nbsp;&nbsp;<a href='about:black' onClick={ e => this.hideResponse(e) }>Hide Response</a></span>}
             {showResponse && <div className='pull-right'>
               <strong>
                 <span>{this.state.response.status}</span>

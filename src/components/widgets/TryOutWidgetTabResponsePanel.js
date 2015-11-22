@@ -58,8 +58,7 @@ class TryOutWidgetTabResponsePanel extends Component {
   componentDidMount () {
     const elem = this.refs.codemirror
 
-    const mode = this.props.response.requestFormat.indexOf('json') > 0 ? 'application/json' : 'text/html'
-    CodeMirror.fromTextArea(elem, { mode: mode })
+    CodeMirror.fromTextArea(elem, { mode: this.props.response.requestFormat })
 
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
       this.props.response.data = this.props.response.data.replace('\\"', '\"')

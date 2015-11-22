@@ -25,7 +25,8 @@ class OperationWidget extends Component {
           <strong >{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
           &nbsp;
           <samp >{this.props.operation.spec.url}</samp>
-          { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow', marginLeft: '5px'}}><i className='fa fa-lock' title='Secured'></i></span>) }
+          &nbsp;
+          { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>) }
           { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy'></i>}
         </div>
         <div className='panel-body' >
