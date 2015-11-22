@@ -25,7 +25,7 @@ APIExplorer
   })
   .start()
 
-function interceptor (apiSpec) {
+function interceptor (config, apiSpec) {
   apiSpec.apis.forEach(api => {
     api.operations.forEach(operation => {
       operation.parameters.forEach(parameter => {

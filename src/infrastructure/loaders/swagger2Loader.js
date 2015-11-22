@@ -7,7 +7,7 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
     .then(apiSpec => {
       let newApiSpec = apiSpec
       if (config.interceptor) {
-        newApiSpec = config.interceptor(apiSpec)
+        newApiSpec = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, apiSpec)
       }
       swagger2JsonLoader(newApiSpec, config.friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
     })

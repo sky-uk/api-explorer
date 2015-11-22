@@ -14,6 +14,7 @@ class TryOutWidgetTabParameters extends Component {
   editorForInput (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     const style = { border: 'solid 1px #AAA', padding: '2px' }
+    debugger
     if (param.in === 'body') {
       return (
         <textarea className='col-md-12' rows={Math.max(4, value.split('\n').length + 1)}
@@ -44,16 +45,17 @@ class TryOutWidgetTabParameters extends Component {
 
   editorForMultipleSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
+    debugger
     return (
         <select multiple='multiple'
                 className='col-md-12'
-                value={value}
+                defaultValue={value}
                 onChange={(evt) => {
                   const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
                   handleParametersOnChange(param.name, selectedValues)
                 }
                 } >
-            {param.items.enum.map((text, i) => <option key={i}>{text}</option>)}
+            {param.items.enum.map((text, i) => <option key={i} selected={value && value.indexOf(text) > 0}>{text}</option>)}
         </select>
     )
   }
