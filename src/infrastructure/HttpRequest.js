@@ -5,6 +5,10 @@ class HttpRequest {
   }
 
   validateParameters (operationParametersSpec, operationParameters) {
+    if (!operationParametersSpec) {
+      return true
+    }
+
     if (operationParametersSpec && Object.getOwnPropertyNames(operationParameters).length > 0) {
       let valid = true
       operationParametersSpec
