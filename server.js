@@ -4,7 +4,9 @@ var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('./webpack.config')
 
 var Express = require('express')
+var morgan = require('morgan')
 var app = new Express()
+app.use(morgan('combined'))
 var port = process.env.PORT || 3000
 
 var compiler = webpack(config)
