@@ -117,6 +117,7 @@ Application.propTypes = {
   loader: PropTypes.object,
   apis: PropTypes.object,
   operations: PropTypes.object,
+  dispatch: PropTypes.function,
   selectedOperationId: PropTypes.string
 }
 
