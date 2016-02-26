@@ -3,15 +3,8 @@ import APIExplorer from './../src'
 APIExplorer
   .enableQueryStringConfig('url')
   .config(c => {
-    // Otherwise use the pre-configured settings
-    // c.swagger2API('petshop', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', true)
-    // http://localhost:3000/?swaggername=Web%20Api&swaggerpath=&swaggerconfig=swagger1API
-    // c.swagger2API('Instagram', '/samples/instagram.json')
-    // c.swagger2API('petshopx', 'https://raw.githubusercontent.com/swagger-api/swagger-spec/master/examples/v2.0/json/petstore-with-external-docs.json')
-    // c.swagger2API('petshop', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', true)
-    // c.swagger2API('petshop', 'https://petstore.swagger.io/v2/swagger.json')
-    // c.swagger2API('Pet Store', '/samples/petstore.json')
-    // c.swagger2API('Twitter', '/samples/twitter.json')
+    // c.swagger2API('hAPI', 'http://localhost:3000/samples/hapi.json')
+    c.swagger2API('Thoth', 'http://adeetc.thothapp.com/swagger/docs/v2', true)
   })
   .configWidgetTabs(c => {
     // c.addWidgetTab('HATEOAS', SSPAPIExplorer.HATEOASWidget)
@@ -20,14 +13,20 @@ APIExplorer
     c.addHeader('Test', 'test')
   })
   .configInterceptors(c => {
-    // c.swagger2Interceptor(interceptor)
-    c.swagger1Interceptor(interceptor)
+    // c.swagger1Interceptor(swagger1_replaceDefaultValueByXDefaultValue)
+    // c.swagger2Interceptor(swagger2_replaceDefaultParamByXDefaultValue)
+    c.swagger2Interceptor(thothInterceptor)
   })
   .start()
 
-function interceptor (config, apiSpec) {
-  if (config.friendlyName !== 'url') return // 'url' is the friendlyName of APIs configured via QueryString
+function thothInterceptor (config, apiSpec) {
+  apiSpec.basePath = '/'
+  apiSpec.schemes = ['https']
+  apiSpec.host = 'adeetc.thothapp.com'
+  return apiSpec
+}
 
+function swagger1_replaceDefaultValueByXDefaultValue (config, apiSpec) {
   apiSpec.apis.forEach(api => {
     api.operations.forEach(operation => {
       operation.parameters.forEach(parameter => {
@@ -39,5 +38,22 @@ function interceptor (config, apiSpec) {
       })
     })
   })
+  return apiSpec
+}
+
+function swagger2_replaceDefaultParamByXDefaultValue (config, apiSpec) {
+  Object.keys(apiSpec.paths).forEach(path_key => {
+    var path = apiSpec.paths[path_key]
+    Object.keys(path).forEach(httpMethod => {
+      var operation = path[httpMethod]
+      var parameters = operation.parameters || []
+      parameters.forEach(param => {
+        if (param.hasOwnProperty('default')) {
+          param['x-defaultValue'] = param.default
+        }
+      })
+    })
+  })
+
   return apiSpec
 }

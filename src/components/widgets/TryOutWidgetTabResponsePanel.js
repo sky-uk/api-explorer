@@ -22,8 +22,12 @@ import 'codemirror/addon/search/searchcursor'
 import 'codemirror/addon/dialog/dialog'
 import 'codemirror/addon/dialog/dialog.css'
 
+import { selectedOperation } from '../../actions/loadActionCreators'
+
 /* import '../../vendor/codemirror/codemirror-mode-links'
 import '../../vendor/codemirror/codemirror-extension-foldall'*/
+
+import HATEOASInfoExtractor from './HATEOASInfoExtractor'
 
 class TryOutWidgetTabResponsePanel extends Component {
   constructor () {
@@ -58,10 +62,50 @@ class TryOutWidgetTabResponsePanel extends Component {
   componentDidMount () {
     const elem = this.refs.codemirror
 
-    CodeMirror.fromTextArea(elem, { mode: this.props.response.requestFormat })
+    var editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.requestFormat })
+    editor.focus()
+    this.addHATEOASLinks(editor)
 
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
       this.props.response.data = this.props.response.data.replace('\\"', '\"')
+    }
+  }
+
+  addHATEOASLinks (editor) {
+    let tthis = this
+    const hateoasLinks = HATEOASInfoExtractor.getLinksFor(editor.getValue(), this.props.operations.toJS())
+    hateoasLinks.forEach(addWidgetToEditor)
+
+    function addWidgetToEditor (widgetInfo) {
+      const width = widgetInfo.line.match(/^\s*/)[0].length // length of the initial whitespaces
+      var elem = window.$(`
+        <span>
+          <span style='font-size: inherit; display:inline-block; width:${width}ch'></span>
+          <span style='font-size: 80%'>
+            <span class='label label-info' style='position: relative; top:-1px'>HYPERMEDIA</span>
+            <a class='open-link'    href='${widgetInfo.href}' target='_blank' >Open link</a> |
+            <a class='copy-link'    href='#' data-clipboard-text='${widgetInfo.href}' >Copy link</a>
+            <span class='explore-link-container'> |
+              <a class='explore-link' href='#' >Explore link</a>
+              <small class="text-muted"><em>(${widgetInfo.operationSummary})</em></small>
+            </span>
+          </span>
+        </span>`)
+
+      if (!widgetInfo.operationId) {
+        elem.find('span.explore-link-container').hide()
+      } else {
+        elem.find('a.explore-link')
+            .attr('href', `/operation/${widgetInfo.operationId}/try-it`)
+            .click(evt => {
+              evt.preventDefault()
+              const { store: { dispatch }, history } = tthis.context
+              history.pushState(null, `/operation/${widgetInfo.operationId}/try-it`)
+              dispatch(selectedOperation(widgetInfo.operationId))
+            })
+      }
+
+      editor.addLineWidget(widgetInfo.lineNo - 1, elem[0], { coverGutter: false, noHScroll: false })
     }
   }
 
@@ -76,7 +120,7 @@ class TryOutWidgetTabResponsePanel extends Component {
         <small className='text-muted'>
           <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
           <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;
-          <strong>Fold: </strong>: To fold all lines press <mark>Ctrl-Y</mark>, and <mark>Ctrl-Alt-Y</mark> to unfold.&nbsp;
+          <strong>Fold: </strong>To fold all lines press <mark>Ctrl-Y</mark>, and <mark>Ctrl-Alt-Y</mark> to unfold.&nbsp;
           <em>Note that in OSX you should use Cmd instead of Ctrl.</em>
         </small>
         <br/>
@@ -86,7 +130,13 @@ class TryOutWidgetTabResponsePanel extends Component {
 }
 
 TryOutWidgetTabResponsePanel.propTypes = {
-  response: PropTypes.object
+  response: PropTypes.object,
+  operations: PropTypes.object
+}
+
+TryOutWidgetTabResponsePanel.contextTypes = {
+  store: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired
 }
 
 export default TryOutWidgetTabResponsePanel

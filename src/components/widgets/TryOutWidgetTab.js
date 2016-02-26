@@ -137,7 +137,7 @@ class TryOutWidgetTab extends Component {
           </div>
           {showResponse && <div className='panel-body'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
-            <TryOutWidgetTabResponsePanel response={this.state.response} />
+            <TryOutWidgetTabResponsePanel response={this.state.response} operations={this.props.operations} />
             <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers} responseHeaders={this.state.response.headers} />
           </div>}
         </div>
@@ -148,6 +148,7 @@ class TryOutWidgetTab extends Component {
 
 TryOutWidgetTab.propTypes = {
   operation: PropTypes.object.isRequired,
+  operations: PropTypes.object.isRequired,
   definitions: PropTypes.object.isRequired,
   apis: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired
