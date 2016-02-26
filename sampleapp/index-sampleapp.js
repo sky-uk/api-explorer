@@ -26,6 +26,7 @@ function thothInterceptor (config, apiSpec) {
   return apiSpec
 }
 
+/*
 function swagger1_replaceDefaultValueByXDefaultValue (config, apiSpec) {
   apiSpec.apis.forEach(api => {
     api.operations.forEach(operation => {
@@ -57,3 +58,4 @@ function swagger2_replaceDefaultParamByXDefaultValue (config, apiSpec) {
 
   return apiSpec
 }
+*/

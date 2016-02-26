@@ -113,7 +113,11 @@ class Application extends Component {
 }
 
 Application.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  loader: PropTypes.object,
+  apis: PropTypes.object,
+  operations: PropTypes.object,
+  selectedOperationId: PropTypes.string
 }
 
 export default connect(
