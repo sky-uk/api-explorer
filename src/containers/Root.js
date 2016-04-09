@@ -6,19 +6,17 @@ import { ReduxRouter } from 'redux-router'
 import getRoutes from 'routes'
 import injectDevTools from 'components/DevTools'
 
-const PRODUCTION_BUILD = process.env.NODE_ENV === 'production'
-
 export default class Root extends Component {
   render () {
     const { store } = this.props
-    const DevTools = PRODUCTION_BUILD || injectDevTools()
+    const DevTools = injectDevTools()
     return (
       <Provider store={store}>
         <div>
           <ReduxRouter>
             {getRoutes(store)}
           </ReduxRouter>
-          {PRODUCTION_BUILD && <DevTools />}
+          {DevTools && <DevTools />}
         </div>
       </Provider>
     )
