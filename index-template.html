@@ -14,6 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-with-addons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
     -->
-    <script src="{%= o.htmlWebpackPlugin.files.chunks.main.entry %}?s={%= o.htmlWebpackPlugin.files.chunks.main.size %}"></script>
+    <script src="{%= o.htmlWebpackPlugin.files.chunks.main.entry %}?v={%= o.webpack.hash %}"></script>
   </body>
 </html>

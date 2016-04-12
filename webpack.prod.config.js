@@ -4,13 +4,15 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
-  entry: [
-    './sampleapp/index-sampleapp.js'
-  ],
+  entry: {
+    main: './src'
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'apiexplorer.js',
-    publicPath: '/'
+    filename: 'APIExplorer.umd.js',
+    publicPath: '/',
+    library: 'APIExplorer',
+    libraryTarget: 'umd'
   },
   plugins: [
     new webpack.DefinePlugin({
