@@ -4,7 +4,7 @@ APIExplorer
   .enableQueryStringConfig('url')
   .config(c => {
     // c.swagger2API('hAPI', 'http://localhost:3000/samples/hapi.json')
-    c.swagger2API('Thoth', 'http://adeetc.thothapp.com/swagger/docs/v2', true)
+    //c.swagger2API('Thoth', 'http://adeetc.thothapp.com/swagger/docs/v2', true)
   })
   .configWidgetTabs(c => {
     // c.addWidgetTab('HATEOAS', SSPAPIExplorer.HATEOASWidget)
@@ -13,20 +13,19 @@ APIExplorer
     c.addHeader('Test', 'test')
   })
   .configInterceptors(c => {
-    // c.swagger1Interceptor(swagger1_replaceDefaultValueByXDefaultValue)
-    // c.swagger2Interceptor(swagger2_replaceDefaultParamByXDefaultValue)
-    c.swagger2Interceptor(thothInterceptor)
+    c.swagger1Interceptor(swagger1_replaceDefaultValueByXDefaultValue)
+    c.swagger2Interceptor(swagger2_replaceDefaultParamByXDefaultValue)
+    //c.swagger2Interceptor(thothInterceptor)
   })
   .start()
 
-function thothInterceptor (config, apiSpec) {
+/*function thothInterceptor (config, apiSpec) {
   apiSpec.basePath = '/'
   apiSpec.schemes = ['https']
   apiSpec.host = 'adeetc.thothapp.com'
   return apiSpec
-}
+}*/
 
-/*
 function swagger1_replaceDefaultValueByXDefaultValue (config, apiSpec) {
   apiSpec.apis.forEach(api => {
     api.operations.forEach(operation => {
@@ -58,4 +57,3 @@ function swagger2_replaceDefaultParamByXDefaultValue (config, apiSpec) {
 
   return apiSpec
 }
-*/
