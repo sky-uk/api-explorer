@@ -38,6 +38,9 @@
       "fetch",
       "describe",
       "it"
+    ],
+    "ignore": [
+      "dist"
     ]
   },
   "dependencies": {
