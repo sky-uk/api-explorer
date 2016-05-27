@@ -135,7 +135,7 @@
           "pet"
         ],
         "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma seperated strings",
+        "description": "Multiple status values can be provided with comma separated strings",
         "operationId": "findPetsByStatus",
         "produces": [
           "application/xml",
@@ -157,7 +157,7 @@
               ],
               "default": "available"
             },
-            "collectionFormat": "csv"
+            "collectionFormat": "multi"
           }
         ],
         "responses": {
@@ -190,7 +190,7 @@
           "pet"
         ],
         "summary": "Finds Pets by tags",
-        "description": "Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.",
+        "description": "Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
         "operationId": "findPetsByTags",
         "produces": [
           "application/xml",
@@ -206,7 +206,7 @@
             "items": {
               "type": "string"
             },
-            "collectionFormat": "csv"
+            "collectionFormat": "multi"
           }
         ],
         "responses": {
@@ -230,7 +230,8 @@
               "read:pets"
             ]
           }
-        ]
+        ],
+        "deprecated": true
       }
     },
     "/pet/{petId}": {
@@ -356,7 +357,10 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid pet value"
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
           }
         },
         "security": [
@@ -498,7 +502,7 @@
           "store"
         ],
         "summary": "Find purchase order by ID",
-        "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions",
+        "description": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
         "operationId": "getOrderById",
         "produces": [
           "application/xml",
@@ -511,8 +515,8 @@
             "description": "ID of pet that needs to be fetched",
             "required": true,
             "type": "integer",
-            "maximum": 5,
-            "minimum": 1,
+            "maximum": 10.0,
+            "minimum": 1.0,
             "format": "int64"
           }
         ],
@@ -536,7 +540,7 @@
           "store"
         ],
         "summary": "Delete purchase order by ID",
-        "description": "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors",
+        "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
         "operationId": "deleteOrder",
         "produces": [
           "application/xml",
@@ -548,8 +552,9 @@
             "in": "path",
             "description": "ID of the order that needs to be deleted",
             "required": true,
-            "type": "string",
-            "minimum": 1
+            "type": "integer",
+            "minimum": 1.0,
+            "format": "int64"
           }
         ],
         "responses": {
@@ -701,7 +706,7 @@
               "X-Expires-After": {
                 "type": "string",
                 "format": "date-time",
-                "description": "date in UTC when toekn expires"
+                "description": "date in UTC when token expires"
               }
             }
           },
@@ -782,7 +787,7 @@
           {
             "name": "username",
             "in": "path",
-            "description": "name that need to be deleted",
+            "description": "name that need to be updated",
             "required": true,
             "type": "string"
           },
@@ -839,7 +844,7 @@
   "securityDefinitions": {
     "petstore_auth": {
       "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/api/oauth/dialog",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
       "flow": "implicit",
       "scopes": {
         "write:pets": "modify pets in your account",

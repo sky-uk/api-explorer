@@ -2,11 +2,15 @@
   "name": "api-explorer",
   "version": "0.0.0",
   "description": "API Explorer (live documentation) for Swagger",
-  "main": "dist/APIExplorer.umd.js", 
+  "main": "dist/APIExplorer.umd.js",
   "scripts": {
     "prestart": "npm run build",
     "build": "NODE_ENV=production webpack --config webpack.prod.config",
     "start": "NODE_ENV=production node server-prod.js",
+
+    "dev": "npm run dev:petstore",
+    "dev:petstore": "NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
+
     "start:dev": "set NODE_DEBUG=request && node server.js",
     "start:devdebug": "NODE_DEBUG=request node server.js",
     "start:devwindebug": "set NODE_DEBUG=request && node-debug server.js",

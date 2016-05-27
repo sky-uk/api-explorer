@@ -11,14 +11,14 @@ export default class Root extends Component {
     const { store } = this.props
     const DevTools = injectDevTools()
     return (
-      <Provider store={store}>
-        <div>
-          <ReduxRouter>
-            {getRoutes(store)}
-          </ReduxRouter>
-          {DevTools && <DevTools />}
-        </div>
-      </Provider>
+        <Provider store={store}>
+          <div>
+            <ReduxRouter>
+              {getRoutes(store)}
+            </ReduxRouter>
+            {DevTools && <DevTools />}
+          </div>
+        </Provider>
     )
   }
 }

@@ -19,6 +19,7 @@ export function load (config) {
 
     dispatch({ type: types.LOAD_START, config })
     dispatch({ type: types.CONFIG_URL, url: config.url })
+
     config.loader(config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
   }
 }
