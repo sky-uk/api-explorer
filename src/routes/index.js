@@ -1,7 +1,8 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, IndexRoute, IndexRedirect } from 'react-router'
 
 import Application from 'containers/Application'
+import Settings from 'containers/Settings'
 import Welcome from 'containers/Welcome'
 import OperationWidgetContainer from 'containers/OperationWidgetContainer'
 import NotFound from 'containers/NotFound'
@@ -14,6 +15,12 @@ export default function (store) {
         <Route path='operation/:id' component={OperationWidgetContainer} >
           {APIExplorer.widgetTabs.map(widgetTab =>
             <Route key={widgetTab.slug} path={widgetTab.slug} component={widgetTab.component} />
+          )}
+        </Route>
+        <Route path='settings' component={Settings} >
+          <IndexRedirect to={APIExplorer.settingsPanes[0].slug} />
+          {APIExplorer.settingsPanes.map(pane =>
+            <Route key={pane.slug} path={pane.slug} component={pane.component} />
           )}
         </Route>
       </Route>

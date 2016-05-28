@@ -78,6 +78,11 @@ class Application extends Component {
 
                 <div id='fixed-footer'>
                   Copyright &copy; API Explorer 2015
+
+                  <Link to='/settings' className='pull-right'>
+                    <i className='fa fa-cog fa-inverse' /> Settings
+                  </Link>
+
                 </div>
               </div>
             </div>
