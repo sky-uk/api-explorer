@@ -7,10 +7,8 @@
     "prestart": "npm run build",
     "build": "NODE_ENV=production webpack --config webpack.prod.config",
     "start": "NODE_ENV=production node server-prod.js",
-
     "dev": "npm run dev:petstore",
     "dev:petstore": "NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
-
     "start:dev": "set NODE_DEBUG=request && node server.js",
     "start:devdebug": "NODE_DEBUG=request node server.js",
     "start:devwindebug": "set NODE_DEBUG=request && node-debug server.js",
@@ -61,6 +59,7 @@
     "react-dock": "^0.2.3",
     "react-dom": "^0.14.0",
     "react-highlight": "^0.5.1",
+    "react-jsonschema-form": "^0.31.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
     "redux": "^3.0.0",

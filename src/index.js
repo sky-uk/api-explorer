@@ -10,75 +10,10 @@ import Url from 'infrastructure/Url'
 
 import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from 'components'
 
+import settingsPaneWrapper from 'infrastructure/SettingsPaneWrapper'
+import { GeneralSettings, CustomHeadersSettings } from 'components/settings'
+
 const store = configureStore()
-
-class APIExplorerConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  swagger1API (friendlyName, url, useProxy = false) {
-    this.apiExplorer.addConfiguration(
-      friendlyName,
-      'Swagger1Loader',
-      new Url(url, useProxy)
-    )
-    return this
-  }
-
-  swagger2API (friendlyName, url, useProxy = false) {
-    this.apiExplorer.addConfiguration(
-      friendlyName,
-      'Swagger2Loader',
-      new Url(url, useProxy)
-    )
-    return this
-  }
-}
-
-class APIExplorerInterceptorConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  swagger1Interceptor (interceptor) {
-    this.apiExplorer.addInterceptor(
-      this.apiExplorer.SupportedLoaders.Swagger1Loader,
-      interceptor
-    )
-    return this
-  }
-
-  swagger2Interceptor (interceptor) {
-    this.apiExplorer.addInterceptor(
-      this.apiExplorer.SupportedLoaders.Swagger2Loader,
-      interceptor
-    )
-    return this
-  }
-}
-
-class APIExplorerWidgetTabConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  addWidgetTab (name, component) {
-    this.apiExplorer.addWidgetTab(name, component)
-    return this
-  }
-}
-
-class APIExplorerHeaderConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  addHeader (name, value) {
-    this.apiExplorer.addHeader(name, value)
-    return this
-  }
-}
 
 class APIExplorer {
   constructor () {
@@ -93,6 +28,7 @@ class APIExplorer {
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
+    this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
     this.queryStringLoadEnabled = false
     this.interceptors = {}
@@ -100,6 +36,9 @@ class APIExplorer {
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
     this.addWidgetTab('Response Schema', ResponseSchemaWidgetTab)
+
+    this.addSettingsPane('General', GeneralSettings)
+    this.addSettingsPane('Custom Headers', CustomHeadersSettings)
   }
 
   /**
@@ -221,11 +160,21 @@ class APIExplorer {
   /**
    * Adds a new Widget
    * @param {[type]} name      friendly name of the Widget (to appear in the wodgets tab)
-   * @param {[type]} widgetTab Object that represents the component do add to the widgets tab
+   * @param {[type]} component Object that represents the component do add to the widgets tab
    */
   addWidgetTab (name, component) {
     const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
     this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug })
+  }
+
+  /**
+   * Adds a new Settings Pane
+   * @param {[type]} name      friendly name of the Settings pane
+   * @param {[type]} component Object that represents the component do add to the settings pane
+   */
+  addSettingsPane (name, component) {
+    const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
+    this.settingsPanes.push({ name, component: settingsPaneWrapper(component), slug: slug })
   }
 
   /**
@@ -235,6 +184,74 @@ class APIExplorer {
    */
   addHeader (name, value) {
     this.headers.push({ name, value })
+  }
+}
+
+class APIExplorerConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  swagger1API (friendlyName, url, useProxy = false) {
+    this.apiExplorer.addConfiguration(
+      friendlyName,
+      'Swagger1Loader',
+      new Url(url, useProxy)
+    )
+    return this
+  }
+
+  swagger2API (friendlyName, url, useProxy = false) {
+    this.apiExplorer.addConfiguration(
+      friendlyName,
+      'Swagger2Loader',
+      new Url(url, useProxy)
+    )
+    return this
+  }
+}
+
+class APIExplorerInterceptorConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  swagger1Interceptor (interceptor) {
+    this.apiExplorer.addInterceptor(
+      this.apiExplorer.SupportedLoaders.Swagger1Loader,
+      interceptor
+    )
+    return this
+  }
+
+  swagger2Interceptor (interceptor) {
+    this.apiExplorer.addInterceptor(
+      this.apiExplorer.SupportedLoaders.Swagger2Loader,
+      interceptor
+    )
+    return this
+  }
+}
+
+class APIExplorerWidgetTabConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  addWidgetTab (name, component) {
+    this.apiExplorer.addWidgetTab(name, component)
+    return this
+  }
+}
+
+class APIExplorerHeaderConfigurator {
+  constructor (apiExplorer) {
+    this.apiExplorer = apiExplorer
+  }
+
+  addHeader (name, value) {
+    this.apiExplorer.addHeader(name, value)
+    return this
   }
 }
 
