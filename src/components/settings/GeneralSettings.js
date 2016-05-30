@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 class GeneralSettings extends Component {
   render () {
@@ -15,9 +15,6 @@ class GeneralSettings extends Component {
       </div>
     )
   }
-}
-
-GeneralSettings.propTypes = {
 }
 
 export default GeneralSettings

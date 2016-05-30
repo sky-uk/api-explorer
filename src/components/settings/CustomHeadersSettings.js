@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import './CustomHeadersSettings.css'
-import Form from 'react-jsonschema-form';
+import Form from 'react-jsonschema-form'
 import { headers } from 'actions/loadActionCreators'
 import Immutable from 'immutable'
 
@@ -71,7 +71,7 @@ class CustomHeadersSettings extends Component {
           </div>
         </Form>
         <br/>
-        {this.state.showSuccess && <div className="alert alert-success" role="alert">Settings updated with success.</div>}
+        {this.state.showSuccess && <div className='alert alert-success' role='alert'>Settings updated with success.</div>}
 
       </div>
     )
@@ -79,7 +79,8 @@ class CustomHeadersSettings extends Component {
 }
 
 CustomHeadersSettings.propTypes = {
-  config: PropTypes.object
+  config: PropTypes.object,
+  dispatch: PropTypes.func
 }
 
 export default CustomHeadersSettings

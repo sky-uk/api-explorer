@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 class Settings extends Component {
@@ -10,7 +9,7 @@ class Settings extends Component {
         <h2>Settings</h2>
         <p>In this page you can configure API Explorer settings. Please use the following tabs.</p>
 
-        <ul className="nav nav-tabs">
+        <ul className='nav nav-tabs'>
           {APIExplorer.settingsPanes.map((pane, i) => {
             const url = `/settings/${pane.slug}`
             return (<li key={i} className={this.props.history.isActive(url) ? 'active' : ''}>
