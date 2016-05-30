@@ -1,26 +1,78 @@
 import React, { Component, PropTypes } from 'react'
+import './CustomHeadersSettings.css'
+import Form from 'react-jsonschema-form';
+import { headers } from 'actions/loadActionCreators'
+import Immutable from 'immutable'
+
+const schema = {
+  type: 'object',
+  properties: {
+    headers: {
+      title: 'Headers',
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', title: 'Name' },
+          value: { type: 'string', title: 'Value' }
+        }
+      }
+    }
+  }
+}
+
+const uiSchema = {
+  headers: {
+    items: {
+      name: { classNames: 'col-xs-6' },
+      value: { classNames: 'col-xs-6' }
+    }
+  }
+}
 
 class CustomHeadersSettings extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      ...Immutable.fromJS(props.config).toJS(),
+      showSuccess: false
+    }
+    this.handleFormSave = this.handleFormSave.bind(this)
+    this.handleOnChange = this.handleOnChange.bind(this)
+  }
+
+  handleFormSave (evt) {
+    this.props.dispatch(headers(evt.formData.headers))
+    this.setState({
+      ...evt.formData,
+      showSuccess: true
+    })
+  }
+
+  handleOnChange (evt) {
+    this.setState({
+      ...evt.formData,
+      showSuccess: false
+    })
+  }
 
   render () {
     return (
       <div className='tab-content' >
-        <form className='form-horizontal'>
-          <legend>Headers</legend>
-          {this.props.config.headers.map(header => (
-            <div key={header.name} className='form-group'>
-              <label className='col-sm-2 control-label'>{header.name}</label>
-              <div className='col-sm-10'>
-                <input className='form-control' defaultValue={header.value} />
-              </div>
-            </div>
-          ))}
-          <div className='form-group'>
-            <div className='col-sm-offset-2 col-sm-10'>
-              <button className='btn btn-primary'>Save</button>
-            </div>
+
+        <Form schema={schema}
+              uiSchema={uiSchema}
+              formData={this.state}
+              onChange={this.handleOnChange}
+              onSubmit={this.handleFormSave} >
+          <div>
+            <button type='submit' className='btn btn-primary'>Save</button>
           </div>
-        </form>
+        </Form>
+        <br/>
+        {this.state.showSuccess && <div className="alert alert-success" role="alert">Settings updated with success.</div>}
+
       </div>
     )
   }
