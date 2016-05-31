@@ -17,7 +17,12 @@
     "test-win": "npm run lint && set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
     "test-win:watch": "npm run test-win -- --watch",
     "lint": "standard --verbose | snazzy",
-    "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
+    "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint",
+    "docs:clean": "rimraf _book",
+    "docs:prepare": "gitbook install",
+    "docs:build": "npm run docs:prepare && gitbook build -g sky-uk/api-explorer",
+    "docs:watch": "npm run docs:prepare && gitbook serve",
+    "docs:publish": "npm run docs:clean && npm run docs:build && cd _book && git init && git commit --allow-empty -m 'update book' && git checkout -b gh-pages && touch .nojekyll && git add . && git commit -am 'update book' && git push git@github.com:sky-uk/api-explorer gh-pages --force"
   },
   "engines": {
     "node": ">=4.2.1",
@@ -99,6 +104,8 @@
     "style-loader": "^0.12.3",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0"
+    "webpack-hot-middleware": "^2.2.0",
+    "gitbook-cli": "^0.3.4",
+    "rimraf": "^2.3.4"
   }
 }
