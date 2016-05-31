@@ -111,10 +111,10 @@ class LateralMenu extends Component {
       'btn-warning': operation.spec.httpMethod === 'put'
     })
 
-    let liClass = 'lioperation'
-    if (this.props.selectedOperationId && operation.id === this.props.selectedOperationId) {
-      liClass = `${liClass} active`
-    }
+    const liClass = cx('lioperation', {
+      'active': this.props.selectedOperationId && operation.id === this.props.selectedOperationId,
+      'deprecated-api': operation.spec.deprecated
+    })
 
     return (
       <li key={operation.id} id={operation.id} className={liClass} title={operation.spec.description}>
@@ -123,7 +123,7 @@ class LateralMenu extends Component {
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
             {operation.spec.security && (<span key={`security${operation.id}`} style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>)}
-            <span>{operation.spec.url}</span>
+              <span>{operation.spec.url}</span>
           </span>
         </Link>
 
