@@ -26,6 +26,12 @@ class TryOutWidgetTab extends Component {
       }
     })
 
+    // Override newParameters with `param-*` query string overrides
+    Object.keys(props.location.query)
+          .filter(key => key.startsWith('param-'))
+          .map(key => key.replace(/^param-/, ''))
+          .forEach(key => { newParameters[key] = props.location.query[`param-${key}`] })
+
     this.setState({operationParameters: newParameters})
   }
 
