@@ -126,7 +126,8 @@
                      "read:pets"
                   ]
                }
-            ]
+            ],
+            "deprecated" : "true"
          }
       },
       "/pet/findByStatus":{
@@ -181,7 +182,8 @@
                      "read:pets"
                   ]
                }
-            ]
+            ],
+            "deprecated" : "true"
          }
       },
       "/pet/findByTags":{
@@ -368,7 +370,8 @@
                      "read:pets"
                   ]
                }
-            ]
+            ],
+            "deprecated" : "true"
          }
       },
       "/pet/{petId}/uploadImage":{
@@ -424,7 +427,8 @@
                      "read:pets"
                   ]
                }
-            ]
+            ],
+            "deprecated" : "true"
          }
       },
       "/store/inventory":{
