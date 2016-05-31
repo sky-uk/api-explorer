@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import * as types from 'constants/ActionTypes'
 
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
 import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
@@ -42,6 +43,7 @@ class TryOutWidgetTab extends Component {
       requestInProgress: false,
       operationParameters: {},
       response: {},
+      showLastResponse: false,
       requestPanelClassName: 'panel panel-http-response panel-default'
     }
   }
@@ -82,6 +84,8 @@ class TryOutWidgetTab extends Component {
   }
 
   requestCallback (response) {
+    this.props.dispatch({ type: types.NEW_RESPONSE, operation: this.props.operation, response })
+
     this.setState({requestInProgress: false, response: response})
 
     if (response.status >= 200 && response.status < 300) {
@@ -97,7 +101,7 @@ class TryOutWidgetTab extends Component {
   }
 
 // ###############################################################################################################
-// Renderes
+// Renderers
 // ###############################################################################################################
 
   render () {
@@ -109,7 +113,9 @@ class TryOutWidgetTab extends Component {
       overflow: 'hidden'
     }
     const showResponse = !this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''
-    const url = this.state.response && this.state.response.url
+    const showLastResponse = !showResponse && this.props.operationResponse
+    const response = !showResponse && this.props.operationResponse ? this.props.operationResponse : this.state.response
+    const url = response && response.url
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
@@ -126,19 +132,20 @@ class TryOutWidgetTab extends Component {
               onValidateParameters={ () => this.onValidateParameters() }
               onExecuteRequest={ requestFormat => this.onExecuteRequest(requestFormat) }
             />
-            {showResponse && <span>&nbsp;&nbsp;<a href='about:black' onClick={ e => this.hideResponse(e) }>Hide Response</a></span>}
-            {showResponse && <div className='pull-right'>
+            {showResponse && <span>&nbsp;&nbsp;<a href='about:blank' onClick={ e => this.hideResponse(e) }>Hide Response</a></span>}
+
+            {(showResponse || showLastResponse) && <div className='pull-right'>
               <strong>
-                <span>{this.state.response.status}</span>
+                <span>{response.status}</span>
                 &nbsp;
-                <span>{this.state.response.statusText}</span>
+                <span>{response.statusText}</span>
               </strong>
             </div>}
           </div>
-          {showResponse && <div className='panel-body'>
+          {(showResponse || showLastResponse) && <div className='panel-body'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
-            <TryOutWidgetTabResponsePanel response={this.state.response} operations={this.props.operations} />
-            <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers} responseHeaders={this.state.response.headers} />
+            <TryOutWidgetTabResponsePanel response={response} operations={this.props.operations} />
+            <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers} responseHeaders={response.headers} />
           </div>}
         </div>
       </div>
@@ -149,9 +156,11 @@ class TryOutWidgetTab extends Component {
 TryOutWidgetTab.propTypes = {
   operation: PropTypes.object.isRequired,
   operations: PropTypes.object.isRequired,
+  operationResponse: PropTypes.object,
   definitions: PropTypes.object.isRequired,
   apis: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
+  dispatch: PropTypes.func
 }
 
 export default TryOutWidgetTab

@@ -62,13 +62,33 @@ class TryOutWidgetTabResponsePanel extends Component {
   componentDidMount () {
     const elem = this.refs.codemirror
 
-    var editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.requestFormat })
-    editor.focus()
-    this.addHATEOASLinks(editor)
+    this.editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.requestFormat })
+    this.editor.focus()
+
+    this.addHATEOASLinks(this.editor)
 
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
       this.props.response.data = this.props.response.data.replace('\\"', '\"')
     }
+  }
+
+  componentDidUpdate () {
+    this.editor.setValue(this.getIndentedJson())
+    this.editor.refresh()
+  }
+
+  getIndentedJson () {
+    let data = this.props.response.data
+    if (this.props.response.requestFormat.indexOf('json') > 0) {
+      try {
+        data = JSON.stringify(JSON.parse(data), null, 2)
+      } catch (e) {
+        console.warn('Invalid json returned in the response')
+        data = e.message + '\n' + data
+      }
+    }
+
+    return data
   }
 
   addHATEOASLinks (editor) {
@@ -110,18 +130,10 @@ class TryOutWidgetTabResponsePanel extends Component {
   }
 
   render () {
-    let data = this.props.response.data
-    if (this.props.response.requestFormat.indexOf('json') > 0) {
-      try {
-        data = JSON.stringify(JSON.parse(data), null, 2)
-      } catch (e) {
-        console.warn('Invalid json returned in the response')
-        data = e.message + '\n' + data
-      }
-    }
+    let data = this.getIndentedJson()
     return (
       <div>
-        <textarea className='col-md-12 codemirror-response' ref='codemirror' defaultValue={data} />
+        <textarea className='col-md-12 codemirror-response' ref='codemirror' value={data} readOnly />
         <small className='text-muted'>
           <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
           <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;
