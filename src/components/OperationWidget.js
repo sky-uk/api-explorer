@@ -10,10 +10,11 @@ class OperationWidget extends Component {
 
     const httpMethod = this.props.operation.spec.httpMethod
     const panelCx = cx('documentation-widget panel panel-default', {
-      'panel-primary': httpMethod === 'get',
+      'panel-blue': httpMethod === 'get',
       'panel-green': httpMethod === 'post',
       'panel-red': httpMethod === 'delete',
-      'panel-yellow': httpMethod === 'put'
+      'panel-yellow': httpMethod === 'put',
+      'panel-deprecated': this.props.operation.spec.deprecated
     })
     const hasSecurity = this.props.operation.spec.security !== undefined
     return (
@@ -28,6 +29,7 @@ class OperationWidget extends Component {
           &nbsp;
           { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>) }
           { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy'></i>}
+          &nbsp; { this.props.operation.spec.deprecated && <span className='badge'>deprecated</span>}
         </div>
         <div className='panel-body' >
           <ul className='nav nav-tabs' >

@@ -80,7 +80,8 @@
               "read:pets"
             ]
           }
-        ]
+        ],
+        "deprecated": true
       },
       "put": {
         "tags": [
@@ -126,7 +127,8 @@
               "read:pets"
             ]
           }
-        ]
+        ],
+        "deprecated": true
       }
     },
     "/pet/findByStatus": {
@@ -370,7 +372,8 @@
               "read:pets"
             ]
           }
-        ]
+        ],
+        "deprecated": true
       }
     },
     "/pet/{petId}/uploadImage": {
