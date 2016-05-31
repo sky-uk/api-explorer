@@ -62,7 +62,7 @@ class TryOutWidgetTabResponsePanel extends Component {
   componentDidMount () {
     const elem = this.refs.codemirror
 
-    this.editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.requestFormat })
+    this.editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.contentType })
     this.editor.focus()
 
     this.addHATEOASLinks(this.editor)
