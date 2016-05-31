@@ -13,6 +13,7 @@ import settingsPaneWrapper from 'infrastructure/SettingsPaneWrapper'
 import { GeneralSettings, CustomHeadersSettings } from 'components/settings'
 
 import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
+import LinkGenerator from './LinkGenerator'
 
 class APIExplorer {
   constructor () {
@@ -38,6 +39,8 @@ class APIExplorer {
 
     this.addSettingsPane('General', GeneralSettings)
     this.addSettingsPane('Custom Headers', CustomHeadersSettings)
+
+    this.LinkGenerator = new LinkGenerator()
   }
 
   /**
@@ -64,7 +67,7 @@ class APIExplorer {
     document.location.search.substr(1)
           .split('&')
           .map(_ => _.split('='))
-          .forEach(a => queryString[decodeURIComponent(a[0]).replace('[]', '')] = decodeURIComponent(a[1]))
+          .forEach(a => { queryString[decodeURIComponent(a[0]).replace('[]', '')] = decodeURIComponent(a[1]) })
 
     // If a specification exists in the query string
     if (queryString.hasOwnProperty('swaggerSpec')) {

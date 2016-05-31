@@ -55,14 +55,12 @@ class LateralMenu extends Component {
                                 .map(name => this.props.operations.filter(o => o.apiname === name))
                                 .toArray()
     return (
-    <div id='lateral-menu'>
-      <ul className='nav'>
-        <OperationsFilter placeholder='e.g. getusersession'
-        onFilter={text => this.handleFilterUpdate(text)} />
-
-        {operationsByApi.map(apiOperations => this.renderAPI(apiOperations))}
-      </ul>
-    </div>
+      <div id='lateral-menu'>
+        <ul className='nav'>
+          <OperationsFilter placeholder='e.g. getusersession' onFilter={text => this.handleFilterUpdate(text)} />
+          {operationsByApi.map(apiOperations => this.renderAPI(apiOperations))}
+        </ul>
+      </div>
     )
   }
 
@@ -118,12 +116,12 @@ class LateralMenu extends Component {
 
     return (
       <li key={operation.id} id={operation.id} className={liClass} title={operation.spec.description}>
-        <Link to={`/operation/${operation.id}/try-it`} className='operation-container' onClick={ () => this.props.onOperationClick(operation.id) }>
+        <Link to={APIExplorer.LinkGenerator.toOperation(operation)} className='operation-container' onClick={() => this.props.onOperationClick(operation.id)}>
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
             {operation.spec.security && (<span key={`security${operation.id}`} style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>)}
-              <span>{operation.spec.url}</span>
+            <span>{operation.spec.url}</span>
           </span>
         </Link>
 
