@@ -9,7 +9,7 @@ class HttpRequest {
   }
 
   validateParameters (operationParametersSpec, operationParameters) {
-    if (!operationParametersSpec || operationParametersSpec.length == 0) {
+    if (!operationParametersSpec || operationParametersSpec.length === 0) {
       return true
     }
 
