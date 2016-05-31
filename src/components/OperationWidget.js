@@ -14,7 +14,7 @@ class OperationWidget extends Component {
       'panel-green': httpMethod === 'post',
       'panel-red': httpMethod === 'delete',
       'panel-yellow': httpMethod === 'put',
-      'panel-deprecated':this.props.operation.spec.deprecated
+      'panel-deprecated': this.props.operation.spec.deprecated
     })
     const hasSecurity = this.props.operation.spec.security !== undefined
     return (
