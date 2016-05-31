@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node server-prod.js",
     "dev": "npm run dev:petstore",
     "dev:petstore": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
+    "dev:helloworld": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=helloworld node server.js",
     "start:dev": "set NODE_DEBUG=request && node server.js",
     "start:devdebug": "NODE_DEBUG=request node server.js",
     "start:devwindebug": "set NODE_DEBUG=request && node-debug server.js",
@@ -105,8 +106,10 @@
     "snazzy": "^2.0.1",
     "standard": "^5.3.1",
     "style-loader": "^0.12.3",
-    "webpack": "^1.9.11",
-    "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0"
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0",
+    "gitbook-cli": "^0.3.4",
+    "rimraf": "^2.3.4"
   }
 }

@@ -1,0 +1,52 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "This is a sample api-explorerhelloworld server.",
+		"version": "1.0.0",
+		"title": "Swagger Helloworld",
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"host": "localhost:3000",
+	"basePath": "/sampleapp/helloworld",
+	"tags": [{
+		"name": "hello",
+		"description": "Everything about your api explorer",
+		"externalDocs": {
+			"description": "Find out more",
+			"url": "http://apiexplorer.io"
+		}
+	}],
+	"schemes": [
+		"http"
+	],
+	"paths": {
+		"/hello": {
+			"get": {
+				"tags": [
+					"hello"
+				],
+				"summary": "Hello from apiexplorer",
+				"description": "",
+				"operationId": "hello",
+				"consumes": [
+					"application/json",
+					"application/xml"
+				],
+				"produces": [
+					"application/xml",
+					"application/json"
+				],
+				"responses": {},
+				"security": []
+			}
+		}
+	},
+	"definitions": {},
+	"externalDocs": {
+		"description": "Find out more about Api-Explorer",
+		"url": "http://www.apiexplorer.io"
+	}
+}
