@@ -1,12 +1,12 @@
 var path = require('path')
 var webpack = require('webpack')
-var sample = process.env.APIEXPLORER_SAMPLE
+var sample = process.env.APIEXPLORER_SAMPLE.replace(/ /, '')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './sampleapp/' + sample
+    './sampleapp/' + sample + '/index.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),

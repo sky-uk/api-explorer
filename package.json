@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node server-prod.js",
     "dev": "npm run dev:petstore",
     "dev:petstore": "NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
+    "dev:petstore:win": "SET NODE_DEBUG=request && SET APIEXPLORER_SAMPLE=petstore && node server.js",
     "start:dev": "set NODE_DEBUG=request && node server.js",
     "start:devdebug": "NODE_DEBUG=request node server.js",
     "start:devwindebug": "set NODE_DEBUG=request && node-debug server.js",
