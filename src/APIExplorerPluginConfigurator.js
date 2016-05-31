@@ -1,7 +1,6 @@
 export default class APIExplorerPluginConfigurator {
-  constructor(apiExplorer) {
+  constructor (apiExplorer) {
     this.apiExplorer = apiExplorer
-
     this.apiExplorer.plugins = []
   }
 
@@ -20,7 +19,7 @@ export default class APIExplorerPluginConfigurator {
    * @param  {[function]} configurator    A function used to configure API Explorer
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
    */
-  addPlugin(pluginSpec) {
+  addPlugin (pluginSpec) {
     if (!pluginSpec) {
       throw new Error('ArgumentError: pluginSpec is a required field')
     }

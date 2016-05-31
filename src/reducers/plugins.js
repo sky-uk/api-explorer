@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 const reducers = { }
 
 // Inject all the existing plugin reducers
-if (window.APIExplorer.plugins.length > 0) {
+if (window.APIExplorer && window.APIExplorer.plugins.length > 0) {
   window.APIExplorer.plugins
     .filter(pluginSpec => pluginSpec.reducer)
     .forEach(pluginSpec => reducers[pluginSpec.key] = pluginSpec.reducer)

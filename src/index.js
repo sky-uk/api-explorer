@@ -127,7 +127,7 @@ class APIExplorer {
    */
   start (domAnchor = 'root') {
     const configureStore = require('store/configureStore')
-    const store = configureStore(  )
+    const store = configureStore()
 
     store.dispatch(apiConfigurations(this.apiConfigurations))
 
