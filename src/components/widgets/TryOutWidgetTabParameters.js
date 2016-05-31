@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Enumerable from 'linq'
+import moment from 'moment'
 
 class TryOutWidgetTabParameters extends Component {
 
@@ -44,17 +45,17 @@ class TryOutWidgetTabParameters extends Component {
 
   editorForMultipleSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
-    value = value || param.items.enum[0]
+    value = [ value || param.items.default ]
     return (
         <select multiple='multiple'
                 className='col-md-12'
-                defaultValue={value}
+                value={value}
                 onChange={(evt) => {
                   const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
                   handleParametersOnChange(param.name, selectedValues)
                 }
                 } >
-            {param.items.enum.map((text, i) => <option key={i} selected={value && value.indexOf(text) > 0}>{text}</option>)}
+            {param.items.enum.map((text, i) => <option key={i} value={text}>{text}</option>)}
         </select>
     )
   }
@@ -62,6 +63,24 @@ class TryOutWidgetTabParameters extends Component {
 // ###############################################################################################################
 // Renders
 // ###############################################################################################################
+
+  renderLastParametersList () {
+    if (this.props.operationLastParameters.size > 0) {
+      const style = { float: 'right' }
+      return (
+        <div style={style}>
+          <span>Last Parameters Used: </span>
+          <select onChange={ (e) => this.props.onHandleLastParametersChange(e)} >
+            <option value='{"values": "default"}'>Default Parameters</option>
+            {this.props.operationLastParameters.map((parameter, i) =>
+              <option key={i} value={JSON.stringify(parameter.values)}>{moment(parameter.moment).fromNow()}</option>
+            )}
+          </select>
+        </div>
+      )
+    }
+    return ''
+  }
 
   renderEditorFor (param) {
     const value = this.props.operationParameters[param.name]
@@ -101,6 +120,7 @@ class TryOutWidgetTabParameters extends Component {
     if (parameters && parameters.length > 0) {
       return (
         <div>
+          {this.renderLastParametersList()}
           <h4>Parameters</h4>
           <table className='table table-striped' >
             <tbody className='operation-params' >
@@ -124,7 +144,9 @@ class TryOutWidgetTabParameters extends Component {
 TryOutWidgetTabParameters.propTypes = {
   operation: PropTypes.object.isRequired,
   operationParameters: PropTypes.object,
-  onHandleParametersChange: PropTypes.func.isRequired
+  operationLastParameters: PropTypes.object,
+  onHandleParametersChange: PropTypes.func.isRequired,
+  onHandleLastParametersChange: PropTypes.func.isRequired
 }
 
 export default TryOutWidgetTabParameters

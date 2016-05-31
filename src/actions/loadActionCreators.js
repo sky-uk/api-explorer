@@ -47,3 +47,15 @@ function newDefinition (config, definition) {
 export function selectedOperation (operationId) {
   return { type: types.SELECTED_OPERATION, operationId }
 }
+
+export function newParameters (operationName, parameters) {
+  return { type: types.NEW_PARAMETERS, operationName, parameters }
+}
+
+export function localParameters (operationName, parameters) {
+  return { type: types.LOCAL_PARAMETERS, operationName, parameters }
+}
+
+export function newResponse (operation, response) {
+  return { type: types.NEW_RESPONSE, operation, response }
+}

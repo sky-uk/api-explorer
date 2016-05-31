@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import * as types from 'constants/ActionTypes'
+import moment from 'moment'
 
+import { newParameters, localParameters, newResponse } from '../../actions/loadActionCreators'
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
 import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
@@ -17,13 +18,32 @@ class TryOutWidgetTab extends Component {
     this.httpRequest = new HttpRequest((resp) => this.requestCallback(resp))
   }
 
-  setOperationParameters (props) {
+  setDefaultOperationParameters (props) {
     let newParameters = {}
+
     props.operation.spec.parameters && props.operation.spec.parameters.forEach(param => {
-      const value = param['x-defaultValue']
+      let value
+      if (param.type === 'array') {
+        value = param.items.default
+      } else {
+        value = param.default
+      }
       if (value) {
         newParameters[param.name] = value
       }
+    })
+
+    this.setState({operationParameters: newParameters})
+  }
+
+  setOperationParameters (props) {
+    this.setDefaultOperationParameters(props)
+
+    let newParameters = {}
+
+    // Override default parameters with the ones in global storage
+    props.operationLocalParameters && Object.keys(props.operationLocalParameters).length && Object.keys(props.operationLocalParameters).forEach(key => {
+      newParameters[key] = props.operationLocalParameters[key]
     })
 
     // Override newParameters with `param-*` query string overrides
@@ -76,7 +96,33 @@ class TryOutWidgetTab extends Component {
     )
   }
 
+  onHandleLastParametersChange (optionValues) {
+    if (optionValues['values'] === 'default') {
+      this.setDefaultOperationParameters(this.props)
+    } else {
+      let newParameters = {}
+
+      Object.keys(optionValues).forEach(key => {
+        newParameters[key] = optionValues[key]
+      })
+
+      this.setState({operationParameters: newParameters})
+    }
+  }
+
   onExecuteRequest (requestFormat) {
+    this.props.dispatch(
+      newParameters(
+        this.props.operation.id,
+        {
+          values: this.state.operationParameters,
+          moment: moment().format()
+        }
+      )
+    )
+
+    this.props.dispatch(localParameters(this.props.operation.id, this.state.operationParameters))
+
     this.setState({requestInProgress: true, requestFormat: requestFormat})
     this.httpRequest.doRequest({
       url: this.getUrl(this.props.operation.spec.url),
@@ -90,7 +136,7 @@ class TryOutWidgetTab extends Component {
   }
 
   requestCallback (response) {
-    this.props.dispatch({ type: types.NEW_RESPONSE, operation: this.props.operation, response })
+    this.props.dispatch(newResponse(this.props.operation, response))
 
     this.setState({requestInProgress: false, response: response})
 
@@ -127,7 +173,9 @@ class TryOutWidgetTab extends Component {
         <TryOutWidgetTabParameters
           operation={this.props.operation}
           operationParameters={this.state.operationParameters}
+          operationLastParameters={this.props.operationLastParameters}
           onHandleParametersChange={ (name, value) => this.onHandleParametersChange(name, value) }
+          onHandleLastParametersChange={ (e) => this.onHandleLastParametersChange(JSON.parse(e.target.selectedOptions[0].value)) }
         />
         <div className={ this.state.requestPanelClassName }>
           <div className='panel-heading'>
@@ -166,7 +214,9 @@ TryOutWidgetTab.propTypes = {
   definitions: PropTypes.object.isRequired,
   apis: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  operationLastParameters: PropTypes.object.isRequired,
+  operationLocalParameters: PropTypes.object.isRequired
 }
 
 export default TryOutWidgetTab

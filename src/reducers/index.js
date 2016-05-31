@@ -10,7 +10,9 @@ const rootReducer = combineReducers({
   definitions: require('./definitions'),
   configs: require('./configs'),
   uiState: require('./uiState'),
-  plugins: require('./plugins')
+  plugins: require('./plugins'),
+  operationLastParameters: require('./operationLastParameters'),
+  operationLocalParameters: require('./operationLocalParameters')
 })
 
 export default rootReducer
