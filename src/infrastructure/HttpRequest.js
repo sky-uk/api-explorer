@@ -1,3 +1,7 @@
+function getMediaType (headerValue) {
+  return headerValue.split(';')[0]
+}
+
 class HttpRequest {
   constructor (callback, useProxy) {
     this.callback = callback
@@ -121,7 +125,8 @@ class HttpRequest {
         status: response.status,
         statusText: response.statusText,
         headers: response.headers,
-        requestFormat: requestInformation.requestFormat
+        requestFormat: requestInformation.requestFormat,
+        contentType: getMediaType(response.headers.get('Content-Type'))
       }
       response.text()
               .then(data => {
