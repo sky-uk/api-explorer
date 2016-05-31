@@ -38,6 +38,5 @@ export default class APIExplorerPluginConfigurator {
     this.apiExplorer.plugins.push(pluginSpec)
     this.apiExplorer.plugins[pluginSpec.key] = pluginSpec
     console.log(`[${pluginSpec.key}] ${pluginSpec.name} successfully registered.`)
-    console.log(this.apiExplorer.plugins)
   }
 }
