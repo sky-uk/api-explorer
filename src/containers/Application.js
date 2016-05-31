@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Dock from 'react-dock'
 import marked from 'marked'
-import { ExplorerHeader, ApplicationLoading, ApplicationAskForAPI, LateralMenu } from 'components'
+import { ExplorerHeader, ApplicationLoading, ApplicationAskForAPI, LateralMenu, APICounter } from 'components'
 import { selectedOperation } from '../actions/loadActionCreators'
 
 class Application extends Component {
@@ -73,7 +73,7 @@ class Application extends Component {
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
-                <h1>API Explorer <span className='badge'>{numberOfAPIs} API{numberOfAPIs > 1 ? 's' : ''}</span></h1>
+                <h1>API Explorer {numberOfAPIs > 1 && <APICounter numberOfAPIs={numberOfAPIs} />}</h1>
                 {this.props.children}
 
                 <div id='fixed-footer'>
