@@ -160,7 +160,7 @@ TryOutWidgetTab.propTypes = {
   definitions: PropTypes.object.isRequired,
   apis: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  dispatch: PropTypes.object.isRequired
+  dispatch: PropTypes.func
 }
 
 export default TryOutWidgetTab
