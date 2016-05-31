@@ -22,12 +22,8 @@ import 'codemirror/addon/search/searchcursor'
 import 'codemirror/addon/dialog/dialog'
 import 'codemirror/addon/dialog/dialog.css'
 
-import { selectedOperation } from '../../actions/loadActionCreators'
-
 /* import '../../vendor/codemirror/codemirror-mode-links'
 import '../../vendor/codemirror/codemirror-extension-foldall'*/
-
-import HATEOASInfoExtractor from './HATEOASInfoExtractor'
 
 class TryOutWidgetTabResponsePanel extends Component {
   constructor () {
@@ -59,22 +55,39 @@ class TryOutWidgetTabResponsePanel extends Component {
     CodeMirror.defaults.gutters = ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
   }
 
+  applyPlugins () {
+    console.log(this.props)
+    APIExplorer.plugins
+      .filter(p => p.decorateEditor)
+      .forEach(p => p.decorateEditor(
+        this.editor,
+        {
+          operations: this.props.operations.toJS(),
+          apis: this.props.apis
+        },
+        this.editor.getValue()))
+  }
+
   componentDidMount () {
     const elem = this.refs.codemirror
 
     this.editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.contentType })
     this.editor.focus()
-
-    this.addHATEOASLinks(this.editor)
-
+    this.applyPlugins()
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
       this.props.response.data = this.props.response.data.replace('\\"', '\"')
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
+    if (prevProps.response.data === this.props.response.data) {
+      console.log('skipping did update')
+      return
+    }
     this.editor.setValue(this.getIndentedJson())
+    this.applyPlugins()
     this.editor.refresh()
+    console.log('did update')
   }
 
   getIndentedJson () {
@@ -89,44 +102,6 @@ class TryOutWidgetTabResponsePanel extends Component {
     }
 
     return data
-  }
-
-  addHATEOASLinks (editor) {
-    let tthis = this
-    const hateoasLinks = HATEOASInfoExtractor.getLinksFor(editor.getValue(), this.props.operations.toJS())
-    hateoasLinks.forEach(addWidgetToEditor)
-
-    function addWidgetToEditor (widgetInfo) {
-      const width = widgetInfo.line.match(/^\s*/)[0].length // length of the initial whitespaces
-      var elem = window.$(`
-        <span>
-          <span style='font-size: inherit; display:inline-block; width:${width}ch'></span>
-          <span style='font-size: 80%'>
-            <span class='label label-info' style='position: relative; top:-1px'>HYPERMEDIA</span>
-            <a class='open-link'    href='${widgetInfo.href}' target='_blank' >Open link</a> |
-            <a class='copy-link'    href='#' data-clipboard-text='${widgetInfo.href}' >Copy link</a>
-            <span class='explore-link-container'> |
-              <a class='explore-link' href='#' >Explore link</a>
-              <small class="text-muted"><em>(${widgetInfo.operationSummary})</em></small>
-            </span>
-          </span>
-        </span>`)
-
-      if (!widgetInfo.operationId) {
-        elem.find('span.explore-link-container').hide()
-      } else {
-        elem.find('a.explore-link')
-            .attr('href', `/operation/${widgetInfo.operationId}/try-it`)
-            .click(evt => {
-              evt.preventDefault()
-              const { store: { dispatch }, history } = tthis.context
-              history.pushState(null, `/operation/${widgetInfo.operationId}/try-it`)
-              dispatch(selectedOperation(widgetInfo.operationId))
-            })
-      }
-
-      editor.addLineWidget(widgetInfo.lineNo - 1, elem[0], { coverGutter: false, noHScroll: false })
-    }
   }
 
   render () {
@@ -148,7 +123,8 @@ class TryOutWidgetTabResponsePanel extends Component {
 
 TryOutWidgetTabResponsePanel.propTypes = {
   response: PropTypes.object,
-  operations: PropTypes.object
+  operations: PropTypes.object,
+  apis: PropTypes.object
 }
 
 TryOutWidgetTabResponsePanel.contextTypes = {

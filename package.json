@@ -89,6 +89,7 @@
     "chai": "^3.4.0",
     "chai-immutable": "^1.4.0",
     "cross-env": "^1.0.8",
+    "esprima": "^2.7.2",
     "expect": "^1.8.0",
     "exports-loader": "^0.6.2",
     "express": "^4.13.3",
