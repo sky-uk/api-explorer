@@ -6,9 +6,11 @@ const rootReducer = combineReducers({
   loader: require('./loader'),
   apis: require('./apis'),
   operations: require('./operations'),
+  operationResponses: require('./operationResponses'),
   definitions: require('./definitions'),
   configs: require('./configs'),
-  uiState: require('./uiState')
+  uiState: require('./uiState'),
+  plugins: require('./plugins')
 })
 
 export default rootReducer

@@ -1,7 +1,6 @@
 import 'babel-core/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
-import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
 import { load as loadSpec, apiConfigurations, headers } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
@@ -13,7 +12,7 @@ import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from 'compone
 import settingsPaneWrapper from 'infrastructure/SettingsPaneWrapper'
 import { GeneralSettings, CustomHeadersSettings } from 'components/settings'
 
-const store = configureStore()
+import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
 
 class APIExplorer {
   constructor () {
@@ -82,6 +81,17 @@ class APIExplorer {
   }
 
   /*
+   * Method of the fluent API used to configure APIExplorer plugins
+   * @param  {[function]} configuratorFunc    A function used to configure the plugins
+   * @return {[APIExplorer]}                  APIExplorer instance to provide a fluent interface
+   */
+  configPlugins (configuratorFunc) {
+    const configurator = new APIExplorerPluginConfigurator(this)
+    configuratorFunc(configurator)
+    return this
+  }
+
+  /*
    * Method of the fluent API used to configure The widgets of APIExplorer
    * @param  {[function]} configurator    A function used to configure the widgets
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
@@ -92,7 +102,7 @@ class APIExplorer {
     return this
   }
 
-    /*
+  /*
    * Method of the fluent API used to configure the interceptors of APIExplorer
    * @param  {[function]} configurator    A function used to configure the interceptors
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
@@ -116,6 +126,9 @@ class APIExplorer {
    * @return {[APIExplorer]}      APIExplorer instance to provide a fluent interface
    */
   start (domAnchor = 'root') {
+    const configureStore = require('store/configureStore')
+    const store = configureStore()
+
     store.dispatch(apiConfigurations(this.apiConfigurations))
 
     // Dispatch actions to load configurations
