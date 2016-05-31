@@ -5,7 +5,7 @@ import samplePluginMultipleReducers from './samplePluginMultipleReducers'
 
 APIExplorer
   .config(c => {
-    c.swagger2API('petstore', 'http://localhost:3000/samples/petstore.json', true)
+    c.swagger2API('petstore', 'http://localhost:3000/sampleapp/petstore/petstore.json', true)
   })
   .configPlugins(c => {
     c.addPlugin(samplePlugin)

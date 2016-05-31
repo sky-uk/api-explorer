@@ -8,7 +8,8 @@
     "build": "NODE_ENV=production webpack --config webpack.prod.config",
     "start": "NODE_ENV=production node server-prod.js",
     "dev": "npm run dev:petstore",
-    "dev:petstore": "NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
+    "dev:petstore": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
+    "dev:helloworld": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=helloworld node server.js",
     "start:dev": "set NODE_DEBUG=request && node server.js",
     "start:devdebug": "NODE_DEBUG=request node server.js",
     "start:devwindebug": "set NODE_DEBUG=request && node-debug server.js",
@@ -17,7 +18,12 @@
     "test-win": "npm run lint && set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
     "test-win:watch": "npm run test-win -- --watch",
     "lint": "standard --verbose | snazzy",
-    "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint"
+    "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint",
+    "docs:clean": "rimraf _book",
+    "docs:prepare": "gitbook install",
+    "docs:build": "npm run docs:prepare && gitbook build -g sky-uk/api-explorer",
+    "docs:watch": "npm run docs:prepare && gitbook serve",
+    "docs:publish": "npm run docs:clean && npm run docs:build && cd _book && git init && git commit --allow-empty -m 'update book' && git checkout -b gh-pages && touch .nojekyll && git add . && git commit -am 'update book' && git push git@github.com:sky-uk/api-explorer gh-pages --force"
   },
   "engines": {
     "node": ">=4.2.1",
@@ -62,6 +68,7 @@
     "react-jsonschema-form": "^0.31.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
+    "recursive-readdir": "^2.0.0",
     "redux": "^3.0.0",
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
@@ -77,9 +84,11 @@
     "babel-runtime": "^5.8.29",
     "chai": "^3.4.0",
     "chai-immutable": "^1.4.0",
+    "cross-env": "^1.0.8",
     "expect": "^1.8.0",
     "exports-loader": "^0.6.2",
     "express": "^4.13.3",
+    "gitbook-cli": "^0.3.4",
     "highlight.js": "^8.9.1",
     "html-webpack-plugin": "^1.6.2",
     "imports-loader": "^0.6.5",
@@ -94,11 +103,12 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "request": "^2.65.0",
+    "rimraf": "^2.3.4",
     "snazzy": "^2.0.1",
     "standard": "^5.3.1",
     "style-loader": "^0.12.3",
-    "webpack": "^1.9.11",
-    "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0"
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0"
   }
 }

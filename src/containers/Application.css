@@ -161,6 +161,11 @@ img { max-width:100% }
     margin-right: 15px;
 }
 
+#lateral-menu .deprecated-api span {
+    text-decoration: line-through;
+    color: gray;
+}
+
 
 /* ###############################################################################
     Header
