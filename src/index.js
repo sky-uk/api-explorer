@@ -1,7 +1,6 @@
 import 'babel-core/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
-import configureStore from 'store/configureStore'
 import Root from 'containers/Root'
 import { load as loadSpec, apiConfigurations, headers } from 'actions/loadActionCreators'
 import * as Loaders from 'infrastructure/loaders'
@@ -14,8 +13,6 @@ import settingsPaneWrapper from 'infrastructure/SettingsPaneWrapper'
 import { GeneralSettings, CustomHeadersSettings } from 'components/settings'
 
 import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
-
-const store = configureStore()
 
 class APIExplorer {
   constructor () {
@@ -129,6 +126,9 @@ class APIExplorer {
    * @return {[APIExplorer]}      APIExplorer instance to provide a fluent interface
    */
   start (domAnchor = 'root') {
+    const configureStore = require('store/configureStore')
+    const store = configureStore(  )
+
     store.dispatch(apiConfigurations(this.apiConfigurations))
 
     // Dispatch actions to load configurations

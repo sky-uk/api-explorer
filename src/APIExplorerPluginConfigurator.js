@@ -25,8 +25,8 @@ export default class APIExplorerPluginConfigurator {
       throw new Error('ArgumentError: pluginSpec is a required field')
     }
 
-    if (!/^[a-z][a-zA-Z]*$/.test(pluginSpec.key)) {
-      throw new Error('ArgumentError: pluginSpec.key should match "[a-z][a-zA-Z]*" regex.')
+    if (!/^[a-z][a-zA-Z0-9]*$/.test(pluginSpec.key)) {
+      throw new Error('ArgumentError: pluginSpec.key should match "[a-z][a-zA-Z0-9]*" regex.')
     }
 
     if (this.apiExplorer.plugins[pluginSpec.key]) {

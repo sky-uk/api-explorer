@@ -6,11 +6,18 @@ APIExplorer
     c.swagger2API('petstore', 'http://localhost:3000/samples/petstore.json', true)
   })
   .configPlugins(c => {
-    const pluginSpec = {
+
+    c.addPlugin({
       key: 'samplePlugin',
+      name: 'Sample Plugin',
+      reducer: pluginReducer
+    })
+
+    c.addPlugin({
+      key: 'samplePlugin2',
       name: 'Sample Plugin'
-    }
-    c.addPlugin(pluginSpec)
+    })
+
   })
   .configWidgetTabs(c => {
     c.addWidgetTab('Operation Props', OperationPropsTab)
@@ -20,3 +27,11 @@ APIExplorer
     c.addHeader('X-Bar', 'Another Value')
   })
   .start()
+
+function pluginReducer (state = 1, action) {
+  switch (action.type) {
+    case 'NEW_OPERATION':
+      return state + 1
+  }
+  return state
+}
