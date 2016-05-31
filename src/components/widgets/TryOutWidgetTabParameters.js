@@ -44,6 +44,7 @@ class TryOutWidgetTabParameters extends Component {
 
   editorForMultipleSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
+    value = value || param.items.enum[0]
     return (
         <select multiple='multiple'
                 className='col-md-12'
