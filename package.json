@@ -68,6 +68,7 @@
     "react-jsonschema-form": "^0.31.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
+    "recursive-readdir": "^2.0.0",
     "redux": "^3.0.0",
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
@@ -108,8 +109,6 @@
     "style-loader": "^0.12.3",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0",
-    "gitbook-cli": "^0.3.4",
-    "rimraf": "^2.3.4"
+    "webpack-hot-middleware": "^2.10.0"
   }
 }
