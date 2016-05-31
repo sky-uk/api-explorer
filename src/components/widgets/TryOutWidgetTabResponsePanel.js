@@ -112,7 +112,12 @@ class TryOutWidgetTabResponsePanel extends Component {
   render () {
     let data = this.props.response.data
     if (this.props.response.requestFormat.indexOf('json') > 0) {
-      data = JSON.stringify(JSON.parse(data), null, 2)
+      try {
+        data = JSON.stringify(JSON.parse(data), null, 2)
+      } catch (e) {
+        console.warn('Invalid json returned in the response')
+        data = e.message + '\n' + data
+      }
     }
     return (
       <div>
