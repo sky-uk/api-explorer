@@ -111,14 +111,10 @@ class LateralMenu extends Component {
       'btn-warning': operation.spec.httpMethod === 'put'
     })
 
-    let liClass = 'lioperation'
-    if (this.props.selectedOperationId && operation.id === this.props.selectedOperationId) {
-      liClass = `${liClass} active`
-    }
-
-    if (operation.spec.deprecated) {
-      liClass = `${liClass} deprecated-api`
-    }
+    const liClass = cx('lioperation', {
+      'active': this.props.selectedOperationId && operation.id === this.props.selectedOperationId,
+      'deprecated-api': operation.spec.deprecated
+    })
 
     return (
       <li key={operation.id} id={operation.id} className={liClass} title={operation.spec.description}>
