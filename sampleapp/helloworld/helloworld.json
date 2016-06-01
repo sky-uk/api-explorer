@@ -1,0 +1,272 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "This is a sample api-explorerhelloworld server.",
+		"version": "1.0.0",
+		"title": "Swagger Helloworld",
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"host": "localhost:3000",
+	"basePath": "/sampleapp/helloworld",
+	"tags": [{
+		"name": "hello",
+		"description": "Everything about your api explorer",
+		"externalDocs": {
+			"description": "Find out more",
+			"url": "http://apiexplorer.io"
+		}
+	}],
+	"schemes": [
+		"http"
+	],
+	"paths": {
+		"/hello": {
+			"get": {
+				"tags": [
+					"hello"
+				],
+				"summary": "Hello from apiexplorer",
+				"description": "",
+				"operationId": "hello",
+				"consumes": [
+					"application/json",
+					"application/xml"
+				],
+				"produces": [
+					"application/xml",
+					"application/json"
+				],
+				"responses": {},
+				"security": []
+			}
+		},
+		"/hello/{hello}": {
+			"put":{
+				 "tags":[
+						"hello"
+				 ],
+				 "summary": "Crete hello",
+         "description": "This can only be done by the logged in user.",
+         "operationId": "createHello",
+         "produces": [
+           "application/xml",
+           "application/json"
+         ],
+         "parameters": [
+           {
+             "name": "hello",
+             "in": "path",
+             "description": "hello that need to be created",
+             "required": true,
+             "type": "string"
+           }
+         ],
+         "responses": {
+           "400": {
+             "description": "Invalid hello supplied"
+           },
+           "404": {
+             "description": "Hello not found"
+           }
+         }
+       },
+			 "delete":{
+ 				 "tags":[
+ 						"hello"
+ 				 ],
+ 				 "summary": "Delete hello",
+          "description": "This can only be done by the logged in user.",
+          "operationId": "deleteHello",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "hello",
+              "in": "path",
+              "description": "hello that need to be deleted",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Invalid hello supplied"
+            },
+            "404": {
+              "description": "Hello not found"
+            }
+          },
+					"security": []
+        },
+				"post":{
+  				 "tags":[
+  						"hello"
+  				 ],
+  				 "summary": "Updated hello",
+           "description": "This can only be done by the logged in user.",
+           "operationId": "updateHello",
+           "produces": [
+             "application/xml",
+             "application/json"
+           ],
+           "parameters": [
+             {
+               "name": "hello",
+               "in": "path",
+               "description": "hello that need to be updated",
+               "required": true,
+               "type": "string"
+             }
+           ],
+           "responses": {
+             "400": {
+               "description": "Invalid hello supplied"
+             },
+             "404": {
+               "description": "Hello not found"
+             }
+           },
+ 					"security": []
+         }
+		 },
+		 "/oldHello": {
+ 			"get": {
+ 				"tags": [
+ 					"old hello"
+ 				],
+ 				"summary": "Old Hello from apiexplorer",
+ 				"description": "",
+ 				"operationId": "hello",
+ 				"consumes": [
+ 					"application/json",
+ 					"application/xml"
+ 				],
+ 				"produces": [
+ 					"application/xml",
+ 					"application/json"
+ 				],
+ 				"responses": {},
+ 				"security": [],
+				"deprecated": "true"
+ 			},
+			"put":{
+				 "tags":[
+						"old hello"
+				 ],
+				 "summary": "Crete hello",
+         "description": "This can only be done by the logged in user.",
+         "operationId": "createHello",
+         "produces": [
+           "application/xml",
+           "application/json"
+         ],
+         "parameters": [
+           {
+             "name": "hello",
+             "in": "path",
+             "description": "hello that need to be created",
+             "required": true,
+             "type": "string"
+           }
+         ],
+         "responses": {
+           "400": {
+             "description": "Invalid hello supplied"
+           },
+           "404": {
+             "description": "Hello not found"
+           }
+         },
+				 "deprecated": "true"
+       },
+			 "delete":{
+ 				 "tags":[
+ 						"old hello"
+ 				 ],
+ 				 "summary": "Delete hello",
+          "description": "This can only be done by the logged in user.",
+          "operationId": "deleteHello",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "hello",
+              "in": "path",
+              "description": "hello that need to be deleted",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Invalid hello supplied"
+            },
+            "404": {
+              "description": "Hello not found"
+            }
+          },
+					"security": [],
+					"deprecated": "true"
+        },
+				"post":{
+  				 "tags":[
+  						"old hello"
+  				 ],
+  				 "summary": "Updated hello",
+           "description": "This can only be done by the logged in user.",
+           "operationId": "updateHello",
+           "produces": [
+             "application/xml",
+             "application/json"
+           ],
+           "parameters": [
+             {
+               "name": "hello",
+               "in": "path",
+               "description": "hello that need to be updated",
+               "required": true,
+               "type": "string"
+             }
+           ],
+           "responses": {
+             "400": {
+               "description": "Invalid hello supplied"
+             },
+             "404": {
+               "description": "Hello not found"
+             }
+           },
+ 					"security": [],
+					"deprecated": "true"
+         }
+ 		}
+	},
+	"definitions": {
+		"Hello":{
+			 "type":"object",
+			 "properties":{
+					"id":{
+						 "type":"integer",
+						 "format":"int64"
+					},
+					"name":{
+						 "type":"string"
+					}
+			 },
+			 "xml":{
+					"name":"Hello"
+			 }
+		}
+	},
+	"externalDocs": {
+		"description": "Find out more about Api-Explorer",
+		"url": "http://www.apiexplorer.io"
+	}
+}
