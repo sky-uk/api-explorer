@@ -11,7 +11,7 @@ let DevTools = injectDevTools()
 const finalCreateStore = compose(
   applyMiddleware(thunk),
   reduxReactRouter({ createHistory }),
-  DevTools ? DevTools.instrument() : null,
+  DevTools ? DevTools.instrument({ maxAge: 2 }) : null,
   persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore)
 

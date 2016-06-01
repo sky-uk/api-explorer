@@ -8,9 +8,10 @@ export default () => {
     return null
   }
   return createDevTools(
-    <DockMonitor toggleVisibilityKey='H'
-                 changePositionKey='Q'
-                 defaultIsVisible={false}>
+    <DockMonitor toggleVisibilityKey='ctrl-h'
+                 changePositionKey='ctrl-q'
+                 defaultSize={0.2}
+                 defaultIsVisible >
       <LogMonitor />
     </DockMonitor>
   )
