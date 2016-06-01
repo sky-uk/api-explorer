@@ -1,8 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router'
+import { selectedOperation } from 'actions/loadActionCreators'
 
 class OperationWidget extends Component {
+
+  componentDidMount () {
+    this.props.dispatch(selectedOperation(this.props.operation.id))
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.operation.id !== prevProps.operation.id) {
+      this.props.dispatch(selectedOperation(this.props.operation.id))
+    }
+  }
+
   render () {
     if (this.props.operation === null) {
       return <div>No operation was found.</div>
@@ -49,9 +61,10 @@ class OperationWidget extends Component {
 
 OperationWidget.propTypes = {
   children: PropTypes.element,
-  operation: PropTypes.object,
-  history: PropTypes.object,
-  config: PropTypes.object
+  dispatch: PropTypes.func.isRequired,
+  operation: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 }
 
 export default OperationWidget
