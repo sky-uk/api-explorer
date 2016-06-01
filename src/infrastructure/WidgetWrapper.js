@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { List } from 'immutable'
 
 export default function widgetWrapper (widgetTab) {
   return connect(
@@ -19,7 +20,9 @@ export default function widgetWrapper (widgetTab) {
                 useProxy: state.configs.get('url').useProxy,
                 headers: state.configs.get('headers'),
                 queryString: state.configs.get('url').getQueryString()
-              }
+              },
+              operationLocalParameters: state.operationLocalParameters.get(operation.id) || {},
+              operationLastParameters: state.operationLastParameters.get(operation.id) || List([])
             }
           }
         )(widgetTab)

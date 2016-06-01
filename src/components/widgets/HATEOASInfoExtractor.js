@@ -8,7 +8,8 @@ export default {
 function getLinksFor (text, operations) {
   if (text.charAt(0) === '{') return getJSONLinksFor(text, operations)
   else if (text.indexOf('<?xml') === 0) return getXMLLinksFor(text)
-  throw new Error('TEXT FORMAT NOT SUPPORTED: ', text.substring(0, 20), '...')
+  // throw new Error('TEXT FORMAT NOT SUPPORTED: ', text.substring(0, 20), '...')
+  return []
 }
 
 function getJSONLinksFor (text, operations) {
