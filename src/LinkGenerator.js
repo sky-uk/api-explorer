@@ -5,6 +5,21 @@ export default class LinkGenerator {
     this.apiExplorer = apiExplorer
   }
 
+  makeHref (api, operationSpec, params) {
+    const {host, basePath} = api
+    const scheme = api.schemes[0]
+    const path = operationSpec.url
+    let href = `${scheme}://${host}${basePath}${path}`
+    Object.keys(params).forEach(key => {
+      const rex = new RegExp(`\{${key}\}`)
+      if (rex.test(href)) {
+        href = href.replace(rex, params[key])
+        delete params[key]
+      }
+    })
+    return new URI(href).query(params).toString()
+  }
+
   toOperation (operationSpec, params = {}) {
     const baseUri = `/operation/${operationSpec.id}/try-it`
     const queryParams = {}

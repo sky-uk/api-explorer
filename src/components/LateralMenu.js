@@ -116,7 +116,7 @@ class LateralMenu extends Component {
 
     return (
       <li key={operation.id} id={operation.id} className={liClass} title={operation.spec.description}>
-        <Link to={APIExplorer.LinkGenerator.toOperation(operation)} className='operation-container' onClick={() => this.props.onOperationClick(operation.id)}>
+        <Link to={APIExplorer.LinkGenerator.toOperation(operation)} className='operation-container' >
           <span className='operation'>
             <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
@@ -134,8 +134,7 @@ class LateralMenu extends Component {
 LateralMenu.propTypes = {
   operations: PropTypes.array.isRequired,
   apis: PropTypes.object.isRequired,
-  selectedOperationId: PropTypes.string,
-  onOperationClick: PropTypes.func.isRequired
+  selectedOperationId: PropTypes.string
 }
 
 export default LateralMenu

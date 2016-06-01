@@ -63,7 +63,8 @@ class TryOutWidgetTabResponsePanel extends Component {
         this.editor,
         {
           operations: this.props.operations.toJS(),
-          apis: this.props.apis
+          apis: this.props.apis,
+          history: this.context.history
         },
         this.editor.getValue()))
   }

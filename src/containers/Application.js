@@ -6,7 +6,6 @@ import { Link } from 'react-router'
 import Dock from 'react-dock'
 import marked from 'marked'
 import { ExplorerHeader, ApplicationLoading, ApplicationAskForAPI, LateralMenu, APICounter } from 'components'
-import { selectedOperation } from '../actions/loadActionCreators'
 
 class Application extends Component {
   constructor () {
@@ -65,7 +64,6 @@ class Application extends Component {
               operations={this.props.operations.toJS()}
               apis={this.props.apis}
               selectedOperationId={this.props.selectedOperationId}
-              onOperationClick={ operationId => this.props.dispatch(selectedOperation(operationId)) }
             />
           </div>
         </Dock>
