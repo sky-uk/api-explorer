@@ -48,7 +48,7 @@ To generate a production build you need to run the following commands:
 
 ```
 npm install
-npm run build
+npm run dev
 ```
 
 The output files are stored in the `dist` folder. You can grab the files and place then in your application server.
@@ -86,4 +86,3 @@ APIExplorer
   })
   .start()
 ```
-
