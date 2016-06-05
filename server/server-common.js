@@ -1,29 +1,32 @@
 var request = require('request')
 var Express = require('express')
+var path = require('path')
 
-module.exports = function (app, port, basePath) {
-  app.use(Express.static(__dirname + '/public'))
+module.exports = function (app, port, rootPath) {
+  app.use(Express.static(path.join(rootPath, '/public')))
 
   app.all('/proxy/*', function (req, res) {
     try {
       var url = decodeURIComponent(req.query.url)
-      console.log('Proxy request to: ' + url)
       req.pipe(request(url)).pipe(res)
     } catch (err) {
       res.status(500).send(err)
     }
   })
 
+  // TODO: CG: I guess this is not required anymore
   app.get('/samples/*', function (req, res) {
-    res.sendFile(basePath + req.path)
+    res.sendFile(rootPath + req.path)
   })
 
+  // TODO: CG: I guess this is not required anymore
   app.get('/*.js', function (req, res) {
-    res.sendFile(basePath + req.path)
+    res.sendFile(rootPath + req.path)
   })
 
+  // SPA fallback. Serve everything as index.html
   app.get('/*', function (req, res) {
-    res.sendFile(basePath + '/index.html')
+    res.sendFile(path.join(rootPath, 'server', '/index.html'))
   })
 
   app.listen(port, function (error) {

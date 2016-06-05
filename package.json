@@ -5,19 +5,16 @@
   "main": "dist/APIExplorer.umd.js",
   "scripts": {
     "prestart": "npm run build",
-    "build": "NODE_ENV=production webpack --config webpack.prod.config",
+    "build": "NODE_ENV=production webpack --config build/webpack.prod.config",
     "start": "NODE_ENV=production node server-prod.js",
     "dev": "npm run dev:petstore",
-    "dev:petstore": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=petstore node server.js",
-    "dev:links": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=links node server.js",
-    "dev:helloworld": "cross-env NODE_DEBUG=request APIEXPLORER_SAMPLE=helloworld node server.js",
+    "dev:petstore": "cross-env APIEXPLORER_SAMPLE=petstore nodemon server/server.js",
+    "dev:links": "cross-env APIEXPLORER_SAMPLE=links nodemon server/server.js",
+    "dev:helloworld": "cross-env APIEXPLORER_SAMPLE=helloworld nodemon server/server.js",
     "test": "npm run lint",
-    "DISABLEDtest": "npm run lint && NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
+    "DISABLEDtest": "npm run lint && cross-env NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
     "DISABLEDtest:watch": "npm test -- --watch",
-    "DISABLEDtest-win": "npm run lint && set NODE_ENV=test && mocha --recursive --compilers js:babel-core/register",
-    "DISABLEDtest-win:watch": "npm run test-win -- --watch",
     "lint": "standard --verbose | snazzy",
-    "lint:watch": "nodemon --watch ./ --ext js --exec npm run lint",
     "docs:clean": "rimraf _book",
     "docs:prepare": "gitbook install",
     "docs:build": "npm run docs:prepare && gitbook build -g sky-uk/api-explorer",
@@ -50,6 +47,9 @@
       "dist"
     ]
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "async": "^1.5.0",
     "classnames": "^2.1.2",

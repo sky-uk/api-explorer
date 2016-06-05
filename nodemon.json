@@ -1,0 +1,14 @@
+{
+  "verbose": true,
+  "ignore": [
+    "node_modules/**/node_modules"
+  ],
+  "events": {
+    "restart": "osascript -e 'display notification \"App restarted\" with title \"nodemon\"'"
+  },
+  "watch": [
+    "server",
+    "build"
+  ],
+  "ext": "js json"
+}

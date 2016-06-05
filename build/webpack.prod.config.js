@@ -2,13 +2,17 @@ var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
+var rootPath = path.join(__dirname, '..')
+var srcPath = path.join(rootPath, 'src')
+var distPath = path.join(rootPath, 'dist')
+
 module.exports = {
   devtool: 'source-map',
   entry: {
-    main: './src'
+    main: srcPath
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: distPath,
     filename: 'APIExplorer.umd.js',
     publicPath: '/',
     library: 'APIExplorer',
@@ -28,7 +32,8 @@ module.exports = {
         unused: true,
         dead_code: true,
         warnings: false
-      }),
+      }
+    }),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -37,7 +42,7 @@ module.exports = {
   ],
   resolve: {
     modulesDirectories: [
-      'src',
+      srcPath,
       'node_modules'
     ]
   },
@@ -46,11 +51,11 @@ module.exports = {
       test: /\.js$/,
       loaders: ['babel'],
       exclude: /node_modules/,
-      include: __dirname
+      include: srcPath
     }, {
       test: /\.css?$/,
       loaders: ['style', 'raw'],
-      include: __dirname
+      include: srcPath
     }]
   }
 }
