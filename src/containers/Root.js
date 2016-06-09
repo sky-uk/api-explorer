@@ -16,7 +16,7 @@ export default class Root extends Component {
             <ReduxRouter>
               {getRoutes(store)}
             </ReduxRouter>
-            {DevTools && <DevTools />}
+            {!window.devToolsExtension && DevTools && <DevTools />}
           </div>
         </Provider>
     )
