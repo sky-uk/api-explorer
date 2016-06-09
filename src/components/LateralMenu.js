@@ -73,7 +73,7 @@ class LateralMenu extends Component {
         <a href='#'>
           <i className='fa fa-fw fa-user'></i>
           <span></span>
-          <strong>{apiOperations[0].apiname}</strong><span> API</span>
+          <strong>{apiOperations[0].apiname}</strong><span></span>
         </a>
         <ul className='nav nav-second-level'>
         {tags.map(tag => this.renderOperationsWithTag(apiOperations, tag))}
