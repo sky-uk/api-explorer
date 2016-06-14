@@ -1,3 +1,5 @@
+import URI from 'urijs'
+
 export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   const url = config.url.getUrl()
   onLoadProgress(`Loading API Spec from ${url}`)
@@ -6,18 +8,29 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
     .then(response => response.json())
     .then(apiSpec => {
       let newApiSpec = apiSpec
+      let defaultHost = new URI(url).host()
+
       if (config.interceptor) {
         newApiSpec = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, apiSpec)
       }
-      swagger2JsonLoader(newApiSpec, config.friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+
+      swagger2JsonLoader(newApiSpec, config.friendlyName, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
     })
 }
 
-export function swagger2JsonLoader (apiSpec, friendlyName, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
+export function swagger2JsonLoader (apiSpec, friendlyName, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
   onNewAPI(apiSpec)
   const apiname = friendlyName
+
+  // defaults
+  apiSpec = Object.assign({
+    definitions: [],
+    basePath: '',
+    host: defaultHost
+  }, apiSpec)
+
   Object.keys(apiSpec.paths)
         .forEach(url => {
           Object.keys(apiSpec.paths[url])
