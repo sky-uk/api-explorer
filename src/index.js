@@ -37,7 +37,6 @@ class APIExplorer {
     this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
     this.queryStringLoadEnabled = false
-    this.interceptors = {}
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
@@ -152,10 +151,6 @@ class APIExplorer {
 
     // Dispatch actions to load configurations
     for (const config of this.apiConfigurations) {
-      const interceptor = this.interceptors[config.loaderType]
-      if (interceptor) {
-        config.interceptor = interceptor
-      }
       store.dispatch(loadSpec(config))
     }
 

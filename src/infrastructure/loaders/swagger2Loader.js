@@ -10,9 +10,7 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
       let newApiSpec = apiSpec
       let defaultHost = new URI(url).host()
 
-      if (config.interceptor) {
-        newApiSpec = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, apiSpec)
-      }
+      newApiSpec = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, apiSpec)
 
       swagger2JsonLoader(newApiSpec, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
     })

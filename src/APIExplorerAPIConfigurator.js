@@ -9,7 +9,7 @@ export default class APIExplorerAPIConfigurator {
     this.url = url
 
     this.headers = []
-    this.interceptors = []
+    this.interceptor = (config, apiSpec) => { return apiSpec }
     this.HttpClientConfigurator = c => {}
   }
 
@@ -18,16 +18,12 @@ export default class APIExplorerAPIConfigurator {
     return this
   }
 
-  addInterceptor (interceptor) {
-    let currrentInterceptor = this.interceptors[this.loaderType]
+  addInterceptor (newInterceptor) {
+    let currrentInterceptor = this.interceptor
 
-    if (!currrentInterceptor) {
-      currrentInterceptor = (config, apiSpec) => {}
-    }
-
-    this.interceptors[this.loaderType] = (config, apiSpec) => {
-      currrentInterceptor(config, apiSpec)
-      interceptor(config, apiSpec)
+    this.interceptor = (config, apiSpec) => {
+      apiSpec = currrentInterceptor(config, apiSpec)
+      return newInterceptor(config, apiSpec)
     }
 
     return this
