@@ -22,7 +22,6 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
 export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
-  onNewAPI(apiSpec)
 
   // defaults
   apiSpec = Object.assign({
@@ -30,6 +29,8 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
     basePath: '',
     host: defaultHost
   }, apiSpec)
+
+  onNewAPI(apiSpec)
 
   Object.keys(apiSpec.paths)
         .forEach(url => {
