@@ -7,11 +7,12 @@ import createHistory from 'history/lib/createBrowserHistory' // history/lib/crea
 import thunk from 'redux-thunk'
 
 let DevTools = injectDevTools()
+let InstrumentationStrategy = window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument({ maxAge: 2 })
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
   reduxReactRouter({ createHistory }),
-  DevTools ? DevTools.instrument({ maxAge: 2 }) : null,
+  DevTools ? InstrumentationStrategy : null,
   persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore)
 
