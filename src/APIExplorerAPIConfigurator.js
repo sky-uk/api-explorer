@@ -29,6 +29,11 @@ export default class APIExplorerAPIConfigurator {
     return this
   }
 
+  useProxy (isProxied) {
+    this.url.setProxy(isProxied)
+    return this
+  }
+
   /**
    * Configure global CORS settings
    * @param {object} config      The current HTTP Client Configuration

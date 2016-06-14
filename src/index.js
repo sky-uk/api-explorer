@@ -54,12 +54,12 @@ class APIExplorer {
    * @param  {[function]} configurator    A function used to configure API Explorer
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
    */
-  addAPI (friendlyName, specFormat, url, useProxy, configuratorFunc) {
+  addAPI (friendlyName, specFormat, url, configuratorFunc) {
     let loaderType = this.getLoaderTypeBySpecFormat(specFormat)
     const loader = this.Loaders[loaderType]
 
     const slug = friendlyName.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
-    const conf = new APIExplorerAPIConfigurator(friendlyName, loaderType, loader, slug, new Url(url, useProxy), this)
+    const conf = new APIExplorerAPIConfigurator(friendlyName, loaderType, loader, slug, new Url(url), this)
 
     configuratorFunc(conf)
     this.apiConfigurations.push(conf)
@@ -162,7 +162,7 @@ class APIExplorer {
       this.addConfiguration(
         friendlyName,
         specLoader,
-        new Url(queryString.swaggerSpec, swaggerUseProxy)
+        new Url(queryString.swaggerSpec).setProxy(swaggerUseProxy)
       )
     }
 
