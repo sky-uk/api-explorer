@@ -37,7 +37,7 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index-template.html'
+      template: path.join(rootPath, 'build', 'index-template.html')
     })
   ],
   resolve: {
@@ -51,11 +51,11 @@ module.exports = {
       test: /\.js$/,
       loaders: ['babel'],
       exclude: /node_modules/,
-      include: srcPath
+      include: rootPath
     }, {
       test: /\.css?$/,
       loaders: ['style', 'raw'],
-      include: srcPath
+      include: rootPath
     }]
   }
 }
