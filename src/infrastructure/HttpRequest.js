@@ -96,7 +96,7 @@ class HttpRequest {
     return result
   }
 
-  doRequest (params) {
+  doRequest (params, GlobalHttpClientConfigurator, ApiHttpClientConfigurator) {
     const callback = this.callback
 
     const requestInformation = this.getRequestInformation(params)
@@ -113,12 +113,16 @@ class HttpRequest {
 
     params.headers.forEach(h => headers[h.name] = h.value)
 
-    fetch(finalUrl, {
+    let requestConfig = {
       method: requestInformation.httpMethod,
       headers: headers,
-      body: requestInformation.body,
-      credentials: 'include'
-    })
+      body: requestInformation.body
+    }
+
+    GlobalHttpClientConfigurator(requestConfig)
+    ApiHttpClientConfigurator(requestConfig)
+
+    fetch(finalUrl, requestConfig)
     .then(response => {
       let resp = {
         url: requestInformation.url,
@@ -128,11 +132,11 @@ class HttpRequest {
         requestFormat: requestInformation.requestFormat,
         contentType: getMediaType(response.headers.get('Content-Type'))
       }
-      response.text()
-              .then(data => {
-                resp.data = data
-                callback(resp)
-              })
+
+      return response.text().then(responseText => { resp.data = responseText; callback(resp) })
+    })
+    .catch(error => {
+      console.error('Received error', error)
     })
   }
 }

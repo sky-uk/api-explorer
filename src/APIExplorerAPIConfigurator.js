@@ -29,9 +29,26 @@ export default class APIExplorerAPIConfigurator {
     return this
   }
 
+  /**
+   * Configure global CORS settings
+   * @param {object} config      The current HTTP Client Configuration
+   */
   configCORS (config) {
-    this.HttpClientConfigurator(c => {
+    this.configHttpClient(c => {
       c.credentials = config.credentials
     })
+
+    return this
+  }
+
+  configHttpClient (configurator) {
+    let currentConfigurator = this.HttpClientConfigurator
+
+    this.HttpClientConfigurator = c => {
+      currentConfigurator(c)
+      configurator(c)
+    }
+
+    return this
   }
 }

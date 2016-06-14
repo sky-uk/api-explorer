@@ -132,7 +132,7 @@ class TryOutWidgetTab extends Component {
       requestFormat: requestFormat && requestFormat !== '' ? requestFormat : this.props.operation.spec.produces[0],
       spec: this.props.operation.spec,
       parameters: this.state.operationParameters
-    })
+    }, this.props.config.HttpClientConfigurator, this.props.apiConfig.HttpClientConfigurator)
   }
 
   requestCallback (response) {
@@ -214,6 +214,7 @@ TryOutWidgetTab.propTypes = {
   definitions: PropTypes.object.isRequired,
   apis: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  apiConfig: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   operationLastParameters: PropTypes.object.isRequired,
   operationLocalParameters: PropTypes.object.isRequired

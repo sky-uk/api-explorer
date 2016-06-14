@@ -37,6 +37,7 @@ class APIExplorer {
     this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
     this.queryStringLoadEnabled = false
+    this.HttpClientConfigurator = c => {}
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
@@ -63,6 +64,14 @@ class APIExplorer {
     configuratorFunc(conf)
     this.apiConfigurations.push(conf)
     return this
+  }
+
+  getAPI (name) {
+    let config = this.apiConfigurations.find(config => {
+      return config.friendlyName === name
+    })
+
+    return config
   }
 
   /**
@@ -105,6 +114,29 @@ class APIExplorer {
   addWidgetTab (name, component) {
     const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
     this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug })
+    return this
+  }
+
+  /**
+   * Configure global CORS settings
+   * @param {object} config      The current HTTP Client Configuration
+   */
+  configCORS (config) {
+    this.configHttpClient(c => {
+      c.credentials = config.credentials
+    })
+
+    return this
+  }
+
+  configHttpClient (configurator) {
+    let currentConfigurator = this.HttpClientConfigurator
+
+    this.HttpClientConfigurator = c => {
+      currentConfigurator(c)
+      configurator(c)
+    }
+
     return this
   }
 
