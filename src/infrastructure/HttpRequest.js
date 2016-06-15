@@ -13,7 +13,7 @@ class HttpRequest {
       return true
     }
 
-    if (operationParametersSpec && Object.getOwnPropertyNames(operationParameters).length > 0) {
+    if (operationParametersSpec) {
       let valid = true
       operationParametersSpec
         .filter(param => param.required)
