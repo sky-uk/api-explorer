@@ -13,6 +13,7 @@ import settingsPaneWrapper from 'infrastructure/SettingsPaneWrapper'
 import { GeneralSettings, CustomHeadersSettings } from 'components/settings'
 
 import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
+import APIExplorerAPIConfigurator from './APIExplorerAPIConfigurator'
 import LinkGenerator from './LinkGenerator'
 
 class APIExplorer {
@@ -20,6 +21,11 @@ class APIExplorer {
     this.SupportedLoaders = {
       Swagger1Loader: 'Swagger1Loader',
       Swagger2Loader: 'Swagger2Loader'
+    }
+
+    this.LoaderFriendlyNames = {
+      'swagger1': this.SupportedLoaders.Swagger1Loader,
+      'swagger2': this.SupportedLoaders.Swagger2Loader
     }
 
     this.Loaders = {}
@@ -31,7 +37,7 @@ class APIExplorer {
     this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
     this.queryStringLoadEnabled = false
-    this.interceptors = {}
+    this.HttpClientConfigurator = c => {}
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
     this.addWidgetTab('Spec', SpecWidgetTab)
@@ -48,9 +54,89 @@ class APIExplorer {
    * @param  {[function]} configurator    A function used to configure API Explorer
    * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
    */
-  config (configurator) {
-    const apiExplorerConfigurator = new APIExplorerConfigurator(this)
-    configurator(apiExplorerConfigurator)
+  addAPI (friendlyName, specFormat, url, configuratorFunc) {
+    let loaderType = this.getLoaderTypeBySpecFormat(specFormat)
+    const loader = this.Loaders[loaderType]
+
+    const slug = friendlyName.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
+    const conf = new APIExplorerAPIConfigurator(friendlyName, loaderType, loader, slug, new Url(url), this)
+
+    configuratorFunc(conf)
+    this.apiConfigurations.push(conf)
+    return this
+  }
+
+  getAPI (name) {
+    let config = this.apiConfigurations.find(config => {
+      return config.friendlyName === name
+    })
+
+    return config
+  }
+
+  /**
+   * Adds a new Header
+   * @param {[type]} name  Name of the Header
+   * @param {[type]} value Value of the Header
+   */
+  addHeader (name, value) {
+    this.headers.push({ name, value })
+    return this
+  }
+
+  /*
+   * Method of the fluent API used to configure APIExplorer plugins
+   * @param  {[object]} pluginSpec    An object describing the plugin
+   * @return {[APIExplorer]}          APIExplorer instance to provide a fluent interface
+   */
+  addPlugin (pluginSpec) {
+    const configurator = new APIExplorerPluginConfigurator(this)
+    configurator.addPlugin(pluginSpec)
+    return this
+  }
+
+  /**
+   * Adds a new Settings Pane
+   * @param {[type]} name      friendly name of the Settings pane
+   * @param {[type]} component Object that represents the component do add to the settings pane
+   */
+  addSettingsPane (name, component) {
+    const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
+    this.settingsPanes.push({ name, component: settingsPaneWrapper(component), slug: slug })
+    return this
+  }
+
+  /**
+   * Adds a new Widget
+   * @param {[type]} name      friendly name of the Widget (to appear in the wodgets tab)
+   * @param {[type]} component Object that represents the component do add to the widgets tab
+   */
+  addWidgetTab (name, component) {
+    const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
+    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug })
+    return this
+  }
+
+  /**
+   * Configure global CORS settings
+   * @param {object} config      The current HTTP Client Configuration
+   */
+  configCORS (config) {
+    this.configHttpClient(c => {
+      c.credentials = config.credentials
+    })
+
+    return this
+  }
+
+  configHttpClient (configurator) {
+    let currentConfigurator = this.HttpClientConfigurator
+
+    this.HttpClientConfigurator = c => {
+      currentConfigurator(c)
+      configurator(c)
+    }
+
     return this
   }
 
@@ -76,49 +162,10 @@ class APIExplorer {
       this.addConfiguration(
         friendlyName,
         specLoader,
-        new Url(queryString.swaggerSpec, swaggerUseProxy)
+        new Url(queryString.swaggerSpec).setProxy(swaggerUseProxy)
       )
     }
 
-    return this
-  }
-
-  /*
-   * Method of the fluent API used to configure APIExplorer plugins
-   * @param  {[function]} configuratorFunc    A function used to configure the plugins
-   * @return {[APIExplorer]}                  APIExplorer instance to provide a fluent interface
-   */
-  configPlugins (configuratorFunc) {
-    const configurator = new APIExplorerPluginConfigurator(this)
-    configuratorFunc(configurator)
-    return this
-  }
-
-  /*
-   * Method of the fluent API used to configure The widgets of APIExplorer
-   * @param  {[function]} configurator    A function used to configure the widgets
-   * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
-   */
-  configWidgetTabs (configurator) {
-    const apiExplorerWidgetTabConfigurator = new APIExplorerWidgetTabConfigurator(this)
-    configurator(apiExplorerWidgetTabConfigurator)
-    return this
-  }
-
-  /*
-   * Method of the fluent API used to configure the interceptors of APIExplorer
-   * @param  {[function]} configurator    A function used to configure the interceptors
-   * @return {[APIExplorer]}              APIExplorer instance to provide a fluent interface
-   */
-  configInterceptors (configurator) {
-    const apiExplorerInterceptorConfigurator = new APIExplorerInterceptorConfigurator(this)
-    configurator(apiExplorerInterceptorConfigurator)
-    return this
-  }
-
-  configHeaders (configurator) {
-    const apiExplorerHeaderConfigurator = new APIExplorerHeaderConfigurator(this)
-    configurator(apiExplorerHeaderConfigurator)
     return this
   }
 
@@ -136,10 +183,6 @@ class APIExplorer {
 
     // Dispatch actions to load configurations
     for (const config of this.apiConfigurations) {
-      const interceptor = this.interceptors[config.loaderType]
-      if (interceptor) {
-        config.interceptor = interceptor
-      }
       store.dispatch(loadSpec(config))
     }
 
@@ -150,124 +193,17 @@ class APIExplorer {
     return this
   }
 
-  /**
-   * Adds an API configuration
-   * @param {[type]} loaderType The type of loader used to parse the api description
-   * @param {[type]} extraProps Extra properties specific to the loader
-   */
-  addConfiguration (friendlyName, loaderType, url) {
-    const loader = this.Loaders[loaderType]
-    this.apiConfigurations.push({ friendlyName, loaderType, loader, url })
-  }
+  getLoaderTypeBySpecFormat (specFormat) {
+    let loaderType = this.LoaderFriendlyNames[specFormat]
 
-  /**
-   * Adds a new interceptor to make changes to the swagger spec before usage
-   * Only one interceptor per type is supported
-   * @param {[type]} loaderType The type of loader to associate this interceptor with
-   * @param {[function]} interceptor A function to change the properties of swagger spec
-   */
-  addInterceptor (loaderType, interceptor) {
-    if (this.interceptors[loaderType]) {
-      console.warn(`The register of the interceptor for type '${loaderType}' will overlap the previous register. Only one interceptor is supported for each loader type.`)
+    if (!loaderType) {
+      console.warn('Unsupported API specification format: ' + specFormat,
+                   'Available formats:', Object.keys(this.LoaderFriendlyNames))
+
+      throw Error('Unsupported API specification format: ' + specFormat)
     }
-    this.interceptors[loaderType] = interceptor
-  }
 
-  /**
-   * Adds a new Widget
-   * @param {[type]} name      friendly name of the Widget (to appear in the wodgets tab)
-   * @param {[type]} component Object that represents the component do add to the widgets tab
-   */
-  addWidgetTab (name, component) {
-    const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
-    this.widgetTabs.push({ name, component: widgetWrapper(component), slug: slug })
-  }
-
-  /**
-   * Adds a new Settings Pane
-   * @param {[type]} name      friendly name of the Settings pane
-   * @param {[type]} component Object that represents the component do add to the settings pane
-   */
-  addSettingsPane (name, component) {
-    const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
-    this.settingsPanes.push({ name, component: settingsPaneWrapper(component), slug: slug })
-  }
-
-  /**
-   * Adds a new Header
-   * @param {[type]} name  Name of the Header
-   * @param {[type]} value Value of the Header
-   */
-  addHeader (name, value) {
-    this.headers.push({ name, value })
-  }
-}
-
-class APIExplorerConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  swagger1API (friendlyName, url, useProxy = false) {
-    this.apiExplorer.addConfiguration(
-      friendlyName,
-      'Swagger1Loader',
-      new Url(url, useProxy)
-    )
-    return this
-  }
-
-  swagger2API (friendlyName, url, useProxy = false) {
-    this.apiExplorer.addConfiguration(
-      friendlyName,
-      'Swagger2Loader',
-      new Url(url, useProxy)
-    )
-    return this
-  }
-}
-
-class APIExplorerInterceptorConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  swagger1Interceptor (interceptor) {
-    this.apiExplorer.addInterceptor(
-      this.apiExplorer.SupportedLoaders.Swagger1Loader,
-      interceptor
-    )
-    return this
-  }
-
-  swagger2Interceptor (interceptor) {
-    this.apiExplorer.addInterceptor(
-      this.apiExplorer.SupportedLoaders.Swagger2Loader,
-      interceptor
-    )
-    return this
-  }
-}
-
-class APIExplorerWidgetTabConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  addWidgetTab (name, component) {
-    this.apiExplorer.addWidgetTab(name, component)
-    return this
-  }
-}
-
-class APIExplorerHeaderConfigurator {
-  constructor (apiExplorer) {
-    this.apiExplorer = apiExplorer
-  }
-
-  addHeader (name, value) {
-    this.apiExplorer.addHeader(name, value)
-    return this
+    return loaderType
   }
 }
 

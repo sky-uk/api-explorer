@@ -1,9 +1,10 @@
 const URI_PROTOCOL_REGEX = /([a-z]+):\/\//
 
 class Url {
-  constructor (url, useProxy) {
+  constructor (url) {
     this.url = ''
     this.queryString = ''
+    this.useProxy = false
 
     const elements = url.split('?')
     if (elements.length > 1) {
@@ -13,8 +14,12 @@ class Url {
       this.url = url
       this.queryString = ''
     }
-    this.useProxy = useProxy
+
     this.protocol = URI_PROTOCOL_REGEX.exec(url).splice(1).toString()
+  }
+
+  setProxy (isProxied) {
+    this.useProxy = isProxied
   }
 
   getQueryString () {

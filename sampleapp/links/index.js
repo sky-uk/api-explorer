@@ -3,13 +3,10 @@ import AddLinksPlugin from './plugin'
 import OperationPropsTab from './OperationPropsTab'
 
 APIExplorer
-  .config(c => {
-    c.swagger2API('petstore', 'http://localhost:3000/sampleapp/petstore/petstore.json', true)
+  .addAPI('petstore', 'swagger2', 'http://localhost:3000/sampleapp/petstore/petstore.json', c => {
+    c.useProxy(true)
   })
-  .configWidgetTabs(c => {
-    c.addWidgetTab('Operation Props', OperationPropsTab)
-  })
-  .configPlugins(c => {
-    c.addPlugin(AddLinksPlugin)
-  })
+  .addWidgetTab('Operation Props', OperationPropsTab)
+  .addPlugin(AddLinksPlugin)
+  .configCORS({ credentials: 'omit' })
   .start()
