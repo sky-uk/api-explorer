@@ -90,6 +90,13 @@ class HttpRequest {
       .filter(param => param.in === 'body')
       .map(param => params.parameters[param.name] || param.default)[0]
 
+    result.headers = {}
+    parameters
+      .filter(param => param.in === 'header')
+      .forEach(param => {
+        result.headers[param.name] = params.parameters[param.name] || param.default
+      })
+
     result.httpMethod = params.spec.httpMethod
     result.requestFormat = params.requestFormat
 
@@ -115,7 +122,7 @@ class HttpRequest {
 
     let requestConfig = {
       method: requestInformation.httpMethod,
-      headers: headers,
+      headers: Object.assign({}, headers, requestInformation.headers),
       body: requestInformation.body
     }
 
