@@ -8,7 +8,7 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
     .then(response => response.json())
     .then(apiSpec => {
       let newApiSpec = apiSpec
-      let defaultHost = new URI(url).host()
+      let defaultHost = new URI(config.url.url).host()
 
       newApiSpec = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, apiSpec)
 
