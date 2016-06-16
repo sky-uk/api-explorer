@@ -95,6 +95,11 @@ class TryOutWidgetTabResponsePanel extends Component {
 
   getIndentedJson () {
     let data = this.props.response.data
+
+    if (!data || data === '') {
+      return ''
+    }
+
     if (this.props.response.requestFormat.indexOf('json') > 0) {
       try {
         data = JSON.stringify(JSON.parse(data), null, 2)

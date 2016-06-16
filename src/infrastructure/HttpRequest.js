@@ -1,5 +1,5 @@
 function getMediaType (headerValue) {
-  return headerValue.split(';')[0]
+  return headerValue ? headerValue.split(';')[0] : ''
 }
 
 class HttpRequest {
