@@ -74,15 +74,13 @@ You can customize APIExplorer using the following fluent configuration:
 
 ```javascript
 APIExplorer
-  .config(c => {
-  	c.swagger2API('petshop', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', true)
-    }
+  .addAPI('petstore', 'swagger2', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', c => {
+    c.addHeader('X-Foo', 'Some Value')
+    c.addHeader('X-Bar', 'Another Value')
+    c.useProxy(true)
   })
-  .configWidgetTabs(c => {
-    // c.addWidgetTab('HATEOAS', APIExplorer.HATEOASWidget)
-  })
-  .configHeaders(c => {
-    c.addHeader('HeaderName', 'HeaderValue')
-  })
+  .addWidgetTab('HATEOAS', APIExplorer.HATEOASWidget)
+  .addPlugin(samplePlugin)
+  .configCORS({ credentials: 'omit' })
   .start()
 ```
