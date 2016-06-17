@@ -92,7 +92,7 @@ class HttpRequest {
 
     result.headers = {}
     parameters
-      .filter(param => param.in === 'header')
+      .filter(param => param.in === 'header' && params.parameters.hasOwnProperty(param.name))
       .forEach(param => {
         result.headers[param.name] = params.parameters[param.name] || param.default
       })
