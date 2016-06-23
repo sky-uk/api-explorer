@@ -1,6 +1,6 @@
 {
   "name": "api-explorer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "API Explorer (live documentation) for Swagger",
   "main": "dist/APIExplorer.umd.js",
   "scripts": {
@@ -31,7 +31,6 @@
   },
   "author": "Sky UK Limited",
   "license": "SEE LICENSE IN LICENSE",
-  "private": true,
   "bugs": {
     "url": "https://github.com/sky-uk/api-explorer/issues"
   },
