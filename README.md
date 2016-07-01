@@ -84,3 +84,16 @@ APIExplorer
   .configCORS({ credentials: 'omit' })
   .start()
 ```
+
+
+## Maintainers
+
+- [Carlos Guedes](https://github.com/cguedes) - carlos.guedes@sky.uk
+- [Nuno Silva](https://github.com/nunoas) - nuno.silva@sky.uk
+- [Daniel Correia](https://github.com/danielbcorreia) - daniel.correia@sky.uk
+- [Pedro Félix](https://github.com/pmhsfelix) - pedro.felix@sky.uk
+
+## Contributing
+
+We appreciate any contribution to API Explorer, please check out [CONTRIBUTING.md](CONTRIBUTING.md).
+We keep a list of features and bugs [in the issue tracker](https://github.com/sky-uk/api-explorer/issues).
