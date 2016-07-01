@@ -12,7 +12,7 @@ When submitting issues, please make sure you include the following:
 0. Details of the problem and what you're expecting to be the solution.
 0. Screenshot or video of the problem /you may use [recordit.co](http://recordit.co/).
 
-Fell free to make some changes and submit a [pull request](#pull-requests). We'd love to see your contributions!
+Fell free to make some changes and submit a pull request. We'd love to see your contributions!
 
 
 ## Discussion
