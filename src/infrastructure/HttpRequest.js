@@ -94,7 +94,13 @@ class HttpRequest {
     parameters
       .filter(param => param.in === 'header' && params.parameters.hasOwnProperty(param.name))
       .forEach(param => {
-        result.headers[param.name] = params.parameters[param.name] || param.default
+        let value = params.parameters[param.name]
+
+        if (!value && !param.default) {
+          return
+        }
+
+        result.headers[param.name] = value || param.default
       })
 
     result.httpMethod = params.spec.httpMethod
