@@ -26,7 +26,7 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
   // defaults
   apiSpec = Object.assign({
     definitions: [],
-    basePath: '',
+    basePath: '/',
     host: defaultHost
   }, apiSpec)
 

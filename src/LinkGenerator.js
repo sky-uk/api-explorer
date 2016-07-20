@@ -10,6 +10,7 @@ export default class LinkGenerator {
     const scheme = api.schemes[0]
     const path = operationSpec.url
     let href = `${scheme}://${host}${basePath}${path}`
+
     Object.keys(params).forEach(key => {
       const rex = new RegExp(`\{${key}\}`)
       if (rex.test(href)) {
@@ -17,7 +18,11 @@ export default class LinkGenerator {
         delete params[key]
       }
     })
-    return new URI(href).query(params).toString()
+
+    let uri = new URI(href).query(params)
+    uri.normalizePath()
+
+    return uri.toString()
   }
 
   toOperation (operationSpec, params = {}) {
