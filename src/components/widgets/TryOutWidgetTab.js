@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
+import URI from 'urijs'
 
 import { newParameters, localParameters, newResponse } from '../../actions/loadActionCreators'
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
@@ -76,7 +77,11 @@ class TryOutWidgetTab extends Component {
 
   getUrl (path) {
     let scheme = this.props.apis.schemes ? this.props.apis.schemes[0] : this.props.config.defaultScheme
-    return `${scheme}://${this.props.apis.host}${this.props.apis.basePath}${path}`
+    let uri = new URI(`${scheme}://${this.props.apis.host}${this.props.apis.basePath}${path}`)
+
+    uri.normalizePath()
+
+    return uri.toString()
   }
 
 // ###############################################################################################################
