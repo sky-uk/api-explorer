@@ -135,7 +135,9 @@ class HttpRequest {
     GlobalHttpClientConfigurator(requestConfig)
     ApiHttpClientConfigurator(requestConfig)
 
-    fetch(finalUrl, requestConfig)
+    var req = new Request(finalUrl, requestConfig)
+
+    fetch(req)
     .then(response => {
       let resp = {
         url: requestInformation.url,
@@ -146,7 +148,7 @@ class HttpRequest {
         contentType: getMediaType(response.headers.get('Content-Type'))
       }
 
-      return response.text().then(responseText => { resp.data = responseText; callback(resp) })
+      return response.text().then(responseText => { resp.data = responseText; callback(req, resp) })
     })
     .catch(error => {
       console.error('Received error', error)

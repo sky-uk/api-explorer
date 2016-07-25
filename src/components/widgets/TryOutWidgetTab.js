@@ -16,7 +16,7 @@ class TryOutWidgetTab extends Component {
     super()
     this.state = this.getState()
 
-    this.httpRequest = new HttpRequest((resp) => this.requestCallback(resp))
+    this.httpRequest = new HttpRequest((req, resp) => this.requestCallback(req, resp))
   }
 
   setDefaultOperationParameters (props) {
@@ -70,6 +70,7 @@ class TryOutWidgetTab extends Component {
       requestInProgress: false,
       operationParameters: {},
       response: {},
+      request: {},
       showLastResponse: false,
       requestPanelClassName: 'panel panel-http-response panel-default'
     }
@@ -140,10 +141,10 @@ class TryOutWidgetTab extends Component {
     }, this.props.config.HttpClientConfigurator, this.props.apiConfig.HttpClientConfigurator)
   }
 
-  requestCallback (response) {
-    this.props.dispatch(newResponse(this.props.operation, response))
+  requestCallback (request, response) {
+    this.props.dispatch(newResponse(this.props.operation, response, request))
 
-    this.setState({requestInProgress: false, response: response})
+    this.setState({requestInProgress: false, response: response, request: request})
 
     if (response.status >= 200 && response.status < 300) {
       this.setState({ requestPanelClassName: 'panel panel-http-response panel-success' })
@@ -173,6 +174,10 @@ class TryOutWidgetTab extends Component {
     const showLastResponse = !showResponse && this.props.operationResponse
     const response = !showResponse && this.props.operationResponse ? this.props.operationResponse : this.state.response
     const url = response && response.url
+
+    const request = this.state.request
+    const requestHeaders = request.headers
+
     return (
       <div className='tab-content'>
         <TryOutWidgetTabParameters
@@ -204,7 +209,7 @@ class TryOutWidgetTab extends Component {
           {(showResponse || showLastResponse) && <div className='panel-body'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
             <TryOutWidgetTabResponsePanel response={response} operations={this.props.operations} apis={this.props.apis} />
-            <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers.concat(this.props.apiConfig.headers)} responseHeaders={response.headers} />
+            <TryOutWidgetTabHttpHeadersPanel requestHeaders={requestHeaders} responseHeaders={response.headers} />
           </div>}
         </div>
       </div>

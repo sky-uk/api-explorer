@@ -8,8 +8,17 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
   }
 
   renderRequestHeaders (requestHeaders) {
-    if (requestHeaders && requestHeaders.length > 0) {
-      return this.props.requestHeaders.map(header => <tr><td>{header.name}</td><td>{header.value}</td></tr>)
+    var headerMap = Map(requestHeaders)
+
+    if (headerMap && headerMap.size > 0) {
+      return headerMap.map((value, key) => {
+        return (
+          <tr>
+            <td style={{textTransform: 'capitalize'}}>{key}</td>
+            <td>{value}</td>
+          </tr>
+        )
+      })
     }
 
     return (<tr><td colSpan={2}>No headers were found</td></tr>)
@@ -61,7 +70,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
 }
 
 TryOutWidgetTabHttpHeadersPanel.propTypes = {
-  requestHeaders: PropTypes.array,
+  requestHeaders: PropTypes.object,
   responseHeaders: PropTypes.object
 }
 

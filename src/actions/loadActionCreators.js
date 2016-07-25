@@ -56,6 +56,6 @@ export function localParameters (operationName, parameters) {
   return { type: types.LOCAL_PARAMETERS, operationName, parameters }
 }
 
-export function newResponse (operation, response) {
-  return { type: types.NEW_RESPONSE, operation, response }
+export function newResponse (operation, response, request) {
+  return { type: types.NEW_RESPONSE, operation, response, request }
 }
