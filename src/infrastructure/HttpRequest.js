@@ -1,3 +1,5 @@
+import Request from 'fetch'
+
 function getMediaType (headerValue) {
   return headerValue ? headerValue.split(';')[0] : ''
 }
