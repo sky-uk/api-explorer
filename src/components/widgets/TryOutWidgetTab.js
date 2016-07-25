@@ -204,7 +204,7 @@ class TryOutWidgetTab extends Component {
           {(showResponse || showLastResponse) && <div className='panel-body'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
             <TryOutWidgetTabResponsePanel response={response} operations={this.props.operations} apis={this.props.apis} />
-            <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers} responseHeaders={response.headers} />
+            <TryOutWidgetTabHttpHeadersPanel requestHeaders={this.props.config.headers.concat(this.props.apiConfig.headers)} responseHeaders={response.headers} />
           </div>}
         </div>
       </div>
