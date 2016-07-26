@@ -7,25 +7,8 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
     this.state = { ...this.state }
   }
 
-  renderRequestHeaders (requestHeaders) {
-    var headerMap = Map(requestHeaders)
-
-    if (headerMap && headerMap.size > 0) {
-      return headerMap.map((value, key) => {
-        return (
-          <tr>
-            <td style={{textTransform: 'capitalize'}}>{key}</td>
-            <td>{value}</td>
-          </tr>
-        )
-      })
-    }
-
-    return (<tr><td colSpan={2}>No headers were found</td></tr>)
-  }
-
-  renderResponseHeaders (responseHeaders) {
-    var headerMap = Map(responseHeaders)
+  renderHeaders (headers) {
+    var headerMap = Map(headers)
 
     if (headerMap && headerMap.size > 0) {
       return headerMap.map((value, key) => {
@@ -52,7 +35,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
           <h5 ><strong>Request Headers</strong></h5>
           <table ref='tableRequestHeaders' className={tableClass} style={{fontSize: '12px'}}>
             <tbody>
-              {this.renderRequestHeaders(requestHeaders)}
+              {this.renderHeaders(requestHeaders)}
             </tbody>
           </table>
         </div>
@@ -60,7 +43,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
           <h5 ><strong>Response Headers</strong></h5>
           <table ref='tableResponseHeaders' className={tableClass} style={{fontSize: '12px'}}>
             <tbody>
-              {this.renderResponseHeaders(responseHeaders)}
+              {this.renderHeaders(responseHeaders)}
             </tbody>
           </table>
         </div>
