@@ -1,6 +1,7 @@
 import Enumerable from 'linq'
 import { swagger2JsonLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
+import URI from 'urijs'
 
 function executeInterceptor (config, apiSpec) {
   if (config.interceptor) {
@@ -28,6 +29,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
     .then(response => response.json())
     .then(apiSpec => {
       let newApiSpec = executeInterceptor(config, apiSpec)
+      let defaultHost = new URI(config.url.url).host()
 
       onLoadProgress(`Loading content from '${url}' completed`)
       const apis = Enumerable
@@ -39,6 +41,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
       async.map(apis, executeFetch, (err, result) => {
         if (err) {
           onLoadError(`Error loading Swagger 1.x apis: ${err}`)
+          console.error(err)
         } else {
           onLoadProgress(`Loading of Swagger spec 1.x completed.`)
 
@@ -49,7 +52,8 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
           const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)
           onLoadProgress('Convertion from Swagger 1.x to Swagger 2.0 completed!')
           swagger2Document.info.title = swagger2Document.info.title === 'Title was not specified' ? 'API' : swagger2Document.info.title
-          swagger2JsonLoader(swagger2Document, config.friendlyName, config.slug, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+
+          swagger2JsonLoader(swagger2Document, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
         }
       })
     })

@@ -16,6 +16,7 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
     })
     .catch(error => {
       onLoadError(`Error fetching spec at ${url} (${error.message})`)
+      console.error(error)
     })
 }
 

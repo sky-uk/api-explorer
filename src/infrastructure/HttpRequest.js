@@ -1,4 +1,4 @@
-import Request from 'fetch'
+import Request from 'whatwg-fetch'
 
 function getMediaType (headerValue) {
   return headerValue ? headerValue.split(';')[0] : ''
