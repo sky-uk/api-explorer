@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import URI from 'urijs'
 
-import { newParameters, localParameters, newResponse } from '../../actions/loadActionCreators'
+import { newParameters, localParameters, responseReceived } from '../../actions/loadActionCreators'
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
 import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
@@ -142,7 +142,7 @@ class TryOutWidgetTab extends Component {
   }
 
   requestCallback (request, response) {
-    this.props.dispatch(newResponse(this.props.operation, response, request))
+    this.props.dispatch(responseReceived(this.props.operation, response, request))
 
     this.setState({requestInProgress: false, response: response, request: request})
 

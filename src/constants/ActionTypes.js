@@ -7,7 +7,7 @@ export const LOAD_COMPLETE = 'LOAD_COMPLETE'
 export const NEW_API = 'NEW_API'
 export const NEW_OPERATION = 'NEW_OPERATION'
 export const NEW_DEFINITION = 'NEW_DEFINITION'
-export const NEW_RESPONSE = 'NEW_RESPONSE'
+export const RESPONSE_RECEIVED = 'RESPONSE_RECEIVED'
 
 export const CONFIG_URL = 'CONFIG_URL'
 export const CONFIG_HEADERS = 'CONFIG_HEADERS'
