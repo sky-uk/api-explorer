@@ -7,7 +7,7 @@
     "prestart": "npm run build",
     "build": "NODE_ENV=production webpack --config build/webpack.prod.config",
     "start": "NODE_ENV=production node server-prod.js",
-    "dev": "npm run dev:petstore",
+    "dev": "npm run dev:links",
     "dev:petstore": "cross-env APIEXPLORER_SAMPLE=petstore nodemon server/server.js",
     "dev:links": "cross-env APIEXPLORER_SAMPLE=links nodemon server/server.js",
     "dev:helloworld": "cross-env APIEXPLORER_SAMPLE=helloworld nodemon server/server.js",
