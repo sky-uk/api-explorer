@@ -10,7 +10,7 @@ import NotFound from 'containers/NotFound'
 export default function (store) {
   return (
     <Route>
-      <Route path='/' component={Application}>
+      <Route path={APIExplorer.basePath} component={Application}>
         <IndexRoute component={Welcome} />
         <Route path='operation/:id' component={OperationWidgetContainer} >
           {APIExplorer.widgetTabs.map(widgetTab =>

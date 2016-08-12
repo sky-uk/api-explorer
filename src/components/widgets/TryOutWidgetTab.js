@@ -81,6 +81,7 @@ class TryOutWidgetTab extends Component {
     let uri = new URI(`${scheme}://${this.props.apis.host}${this.props.apis.basePath}${path}`)
 
     uri.normalizePath()
+    uri = URI.decode(uri)
 
     return uri.toString()
   }
