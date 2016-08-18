@@ -26,10 +26,17 @@ export default class LinkGenerator {
   }
 
   toOperation (operationSpec, params = {}) {
-    const baseUri = `/operation/${operationSpec.id}/try-it`
+    const basePath = this.apiExplorer.getBasePath()
+    const baseUri = `${basePath}/operation/${operationSpec.id}/try-it`
     const queryParams = {}
+
     Object.keys(params).forEach(key => { queryParams[`param-${key}`] = params[key] })
-    const newUrl = new URI(baseUri).query(queryParams).toString()
+
+    const newUrl = new URI(baseUri)
+      .query(queryParams)
+      .normalizePath()
+      .toString()
+
     return newUrl
   }
 }

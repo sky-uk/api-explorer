@@ -46,9 +46,9 @@ class APIExplorer {
     this.addSettingsPane('General', GeneralSettings)
     this.addSettingsPane('Custom Headers', CustomHeadersSettings)
 
-    this.LinkGenerator = new LinkGenerator()
+    this.LinkGenerator = new LinkGenerator(this)
 
-    this.basePath = '/'
+    this.basePath = ''
   }
 
   /**
@@ -174,6 +174,10 @@ class APIExplorer {
   setBasePath (basePath) {
     this.basePath = basePath
     return this
+  }
+
+  getBasePath () {
+    return this.basePath
   }
 
   /**

@@ -8,9 +8,11 @@ import OperationWidgetContainer from 'containers/OperationWidgetContainer'
 import NotFound from 'containers/NotFound'
 
 export default function (store) {
+  const basePath = `${APIExplorer.basePath}/`
+
   return (
     <Route>
-      <Route path={APIExplorer.basePath} component={Application}>
+      <Route path={basePath} component={Application}>
         <IndexRoute component={Welcome} />
         <Route path='operation/:id' component={OperationWidgetContainer} >
           {APIExplorer.widgetTabs.map(widgetTab =>
