@@ -69,14 +69,27 @@ npm run lint
 You can customize APIExplorer using the following fluent configuration:
 
 ```html
-<script src="/apiexplorer.js?s=2317557"></script>
+<script src="/APIExplorer.umd.js?s=2317557"></script>
 ```
+
+Minimal configuration
+
+```javascript
+APIExplorer
+  .addAPI('petstore', 'swagger2', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0')
+  .start()
+```
+
+Extended configuration
 
 ```javascript
 APIExplorer
   .addAPI('petstore', 'swagger2', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', c => {
     c.addHeader('X-Foo', 'Some Value')
     c.addHeader('X-Bar', 'Another Value')
+    c.useProxy(true)
+  })
+  .addAPI('guthub', 'swagger2', 'https://api.apis.guru/v2/specs/github.com/v3/swagger.json', c => {
     c.useProxy(true)
   })
   .addWidgetTab('HATEOAS', APIExplorer.HATEOASWidget)
