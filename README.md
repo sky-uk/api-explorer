@@ -89,7 +89,7 @@ APIExplorer
     c.addHeader('X-Bar', 'Another Value')
     c.useProxy(true)
   })
-  .addAPI('guthub', 'swagger2', 'https://api.apis.guru/v2/specs/github.com/v3/swagger.json', c => {
+  .addAPI('github', 'swagger2', 'https://api.apis.guru/v2/specs/github.com/v3/swagger.json', c => {
     c.useProxy(true)
   })
   .addWidgetTab('HATEOAS', APIExplorer.HATEOASWidget)
