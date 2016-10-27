@@ -16,6 +16,8 @@ import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
 import APIExplorerAPIConfigurator from './APIExplorerAPIConfigurator'
 import LinkGenerator from './LinkGenerator'
 
+import URI from 'urijs'
+
 class APIExplorer {
   constructor () {
     this.SupportedLoaders = {
@@ -171,13 +173,38 @@ class APIExplorer {
     return this
   }
 
+  /**
+   * Setter method to set API basePath
+   * @param  {String} basePath to set as API basePath
+   * @return {[APIExplorer]} the APIExplorer instance
+   */
   setBasePath (basePath) {
     this.basePath = basePath
     return this
   }
 
+  /**
+   * Getter method to retrieve API basePath
+   * @return {String} API basePath
+   */
   getBasePath () {
     return this.basePath
+  }
+
+  /**
+   * Method used to append API base path to relative links.
+   * If *what* starts with '/' (forward slash), '/' is removed.
+   *
+   * Will append the API base path to the beginning of whatever url passed into *what*, while ensuring this url is normalized.
+   * @param  {String} what to append to the end of API base path
+   * @return {String} API basePath appended to *what* and normalized
+   */
+  buildAppLink (what) {
+    const appendTo = what.startsWith('/') ? what.substring(1) : what
+    const concatenatedUrl = `${this.basePath}/${appendTo}`
+    return new URI(concatenatedUrl)
+      .normalizePath()
+      .toString()
   }
 
   /**

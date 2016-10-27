@@ -11,9 +11,9 @@ class Settings extends Component {
 
         <ul className='nav nav-tabs'>
           {APIExplorer.settingsPanes.map((pane, i) => {
-            const url = `/settings/${pane.slug}`
-            return (<li key={i} className={this.props.history.isActive(url) ? 'active' : ''}>
-              <Link key={i} to={`/settings/${pane.slug}`} className='operation-container' >{pane.name}</Link>
+            const settingsUrl = APIExplorer.LinkGenerator.toSettings(pane.slug)
+            return (<li key={i} className={this.props.history.isActive(settingsUrl) ? 'active' : ''}>
+              <Link key={i} to={settingsUrl} className='operation-container' >{pane.name}</Link>
             </li>)
           })}
         </ul>

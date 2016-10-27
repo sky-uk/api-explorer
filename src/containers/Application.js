@@ -48,14 +48,14 @@ class Application extends Component {
           <div id='sidebar'>
             <span className='pull-right close-button' onClick={() => this.handleCloseDock()} >X</span>
             <div className='api-explorer-logo'>
-              <Link to='/' >
-              <img src='https://dev.int.skystore.com/api/explorer/public/images/logo_transparent.png' />
+              <Link to={APIExplorer.LinkGenerator.toHome()} >
+                <img src='https://dev.int.skystore.com/api/explorer/public/images/logo_transparent.png' />
               </Link>
             </div>
             <ul className='nav' id='side-menu'>
               <li>
-                <Link to='/' >
-                <i className='fa fa-fw fa-home'></i><span>Home</span>
+                <Link to={APIExplorer.LinkGenerator.toHome()} >
+                  <i className='fa fa-fw fa-home'></i><span>Home</span>
                 </Link>
               </li>
             </ul>
@@ -77,7 +77,7 @@ class Application extends Component {
                 <div id='fixed-footer'>
                   Copyright &copy; API Explorer 2015
 
-                  <Link to='/settings' className='pull-right'>
+                  <Link to={APIExplorer.LinkGenerator.toSettings()} className='pull-right'>
                     <i className='fa fa-cog fa-inverse' /> Settings
                   </Link>
 

@@ -11,6 +11,7 @@
     "dev:petstore": "cross-env APIEXPLORER_SAMPLE=petstore nodemon server/server.js",
     "dev:links": "cross-env APIEXPLORER_SAMPLE=links nodemon server/server.js",
     "dev:helloworld": "cross-env APIEXPLORER_SAMPLE=helloworld nodemon server/server.js",
+    "dev:basepath": "cross-env APIEXPLORER_SAMPLE=basepath nodemon server/server.js",
     "test": "npm run lint",
     "DISABLEDtest": "npm run lint && cross-env NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
     "DISABLEDtest:watch": "npm test -- --watch",

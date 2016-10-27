@@ -25,7 +25,7 @@ module.exports = function (app, port, rootPath) {
   })
 
   // SPA fallback. Serve everything as index.html
-  app.get('/*', function (req, res) {
+  app.get('(/explorer)?/*', function (req, res) {
     res.sendFile(path.join(rootPath, 'server', '/index.html'))
   })
 

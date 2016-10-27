@@ -46,9 +46,9 @@ class OperationWidget extends Component {
         <div className='panel-body' >
           <ul className='nav nav-tabs' >
             {APIExplorer.widgetTabs.map((widgetTab, i) => {
-              const url = `/operation/${ this.props.operation.id}/${widgetTab.slug}`
+              const url = APIExplorer.LinkGenerator.toTabOperation(this.props.operation, widgetTab)
               return (<li key={i} className={this.props.history.isActive(url) ? 'active' : ''}>
-                <Link key={i} to={`/operation/${this.props.operation.id}/${widgetTab.slug}`} className='operation-container' >{widgetTab.name}</Link>
+                <Link key={i} to={url} className='operation-container' >{widgetTab.name}</Link>
               </li>)
             })}
           </ul>
