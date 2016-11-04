@@ -65,7 +65,7 @@ class APIExplorer {
     const slug = friendlyName.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
     const conf = new APIExplorerAPIConfigurator(friendlyName, loaderType, loader, slug, new Url(url), this)
 
-    configuratorFunc(conf)
+    configuratorFunc && configuratorFunc(conf)
     this.apiConfigurations.push(conf)
     return this
   }
