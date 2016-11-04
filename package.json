@@ -1,6 +1,6 @@
 {
   "name": "apiexplorer",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "API Explorer (live documentation) for Swagger",
   "main": "dist/APIExplorer.umd.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "docs:build": "npm run docs:prepare && gitbook build -g sky-uk/api-explorer",
     "docs:watch": "npm run docs:prepare && gitbook serve",
     "docs:publish": "npm run docs:clean && npm run docs:build && cd _book && git init && git commit --allow-empty -m 'update book' && git checkout -b gh-pages && touch .nojekyll && git add . && git commit -am 'update book' && git push git@github.com:sky-uk/api-explorer gh-pages --force",
-
     "preversion": "npm test",
     "version": "npm run build && git add -A dist",
     "postversion": "git push && git push --tags"
