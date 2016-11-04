@@ -98,6 +98,10 @@ APIExplorer
   .start()
 ```
 
+## Sample API Explorer client
+
+You can find a sample project that depends on API Explorer in https://github.com/sky-uk/petstore-api-explorer.
+
 
 ## Maintainers
 
