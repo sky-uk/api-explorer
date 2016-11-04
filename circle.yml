@@ -1,8 +1,6 @@
 dependencies:
   pre:
-    - cat ~/.npmrc
     - echo "$NPM_TOKEN"
-    - cat ~/.npmrc
 
 machine:
   node:
