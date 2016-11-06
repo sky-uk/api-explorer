@@ -8,7 +8,7 @@ API Explorer
 
 API Explorer is a live documentation client for Swagger. It provides a nice and highly customizable UI for Swagger.
 
-![Sample API Explorer](./docs/apiexplorer-demo.gif)
+![Sample API Explorer](http://sky-uk.github.io/api-explorer/docs/apiexplorer-demo.gif)
 
 ## Sample Application (development)
 
