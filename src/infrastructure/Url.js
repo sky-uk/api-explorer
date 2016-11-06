@@ -2,6 +2,13 @@ const URI_PROTOCOL_REGEX = /([a-z]+):\/\//
 
 class Url {
   constructor (url) {
+    if (url.startsWith('/')) {
+      console.log('Converting pathname only URL to URL with protocol and host.')
+      console.log(`Current url: ${url}`)
+      url = `${window.location.protocol}//${window.location.host}${url}`
+      console.log(`Final url: ${url}`)
+    }
+
     this.url = ''
     this.queryString = ''
     this.useProxy = false
