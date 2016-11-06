@@ -25,6 +25,9 @@
     "version": "npm run build && git add -A dist",
     "postversion": "git push && git push --tags"
   },
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=4.2.1",
     "npm": ">=2.14.7"
