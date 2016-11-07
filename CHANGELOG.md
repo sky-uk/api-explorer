@@ -1,3 +1,9 @@
+## 0.2.7 (November 7, 2016)
+
+* Allow to specify a pathname only URL for swagger spec (#152)
+* Use absolute path for README.md image
+* Only include dist files in NPM (#155)
+
 ## 0.2.6 (November 4, 2016)
 
 * Adds CHANGELOG.md file to track version changes
