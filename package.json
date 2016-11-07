@@ -1,6 +1,6 @@
 {
   "name": "apiexplorer",
-  "version": "0.2.7-0",
+  "version": "0.2.7",
   "description": "API Explorer (live documentation) for Swagger",
   "main": "dist/APIExplorer.umd.js",
   "scripts": {
@@ -53,9 +53,6 @@
       "dist"
     ]
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "async": "^1.5.0",
     "classnames": "^2.1.2",
