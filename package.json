@@ -41,6 +41,16 @@
   "bugs": {
     "url": "https://github.com/sky-uk/api-explorer/issues"
   },
+  "maintainers": [
+    {
+      "name": "Carlos Guedes",
+      "email": "carlos.guedes@sky.uk"
+    },
+    {
+      "name": "Daniel Correia",
+      "email": "daniel.correia@sky.uk"
+    }
+  ],
   "standard": {
     "parser": "babel-eslint",
     "globals": [
