@@ -1,7 +1,7 @@
 import {List, Map} from 'immutable'
 import * as types from '../constants/ActionTypes'
 
-let INITIAL_STATE = Map({ 'loaded': false, 'totalApis': 0, 'loadedApis': 0, 'progress': List([]), 'currentStep': '' })
+let INITIAL_STATE = Map({ 'loaded': false, 'totalApis': 0, 'loadedApis': 0, 'failedLoads': 0, 'progress': List([]), 'currentStep': '' })
 
 export default function loaderReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -15,9 +15,13 @@ export default function loaderReducer (state = INITIAL_STATE, action) {
                 state.get('progress').push(action.currentStep)
               )
     case types.LOAD_COMPLETE:
-      const loadedApis = state.get('loadedApis') + 1
-      const allApisLoaded = loadedApis === state.get('totalApis')
+      const failedLoads = action.success ? state.get('failedLoads') : state.get('failedLoads') + 1
+      const loadedApis = action.success ? state.get('loadedApis') + 1 : state.get('loadedApis')
+
+      const allApisLoaded = (loadedApis + failedLoads) === state.get('totalApis')
+
       return state
+              .set('failedLoads', failedLoads)
               .set('loadedApis', loadedApis)
               .set('loaded', allApisLoaded)
   }
