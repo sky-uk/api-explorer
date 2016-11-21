@@ -15,6 +15,8 @@ class Welcome extends Component {
   }
 
   renderSingleAPIContent (api) {
+    if (!api) return
+
     const { title, description, version } = api.info
     return (
       <div key={title}>
