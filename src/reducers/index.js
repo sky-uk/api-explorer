@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerStateReducer } from 'redux-router'
+import { reducer as toastrReducer } from 'react-redux-toastr'
 
 const rootReducer = combineReducers({
   router: routerStateReducer,
+  toastr: toastrReducer,
   loader: require('./loader'),
   apis: require('./apis'),
   operations: require('./operations'),
