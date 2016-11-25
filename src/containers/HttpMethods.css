@@ -3,6 +3,23 @@
   background-color: transparent;
 }
 
+/*
+Color schema:
+    HEAD    - #5bc0de
+    GET     - #428bca
+
+    DELETE  - #d9534f
+    PUT     - #EB961E
+    PATCH   - #F2C769
+
+    POST    - #5cb85c
+
+    OPTIONS - #dddddd
+    TRACE   - #aaaaaa
+
+    Utility site: http://colllor.com/
+ */
+
 .lioperation.active .btn-http-method-head,
 .btn-http-method-head:hover     { background-color: #5bc0de; color: white; }
 .btn-http-method-head                      { color: #5bc0de;
@@ -19,14 +36,14 @@
                                       border-color: #d9534f; }
 
 .lioperation.active .btn-http-method-put,
-.btn-http-method-put:hover      { background-color: #f0ad4e; color: white; }
-.btn-http-method-put                       { color: #f0ad4e;
-                                      border-color: #f0ad4e; }
+.btn-http-method-put:hover      { background-color: #EB961E; color: white; }
+.btn-http-method-put                       { color: #EB961E;
+                                      border-color: #EB961E; }
 
 .lioperation.active .btn-http-method-patch,
-.btn-http-method-patch:hover    { background-color: #f0be4e; color: white; }
-.btn-http-method-patch                     { color: #f0be4e;
-                                      border-color: #f0be4e; }
+.btn-http-method-patch:hover    { background-color: #F2C769; color: white; }
+.btn-http-method-patch                     { color: #F2C769;
+                                      border-color: #F2C769; }
 
 .lioperation.active .btn-http-method-post,
 .btn-http-method-post:hover     { background-color: #5cb85c; color: white; }
@@ -70,13 +87,13 @@
 .panel-http-method-delete > .panel-heading  {     border-color: #d9534f;
                                               background-color: #d9534f; color: #fff; }
 
-.panel-http-method-put                      {     border-color: #f0ad4e; }
-.panel-http-method-put > .panel-heading     {     border-color: #f0ad4e;
-                                              background-color: #f0ad4e; color: #fff; }
+.panel-http-method-put                      {     border-color: #EB961E; }
+.panel-http-method-put > .panel-heading     {     border-color: #EB961E;
+                                              background-color: #EB961E; color: #fff; }
 
-.panel-http-method-patch                    {     border-color: #f0be4e; }
-.panel-http-method-patch > .panel-heading   {     border-color: #f0be4e;
-                                              background-color: #f0be4e; color: #fff; }
+.panel-http-method-patch                    {     border-color: #F2C769; }
+.panel-http-method-patch > .panel-heading   {     border-color: #F2C769;
+                                              background-color: #F2C769; color: #fff; }
 
 .panel-http-method-post                     {     border-color: #5cb85c; }
 .panel-http-method-post > .panel-heading    {     border-color: #5cb85c;
