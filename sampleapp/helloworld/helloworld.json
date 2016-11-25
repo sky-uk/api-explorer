@@ -1,9 +1,9 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "This is a sample api-explorerhelloworld server.",
+		"description": "This is a sample api-explorer Hello World API.<br/><br/> We can have *italic* and **bold** text.",
 		"version": "1.0.0",
-		"title": "Swagger Helloworld",
+		"title": "Swagger Hello World",
 		"license": {
 			"name": "Apache 2.0",
 			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -23,6 +23,26 @@
 		"http"
 	],
 	"paths": {
+		"/verbs": {
+			"head":    { "tags": [ "HTTP Verbs" ] },
+			"get":     { "tags": [ "HTTP Verbs" ] },
+			"delete":  { "tags": [ "HTTP Verbs" ] },
+			"put":     { "tags": [ "HTTP Verbs" ] },
+			"patch":   { "tags": [ "HTTP Verbs" ] },
+			"post":    { "tags": [ "HTTP Verbs" ] },
+			"options": { "tags": [ "HTTP Verbs" ] },
+			"trace":   { "tags": [ "HTTP Verbs" ] }
+		},
+		"/verbs-deprecated": {
+			"head":    { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"get":     { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"delete":  { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"put":     { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"patch":   { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"post":    { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"options": { "tags": [ "HTTP Verbs" ], "deprecated": true },
+			"trace":   { "tags": [ "HTTP Verbs" ], "deprecated": true }
+		},
 		"/hello": {
 			"get": {
 				"tags": [
