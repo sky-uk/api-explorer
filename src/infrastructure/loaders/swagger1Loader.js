@@ -25,7 +25,8 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
   onLoadProgress(`Loading API Swagger 1.0 Spec from ${url}`)
 
   const async = require('async')
-  fetch(url)
+
+  return fetch(url)
     .then(response => response.json())
     .then(apiSpec => {
       let newApiSpec = executeInterceptor(config, apiSpec)

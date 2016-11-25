@@ -5,6 +5,7 @@ import { ReduxRouter } from 'redux-router'
 
 import getRoutes from 'routes'
 import injectDevTools from 'components/DevTools'
+import ReduxToastr from 'react-redux-toastr'
 
 export default class Root extends Component {
   render () {
@@ -16,6 +17,12 @@ export default class Root extends Component {
             <ReduxRouter>
               {getRoutes(store)}
             </ReduxRouter>
+
+            <ReduxToastr
+              transitionIn='fadeIn'
+              transitionOut='fadeOut'
+              progressBar/>
+
             {!window.devToolsExtension && DevTools && <DevTools />}
           </div>
         </Provider>

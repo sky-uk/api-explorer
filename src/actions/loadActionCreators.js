@@ -1,4 +1,5 @@
 import * as types from 'constants/ActionTypes'
+import { toastr } from 'react-redux-toastr'
 
 export function apiConfigurations (apiConfigurations) {
   return { type: types.API_CONFIGURATIONS, payload: apiConfigurations }
@@ -11,7 +12,8 @@ export function headers (headers) {
 export function load (config) {
   return dispatch => {
     const onLoadProgress = status => dispatch(progress(config, `[${config.friendlyName}] ${status}`))
-    const onLoadCompleted = apis => dispatch(loadCompleted(config, apis))
+    const onLoadCompleted = apiSpec => dispatch(loadCompleted(config, apiSpec, true))
+    const onLoadFailure = () => dispatch(loadCompleted(config, null, false))
     const onLoadError = errorMessage => dispatch(progress(config, `[${config.friendlyName}] ${errorMessage}`))
     const onNewAPI = api => dispatch(newAPI(config, api))
     const onNewOperation = operation => dispatch(newOperation(config, operation))
@@ -20,7 +22,15 @@ export function load (config) {
     dispatch({ type: types.LOAD_START, config })
     dispatch({ type: types.CONFIG_URL, url: config.url })
 
-    config.loader(config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+    config
+      .loader(config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+      .catch(error => {
+        onLoadError(`Error fetching spec at ${config.url.toString()} (${error.message})`)
+        console.warn(error)
+
+        toastr.warning(`Error loading ${config.friendlyName}`, error.toString())
+        onLoadFailure()
+      })
   }
 }
 
@@ -28,8 +38,8 @@ function progress (config, currentStep) {
   return { type: types.UPDATE_PROGRESS, config, currentStep }
 }
 
-function loadCompleted (config, apis) {
-  return { type: types.LOAD_COMPLETE, config, apis }
+function loadCompleted (config, apis, success) {
+  return { type: types.LOAD_COMPLETE, config, apis, success }
 }
 
 function newAPI (config, api) {

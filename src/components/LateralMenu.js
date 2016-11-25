@@ -65,7 +65,7 @@ class LateralMenu extends Component {
   }
 
   renderAPI (apiOperations) {
-    if (!this.isApiVisible(apiOperations[0].apiname, apiOperations)) return
+    if (apiOperations.length === 0 || !this.isApiVisible(apiOperations[0].apiname, apiOperations)) return
 
     const tags = Enumerable.from(apiOperations).selectMany(o => o.spec.tags).distinct().toArray()
     return (

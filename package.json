@@ -80,6 +80,7 @@
     "react-highlight": "^0.5.1",
     "react-jsonschema-form": "^0.31.0",
     "react-redux": "^4.0.0",
+    "react-redux-toastr": "^4.0.3",
     "react-router": "^1.0.0-rc3",
     "recursive-readdir": "^2.0.0",
     "redux": "^3.0.0",
