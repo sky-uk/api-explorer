@@ -102,12 +102,7 @@ class LateralMenu extends Component {
       return
     }
 
-    const httpMethodCx = cx('btn btn-outline btn-xs', {
-      'btn-success': operation.spec.httpMethod === 'post',
-      'btn-info': operation.spec.httpMethod === 'get',
-      'btn-danger': operation.spec.httpMethod === 'delete',
-      'btn-warning': operation.spec.httpMethod === 'put'
-    })
+    const httpMethodClasses = `btn btn-http-method btn-xs btn-http-method-${operation.spec.httpMethod}`
 
     const liClass = cx('lioperation', {
       'active': this.props.selectedOperationId && operation.id === this.props.selectedOperationId,
@@ -118,10 +113,10 @@ class LateralMenu extends Component {
       <li key={operation.id} id={operation.id} className={liClass} title={operation.spec.description}>
         <Link to={APIExplorer.LinkGenerator.toOperation(operation)} className='operation-container' >
           <span className='operation'>
-            <span className={httpMethodCx}>{operation.spec.httpMethod.toUpperCase()}</span>
+            <span className={httpMethodClasses}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
             {operation.spec.security && (<span key={`security${operation.id}`} style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>)}
-            <span>{operation.spec.url}</span>
+            <span className='operation-url'>{operation.spec.url}</span>
           </span>
         </Link>
 

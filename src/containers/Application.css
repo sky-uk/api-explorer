@@ -76,7 +76,7 @@
 
 
 #sidebar span.operation { border: solid 1px transparent; font-family: verdana; font-size: smaller; }
-#sidebar span.operation .btn { width:50px; font-size: 10px }
+#sidebar span.operation .btn { width:60px; font-size: 10px }
 
 #sidebar::-webkit-scrollbar {
     width: .7em;
@@ -161,11 +161,10 @@ img { max-width:100% }
     margin-right: 15px;
 }
 
-#lateral-menu .deprecated-api span {
+#lateral-menu .deprecated-api {
     text-decoration: line-through;
-    color: gray;
+    opacity: .5;
 }
-
 
 /* ###############################################################################
     Header

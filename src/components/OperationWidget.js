@@ -21,11 +21,7 @@ class OperationWidget extends Component {
     }
 
     const httpMethod = this.props.operation.spec.httpMethod
-    const panelCx = cx('documentation-widget panel panel-default', {
-      'panel-blue': httpMethod === 'get',
-      'panel-green': httpMethod === 'post',
-      'panel-red': httpMethod === 'delete',
-      'panel-yellow': httpMethod === 'put',
+    const panelCx = cx(`documentation-widget panel panel-default panel-http-method panel-http-method-${httpMethod}`, {
       'panel-deprecated': this.props.operation.spec.deprecated
     })
     const hasSecurity = this.props.operation.spec.security !== undefined

@@ -1,0 +1,91 @@
+.btn-http-method {
+  color: inherit;
+  background-color: transparent;
+}
+
+.lioperation.active .btn-http-method-head,
+.btn-http-method-head:hover     { background-color: #5bc0de; color: white; }
+.btn-http-method-head                      { color: #5bc0de;
+                                      border-color: #5bc0de; }
+
+.lioperation.active .btn-http-method-get,
+.btn-http-method-get:hover      { background-color: #428bca; color: white; }
+.btn-http-method-get                       { color: #428bca;
+                                      border-color: #428bca; }
+
+.lioperation.active .btn-http-method-delete,
+.btn-http-method-delete:hover   { background-color: #d9534f; color: white; }
+.btn-http-method-delete                    { color: #d9534f;
+                                      border-color: #d9534f; }
+
+.lioperation.active .btn-http-method-put,
+.btn-http-method-put:hover      { background-color: #f0ad4e; color: white; }
+.btn-http-method-put                       { color: #f0ad4e;
+                                      border-color: #f0ad4e; }
+
+.lioperation.active .btn-http-method-patch,
+.btn-http-method-patch:hover    { background-color: #f0be4e; color: white; }
+.btn-http-method-patch                     { color: #f0be4e;
+                                      border-color: #f0be4e; }
+
+.lioperation.active .btn-http-method-post,
+.btn-http-method-post:hover     { background-color: #5cb85c; color: white; }
+.btn-http-method-post                      { color: #5cb85c;
+                                      border-color: #5cb85c; }
+
+.lioperation.active .btn-http-method-options,
+.btn-http-method-options:hover  { background-color: #dddddd; color: black; border-color: black; }
+.btn-http-method-options                   { color: #dddddd;
+                                      border-color: #dddddd; }
+
+.lioperation.active .btn-http-method-trace,
+.btn-http-method-trace:hover    { background-color: #aaaaaa; color: black; border-color: black; }
+.btn-http-method-trace                     { color: #aaaaaa;
+                                      border-color: #aaaaaa; }
+
+
+/* Note: This rule needs to be above the other .panel-http-method rules */
+.panel-deprecated > .panel-heading {
+  color: #fff !important;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0,0,0, 0.5),
+    rgba(0,0,0, 0.5) 10px,
+    rgba(0,0,0, 0.3) 10px,
+    rgba(0,0,0, 0.3) 20px
+  );
+}
+
+.panel-http-method a { color: black; }
+
+.panel-http-method-head                     {     border-color: #5bc0de; }
+.panel-http-method-head > .panel-heading    {     border-color: #5bc0de;
+                                              background-color: #5bc0de; color: #fff; }
+
+.panel-http-method-get                      {     border-color: #428bca; }
+.panel-http-method-get > .panel-heading     {     border-color: #428bca;
+                                              background-color: #428bca; color: #fff; }
+
+.panel-http-method-delete                   {     border-color: #d9534f; }
+.panel-http-method-delete > .panel-heading  {     border-color: #d9534f;
+                                              background-color: #d9534f; color: #fff; }
+
+.panel-http-method-put                      {     border-color: #f0ad4e; }
+.panel-http-method-put > .panel-heading     {     border-color: #f0ad4e;
+                                              background-color: #f0ad4e; color: #fff; }
+
+.panel-http-method-patch                    {     border-color: #f0be4e; }
+.panel-http-method-patch > .panel-heading   {     border-color: #f0be4e;
+                                              background-color: #f0be4e; color: #fff; }
+
+.panel-http-method-post                     {     border-color: #5cb85c; }
+.panel-http-method-post > .panel-heading    {     border-color: #5cb85c;
+                                              background-color: #5cb85c; color: #fff; }
+
+.panel-http-method-options                  {     border-color: #dddddd; }
+.panel-http-method-options > .panel-heading {     border-color: #dddddd;
+                                              background-color: #dddddd; color: #000; }
+
+.panel-http-method-trace                    {     border-color: #aaaaaa; }
+.panel-http-method-trace > .panel-heading   {     border-color: #aaaaaa;
+                                              background-color: #aaaaaa; color: #000; }
