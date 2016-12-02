@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Dock from 'react-dock'
 import marked from 'marked'
-import { ExplorerHeader, ApplicationLoading, ApplicationAskForAPI, LateralMenu, APICounter } from 'components'
+import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu, APICounter } from 'components'
 
 class Application extends Component {
   constructor () {
@@ -16,7 +16,7 @@ class Application extends Component {
 
   render () {
     if (this.props.loader.get('totalApis') === 0) {
-      return this.renderAskForSpec()
+      return <HowToConfigureAPIExplorer />
     }
     const loaded = this.props.loader.get('loaded')
     return loaded ? this.renderApplication() : this.renderLoadingScreen()
@@ -27,10 +27,6 @@ class Application extends Component {
     return (
       <ApplicationLoading currentStep={currentStep} progressMessages={progress} />
     )
-  }
-
-  renderAskForSpec () {
-    return <ApplicationAskForAPI />
   }
 
   handleDockResize (size) {
