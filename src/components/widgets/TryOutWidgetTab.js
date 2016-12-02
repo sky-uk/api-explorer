@@ -144,14 +144,16 @@ class TryOutWidgetTab extends Component {
 
   requestCallback (request, response) {
     this.props.dispatch(responseReceived(this.props.operation, response, request))
-
     this.setState({requestInProgress: false, response: response, request: request})
 
-    if (response.status >= 200 && response.status < 300) {
-      this.setState({ requestPanelClassName: 'panel panel-http-response panel-success' })
-    } else {
-      this.setState({ requestPanelClassName: 'panel panel-http-response panel-danger' })
+    const statusCategories = {
+      '2': 'panel-success',
+      '3': 'panel-info',
+      '4': 'panel-warning',
+      '5': 'panel-danger'
     }
+    const statusCategory = ('' + response.status).charAt(0)
+    this.setState({ requestPanelClassName: `panel panel-http-response ${statusCategories[statusCategory]}` })
   }
 
   hideResponse (e) {
@@ -171,7 +173,7 @@ class TryOutWidgetTab extends Component {
       width: '100%',
       overflow: 'hidden'
     }
-    const showResponse = !this.state.requestInProgress && this.state.response && this.state.response.data && this.state.response.data !== ''
+    const showResponse = !this.state.requestInProgress && this.state.response
     const showLastResponse = !showResponse && this.props.operationResponse
     const response = !showResponse && this.props.operationResponse ? this.props.operationResponse : this.state.response
     const url = response && response.url
