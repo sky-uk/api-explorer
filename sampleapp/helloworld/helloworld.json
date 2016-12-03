@@ -9,7 +9,6 @@
 			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
 		}
 	},
-	"host": "localhost:3000",
 	"basePath": "/sampleapp/helloworld",
 	"tags": [{
 		"name": "hello",
@@ -23,6 +22,18 @@
 		"http"
 	],
 	"paths": {
+		"/echo-status": {
+			"get":    {
+				"tags": [ "HTTP Status" ],
+				"parameters": [{
+					"name": "status",
+					"in": "query",
+					"description": "HTTP Status Code to return",
+					"required": true,
+					"type": "integer"
+				}]
+			}
+		},
 		"/verbs": {
 			"head":    { "tags": [ "HTTP Verbs" ] },
 			"get":     { "tags": [ "HTTP Verbs" ] },
