@@ -34,8 +34,6 @@ class HowToConfigureAPIExplorer extends Component {
   .addAPI('github', 'swagger2', 'https://api.apis.guru/v2/specs/github.com/v3/swagger.json', c => {
     c.useProxy(true)
   })
-  .addWidgetTab('HATEOAS', APIExplorer.HATEOASWidget)
-  .addPlugin(samplePlugin)
   .configCORS({ credentials: 'omit' })
   .start()`}
               </Highlight>
