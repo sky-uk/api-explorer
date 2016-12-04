@@ -6,7 +6,6 @@ APIExplorer
     c.useProxy(false)
     c.addHeader('Test', 'test')
   })
-  .enableQueryStringConfig('url')
   .configCORS({ credentials: 'include' })
   .start()
 

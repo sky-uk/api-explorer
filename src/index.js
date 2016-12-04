@@ -145,35 +145,6 @@ class APIExplorer {
   }
 
   /**
-   * Enables the API configuration through QueryString parameters 'swaggerSpec', 'swaggerLoader' and 'swaggerUseProxy'
-   *  - swaggerSpec is the URL for a swagger specification
-   *  - swaggerLoader is the loaded to use for the given specification (Swagger1Loader or Swagger2Loader)
-   *  - swaggerUseProxy indicate if we should proxy calls (because CORS) - it is actived with value 'on'
-   * @param  {String} friendlyName [description]
-   * @return {[type]}              [description]
-   */
-  enableQueryStringConfig (friendlyName = 'url') {
-    const queryString = { }
-    document.location.search.substr(1)
-          .split('&')
-          .map(_ => _.split('='))
-          .forEach(a => { queryString[decodeURIComponent(a[0]).replace('[]', '')] = decodeURIComponent(a[1]) })
-
-    // If a specification exists in the query string
-    if (queryString.hasOwnProperty('swaggerSpec')) {
-      const specLoader = queryString.swaggerLoader || 'Swagger2Loader'
-      const swaggerUseProxy = queryString.swaggerUseProxy === 'on'
-      this.addConfiguration(
-        friendlyName,
-        specLoader,
-        new Url(queryString.swaggerSpec).setProxy(swaggerUseProxy)
-      )
-    }
-
-    return this
-  }
-
-  /**
    * Setter method to set API basePath
    * @param  {String} basePath to set as API basePath
    * @return {[APIExplorer]} the APIExplorer instance
