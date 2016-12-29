@@ -1,3 +1,21 @@
+## 0.3.0 (December 29, 2016)
+
+As part of this release we had [8 issues](https://github.com/sky-uk/api-explorer/milestone/6?closed=1) being closed.
+
+### Enhancement
+
+* [#168](https://github.com/sky-uk/api-explorer/issues/168) - Misc improvements
+* [#156](https://github.com/sky-uk/api-explorer/issues/156) - Option to not follow redirects
+* [#143](https://github.com/sky-uk/api-explorer/issues/143) - Missing badges for HEAD, OPTIONS and PATCH
+
+### Bug
+
+* [#159](https://github.com/sky-uk/api-explorer/issues/159) - Status code (and headers) are not shown for some status codes (ex: 204, 500)
+* [#51](https://github.com/sky-uk/api-explorer/issues/51) - Remove support for url spec in querystring
+* [#144](https://github.com/sky-uk/api-explorer/issues/144) - Should warn instead of fail when a spec is not available
+* [#160](https://github.com/sky-uk/api-explorer/pull/160) - Warn instead of failing when API Spec load fails
+
+
 ## 0.2.7 (November 7, 2016)
 
 * Allow to specify a pathname only URL for swagger spec (#152)
