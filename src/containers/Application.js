@@ -69,7 +69,7 @@ class Application extends Component {
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
-                <h1>API Explorer {numberOfAPIs > 1 && <APICounter numberOfAPIs={numberOfAPIs} />}</h1>
+                {this.renderAPIExplorerOrSelectedAPI()}
                 {this.props.children}
 
                 <div id='fixed-footer'>
@@ -90,6 +90,19 @@ class Application extends Component {
 
   onHomeClick = () => {
     this.props.dispatch(selectedOperation(''))
+  }
+
+  renderAPIExplorerOrSelectedAPI () {
+    const selectedOperationId = this.props.selectedOperationId
+    const selectedOperation = this.props.operations.filter(op => op.get('id') === selectedOperationId).first()
+
+    if (!selectedOperation) {
+      return <h1>API Explorer</h1>
+    }
+
+    const api = this.props.apis.get('byName').get(selectedOperation.get('apiname'))
+    const { title, description, version } = api.info
+    return <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
   }
 
   renderMultipleAPIContent (apis) {
