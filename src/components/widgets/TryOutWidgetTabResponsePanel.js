@@ -84,13 +84,11 @@ class TryOutWidgetTabResponsePanel extends Component {
 
   componentDidUpdate (prevProps) {
     if (prevProps.response.data === this.props.response.data) {
-      console.log('skipping did update')
       return
     }
     this.editor.setValue(this.getIndentedJson())
     this.applyPlugins()
     this.editor.refresh()
-    console.log('did update')
   }
 
   getIndentedJson () {
