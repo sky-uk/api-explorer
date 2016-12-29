@@ -11,10 +11,20 @@ class SpecWidgetTab extends Component {
         <span className='doc-w-param-value' >{parameter.description}</span>
       </td>
       <td className='col-md-2' >
-        <span className='doc-w-param-datatype' >{parameter.type}
+        <span className='doc-w-param-datatype' >{this.renderType(parameter)}
         </span>
       </td>
     </tr>)
+  }
+
+  renderType (parameter) {
+    if (parameter.type) {
+      return <abbr>{parameter.type}</abbr>
+    }
+    if (parameter.schema) {
+      return <abbr>{parameter.schema.$ref}</abbr>
+    }
+    return <span>-</span>
   }
 
   renderStatusCodes (statusCode, description) {

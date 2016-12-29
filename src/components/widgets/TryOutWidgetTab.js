@@ -186,6 +186,7 @@ class TryOutWidgetTab extends Component {
       <div className='tab-content'>
         <TryOutWidgetTabParameters
           operation={this.props.operation}
+          definitions={this.props.definitions}
           operationParameters={this.state.operationParameters}
           operationLastParameters={this.props.operationLastParameters}
           onHandleParametersChange={ (name, value) => this.onHandleParametersChange(name, value) }
