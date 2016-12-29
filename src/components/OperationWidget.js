@@ -38,6 +38,7 @@ class OperationWidget extends Component {
           { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>) }
           { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy'></i>}
           &nbsp; { this.props.operation.spec.deprecated && <span className='badge'>deprecated</span>}
+          <div><small style={{marginLeft: '1ch', opacity: 0.7}}>{this.props.operation.spec.summary}</small></div>
         </div>
         <div className='panel-body' >
           <ul className='nav nav-tabs' >
