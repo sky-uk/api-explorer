@@ -173,7 +173,8 @@ class TryOutWidgetTab extends Component {
       width: '100%',
       overflow: 'hidden'
     }
-    const showResponse = !this.state.requestInProgress && this.state.response
+
+    const showResponse = !this.state.requestInProgress && (this.state.response && this.state.response.status)
     const showLastResponse = !showResponse && this.props.operationResponse
     const response = !showResponse && this.props.operationResponse ? this.props.operationResponse : this.state.response
     const url = response && response.url
@@ -185,6 +186,7 @@ class TryOutWidgetTab extends Component {
       <div className='tab-content'>
         <TryOutWidgetTabParameters
           operation={this.props.operation}
+          definitions={this.props.definitions}
           operationParameters={this.state.operationParameters}
           operationLastParameters={this.props.operationLastParameters}
           onHandleParametersChange={ (name, value) => this.onHandleParametersChange(name, value) }

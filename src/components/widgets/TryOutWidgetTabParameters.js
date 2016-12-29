@@ -32,6 +32,10 @@ class TryOutWidgetTabParameters extends Component {
     )
   }
 
+  editorForFile (param, value) {
+    return <input type='file' />
+  }
+
   editorForSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     return (
@@ -93,7 +97,39 @@ class TryOutWidgetTabParameters extends Component {
       return this.editorForMultipleSelect(param, value)
     }
 
+    if (param.type === 'file') {
+      return this.editorForFile(param, value)
+    }
+
     return this.editorForInput(param, value)
+  }
+
+  renderParameterType (parameter) {
+    if (parameter.type === 'string' || parameter.type === 'integer' || parameter.type === 'file') {
+      return <span>{parameter.type}</span>
+    }
+
+    if (parameter.type === 'array') {
+      if (parameter.items && parameter.items.enum) {
+        return <span><abbr>{parameter.type}</abbr> of <abbr>({parameter.items.enum.join(',')})</abbr></span>
+      } else {
+        return <span><abbr>{parameter.type}</abbr> of <abbr>{parameter.items.type}</abbr></span>
+      }
+      console.log('UNKNOWN TYPE', parameter.name, JSON.stringify(parameter, null, 2))
+      return <div>-</div>
+    }
+
+    if (parameter.schema) {
+      const definition = this.props.definitions[parameter.schema.$ref]
+      return (
+        <span title={JSON.stringify(definition, null, 2)}>
+          <abbr style={{ borderBottom: 'dashed gray 1px ' }}>{definition.name}</abbr>
+        </span>
+      )
+    }
+
+    console.log('UNKNOWN TYPE', parameter.name, JSON.stringify(parameter, null, 2))
+    return <div>-</div>
   }
 
   renderParameters (parameters) {
@@ -101,15 +137,15 @@ class TryOutWidgetTabParameters extends Component {
       return (
         <tr key={i}>
           <td><span className='label label-default'>{parameter.in}</span></td>
-          <td className='col-md-2'>
+          <td className='col-md-3'>
               <span>{parameter.name}</span>
               <span title='Required field'>{parameter.required ? '*' : ''}</span>
-              <i className='fa fa-info-circle pull-right' data-toggle='tooltip' data-placement='top' title={parameter.description}></i>
+              {parameter.description && <div><small><small>{parameter.description}</small></small></div>}
           </td>
-          <td className='col-md-8'>
+          <td className='col-md-6'>
               <div>{this.renderEditorFor(parameter)}</div>
           </td>
-          <td className='col-md-2'><span>{parameter.type}</span></td>
+          <td className='col-md-3'><span>{this.renderParameterType(parameter)}</span></td>
         </tr>
       )
     })
@@ -143,6 +179,7 @@ class TryOutWidgetTabParameters extends Component {
 
 TryOutWidgetTabParameters.propTypes = {
   operation: PropTypes.object.isRequired,
+  definitions: PropTypes.object.isRequired,
   operationParameters: PropTypes.object,
   operationLastParameters: PropTypes.object,
   onHandleParametersChange: PropTypes.func.isRequired,

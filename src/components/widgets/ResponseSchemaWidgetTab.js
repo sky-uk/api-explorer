@@ -15,27 +15,40 @@ class ResponseSchemaWidgetTab extends Component {
         return schemaReference
       }
 
-      let model = {}
-      Object.keys(definition.schema.properties || {}).forEach(p => {
-        const propDescriptor = definition.schema.properties[p]
+      if (definition.schema.type === 'object') {
+        let model = {}
+        Object.keys(definition.schema.properties || {}).forEach(p => {
+          const propDescriptor = definition.schema.properties[p]
 
-        // check if the type is an array
-        if (propDescriptor.hasOwnProperty('type') && propDescriptor.type === 'array') {
-          if (propDescriptor.hasOwnProperty('items') && propDescriptor.items.hasOwnProperty('$ref')) {
-            model[p] = [ getModelFor(propDescriptor.items.$ref, deep + 1) ]
+          // check if the type is an array
+          if (propDescriptor.hasOwnProperty('type') && propDescriptor.type === 'array') {
+            if (propDescriptor.hasOwnProperty('items') && propDescriptor.items.hasOwnProperty('$ref')) {
+              model[p] = [ getModelFor(propDescriptor.items.$ref, deep + 1) ]
+            } else {
+              model[p] = [ getModelFor(propDescriptor.items.type, deep + 1) ]
+            }
           } else {
-            model[p] = [ getModelFor(propDescriptor.items.type, deep + 1) ]
+            // check if instead of a array is a known type
+            if (propDescriptor.hasOwnProperty('$ref')) {
+              model[p] = getModelFor(propDescriptor.$ref, deep + 1)
+            } else {
+              model[p] = propDescriptor.type
+            }
           }
-        } else {
-          // check if instead of a array is a known type
-          if (propDescriptor.hasOwnProperty('$ref')) {
-            model[p] = getModelFor(propDescriptor.$ref, deep + 1)
-          } else {
-            model[p] = propDescriptor.type
-          }
+        })
+        return model
+      }
+
+      if (definition.schema.type === 'array') {
+        let model = []
+        let items = definition.schema.items
+        // Draw arrays with $ref objects
+        if (items.hasOwnProperty('$ref')) {
+          model.push(getModelFor(items.$ref, deep + 1))
         }
-      })
-      return model
+        // TODO: Accept other types
+        return model
+      }
     }
 
     if (responseSchema.hasOwnProperty('type')) {
@@ -71,14 +84,14 @@ class ResponseSchemaWidgetTab extends Component {
         if (response.schema.hasOwnProperty('type')) {
           if (response.schema.type === 'array') {
             if (response.schema.items.hasOwnProperty('$ref')) {
-              return `[${definitions[response.schema.items.$ref].name.toLowerCase()}]`
+              return `[${definitions[response.schema.items.$ref].name}]`
             }
-            return `[${response.schema.items.type.toLowerCase()}]`
+            return `[${response.schema.items.type}]`
           }
           return response.schema.type
         }
         if (response.schema.hasOwnProperty('$ref')) {
-          return definitions[response.schema.$ref].name.toLowerCase()
+          return definitions[response.schema.$ref].name
         }
       }
       return 'void'
@@ -91,12 +104,21 @@ class ResponseSchemaWidgetTab extends Component {
     return (
     <div key={responseSchema.statusCode} className='panel panel-default' >
         <div className='panel-heading'>
-          <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''} <code>{responseSchema.returnType}</code>
+          <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''}
+            <code>{responseSchema.returnType}</code>
         </div>
         <div className='panel-body'>
-          <pre>
-            {this.getDefinitions(responseSchema.schema)}
-          </pre>
+          <table style={{ width: '100%' }} className='table' >
+            <thead>
+              <tr><th>Sample</th><th>Schema</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></td>
+                <td><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     )
