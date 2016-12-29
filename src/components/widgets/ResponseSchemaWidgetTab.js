@@ -49,7 +49,6 @@ class ResponseSchemaWidgetTab extends Component {
         // TODO: Accept other types
         return model
       }
-
     }
 
     if (responseSchema.hasOwnProperty('type')) {

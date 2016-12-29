@@ -121,10 +121,11 @@ class TryOutWidgetTabParameters extends Component {
 
     if (parameter.schema) {
       const definition = this.props.definitions[parameter.schema.$ref]
-      return <span title={JSON.stringify(definition, null, 2)}><abbr style={{ borderBottom: 'dashed gray 1px '}}>{definition.name}</abbr></span>
-      return <pre style={{ overflow: 'scroll', maxHeight: 100 }}>
-        {JSON.stringify(definition, null, 2)}
-      </pre>
+      return (
+        <span title={JSON.stringify(definition, null, 2)}>
+          <abbr style={{ borderBottom: 'dashed gray 1px ' }}>{definition.name}</abbr>
+        </span>
+      )
     }
 
     console.log('UNKNOWN TYPE', parameter.name, JSON.stringify(parameter, null, 2))

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Dock from 'react-dock'
 import marked from 'marked'
-import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu, APICounter } from 'components'
+import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu } from 'components'
 import { selectedOperation } from 'actions/loadActionCreators'
 
 class Application extends Component {
@@ -39,7 +39,6 @@ class Application extends Component {
   }
 
   renderApplication () {
-    const numberOfAPIs = this.props.apis.get('byOrder').size
     return (
       <div id='content'>
         <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
@@ -101,7 +100,7 @@ class Application extends Component {
     }
 
     const api = this.props.apis.get('byName').get(selectedOperation.get('apiname'))
-    const { title, description, version } = api.info
+    const { title, version } = api.info
     return <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
   }
 
