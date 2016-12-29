@@ -173,7 +173,8 @@ class TryOutWidgetTab extends Component {
       width: '100%',
       overflow: 'hidden'
     }
-    const showResponse = !this.state.requestInProgress && this.state.response
+
+    const showResponse = !this.state.requestInProgress && (this.state.response && this.state.response.status)
     const showLastResponse = !showResponse && this.props.operationResponse
     const response = !showResponse && this.props.operationResponse ? this.props.operationResponse : this.state.response
     const url = response && response.url
