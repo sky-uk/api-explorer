@@ -1,22 +1,22 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import { persistState } from 'redux-devtools'
 import reducers from 'reducers'
-import injectDevTools from 'components/DevTools'
 import { reduxReactRouter } from 'redux-router'
 import createHistory from 'history/lib/createBrowserHistory' // history/lib/createHashHistory
 import thunk from 'redux-thunk'
 
-let DevTools = injectDevTools()
-let InstrumentationStrategy = window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument({ maxAge: 2 })
-
-const finalCreateStore = compose(
-  applyMiddleware(thunk),
-  reduxReactRouter({ createHistory }),
-  DevTools ? InstrumentationStrategy : null,
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-)(createStore)
+const composed = window.devToolsExtension
+  ? compose(
+      applyMiddleware(thunk),
+      reduxReactRouter({ createHistory }),
+      window.devToolsExtension()
+    )
+  : compose(
+      applyMiddleware(thunk),
+      reduxReactRouter({ createHistory })
+    )
 
 export default function configureStore (initialState) {
+  const finalCreateStore = composed(createStore)
   const store = finalCreateStore(reducers, initialState)
 
   if (module.hot) {
