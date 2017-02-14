@@ -102,10 +102,10 @@ class ResponseSchemaWidgetTab extends Component {
 
   renderResponseSchema (responseSchema) {
     return (
-    <div key={responseSchema.statusCode} className='panel panel-default' >
+      <div key={responseSchema.statusCode} className='panel panel-default' >
         <div className='panel-heading'>
           <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''}
-            <code>{responseSchema.returnType}</code>
+          <code>{responseSchema.returnType}</code>
         </div>
         <div className='panel-body'>
           <table style={{ width: '100%' }} className='table' >

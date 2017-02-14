@@ -35,8 +35,8 @@ class OperationWidget extends Component {
           &nbsp;
           <samp >{this.props.operation.spec.url}</samp>
           &nbsp;
-          { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>) }
-          { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy'></i>}
+          { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow'}}><i className='fa fa-lock' title='Secured' /></span>) }
+          { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy' />}
           &nbsp; { this.props.operation.spec.deprecated && <span className='badge'>deprecated</span>}
           <div><small style={{marginLeft: '1ch', opacity: 0.7}}>{this.props.operation.spec.summary}</small></div>
         </div>

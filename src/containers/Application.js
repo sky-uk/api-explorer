@@ -52,7 +52,7 @@ class Application extends Component {
             <ul className='nav' id='side-menu'>
               <li>
                 <Link to={APIExplorer.LinkGenerator.toHome()} >
-                  <i className='fa fa-fw fa-home'></i><span>Home</span>
+                  <i className='fa fa-fw fa-home' /><span>Home</span>
                 </Link>
               </li>
             </ul>

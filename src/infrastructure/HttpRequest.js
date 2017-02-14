@@ -1,4 +1,4 @@
-/*global Request*/
+/* global Request */
 
 function getMediaType (headerValue) {
   return headerValue ? headerValue.split(';')[0] : ''
@@ -126,7 +126,7 @@ class HttpRequest {
       'Content-Type': requestInformation.requestFormat
     }
 
-    params.headers.forEach(h => headers[h.name] = h.value)
+    params.headers.forEach(h => { headers[h.name] = h.value })
 
     let requestConfig = {
       method: requestInformation.httpMethod,

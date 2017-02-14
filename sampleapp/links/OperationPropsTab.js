@@ -10,7 +10,7 @@ export default class OperationPropsTab extends Component {
           <div key={key}>
             <h5>{key}</h5>
             <pre>
-            {JSON.stringify(this.props[key], null, 2)}
+              {JSON.stringify(this.props[key], null, 2)}
             </pre>
           </div>
         ))}

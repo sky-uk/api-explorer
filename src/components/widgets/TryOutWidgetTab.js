@@ -189,19 +189,19 @@ class TryOutWidgetTab extends Component {
           definitions={this.props.definitions}
           operationParameters={this.state.operationParameters}
           operationLastParameters={this.props.operationLastParameters}
-          onHandleParametersChange={ (name, value) => this.onHandleParametersChange(name, value) }
-          onHandleLastParametersChange={ (e) => this.onHandleLastParametersChange(JSON.parse(e.target.selectedOptions[0].value)) }
+          onHandleParametersChange={(name, value) => this.onHandleParametersChange(name, value)}
+          onHandleLastParametersChange={(e) => this.onHandleLastParametersChange(JSON.parse(e.target.selectedOptions[0].value))}
         />
-        <div className={ this.state.requestPanelClassName }>
+        <div className={this.state.requestPanelClassName}>
           <div className='panel-heading'>
             <TryOutWidgetTabExecuter
               requestFormat={this.state.requestFormat}
               requestFormats={this.props.operation.spec.consumes}
               requestInProgress={this.state.requestInProgress}
-              onValidateParameters={ () => this.onValidateParameters() }
-              onExecuteRequest={ requestFormat => this.onExecuteRequest(requestFormat) }
+              onValidateParameters={() => this.onValidateParameters()}
+              onExecuteRequest={requestFormat => this.onExecuteRequest(requestFormat)}
             />
-            {showResponse && <span>&nbsp;&nbsp;<a href='about:blank' onClick={ e => this.hideResponse(e) }>Hide Response</a></span>}
+            {showResponse && <span>&nbsp;&nbsp;<a href='about:blank' onClick={e => this.hideResponse(e)}>Hide Response</a></span>}
 
             {(showResponse || showLastResponse) && <div className='pull-right'>
               <strong>

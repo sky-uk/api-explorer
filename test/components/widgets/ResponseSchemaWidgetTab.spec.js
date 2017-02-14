@@ -1,4 +1,6 @@
-/* import React from 'react/addons'
+/*
+
+import React from 'react/addons'
 import { ResponseSchemaWidgetTab } from '../../../src/components'
 import {expect} from 'chai'
 
@@ -110,4 +112,6 @@ describe('components', () => {
     }
   }}, propOverrides)
   return renderIntoDocument(<SpecWidgetTab {...props} />)
-}*/
+}
+
+*/

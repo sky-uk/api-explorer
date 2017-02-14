@@ -22,8 +22,10 @@ import 'codemirror/addon/search/searchcursor'
 import 'codemirror/addon/dialog/dialog'
 import 'codemirror/addon/dialog/dialog.css'
 
-/* import '../../vendor/codemirror/codemirror-mode-links'
-import '../../vendor/codemirror/codemirror-extension-foldall'*/
+/*
+  import '../../vendor/codemirror/codemirror-mode-links'
+  import '../../vendor/codemirror/codemirror-extension-foldall'
+*/
 
 class TryOutWidgetTabResponsePanel extends Component {
   constructor () {
@@ -78,7 +80,7 @@ class TryOutWidgetTabResponsePanel extends Component {
     this.editor.focus()
     this.applyPlugins()
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
-      this.props.response.data = this.props.response.data.replace('\\"', '\"')
+      this.props.response.data = this.props.response.data.replace('\\"', '"')
     }
   }
 
@@ -121,7 +123,7 @@ class TryOutWidgetTabResponsePanel extends Component {
           <strong>Fold: </strong>To fold all lines press <mark>Ctrl-Y</mark>, and <mark>Ctrl-Alt-Y</mark> to unfold.&nbsp;
           <em>Note that in OSX you should use Cmd instead of Ctrl.</em>
         </small>
-        <br/>
+        <br />
       </div>
     )
   }

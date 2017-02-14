@@ -44,7 +44,8 @@ class TryOutWidgetTabExecuter extends Component {
 
   renderRequestFormats () {
     return (
-      <select value={this.state.requestFormat || this.state.requestFormats[0]} onChange={ (e) => this.handleRequestFormatChange(e)} >
+      <select value={this.state.requestFormat || this.state.requestFormats[0]}
+        onChange={(e) => this.handleRequestFormatChange(e)} >
         {this.state.requestFormats.map((format, i) =>
           <option key={i} value={format}>{format}</option>
         )}
@@ -54,26 +55,23 @@ class TryOutWidgetTabExecuter extends Component {
 
   render () {
     return (
-        <span>
-          <span>Accept </span>
-          {this.renderRequestFormats()}
+      <span>
+        <span>Accept </span>
+        {this.renderRequestFormats()}
+        &nbsp;
+        <button className='btn btn-primary btn-sm executeRequest' onClick={() => this.executeRequest()} >
+          Execute request
+          &nbsp;&nbsp;
+          <i className='fa fa-angle-double-right' />
           &nbsp;
-          <button
-            className='btn btn-primary btn-sm executeRequest'
-            onClick={() => this.executeRequest()}
-          >
-            Execute request
-            &nbsp;&nbsp;
-            <i className='fa fa-angle-double-right' />
-            &nbsp;
-          </button>
-          {this.props.requestInProgress && <span>&nbsp;<i className='fa fa-spinner fa-spin'></i></span>}
-          {!this.state.isValid &&
-            <strong>
-              &nbsp;<i className='fa fa-exclamation'></i>&nbsp;
-              <span>Required fields (*) missing</span>
-            </strong>}
-        </span>
+        </button>
+        {this.props.requestInProgress && <span>&nbsp;<i className='fa fa-spinner fa-spin' /></span>}
+        {!this.state.isValid &&
+          <strong>
+            &nbsp;<i className='fa fa-exclamation' />&nbsp;
+            <span>Required fields (*) missing</span>
+          </strong>}
+      </span>
     )
   }
 }

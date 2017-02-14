@@ -17,18 +17,15 @@ class TryOutWidgetTabParameters extends Component {
     const style = { border: 'solid 1px #AAA', padding: '2px' }
     if (param.in === 'body') {
       return (
-        <textarea className='col-md-12' rows={ value ? Math.max(4, value.split('\n').length + 1) : 4 }
-                  style={style} required={param.required} value={value}
-                  onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)
-                }
+        <textarea className='col-md-12' rows={value ? Math.max(4, value.split('\n').length + 1) : 4}
+          style={style} required={param.required} value={value}
+          onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)}
         />
       )
     }
     return (
-        <input type='text' className='col-md-12' style={style} required={param.required}
-               value={value}
-               onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value) }
-        />
+      <input type='text' className='col-md-12' style={style} required={param.required}
+        value={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
     )
   }
 
@@ -39,11 +36,10 @@ class TryOutWidgetTabParameters extends Component {
   editorForSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     return (
-        <select className='col-md-12'
-                value={value}
-                onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} >
-            {param.enum.map((text, i) => <option key={i}>{text}</option>)}
-        </select>
+      <select className='col-md-12' value={value}
+        onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} >
+        {param.enum.map((text, i) => <option key={i}>{text}</option>)}
+      </select>
     )
   }
 
@@ -51,16 +47,13 @@ class TryOutWidgetTabParameters extends Component {
     const handleParametersOnChange = this.props.onHandleParametersChange
     value = [ value || param.items.default ]
     return (
-        <select multiple='multiple'
-                className='col-md-12'
-                value={value}
-                onChange={(evt) => {
-                  const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
-                  handleParametersOnChange(param.name, selectedValues)
-                }
-                } >
-            {param.items.enum.map((text, i) => <option key={i} value={text}>{text}</option>)}
-        </select>
+      <select multiple='multiple' className='col-md-12' value={value}
+        onChange={(evt) => {
+          const selectedValues = Enumerable.from(evt.currentTarget.selectedOptions).select(o => o.value).toArray().join(',')
+          handleParametersOnChange(param.name, selectedValues)
+        }} >
+        {param.items.enum.map((text, i) => <option key={i} value={text}>{text}</option>)}
+      </select>
     )
   }
 
@@ -74,7 +67,7 @@ class TryOutWidgetTabParameters extends Component {
       return (
         <div style={style}>
           <span>Last Parameters Used: </span>
-          <select onChange={ (e) => this.props.onHandleLastParametersChange(e)} >
+          <select onChange={(e) => this.props.onHandleLastParametersChange(e)} >
             <option value='{"values": "default"}'>Default Parameters</option>
             {this.props.operationLastParameters.map((parameter, i) =>
               <option key={i} value={JSON.stringify(parameter.values)}>{moment(parameter.moment).fromNow()}</option>
@@ -112,11 +105,8 @@ class TryOutWidgetTabParameters extends Component {
     if (parameter.type === 'array') {
       if (parameter.items && parameter.items.enum) {
         return <span><abbr>{parameter.type}</abbr> of <abbr>({parameter.items.enum.join(',')})</abbr></span>
-      } else {
-        return <span><abbr>{parameter.type}</abbr> of <abbr>{parameter.items.type}</abbr></span>
       }
-      console.log('UNKNOWN TYPE', parameter.name, JSON.stringify(parameter, null, 2))
-      return <div>-</div>
+      return <span><abbr>{parameter.type}</abbr> of <abbr>{parameter.items.type}</abbr></span>
     }
 
     if (parameter.schema) {
@@ -138,12 +128,12 @@ class TryOutWidgetTabParameters extends Component {
         <tr key={i}>
           <td><span className='label label-default'>{parameter.in}</span></td>
           <td className='col-md-3'>
-              <span>{parameter.name}</span>
-              <span title='Required field'>{parameter.required ? '*' : ''}</span>
-              {parameter.description && <div><small><small>{parameter.description}</small></small></div>}
+            <span>{parameter.name}</span>
+            <span title='Required field'>{parameter.required ? '*' : ''}</span>
+            {parameter.description && <div><small><small>{parameter.description}</small></small></div>}
           </td>
           <td className='col-md-6'>
-              <div>{this.renderEditorFor(parameter)}</div>
+            <div>{this.renderEditorFor(parameter)}</div>
           </td>
           <td className='col-md-3'><span>{this.renderParameterType(parameter)}</span></td>
         </tr>
@@ -170,7 +160,7 @@ class TryOutWidgetTabParameters extends Component {
         <div>
           <h4>Parameters</h4>
           <div>This operation does not have any parameters.</div>
-          <br/>
+          <br />
         </div>
       )
     }

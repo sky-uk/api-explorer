@@ -6,7 +6,7 @@ const reducers = { }
 if (window.APIExplorer && window.APIExplorer.plugins && window.APIExplorer.plugins.length > 0) {
   window.APIExplorer.plugins
     .filter(pluginSpec => pluginSpec.reducer)
-    .forEach(pluginSpec => reducers[pluginSpec.key] = pluginSpec.reducer)
+    .forEach(pluginSpec => { reducers[pluginSpec.key] = pluginSpec.reducer })
 }
 
 export default Object.keys(reducers).length > 0 ? combineReducers(reducers) : reducers

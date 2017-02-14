@@ -47,7 +47,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
           onLoadProgress(`Loading of Swagger spec 1.x completed.`)
 
           let apiDeclarations = {}
-          result.forEach(element => apiDeclarations [element.path] = element.result)
+          result.forEach(element => { apiDeclarations[element.path] = element.result })
 
           onLoadProgress('Started to convert Swagger 1.x to Swagger 2.0....')
           const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)

@@ -71,12 +71,12 @@ class LateralMenu extends Component {
     return (
       <li key={apiOperations[0].apiname}>
         <a href='#'>
-          <i className='fa fa-fw fa-user'></i>
-          <span></span>
-          <strong>{apiOperations[0].apiname}</strong><span></span>
+          <i className='fa fa-fw fa-user' />
+          <span />
+          <strong>{apiOperations[0].apiname}</strong><span />
         </a>
         <ul className='nav nav-second-level'>
-        {tags.map(tag => this.renderOperationsWithTag(apiOperations, tag))}
+          {tags.map(tag => this.renderOperationsWithTag(apiOperations, tag))}
         </ul>
       </li>
     )
@@ -115,7 +115,11 @@ class LateralMenu extends Component {
           <span className='operation'>
             <span className={httpMethodClasses}>{operation.spec.httpMethod.toUpperCase()}</span>
             &nbsp;
-            {operation.spec.security && (<span key={`security${operation.id}`} style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}><i className='fa fa-lock' title='Secured'></i></span>)}
+            {operation.spec.security && (
+              <span key={`security${operation.id}`}
+                style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}>
+                <i className='fa fa-lock' title='Secured' />
+              </span>)}
             <span className='operation-url'>{operation.spec.url}</span>
           </span>
         </Link>

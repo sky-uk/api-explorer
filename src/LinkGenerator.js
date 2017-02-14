@@ -23,7 +23,7 @@ export default class LinkGenerator {
     let href = `${scheme}://${host}${basePath}${path}`
 
     Object.keys(params).forEach(key => {
-      const rex = new RegExp(`\{${key}\}`)
+      const rex = new RegExp(`{${key}}`)
       if (rex.test(href)) {
         href = href.replace(rex, params[key])
         delete params[key]

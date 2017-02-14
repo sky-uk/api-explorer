@@ -10,18 +10,15 @@ export default class Root extends Component {
   render () {
     const { store } = this.props
     return (
-        <Provider store={store}>
-          <div>
-            <ReduxRouter>
-              {getRoutes(store)}
-            </ReduxRouter>
+      <Provider store={store}>
+        <div>
+          <ReduxRouter>
+            {getRoutes(store)}
+          </ReduxRouter>
 
-            <ReduxToastr
-              transitionIn='fadeIn'
-              transitionOut='fadeOut'
-              progressBar/>
-          </div>
-        </Provider>
+          <ReduxToastr transitionIn='fadeIn' transitionOut='fadeOut' progressBar />
+        </div>
+      </Provider>
     )
   }
 }

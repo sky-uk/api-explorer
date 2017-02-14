@@ -62,15 +62,15 @@ class CustomHeadersSettings extends Component {
       <div className='tab-content' >
 
         <Form schema={schema}
-              uiSchema={uiSchema}
-              formData={this.state}
-              onChange={this.handleOnChange}
-              onSubmit={this.handleFormSave} >
+          uiSchema={uiSchema}
+          formData={this.state}
+          onChange={this.handleOnChange}
+          onSubmit={this.handleFormSave} >
           <div>
             <button type='submit' className='btn btn-primary'>Save</button>
           </div>
         </Form>
-        <br/>
+        <br />
         {this.state.showSuccess && <div className='alert alert-success' role='alert'>Settings updated with success.</div>}
 
       </div>

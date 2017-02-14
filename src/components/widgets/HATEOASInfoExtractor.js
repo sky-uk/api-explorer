@@ -44,19 +44,19 @@ function getJSONLinksFor (text, operations) {
 
     const ops = operations
 
-    const op_list = ops.filter(op => {
-      let spec_url = op.spec.url
-      const rex = spec_url.replace(/{([^}]+)}/g, '(.*)')
+    const operationsList = ops.filter(op => {
+      let specUrl = op.spec.url
+      const rex = specUrl.replace(/{([^}]+)}/g, '(.*)')
       const regex = new RegExp(rex)
       const success = regex.test(info.href)
       return success
     })
 
     let op = null
-    if (op_list.length > 1) {
-      op_list.sort((o1, o2) => o2.spec.url.length - o1.spec.url.length)
+    if (operationsList.length > 1) {
+      operationsList.sort((o1, o2) => o2.spec.url.length - o1.spec.url.length)
     }
-    op = op_list.length > 0 ? op_list[0] : null
+    op = operationsList.length > 0 ? operationsList[0] : null
 
     if (op) {
       info.operationId = op.id
