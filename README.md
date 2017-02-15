@@ -1,36 +1,47 @@
-API Explorer
+API Explorer [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard) [![Circle CI](https://circleci.com/gh/sky-uk/api-explorer.svg?style=svg&circle-token=316a0c863d30835bace2fa013b5e5cacfbed6c69)](https://circleci.com/gh/sky-uk/api-explorer)
 =================
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
-[![Circle CI](https://circleci.com/gh/sky-uk/api-explorer.svg?style=svg&circle-token=316a0c863d30835bace2fa013b5e5cacfbed6c69)](https://circleci.com/gh/sky-uk/api-explorer)
+API Explorer is a live documentation client for HTTP APIs that provides a nice and highly customizable UI.
 
-**Documentation is in progress**
 
-API Explorer is a live documentation client for Swagger. It provides a nice and highly customizable UI for Swagger.
+* **Extensible**: API Explorer provides a extensible system, based on plugins, that allow you to control several
+   aspects of the UI, interactions with your API endpoints and the API Specification. 
+* **API Specification loaders**: It is pre-bundled with Swagger (v1, v2) API specification loaded, but can be extended
+  to handle other specifications.
+* **Multiple APIs**: You can have multiple API handled in the same UI for convenience.
+* **Developer friendly**: We provide a built-in development server to test your plugins and settings, 
+  with features such as a proxy for bypass CORS restrictions
+* **Clean UI and user friendly**: The UI is focused in the API operation, making it a first class citizen in the UI.
+  Some user friendly aspect are also implemented, like: deep-link to api operations with pre-filled parameters; history for 
+  API request responses; API deprecation indicator; custom headers.
 
-![Sample API Explorer](http://sky-uk.github.io/api-explorer/docs/apiexplorer-demo.gif)
 
-## Sample Application (development)
 
-You can try the application in our online development sandbox.
 
-[https://apiexplorer-app.herokuapp.com](https://apiexplorer-app.herokuapp.com)
+<!-- TOC -->
 
-## Features
+- [Development](#development)
+  - [Build](#build)
+  - [Production build](#production-build)
+  - [Linting](#linting)
+  - [Customization](#customization)
+- [Sample API Explorer client](#sample-api-explorer-client)
+- [Core Maintainers](#core-maintainers)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+- [Sample Application (development)](#sample-application-development)
 
-* Clean UI
-* Multiple APIs
-* Loaders for Swagger version 1.0 and 2.0
-* Custom HTTP Headers
-* Extensible tab widgets
-* Built-in proxy for bypass CORS restrictions
+<!-- /TOC -->
+
+
+> ***NOTE: This page is being re-written.Use with care.***
 
 
 ## Development
 
 ### Build
 
-To build this project you need to clone the repo and then:
+To build this project you need to clone the repository and then:
 
 ```
 npm install
@@ -120,4 +131,14 @@ You can check all the contributors of this project [here](https://github.com/sky
 - [Nuno Silva](https://github.com/nunoas) - nuno.silva@sky.uk
 - [Pedro Félix](https://github.com/pmhsfelix) - pedro.felix@sky.uk
 
+
+
+
+## Sample Application (development)
+
+You can try the application in our online development sandbox.
+
+[https://apiexplorer-app.herokuapp.com](https://apiexplorer-app.herokuapp.com)
+
+![Sample API Explorer](http://sky-uk.github.io/api-explorer/docs/apiexplorer-demo.gif)
 
