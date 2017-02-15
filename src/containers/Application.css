@@ -314,6 +314,10 @@ img { max-width:100% }
   font-weight: bolder;
 }
 
+.CodeMirror {
+  height: 600px !important;
+}
+
 .CodeMirror-fullscreen {
   z-index: 100000000 !important;
 }
