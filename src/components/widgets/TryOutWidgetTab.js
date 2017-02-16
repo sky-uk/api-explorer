@@ -189,6 +189,7 @@ class TryOutWidgetTab extends Component {
           definitions={this.props.definitions}
           operationParameters={this.state.operationParameters}
           operationLastParameters={this.props.operationLastParameters}
+          headers={this.props.config.headers.concat(this.props.apiConfig.headers)}
           onHandleParametersChange={(name, value) => this.onHandleParametersChange(name, value)}
           onHandleLastParametersChange={(e) => this.onHandleLastParametersChange(JSON.parse(e.target.selectedOptions[0].value))}
         />

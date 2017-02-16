@@ -80,7 +80,12 @@ class TryOutWidgetTabParameters extends Component {
   }
 
   renderEditorFor (param) {
-    const value = this.props.operationParameters[param.name]
+    let value = this.props.operationParameters[param.name]
+
+    // for parameters of type header, use default value from headers list
+    if (param.in === 'header' && !value && this.props.headers.find(h => h.name === param.name)) {
+      value = this.props.headers.find(h => h.name === param.name).value
+    }
 
     if (param.enum) {
       return this.editorForSelect(param, value)
@@ -170,6 +175,7 @@ class TryOutWidgetTabParameters extends Component {
 TryOutWidgetTabParameters.propTypes = {
   operation: PropTypes.object.isRequired,
   definitions: PropTypes.object.isRequired,
+  headers: PropTypes.array.isRequired,
   operationParameters: PropTypes.object,
   operationLastParameters: PropTypes.object,
   onHandleParametersChange: PropTypes.func.isRequired,
