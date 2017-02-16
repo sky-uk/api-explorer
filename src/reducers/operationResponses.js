@@ -5,7 +5,7 @@ let INITIAL_STATE = Map()
 
 export default function apisReducer (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case types.NEW_RESPONSE:
+    case types.RESPONSE_RECEIVED:
       return state.set(action.operation.id, action.response, action.request)
   }
   return state
