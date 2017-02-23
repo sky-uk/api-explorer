@@ -31,6 +31,7 @@ This are the steps to get API Explorer working for some API that is described in
 - Edit the `index.html` file to configure your API
   - Add a `<script ...>` tag as the last `<body>` element with the following:
   - **Option A)** if you are hosting `index.html` in the same server/api:
+  
     ```js
     APIExplorer
       .addAPI('some-api', 'swagger2', '/path/to/the/api/spec', c => {
@@ -39,6 +40,7 @@ This are the steps to get API Explorer working for some API that is described in
       .start()
     ```
   - **Option B)** if you are hosting `index.html` in a distinct server/api:
+  
     ```js
     APIExplorer
       .addAPI('some-api', 'swagger2', 'https://example.com/path/to/the/api/spec', c => {
