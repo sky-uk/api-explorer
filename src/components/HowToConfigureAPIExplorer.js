@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Highlight from 'react-highlight'
-import 'highlight.js/styles/monokai_sublime.css' // see issue #26
+import 'highlight.js/styles/monokai.css' // see issue #26
 
 class HowToConfigureAPIExplorer extends Component {
 
@@ -29,10 +29,6 @@ class HowToConfigureAPIExplorer extends Component {
   .addAPI('petstore', 'swagger2', 'https://api.swaggerhub.com/apis/anil614sagar/petStore/1.0.0', c => {
     c.addHeader('X-Foo', 'Some Value')
     c.addHeader('X-Bar', 'Another Value')
-    c.useProxy(true)
-  })
-  .addAPI('github', 'swagger2', 'https://api.apis.guru/v2/specs/github.com/v3/swagger.json', c => {
-    c.useProxy(true)
   })
   .configCORS({ credentials: 'omit' })
   .start()`}
