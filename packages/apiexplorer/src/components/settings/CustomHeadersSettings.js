@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import './CustomHeadersSettings.css'
 import Form from 'react-jsonschema-form'
 import { headers } from '../../actions/loadActionCreators'
 import Immutable from 'immutable'

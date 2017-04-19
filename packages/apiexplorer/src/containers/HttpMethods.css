@@ -75,34 +75,34 @@ Color schema:
 
 .panel-http-method a { color: black; }
 
-.panel-http-method-head                     {     border-color: #5bc0de; }
-.panel-http-method-head > .panel-heading    {     border-color: #5bc0de;
-                                              background-color: #5bc0de; color: #fff; }
+.documentation-widget.panel-http-method-head                     {     border-color: #5bc0de; }
+.documentation-widget.panel-http-method-head > .panel-heading    {     border-color: #5bc0de;
+                                                                   background-color: #5bc0de; color: #fff; }
 
-.panel-http-method-get                      {     border-color: #428bca; }
-.panel-http-method-get > .panel-heading     {     border-color: #428bca;
-                                              background-color: #428bca; color: #fff; }
+.documentation-widget.panel-http-method-get                      {     border-color: #428bca; }
+.documentation-widget.panel-http-method-get > .panel-heading     {     border-color: #428bca;
+                                                                   background-color: #428bca; color: #fff; }
 
-.panel-http-method-delete                   {     border-color: #d9534f; }
-.panel-http-method-delete > .panel-heading  {     border-color: #d9534f;
-                                              background-color: #d9534f; color: #fff; }
+.documentation-widget.panel-http-method-delete                   {     border-color: #d9534f; }
+.documentation-widget.panel-http-method-delete > .panel-heading  {     border-color: #d9534f;
+                                                                   background-color: #d9534f; color: #fff; }
 
-.panel-http-method-put                      {     border-color: #EB961E; }
-.panel-http-method-put > .panel-heading     {     border-color: #EB961E;
-                                              background-color: #EB961E; color: #fff; }
+.documentation-widget.panel-http-method-put                      {     border-color: #EB961E; }
+.documentation-widget.panel-http-method-put > .panel-heading     {     border-color: #EB961E;
+                                                                   background-color: #EB961E; color: #fff; }
 
-.panel-http-method-patch                    {     border-color: #F2C769; }
-.panel-http-method-patch > .panel-heading   {     border-color: #F2C769;
-                                              background-color: #F2C769; color: #fff; }
+.documentation-widget.panel-http-method-patch                    {     border-color: #F2C769; }
+.documentation-widget.panel-http-method-patch > .panel-heading   {     border-color: #F2C769;
+                                                                   background-color: #F2C769; color: #fff; }
 
-.panel-http-method-post                     {     border-color: #5cb85c; }
-.panel-http-method-post > .panel-heading    {     border-color: #5cb85c;
-                                              background-color: #5cb85c; color: #fff; }
+.documentation-widget.panel-http-method-post                     {     border-color: #5cb85c; }
+.documentation-widget.panel-http-method-post > .panel-heading    {     border-color: #5cb85c;
+                                                                   background-color: #5cb85c; color: #fff; }
 
-.panel-http-method-options                  {     border-color: #dddddd; }
-.panel-http-method-options > .panel-heading {     border-color: #dddddd;
-                                              background-color: #dddddd; color: #000; }
+.documentation-widget.panel-http-method-options                  {     border-color: #dddddd; }
+.documentation-widget.panel-http-method-options > .panel-heading {     border-color: #dddddd;
+                                                                   background-color: #dddddd; color: #000; }
 
-.panel-http-method-trace                    {     border-color: #aaaaaa; }
-.panel-http-method-trace > .panel-heading   {     border-color: #aaaaaa;
-                                              background-color: #aaaaaa; color: #000; }
+.documentation-widget.panel-http-method-trace                    {     border-color: #aaaaaa; }
+.documentation-widget.panel-http-method-trace > .panel-heading   {     border-color: #aaaaaa;
+                                                                   background-color: #aaaaaa; color: #000; }
