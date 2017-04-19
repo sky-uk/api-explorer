@@ -24,12 +24,14 @@ export default class Root extends Component {
           <Helmet>
             <title>API Explorer</title>
             <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css"></link>
+
+            {/*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-            <link rel="stylesheet" href="http://diegoddox.github.io/react-redux-toastr/4.0/react-redux-toastr.min.css" />
-            <style>{`body { padding: 0; margin: 0; XXbackground-color: #222 }`}</style>
+            <link rel="stylesheet" href="http://diegoddox.github.io/react-redux-toastr/4.0/react-redux-toastr.min.css" />*/}
+            {/*<style>{`body { padding: 0; margin: 0; XXbackground-color: #222 }`}</style>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*/}
           </Helmet>
           <ConnectedRouter history={history}>
             <Switch>

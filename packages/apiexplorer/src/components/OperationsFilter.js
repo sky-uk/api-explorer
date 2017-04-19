@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Input } from 'semantic-ui-react'
 
 class OperationsFilter extends Component {
   constructor (props) {
@@ -29,24 +30,12 @@ class OperationsFilter extends Component {
 
   render () {
     return (
-      <div id='filter-by-operation'>
-        <form onSubmit={this.handleFilterUpdate}>
-          <div className='form-group'>
-            <div className='input-group'>
-              <input
-                type='text'
-                ref='filterText'
-                className='form-control'
-                value={this.state.text}
-                onChange={this.handlerFilterChange}
-                placeholder={this.props.placeholder} />
-              <div className='input-group-addon'>
-                <i className='fa fa-filter' />
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+      <Input
+        icon='filter'
+        ref='filterText'
+        value={this.state.text}
+        onChange={this.handlerFilterChange}
+        placeholder={this.props.placeholder} />
     )
   }
 

@@ -39,6 +39,7 @@
     "react-router-redux": "next",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "semantic-ui-react": "^0.68.0",
     "styled-components": "^1.4.5",
     "swagger-converter": "^1.4.1",
     "urijs": "^1.18.10"
@@ -56,7 +57,11 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": "https://github.com/sky-uk/api-explorer",
   "keywords": [
-    "api", "explorer", "hypermedia", "documentation", "tool"
+    "api",
+    "explorer",
+    "hypermedia",
+    "documentation",
+    "tool"
   ],
   "bugs": {
     "url": "https://github.com/sky-uk/api-explorer/issues"

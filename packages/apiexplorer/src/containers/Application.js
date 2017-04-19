@@ -1,5 +1,5 @@
-import './BaseStyles.css'
-import './Application.css'
+// import './BaseStyles.css'
+// import './Application.css'
 import './HttpMethods.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
@@ -14,6 +14,7 @@ import { Switch, Route } from 'react-router'
 import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'
+import { Menu, Icon, Input } from 'semantic-ui-react'
 
 class Application extends Component {
   constructor () {
@@ -40,7 +41,7 @@ class Application extends Component {
     this.setState({ dockSize: size, dockIsVisible: true })
   }
 
-  handleCloseDock () {
+  handleCloseDock = () => {
     this.setState({ dockSize: 0, dockIsVisible: false })
   }
 
@@ -48,27 +49,15 @@ class Application extends Component {
     return (
       <div id='content'>
         <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
-          <div id='sidebar'>
-            <span className='pull-right close-button' onClick={() => this.handleCloseDock()} >X</span>
-            <div className='api-explorer-logo'>
-              <Link to={APIExplorer.LinkGenerator.toHome()} onClick={this.onHomeClick} ><AppLogo /></Link>
-            </div>
-            <ul className='nav' id='side-menu'>
-              <li>
-                <Link to={APIExplorer.LinkGenerator.toHome()} >
-                  <i className='fa fa-fw fa-home' /><span>Home</span>
-                </Link>
-              </li>
-            </ul>
-
-            <LateralMenu
-              operations={this.props.operations.toJS()}
-              apis={this.props.apis}
-              selectedOperationId={this.props.selectedOperationId}
-            />
-          </div>
+          <Icon name='delete' size='large' color='grey' style={{ float: 'right' }} onClick={this.handleCloseDock} />
+          <div style={{ textAlign: 'center' }}><AppLogo /></div>
+          <LateralMenu
+            operations={this.props.operations.toJS()}
+            apis={this.props.apis}
+            selectedOperationId={this.props.selectedOperationId}
+          />
         </Dock>
-        <div id='main-content' style={{ marginLeft: this.state.dockSize }}>
+        <div style={{ marginLeft: this.state.dockSize, padding: 10 }}>
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
