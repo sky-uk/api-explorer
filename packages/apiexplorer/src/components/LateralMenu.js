@@ -89,9 +89,12 @@ class LateralMenu extends Component {
 
     if (!this.isTagVisible(tag, visibleOperations)) return
 
+    const api = this.props.apis.get('byName').get(visibleOperations[0].apiname)
+    const apiTag = api.tags.find(t => t.name === tag) || ({ name: tag, description: '' })
+
     return (
       <Menu.Item key={visibleOperations[0].apiname + tag} className='api-tag-operations'>
-        <Menu.Header>{tag}</Menu.Header>
+        <Menu.Header>{apiTag.name} {apiTag.description && <small style={{ float: 'right', fontSize: 'x-small', paddingRight: 20 }}>{apiTag.description}</small>}</Menu.Header>
         {visibleOperations.map(this.renderOperation)}
       </Menu.Item>
     )
@@ -112,10 +115,10 @@ class LateralMenu extends Component {
         active={operation.id === this.props.selectedOperationId} title={operation.spec.description}
         as={Link}
         to={APIExplorer.LinkGenerator.toOperation(operation)}>
-        <Label>{operation.spec.httpMethod.toUpperCase()}</Label>
-        {operation.spec.url}
+        <span>{operation.spec.url}</span>
         {operation.spec.security && <Icon name='lock'
           style={{ width: '1em', display: 'inline-block', opacity: '0.5', margin: '0px 5px', color: 'yellow' }} />}        
+        <Label>{operation.spec.httpMethod.toUpperCase()}</Label>
       </Menu.Item>
     )
   }
@@ -149,7 +152,11 @@ const StyledMenu = Styled.div`
     padding-top: 6px;
     padding-bottom: 6px;
     padding-left: 20px;
-    position: static;
+    position: relative;
+  }
+
+  div.api-operations .api-tag-operations a.api-operation.item:before {
+    background-color: transparent;
   }
 
   div.api-operations .api-operation.active {
@@ -161,11 +168,22 @@ const StyledMenu = Styled.div`
     opacity: .5;
   }
 
+  /*  lock icon */
+  div.api-operations .api-operation i.lock.icon {
+    float: none;
+    position: absolute;
+    top: 6px;
+    left: -2px;
+  }
 
   /* HTTP Labels */
   div.api-operations .api-operation .ui.label {
     color: inherit;
-    background-color: transparent;
+    background-color: #222222;
+    float: none;
+    position: absolute;
+    right: 10px;
+    top: 6px;
   }
 
   div.api-operations .api-operation.active.http-head .ui.label,
@@ -207,6 +225,19 @@ const StyledMenu = Styled.div`
   div.api-operations .api-operation.http-trace:hover .ui.label    { background-color: #aaaaaa; color: black; border-color: black; }
   div.api-operations .api-operation.http-trace .ui.label                     { color: #aaaaaa; }
                                                               /* border-color: #aaaaaa; border-style: solid; border-width: 1px; } */
+
+
+
+ /* LEGACY STYLES (OVERRIDES) /
+  div.api-operations .api-operation i.lock.icon {
+    float: left;
+  }
+  div.api-operations .api-operation .ui.label {
+    float: left;
+    width: 60px;
+  } 
+  //* */
+
 `
 
 /*
