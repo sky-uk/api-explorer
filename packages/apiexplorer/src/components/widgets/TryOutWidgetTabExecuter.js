@@ -59,7 +59,7 @@ class TryOutWidgetTabExecuter extends Component {
         <span>Accept </span>
         {this.renderRequestFormats()}
         &nbsp;
-        <button className='btn btn-primary btn-sm executeRequest' onClick={() => this.executeRequest()} >
+        <button className='ui button primary mini executeRequest' onClick={() => this.executeRequest()} >
           Execute request
           &nbsp;&nbsp;
           <i className='fa fa-angle-double-right' />

@@ -1,6 +1,6 @@
 // import './BaseStyles.css'
-// import './Application.css'
-import './HttpMethods.css'
+import './Application.css'
+// import './HttpMethods.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -14,7 +14,7 @@ import { Switch, Route } from 'react-router'
 import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'
-import { Menu, Icon, Input } from 'semantic-ui-react'
+import { Menu, Icon, Input, Dropdown, Button } from 'semantic-ui-react'
 
 class Application extends Component {
   constructor () {
@@ -56,31 +56,48 @@ class Application extends Component {
             apis={this.props.apis}
             selectedOperationId={this.props.selectedOperationId}
           />
+          <br />
+          <br />
+          <br />
         </Dock>
         <div style={{ marginLeft: this.state.dockSize, padding: 10 }}>
           <div className='container-fluid'>
             <div className='row' id='top'>
               <div className='col-lg-12'>
                 {this.renderAPIExplorerOrSelectedAPI()}
-
                 <Switch>
                   <Route exact path={`${this.props.match.url}`} component={Welcome} />
                   <Route path={`${this.props.match.url}operation/:id`} component={OperationWidgetContainer} />
                   <Route path={`${this.props.match.url}settings/`} component={Settings} />
                 </Switch>
-
-                <div id='fixed-footer'>
+                {/*<div id='fixed-footer'>
                   Copyright &copy; API Explorer 2015
-
                   <Link to={APIExplorer.LinkGenerator.toSettings()} className='pull-right'>
                     <i className='fa fa-cog fa-inverse' /> Settings
                   </Link>
-
-                </div>
+                </div>*/}
               </div>
             </div>
           </div>
         </div>
+        <Menu size='mini' inverted style={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 99999999 }}>
+          <Menu.Item header>Copyright &copy; API Explorer 2015</Menu.Item>
+          <Menu.Menu position='right'>
+            {/*<Menu.Item name='home'/>
+            <Menu.Item name='messages' />
+            <Dropdown item text='Language' floating className='upward'>
+              <Dropdown.Menu>
+                <Dropdown.Item>English</Dropdown.Item>
+                <Dropdown.Item>Russian</Dropdown.Item>
+                <Dropdown.Item>Spanish</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>*/}
+            <Menu.Item>
+              <Link to={APIExplorer.LinkGenerator.toSettings()}><Icon name='cogs' /> Settings</Link>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+
       </div>
     )
   }

@@ -3,11 +3,8 @@ import cx from 'classnames'
 import { Route, Switch } from 'react-router'
 import { Link } from 'react-router-dom'
 import { selectedOperation } from '../actions/loadActionCreators'
+import { Card, Label, Menu, Segment, Icon } from 'semantic-ui-react'
 import Styled from 'styled-components'
-
-function HTTPMethod ({ method = '' }) {
-  return <strong>{method.toUpperCase()}</strong>
-}
 
 class OperationWidget extends Component {
 
@@ -22,47 +19,51 @@ class OperationWidget extends Component {
   }
 
   render () {
+    const { operation } = this.props
     if (this.props.operation === null) {
       return <div>No operation was found.</div>
     }
 
-    const httpMethod = this.props.operation.spec.httpMethod
-    const panelCx = cx(`documentation-widget panel panel-default panel-http-method panel-http-method-${httpMethod}`, {
-      'panel-deprecated': this.props.operation.spec.deprecated
+    const spec = operation.spec
+    const className = cx('api-operation', `http-${spec.httpMethod.toLowerCase()}`, {
+      'api-deprecated': spec.deprecated
     })
-    const hasSecurity = this.props.operation.spec.security !== undefined
+
     return (
-      <div className={panelCx} >
-        <div className='panel-heading' id={this.props.operation.id}>
-          <div className='pull-right'>
-            {(this.props.operation.spec.tags || []).map((tag, i) => <span key={i}><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
-          </div>
-          <HTTPMethod method={this.props.operation.spec.httpMethod} />
-          &nbsp;<samp>{this.props.operation.spec.url}</samp>&nbsp;
-          { hasSecurity && (<span style={{width: '1em', display: 'inline-block', opacity: '0.5', color: 'Yellow'}}><i className='fa fa-lock' title='Secured' /></span>) }
-          { this.props.config.useProxy && <i className='fa fa-globe' title='Using Proxy' />}
-          &nbsp; { this.props.operation.spec.deprecated && <span className='badge'>deprecated</span>}
-          <div><small style={{marginLeft: '1ch', opacity: 0.7}}>{this.props.operation.spec.summary}</small></div>
-        </div>
-        <div className='panel-body' >
-          <ul className='nav nav-tabs'>
+      <StyledWidget>
+        <Card fluid className={className}>
+          <Card.Content className='api-header'>
+            <Card.Header>
+              {(spec.tags || []).map((tag, i) => <Label color='black' size='small' className='right' key={i}>{tag}</Label>)}
+              <strong className='api-http-method'>{spec.httpMethod.toUpperCase()}</strong>
+              <span>{spec.url}&nbsp;</span>
+              {spec.security && <Icon name='lock' size='tiny' color='yellow' style={{ opacity: 1 }} circular inverted title='Secure' />}
+              {this.props.config.useProxy && <Icon size='tiny' name='world' color='white' title='Using Proxy' circular inverted />}
+              {spec.deprecated && <Label size='mini' color='black'>deprecated</Label>}
+              <div><small style={{ opacity: 0.7 }}>{spec.summary}</small></div>
+            </Card.Header>
+          </Card.Content>
+          <Card.Content className='api-tabs'>
+            <Menu attached='top' tabular>
             {APIExplorer.widgetTabs.map((widgetTab, i) => {
               const url = APIExplorer.LinkGenerator.toTabOperation(this.props.operation, widgetTab)
               const routePath = `${this.props.match.path}/${widgetTab.slug}`
               return <Route key={widgetTab.slug} path={routePath} children={({ match }) => (
-                <li key={i} className={match ? 'active' : ''}>
-                  <Link key={i} to={url} className='operation-container' >{widgetTab.name}</Link>
-                </li>)} />
+                <Menu.Item key={i} active={match !== null} name='' as={Link} to={url} className='operation-container' >{widgetTab.name}</Menu.Item>
+                )} />
               })}
-          </ul>
-          <Switch>
-            {APIExplorer.widgetTabs.map(widgetTab => {
-              const routePath = `${this.props.match.path}/${widgetTab.slug}`
-              return <Route key={widgetTab.slug} path={routePath} component={widgetTab.component} />
-            })}
-          </Switch>
-        </div>
-      </div>
+            </Menu>
+            <Switch>
+              {APIExplorer.widgetTabs.map(widgetTab => {
+                const routePath = `${this.props.match.path}/${widgetTab.slug}`
+                return (
+                  <Route key={widgetTab.slug} path={routePath} component={widgetTab.component} />
+                )
+              })}
+            </Switch>
+          </Card.Content>
+        </Card>
+      </StyledWidget>
     )
   }
 }
@@ -77,6 +78,45 @@ OperationWidget.propTypes = {
 
 export default OperationWidget
 
-const HTTPMethodx = Styled(HTTPMethod)`
-  color: red;
+const StyledWidget = Styled.div`
+  .ui.card>.content>.header {
+    color: white !important;
+  }
+
+  .card.api-operation .api-http-method {
+    margin-right: 10px;
+    font-weight: 900;
+  }
+
+  .card.api-operation .ui.label.right {
+    float: right;
+  }
+
+  ${httpMethodStylesCard('head',    '#5bc0de', '#9bd8eb')}
+  ${httpMethodStylesCard('get',     '#428bca', '#7eb0db', '#fff')}
+  ${httpMethodStylesCard('delete',  '#d9534f', '#e7908e')}
+  ${httpMethodStylesCard('put',     '#EB961E', '#f1b764')}
+  ${httpMethodStylesCard('patch',   '#F2C769', '#f8e1af')}
+  ${httpMethodStylesCard('post',    '#5cb85c', '#91cf91')}
+  ${httpMethodStylesCard('options', '#dddddd', '#f7f7f7', '#000')}
+  ${httpMethodStylesCard('trace',   '#aaaaaa', '#d0d0d0', '#000')}
 `
+
+function httpMethodStylesCard (method, color, lightColor, textColor = '#fff') {
+  return `
+  .card.api-operation.http-${method}.api-deprecated .content.api-header {
+    color: ${textColor},
+    background: repeating-linear-gradient(
+      45deg,
+      ${color} 0px,
+      ${color} 10px,
+      ${lightColor} 10px,
+      ${lightColor} 20px
+    );
+  }
+
+  .card.api-operation.http-${method}                        { box-shadow: 0 1px 3px 0 ${color}, 0 0 0 1px ${color}; }
+  .card.api-operation.http-${method} .content.api-header    {       background-color: ${color}; color: ${textColor}; }
+  
+}  `
+}

@@ -8,6 +8,8 @@ import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
 import TryOutWidgetTabHttpHeadersPanel from './TryOutWidgetTabHttpHeadersPanel'
 
+import { Segment } from 'semantic-ui-react'
+
 // import { Map } from 'immutable'
 import { HttpRequest } from '../../infrastructure'
 
@@ -182,7 +184,7 @@ class TryOutWidgetTab extends Component {
     const requestHeaders = request.headers
 
     return (
-      <div className='tab-content'>
+      <Segment attached='bottom'>
         <TryOutWidgetTabParameters
           operation={this.props.operation}
           definitions={this.props.definitions}
@@ -190,10 +192,10 @@ class TryOutWidgetTab extends Component {
           operationLastParameters={this.props.operationLastParameters}
           headers={this.props.config.headers.concat(this.props.apiConfig.headers)}
           onHandleParametersChange={(name, value) => this.onHandleParametersChange(name, value)}
-          onHandleLastParametersChange={(e) => this.onHandleLastParametersChange(JSON.parse(e.target.selectedOptions[0].value))}
+          onHandleLastParametersChange={parameters => this.onHandleLastParametersChange(parameters)}
         />
-        <div className={this.state.requestPanelClassName}>
-          <div className='panel-heading'>
+        <Segment className={this.state.requestPanelClassName}>
+          <div>
             <TryOutWidgetTabExecuter
               requestFormat={this.state.requestFormat}
               requestFormats={this.props.operation.spec.consumes}
@@ -216,8 +218,8 @@ class TryOutWidgetTab extends Component {
             <TryOutWidgetTabResponsePanel response={response} operations={this.props.operations} apis={this.props.apis} />
             <TryOutWidgetTabHttpHeadersPanel requestHeaders={requestHeaders} responseHeaders={response.headers} />
           </div>}
-        </div>
-      </div>
+        </Segment>
+      </Segment>
     )
   }
 }

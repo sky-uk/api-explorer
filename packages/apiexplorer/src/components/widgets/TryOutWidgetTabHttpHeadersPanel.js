@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
+import { Segment, Grid } from 'semantic-ui-react'
 
 class TryOutWidgetTabHttpHeadersPanel extends Component {
   constructor () {
@@ -9,12 +10,11 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
 
   renderHeaders (headers) {
     var headerMap = Map(headers)
-
     if (headerMap && headerMap.size > 0) {
       return headerMap.map((value, key) => {
         return (
           <tr>
-            <td style={{textTransform: 'capitalize'}}>{key}</td>
+            <td>{key.toUpperCase()}</td>
             <td>{value}</td>
           </tr>
         )
@@ -25,29 +25,31 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
   }
 
   render () {
-    const tableClass = 'table table-condensed table-hover table-striped table-bordered col-md-10'
+    const tableClass = 'ui table'
     const responseHeaders = this.props.responseHeaders
     const requestHeaders = this.props.requestHeaders
 
     return (
-      <div>
-        <div className='pull-left' style={{ width: '47%' }}>
-          <h5 ><strong>Request Headers</strong></h5>
-          <table ref='tableRequestHeaders' className={tableClass} style={{fontSize: '12px'}}>
-            <tbody>
-              {this.renderHeaders(requestHeaders)}
-            </tbody>
-          </table>
-        </div>
-        <div className='pull-right' style={{ width: '47%' }}>
-          <h5 ><strong>Response Headers</strong></h5>
-          <table ref='tableResponseHeaders' className={tableClass} style={{fontSize: '12px'}}>
-            <tbody>
-              {this.renderHeaders(responseHeaders)}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <Segment>
+        <Grid columns='2'>
+          <Grid.Column>
+            <h5><strong>Request Headers</strong></h5>
+            <table className={tableClass} style={{ fontSize: '12px' }}>
+              <tbody>
+                {this.renderHeaders(requestHeaders)}
+              </tbody>
+            </table>
+          </Grid.Column>
+          <Grid.Column>
+            <h5><strong>Response Headers</strong></h5>
+            <table className={tableClass} style={{ fontSize: '12px' }}>
+              <tbody>
+                {this.renderHeaders(responseHeaders)}
+              </tbody>
+            </table>
+          </Grid.Column>
+        </Grid>
+      </Segment>
     )
   }
 }

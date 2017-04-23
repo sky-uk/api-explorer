@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Segment } from 'semantic-ui-react'
 
 class SpecWidgetTab extends Component {
   renderParameter (parameter) {
@@ -41,39 +42,35 @@ class SpecWidgetTab extends Component {
     }
 
     return (
-      <div className='tab-content' >
-        <div >
-          <div className='tab-pane fade in' >
-            <p>{this.props.operation.spec.summary}</p>
-            <p className='text-muted' >{this.props.operation.spec.description}</p>
-            <div >
-              <div >
-                <h4 >Parameters</h4>
-                <table className='table table-striped' >
-                  <tbody className='operation-params' >
-                    {this.props.operation.spec.parameters && this.props.operation.spec.parameters.map(parameter =>
-                      this.renderParameter(parameter)
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div>
-              <h4>Response Status Codes</h4>
-              <table className='table table-bordered table-striped' >
-                <tbody className='operation-status' >
-                  {Object.keys(this.props.operation.spec.responses).map(statusCode =>
-                    this.renderStatusCodes(
-                      statusCode,
-                      this.props.operation.spec.responses[statusCode].description
-                    )
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <Segment attached='bottom' >
+        <div>
+          <p>{this.props.operation.spec.summary}</p>
+          <p>{this.props.operation.spec.description}</p>
+          <Segment>
+            <h4 >Parameters</h4>
+            <table className='ui table table-striped' >
+              <tbody className='operation-params' >
+                {this.props.operation.spec.parameters && this.props.operation.spec.parameters.map(parameter =>
+                  this.renderParameter(parameter)
+                )}
+              </tbody>
+            </table>
+          </Segment>
+          <Segment>
+            <h4>Response Status Codes</h4>
+            <table className='ui table table-bordered striped' >
+              <tbody className='operation-status' >
+                {Object.keys(this.props.operation.spec.responses).map(statusCode =>
+                  this.renderStatusCodes(
+                    statusCode,
+                    this.props.operation.spec.responses[statusCode].description
+                  )
+                )}
+              </tbody>
+            </table>
+          </Segment>
         </div>
-      </div>
+      </Segment>
     )
   }
 }

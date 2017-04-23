@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Segment, Card } from 'semantic-ui-react'
 // import Highlight from 'react-highlight'
 // import 'highlight.js/styles/tomorrow.css' see issue #26
 
@@ -102,35 +103,37 @@ class ResponseSchemaWidgetTab extends Component {
 
   renderResponseSchema (responseSchema) {
     return (
-      <div key={responseSchema.statusCode} className='panel panel-default' >
-        <div className='panel-heading'>
-          <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''}
-          <code>{responseSchema.returnType}</code>
-        </div>
-        <div className='panel-body'>
-          <table style={{ width: '100%' }} className='table' >
-            <thead>
-              <tr><th>Sample</th><th>Schema</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></td>
-                <td><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <Segment key={responseSchema.statusCode} >
+        <Card fluid>
+          <Card.Content>
+            <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''}
+            <code>{responseSchema.returnType}</code>
+          </Card.Content>
+          <Card.Content>
+            <table style={{ width: '100%' }} className='table' >
+              <thead>
+                <tr><th>Sample</th><th>Schema</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></td>
+                  <td><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></td>
+                </tr>
+              </tbody>
+            </table>
+          </Card.Content>
+        </Card>
+      </Segment>
     )
   }
 
   render () {
     const responseSchemas = this.getResponseSchemas()
     return (
-      <div className='response-model tab-pane fade in'>
+      <Segment attached='bottom'>
         <h4>Http Status Codes</h4>
         {responseSchemas.map(responseSchema => this.renderResponseSchema(responseSchema))}
-      </div>
+      </Segment>
     )
   }
 }
