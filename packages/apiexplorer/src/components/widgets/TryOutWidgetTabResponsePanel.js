@@ -115,7 +115,7 @@ class TryOutWidgetTabResponsePanel extends Component {
     let data = this.getIndentedJson()
     return (
       <div>
-        <textarea className='col-md-12 codemirror-response' ref='codemirror' value={data} readOnly />
+        <textarea className='codemirror-response' ref='codemirror' value={data} readOnly />
         <small className='text-muted'>
           <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
           <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;

@@ -150,7 +150,7 @@ class TryOutWidgetTabParameters extends Component {
               <span className='pull-right'>{this.renderLastParametersList()}</span>
             </Grid.Column>
           </Grid>
-          <Table tableData={parameters} compact size='small' striped renderBodyRow={this.renderParameterRow} />
+          <Table tableData={parameters} celled selectable compact size='small' striped renderBodyRow={this.renderParameterRow} />
         </Segment>
       )
     } else {

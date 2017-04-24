@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import URI from 'urijs'
+import HttpStatus from './../HttpStatus'
 
 import { newParameters, localParameters, responseReceived } from '../../actions/loadActionCreators'
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
@@ -8,7 +9,7 @@ import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
 import TryOutWidgetTabHttpHeadersPanel from './TryOutWidgetTabHttpHeadersPanel'
 
-import { Segment } from 'semantic-ui-react'
+import { Segment, Label } from 'semantic-ui-react'
 
 // import { Map } from 'immutable'
 import { HttpRequest } from '../../infrastructure'
@@ -73,7 +74,7 @@ class TryOutWidgetTab extends Component {
       response: {},
       request: {},
       showLastResponse: false,
-      requestPanelClassName: 'panel panel-http-response panel-default'
+      requestPanelColor: 'grey'
     }
   }
 
@@ -148,18 +149,18 @@ class TryOutWidgetTab extends Component {
     this.setState({requestInProgress: false, response: response, request: request})
 
     const statusCategories = {
-      '2': 'panel-success',
-      '3': 'panel-info',
-      '4': 'panel-warning',
-      '5': 'panel-danger'
+      '2': 'green',
+      '3': 'blue',
+      '4': 'orange',
+      '5': 'red'
     }
     const statusCategory = ('' + response.status).charAt(0)
-    this.setState({ requestPanelClassName: `panel panel-http-response ${statusCategories[statusCategory]}` })
+    this.setState({ requestPanelColor: `${statusCategories[statusCategory]}` })
   }
 
   hideResponse (e) {
     e.preventDefault()
-    this.setState({response: null, requestPanelClassName: 'panel panel-http-response panel-default'})
+    this.setState({response: null, requestPanelColor: 'grey' })
   }
 
 // ###############################################################################################################
@@ -183,6 +184,8 @@ class TryOutWidgetTab extends Component {
     const request = this.state.request
     const requestHeaders = request.headers
 
+    const httpStatusInfo = HttpStatus.values.find(s => s.value == response.status) || { details: [{ description: '' }] }
+    console.log('httpStatusInfo', httpStatusInfo)
     return (
       <Segment attached='bottom'>
         <TryOutWidgetTabParameters
@@ -194,8 +197,8 @@ class TryOutWidgetTab extends Component {
           onHandleParametersChange={(name, value) => this.onHandleParametersChange(name, value)}
           onHandleLastParametersChange={parameters => this.onHandleLastParametersChange(parameters)}
         />
-        <Segment className={this.state.requestPanelClassName}>
-          <div>
+        <div>
+          <Segment className='no-border no-padding' attached secondary color={this.state.requestPanelColor}>
             <TryOutWidgetTabExecuter
               requestFormat={this.state.requestFormat}
               requestFormats={this.props.operation.spec.consumes}
@@ -206,19 +209,17 @@ class TryOutWidgetTab extends Component {
             {showResponse && <span>&nbsp;&nbsp;<a href='about:blank' onClick={e => this.hideResponse(e)}>Hide Response</a></span>}
 
             {(showResponse || showLastResponse) && <div className='pull-right'>
-              <strong>
-                <span>{response.status}</span>
-                &nbsp;
-                <span>{response.statusText}</span>
-              </strong>
+              <Label color={this.state.requestPanelColor}>
+                <abbr title={httpStatusInfo.details[0].description}>{response.status} {response.statusText}</abbr>
+              </Label>
             </div>}
-          </div>
-          {(showResponse || showLastResponse) && <div className='panel-body'>
+          </Segment>
+          {(showResponse || showLastResponse) && <Segment attached className='no-border no-padding'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
             <TryOutWidgetTabResponsePanel response={response} operations={this.props.operations} apis={this.props.apis} />
             <TryOutWidgetTabHttpHeadersPanel requestHeaders={requestHeaders} responseHeaders={response.headers} />
-          </div>}
-        </Segment>
+          </Segment>}
+        </div>
       </Segment>
     )
   }

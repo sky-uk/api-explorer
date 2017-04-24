@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { selectedOperation } from '../actions/loadActionCreators'
 import { Card, Label, Menu, Segment, Icon } from 'semantic-ui-react'
 import Styled from 'styled-components'
+import httpMethods from './HttpMethods'
 
 class OperationWidget extends Component {
 
@@ -29,13 +30,17 @@ class OperationWidget extends Component {
       'api-deprecated': spec.deprecated
     })
 
+    const httpMethodInfo = httpMethods.values.find(v => v.value === spec.httpMethod.toUpperCase())
+
     return (
       <StyledWidget>
         <Card fluid className={className}>
           <Card.Content className='api-header'>
             <Card.Header>
               {(spec.tags || []).map((tag, i) => <Label color='black' size='small' className='right' key={i}>{tag}</Label>)}
-              <strong className='api-http-method'>{spec.httpMethod.toUpperCase()}</strong>
+              <strong className='api-http-method'>
+                <abbr title={httpMethodInfo.details[0].description}>{spec.httpMethod.toUpperCase()}</abbr>
+              </strong>
               <span>{spec.url}&nbsp;</span>
               {spec.security && <Icon name='lock' size='tiny' color='yellow' style={{ opacity: 1 }} circular inverted title='Secure' />}
               {this.props.config.useProxy && <Icon size='tiny' name='world' color='white' title='Using Proxy' circular inverted />}
