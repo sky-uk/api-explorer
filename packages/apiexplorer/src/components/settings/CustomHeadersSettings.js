@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Form from 'react-jsonschema-form'
 import { headers } from '../../actions/loadActionCreators'
 import Immutable from 'immutable'
+import { Segment } from 'semantic-ui-react'
 
 const schema = {
   type: 'object',
@@ -23,8 +24,8 @@ const schema = {
 const uiSchema = {
   headers: {
     items: {
-      name: { classNames: 'col-xs-6' },
-      value: { classNames: 'col-xs-6' }
+      name: { classNames: 'column' },
+      value: { classNames: 'column' }
     }
   }
 }
@@ -58,21 +59,20 @@ class CustomHeadersSettings extends Component {
 
   render () {
     return (
-      <div className='tab-content' >
-
+      <Segment attached='bottom' >
+        
         <Form schema={schema}
           uiSchema={uiSchema}
           formData={this.state}
           onChange={this.handleOnChange}
           onSubmit={this.handleFormSave} >
           <div>
-            <button type='submit' className='btn btn-primary'>Save</button>
+            <button type='submit' className='ui button primary'>Save</button>
           </div>
         </Form>
         <br />
-        {this.state.showSuccess && <div className='alert alert-success' role='alert'>Settings updated with success.</div>}
-
-      </div>
+        {this.state.showSuccess && <div>Settings updated with success.</div>}
+      </Segment>
     )
   }
 }
