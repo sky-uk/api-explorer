@@ -74,11 +74,18 @@ class LateralMenu extends Component {
 
   renderAPI = (apiOperations) => {
     if (apiOperations.length === 0 || !this.isApiVisible(apiOperations[0].apiname, apiOperations)) return
-
     const tags = Enumerable.from(apiOperations).selectMany(o => o.spec.tags).distinct().toArray()
+
+    const api = this.props.apis.get('byName').get(apiOperations[0].apiname)
+    let scheme = api.schemes ? api.schemes[0] : this.props.config.defaultScheme
+    let uri = `${scheme}://${api.host}${api.basePath}/`
+
     return (
       <div key={apiOperations[0].apiname} className='api-operations'>
-        <Menu.Item header>{apiOperations[0].apiname}</Menu.Item>
+        <Menu.Item header>
+          {apiOperations[0].apiname}
+          <div><small className='text-muted' style={{ fontSize: 8 }}>{uri}</small></div>
+        </Menu.Item>
         {tags.map(tag => this.renderOperationsWithTag(apiOperations, tag))}
       </div>
     )
@@ -94,7 +101,10 @@ class LateralMenu extends Component {
 
     return (
       <Menu.Item key={visibleOperations[0].apiname + tag} className='api-tag-operations'>
-        <Menu.Header>{apiTag.name} {apiTag.description && <small style={{ float: 'right', fontSize: 'x-small', paddingRight: 20 }}>{apiTag.description}</small>}</Menu.Header>
+        <Menu.Header>
+          {apiTag.name}
+          {apiTag.description && <small className='pull-right' style={{ fontSize: 'x-small', paddingRight: 20 }}>{apiTag.description}</small>}
+        </Menu.Header>
         {visibleOperations.map(this.renderOperation)}
       </Menu.Item>
     )
