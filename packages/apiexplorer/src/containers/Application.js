@@ -1,6 +1,4 @@
-// import './BaseStyles.css'
 import './Application.css'
-// import './HttpMethods.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -50,11 +48,14 @@ class Application extends Component {
       <div id='content'>
         <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
           <Icon name='delete' size='large' color='grey' style={{ float: 'right' }} onClick={this.handleCloseDock} />
-          <div style={{ textAlign: 'center' }}><AppLogo /></div>
+          <div style={{ textAlign: 'center' }}>
+            <Link to={APIExplorer.LinkGenerator.toHome()} onClick={this.onHomeClick} ><AppLogo /></Link>
+            </div>
           <LateralMenu
             operations={this.props.operations.toJS()}
             apis={this.props.apis}
             selectedOperationId={this.props.selectedOperationId}
+            dispatch={this.props.dispatch}
           />
           <br />
           <br />
@@ -62,22 +63,12 @@ class Application extends Component {
         </Dock>
         <div style={{ marginLeft: this.state.dockSize, padding: 10 }}>
           <div className='container-fluid'>
-            <div className='row' id='top'>
-              <div className='col-lg-12'>
-                {this.renderAPIExplorerOrSelectedAPI()}
-                <Switch>
-                  <Route exact path={`${this.props.match.url}`} component={Welcome} />
-                  <Route path={`${this.props.match.url}operation/:id`} component={OperationWidgetContainer} />
-                  <Route path={`${this.props.match.url}settings/`} component={Settings} />
-                </Switch>
-                {/*<div id='fixed-footer'>
-                  Copyright &copy; API Explorer 2015
-                  <Link to={APIExplorer.LinkGenerator.toSettings()} className='pull-right'>
-                    <i className='fa fa-cog fa-inverse' /> Settings
-                  </Link>
-                </div>*/}
-              </div>
-            </div>
+            {this.renderAPIExplorerOrSelectedAPI()}
+            <Switch>
+              <Route exact path={`${this.props.match.url}`} component={Welcome} />
+              <Route path={`${this.props.match.url}operation/:id`} component={OperationWidgetContainer} />
+              <Route path={`${this.props.match.url}settings/`} component={Settings} />
+            </Switch>
           </div>
         </div>
         <Menu size='mini' inverted style={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 99999999 }}>
@@ -97,7 +88,6 @@ class Application extends Component {
             </Menu.Item>
           </Menu.Menu>
         </Menu>
-
       </div>
     )
   }

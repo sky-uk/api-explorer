@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import Enumerable from 'linq'
 import { OperationsFilter } from '.'
+import { selectedOperation } from '../actions/loadActionCreators'
 
 import { Menu, Icon, Label } from 'semantic-ui-react'
 import Styled from 'styled-components'
@@ -49,6 +50,11 @@ class LateralMenu extends Component {
     return this.matchFilterRegex(operation.spec.httpMethod + operation.spec.url)
   }
 
+  onHomeClick = (evt) => {
+    this.props.dispatch(selectedOperation(''))
+    
+  }
+
   // ----------------------------------------------------------------------------------------
   // Render
   // ----------------------------------------------------------------------------------------
@@ -60,7 +66,7 @@ class LateralMenu extends Component {
       <StyledMenu>
         <Menu inverted vertical style={{ width: '100%', backgroundColor: 'transparent' }}>
           <Menu.Item>
-            <Link to={APIExplorer.LinkGenerator.toHome()} ><Icon name='home' /> Home</Link>
+            <Link to={APIExplorer.LinkGenerator.toHome()} onClick={this.onHomeClick} ><Icon name='home' /> Home</Link>
           </Menu.Item>
           <Menu.Item>
             <OperationsFilter placeholder='e.g. getusersession' onFilter={this.handleFilterUpdate} />

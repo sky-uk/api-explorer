@@ -185,7 +185,6 @@ class TryOutWidgetTab extends Component {
     const requestHeaders = request.headers
 
     const httpStatusInfo = HttpStatus.values.find(s => s.value == response.status) || { details: [{ description: '' }] }
-    console.log('httpStatusInfo', httpStatusInfo)
     return (
       <Segment attached='bottom'>
         <TryOutWidgetTabParameters
