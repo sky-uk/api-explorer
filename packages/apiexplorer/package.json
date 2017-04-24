@@ -11,13 +11,13 @@
     "umd"
   ],
   "scripts": {
-    "build": "NODE_PATH=./src nwb build-react-component",
+    "build": "nwb build-react-component",
     "build:watch": "nodemon -x 'yarn build' -w src -e '.js'",
     "clean": "nwb clean-module && npm clean-demo",
-    "start": "NODE_PATH=./src nwb serve-react-demo",
-    "test": "NODE_PATH=./src nwb test-react",
-    "test:coverage": "NODE_PATH=./src nwb test-react --coverage",
-    "test:watch": "NODE_PATH=./src nwb test-react --server"
+    "start": "nwb serve-react-demo",
+    "test": "nwb test-react",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server"
   },
   "dependencies": {
     "classnames": "^2.2.5",
