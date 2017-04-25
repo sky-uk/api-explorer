@@ -5,7 +5,7 @@
     "postinstall": "lerna bootstrap --concurrency=1",
     "start": "cd packages/apiexplorer && npm start",
     "test": "lerna run test",
-    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
+    "heroku-prebuild": "git init .",
     "heroku-postbuild": "echo This runs afterwards."
   },
   "devDependencies": {
