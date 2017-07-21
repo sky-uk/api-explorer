@@ -1,10 +1,10 @@
 import esprima from 'esprima'
 
-function isUrl(value) {
-  return typeof value === "string" && value.startsWith('http')
+function isUrl (value) {
+  return typeof value === 'string' && value.startsWith('http')
 }
 
-function transverseObject(obj) {
+function transverseObject (obj) {
   let links = []
 
   // iterate object properties
@@ -24,7 +24,7 @@ function transverseObject(obj) {
   return links
 }
 
-function transverseArray(arr) {
+function transverseArray (arr) {
   let links = []
 
   // iterate array elements
