@@ -1,5 +1,6 @@
 import APIExplorer from './../../src'
 import AddLinksPlugin from './plugin'
+import AddUrlLinksPlugin from './urlPlugin'
 import OperationPropsTab from './OperationPropsTab'
 
 APIExplorer
@@ -7,6 +8,7 @@ APIExplorer
     c.useProxy(true)
   })
   .addWidgetTab('Operation Props', OperationPropsTab)
+  .addPlugin(AddUrlLinksPlugin)
   .addPlugin(AddLinksPlugin)
   .addHeader('x-api-key', 'somekey')
   .configCORS({ credentials: 'omit' })

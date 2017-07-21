@@ -38,6 +38,7 @@ class APIExplorer {
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
     this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
+    this.plugins = [] // This will store all plugin configurations
     this.queryStringLoadEnabled = false
     this.HttpClientConfigurator = c => {}
 

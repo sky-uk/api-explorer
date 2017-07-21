@@ -42,8 +42,10 @@ export default {
     // Inject links to `get /pet/{petId}`
     const links = createLinksMetadata(reprAst)
     const operationSpec = operations.filter(op => op.spec.operationId === 'getPetById')[0].spec
+
     for (let link of links) {
       const exploreLink = APIExplorer.LinkGenerator.toOperation(operationSpec, { petId: link.id })
+
       addWidgetToEditor(cm, link, {
         summary: operationSpec.summary,
         href: APIExplorer.LinkGenerator.makeHref(apis, operationSpec, { petId: link.id, foo: 'bar' }),
