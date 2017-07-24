@@ -127,10 +127,11 @@ class HttpRequest {
     }
 
     params.headers.forEach(h => { headers[h.name] = h.value })
+    requestInformation.headers = Object.assign({}, headers, requestInformation.headers)
 
     let requestConfig = {
       method: requestInformation.httpMethod,
-      headers: Object.assign({}, headers, requestInformation.headers),
+      headers: requestInformation.headers,
       body: requestInformation.body
     }
 
@@ -150,7 +151,7 @@ class HttpRequest {
         contentType: getMediaType(response.headers.get('Content-Type'))
       }
 
-      return response.text().then(responseText => { resp.data = responseText; callback(req, resp) })
+      return response.text().then(responseText => { resp.data = responseText; callback(Object.assign({}, requestInformation), resp) })
     })
     .catch(error => {
       console.error('Received error', error)
