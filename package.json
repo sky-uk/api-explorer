@@ -105,6 +105,7 @@
     "expect": "1.8.0",
     "exports-loader": "0.6.2",
     "express": "4.13.3",
+    "eslint": "^3.0.0",
     "gitbook-cli": "0.3.4",
     "highlight.js": "^9.6.0",
     "html-webpack-plugin": "1.6.2",
