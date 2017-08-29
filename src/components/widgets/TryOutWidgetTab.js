@@ -20,8 +20,12 @@ class TryOutWidgetTab extends Component {
   }
 
   setDefaultOperationParameters (props) {
-    let newParameters = {}
+    let newParameters = this.getDefaultOperationParameters(props)
+    this.setState({operationParameters: newParameters})
+  }
 
+  getDefaultOperationParameters (props) {
+    let newParameters = {}
     props.operation.spec.parameters && props.operation.spec.parameters.forEach(param => {
       let value
       if (param.type === 'array') {
@@ -33,14 +37,11 @@ class TryOutWidgetTab extends Component {
         newParameters[param.name] = value
       }
     })
-
-    this.setState({operationParameters: newParameters})
+    return newParameters
   }
 
   setOperationParameters (props) {
-    this.setDefaultOperationParameters(props)
-
-    let newParameters = {}
+    let newParameters = this.getDefaultOperationParameters(props)
 
     // Override default parameters with the ones in global storage
     props.operationLocalParameters && Object.keys(props.operationLocalParameters).length && Object.keys(props.operationLocalParameters).forEach(key => {
