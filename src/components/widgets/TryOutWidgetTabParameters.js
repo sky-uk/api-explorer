@@ -87,6 +87,10 @@ class TryOutWidgetTabParameters extends Component {
       value = this.props.headers.find(h => h.name === param.name).value
     }
 
+    if (value === undefined) {
+      value = param.default
+    }
+
     if (param.enum) {
       return this.editorForSelect(param, value)
     }
