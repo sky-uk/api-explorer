@@ -1,7 +1,6 @@
 export default class APIExplorerPluginConfigurator {
   constructor (apiExplorer) {
     this.apiExplorer = apiExplorer
-    this.apiExplorer.plugins = []
   }
 
   /**
@@ -36,6 +35,7 @@ export default class APIExplorerPluginConfigurator {
 
     this.apiExplorer.plugins.push(pluginSpec)
     this.apiExplorer.plugins[pluginSpec.key] = pluginSpec
+
     console.log(`[${pluginSpec.key}] ${pluginSpec.name} successfully registered.`)
   }
 }
