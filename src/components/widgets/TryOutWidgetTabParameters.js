@@ -88,7 +88,7 @@ class TryOutWidgetTabParameters extends Component {
     }
 
     if (value === undefined) {
-      value = param.default || ''
+      value = param.default
     }
 
     if (param.enum) {
