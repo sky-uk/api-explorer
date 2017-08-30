@@ -131,6 +131,12 @@ class TryOutWidgetTabParameters extends Component {
     return <div>-</div>
   }
 
+  renderParameterDescription (description) {
+    return description.startsWith('http')
+      ? (<div><small><small><a href={description} target='_blank'>Go to external docs <i className='fa fa-external-link' /></a></small></small></div>)
+      : (<div><small><small>{description}</small></small></div>)
+  }
+
   renderParameters (parameters) {
     return parameters.map((parameter, i) => {
       return (
@@ -139,7 +145,7 @@ class TryOutWidgetTabParameters extends Component {
           <td className='col-md-3'>
             <span>{parameter.name}</span>
             <span title='Required field'>{parameter.required ? '*' : ''}</span>
-            {parameter.description && <div><small><small>{parameter.description}</small></small></div>}
+            {parameter.description && this.renderParameterDescription(parameter.description)}
           </td>
           <td className='col-md-6'>
             <div>{this.renderEditorFor(parameter)}</div>
