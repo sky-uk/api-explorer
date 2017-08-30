@@ -128,6 +128,15 @@ You can check all the contributors of this project [here](https://github.com/sky
 - [Pedro Félix](https://github.com/pmhsfelix) - pedro.felix@sky.uk
 
 
+## Publishing
+
+```
+npm version <update_type>
+```
+where update_type is minor, major or build.
+
+Circle CI will then publish the new version to NPM triggered by a new tag that is pushed to git.
+
 
 ## Try out
 
@@ -136,4 +145,3 @@ You can try the application in the online development sandbox that is using the 
 [https://apiexplorer-app.herokuapp.com](https://apiexplorer-app.herokuapp.com)
 
 ![Sample API Explorer](http://sky-uk.github.io/api-explorer/docs/apiexplorer-demo.gif)
-
