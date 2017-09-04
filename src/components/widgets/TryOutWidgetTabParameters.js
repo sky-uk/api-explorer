@@ -24,13 +24,19 @@ class TryOutWidgetTabParameters extends Component {
       )
     }
     return (
-      <input type='text' className='col-md-12' style={style} required={param.required}
-        value={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
+      <input type='text' id='executeRequest' className='col-md-12' style={style} required={param.required}
+        value={value} onKeyDown={(e) => enterHandler(e)} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
     )
   }
 
   editorForFile (param, value) {
     return <input type='file' />
+  }
+
+  enterHandler(e){
+      if (e.keyCode === 13) {
+          document.getElementById('executeRequest').click()
+      }
   }
 
   editorForSelect (param, value) {
