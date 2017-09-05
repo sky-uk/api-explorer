@@ -33,11 +33,12 @@ class TryOutWidgetTabParameters extends Component {
     return <input type='file' />
   }
 
-  enterHandler(e){
+  enterHandler (e) {
     if (e.keyCode === 13) {
       document.getElementById('executeRequest').click()
     }
   }
+
   editorForSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     return (
