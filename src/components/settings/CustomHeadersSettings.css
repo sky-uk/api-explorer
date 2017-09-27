@@ -1,3 +1,8 @@
 .array-item-remove {
   padding-top: 24px;
 }
+
+.disabledButtonRadio .field-radio-group .radio {
+  padding: 0 5px;
+  display: inline-block;
+}

@@ -3,15 +3,18 @@ import reducers from 'reducers'
 import { reduxReactRouter } from 'redux-router'
 import createHistory from 'history/lib/createBrowserHistory' // history/lib/createHashHistory
 import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+
 
 const composed = window.devToolsExtension
   ? compose(
-      applyMiddleware(thunk),
+      applyMiddleware(thunk, createLogger()),
+      
       reduxReactRouter({ createHistory }),
       window.devToolsExtension()
     )
   : compose(
-      applyMiddleware(thunk),
+      applyMiddleware(thunk, createLogger()),
       reduxReactRouter({ createHistory })
     )
 

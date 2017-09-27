@@ -14,7 +14,20 @@ const schema = {
         type: 'object',
         properties: {
           name: { type: 'string', title: 'Name' },
-          value: { type: 'string', title: 'Value' }
+          value: { type: 'string', title: 'Value' },
+          disabledBtn: { type: 'boolean', title: 'Disable'}
+        }
+      }
+    },
+    disabledHeaders: {
+      title: 'Disabled Headers',
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', title: 'Name' },
+          value: { type: 'string', title: 'Value' },
+          disabledBtn: { type: 'boolean', title: 'Disable'}
         }
       }
     }
@@ -24,8 +37,16 @@ const schema = {
 const uiSchema = {
   headers: {
     items: {
-      name: { classNames: 'col-xs-6' },
-      value: { classNames: 'col-xs-6' }
+      name: { classNames: 'col-xs-5' },
+      value: { classNames: 'col-xs-5' },
+      disabledBtn: { classNames: 'col-xs-2, disabledButtonRadio', id: 'disabledButton',  'ui:widget' : 'radio' }
+    }
+  },
+  disabledHeaders: {
+    items: {
+      name: { classNames: 'col-xs-5', 'ui:readonly' : 'true'   },
+      value: { classNames: 'col-xs-5', 'ui:readonly' : 'true'  },
+      disabledBtn: { classNames: 'col-xs-2, disabledButtonRadio', id: 'disabledButton',  'ui:widget' : 'radio'}
     }
   }
 }
@@ -43,7 +64,7 @@ class CustomHeadersSettings extends Component {
   }
 
   handleFormSave (evt) {
-    this.props.dispatch(headers(evt.formData.headers))
+    this.props.dispatch(headers(evt.formData.headers, evt.formData.newFormDataDisabled));
     this.setState({
       ...evt.formData,
       showSuccess: true
@@ -51,8 +72,31 @@ class CustomHeadersSettings extends Component {
   }
 
   handleOnChange (evt) {
+    if (evt.formData.disabledHeaders === undefined) {
+      const headers = evt.formData.headers.filter((hd) => hd.disabledBtn === undefined || hd.disabledBtn === false);
+      const disabledHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === true);
+
+      var newFormDataHeader = Object.assign({}, { headers });
+      var newFormDataDisabled = Object.assign({}, { disabledHeaders });
+
+    } else {
+      var oldHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === undefined || hd.disabledBtn === false);
+      var oldDisabledHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === true );
+
+      var filterHeaders = evt.formData.disabledHeaders.filter((hd) => hd.disabledBtn === false);
+      var filterDisabledHeaders = evt.formData.disabledHeaders.filter((hd) => hd.disabledBtn === true );
+
+      var headers = oldHeaders.concat(filterHeaders);
+      var disabledHeaders = oldDisabledHeaders.concat(filterDisabledHeaders);
+
+      var newFormDataHeader = Object.assign({}, { headers });
+      var newFormDataDisabled = Object.assign({}, { disabledHeaders });
+
+    }
+
     this.setState({
-      ...evt.formData,
+      ...newFormDataHeader,
+      ...newFormDataDisabled,
       showSuccess: false
     })
   }
@@ -70,9 +114,7 @@ class CustomHeadersSettings extends Component {
             <button type='submit' className='btn btn-primary'>Save</button>
           </div>
         </Form>
-        <br />
         {this.state.showSuccess && <div className='alert alert-success' role='alert'>Settings updated with success.</div>}
-
       </div>
     )
   }
