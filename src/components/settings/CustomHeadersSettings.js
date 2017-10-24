@@ -15,7 +15,7 @@ const schema = {
         properties: {
           name: { type: 'string', title: 'Name' },
           value: { type: 'string', title: 'Value' },
-          disabledBtn: { type: 'boolean', title: 'Disable'}
+          disabledBtn: {type: 'boolean', title: 'Disable'}
         }
       }
     },
@@ -27,7 +27,7 @@ const schema = {
         properties: {
           name: { type: 'string', title: 'Name' },
           value: { type: 'string', title: 'Value' },
-          disabledBtn: { type: 'boolean', title: 'Disable'}
+          disabledBtn: {type: 'boolean', title: 'Disable'}
         }
       }
     }
@@ -39,14 +39,14 @@ const uiSchema = {
     items: {
       name: { classNames: 'col-xs-5' },
       value: { classNames: 'col-xs-5' },
-      disabledBtn: { classNames: 'col-xs-2, disabledButtonRadio', id: 'disabledButton',  'ui:widget' : 'radio' }
+      disabledBtn: { classNames: 'col-xs-2, disabledButtonRadio', id: 'disabledButton', 'ui:widget': 'radio' }
     }
   },
   disabledHeaders: {
     items: {
-      name: { classNames: 'col-xs-5', 'ui:readonly' : 'true'   },
-      value: { classNames: 'col-xs-5', 'ui:readonly' : 'true'  },
-      disabledBtn: { classNames: 'col-xs-2, disabledButtonRadio', id: 'disabledButton',  'ui:widget' : 'radio'}
+      name: { classNames: 'col-xs-5', 'ui:readonly': 'true' },
+      value: { classNames: 'col-xs-5', 'ui:readonly': 'true' },
+      disabledBtn: {classNames: 'col-xs-2, disabledButtonRadio', id: 'disabledButton', 'ui:widget': 'radio'}
     }
   }
 }
@@ -64,7 +64,7 @@ class CustomHeadersSettings extends Component {
   }
 
   handleFormSave (evt) {
-    this.props.dispatch(headers(evt.formData.headers, evt.formData.newFormDataDisabled));
+    this.props.dispatch(headers(evt.formData.headers, evt.formData.newFormDataDisabled))
     this.setState({
       ...evt.formData,
       showSuccess: true
@@ -73,25 +73,24 @@ class CustomHeadersSettings extends Component {
 
   handleOnChange (evt) {
     if (evt.formData.disabledHeaders === undefined) {
-      const headers = evt.formData.headers.filter((hd) => hd.disabledBtn === undefined || hd.disabledBtn === false);
-      const disabledHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === true);
+      const headers = evt.formData.headers.filter((hd) => hd.disabledBtn === undefined || hd.disabledBtn === false)
+      const disabledHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === true)
 
-      var newFormDataHeader = Object.assign({}, { headers });
-      var newFormDataDisabled = Object.assign({}, { disabledHeaders });
-
+      var newFormDataHeader = Object.assign({}, { headers })
+      var newFormDataDisabled = Object.assign({}, { disabledHeaders })
     } else {
-      var oldHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === undefined || hd.disabledBtn === false);
-      var oldDisabledHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === true );
-
-      var filterHeaders = evt.formData.disabledHeaders.filter((hd) => hd.disabledBtn === false);
-      var filterDisabledHeaders = evt.formData.disabledHeaders.filter((hd) => hd.disabledBtn === true );
-
-      var headers = oldHeaders.concat(filterHeaders);
-      var disabledHeaders = oldDisabledHeaders.concat(filterDisabledHeaders);
-
-      var newFormDataHeader = Object.assign({}, { headers });
-      var newFormDataDisabled = Object.assign({}, { disabledHeaders });
-
+      var oldHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === undefined || hd.disabledBtn === false)
+      var oldDisabledHeaders = evt.formData.headers.filter((hd) => hd.disabledBtn === true)
+      var filterHeaders = evt.formData.disabledHeaders.filter((hd) => hd.disabledBtn === false)
+      var filterDisabledHeaders = evt.formData.disabledHeaders.filter((hd) => hd.disabledBtn === true)
+      var headers = oldHeaders.concat(filterHeaders)
+      var disabledHeaders = oldDisabledHeaders.concat(filterDisabledHeaders)
+      /* jshint ignore:start */
+      /* eslint-disable */
+      var newFormDataHeader = Object.assign({}, { headers })
+      var newFormDataDisabled = Object.assign({}, { disabledHeaders })
+      /* eslint-enable */
+      /* jshint ignore:end */
     }
 
     this.setState({

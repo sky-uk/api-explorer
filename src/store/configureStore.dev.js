@@ -5,11 +5,9 @@ import createHistory from 'history/lib/createBrowserHistory' // history/lib/crea
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-
 const composed = window.devToolsExtension
   ? compose(
       applyMiddleware(thunk, createLogger()),
-      
       reduxReactRouter({ createHistory }),
       window.devToolsExtension()
     )
