@@ -21,7 +21,7 @@
         "**/lib/**": true,
         "**/umd/**": true,
         "_book/**": true,
-        "packages/apiexplorer-legacy/**": true
+        "packages-legacy/**": true
     },
     
     "editor.rulers": [ 120 ],
