@@ -60,7 +60,6 @@ class TryOutWidgetTabResponsePanel extends Component {
   applyPlugins () {
     if (!APIExplorer.plugins) return
 
-    console.log(this.props)
     APIExplorer.plugins
       .filter(p => p.decorateEditor)
       .forEach(p => p.decorateEditor(
