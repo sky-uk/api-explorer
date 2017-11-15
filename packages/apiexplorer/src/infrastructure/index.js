@@ -1,3 +1,4 @@
-export { default as HttpRequest } from './HttpRequest'
-export { default as Url } from './Url'
+export { HttpRequest as HttpRequest } from 'apiexplorer-core'
+export { Url as Url } from 'apiexplorer-core'
+
 export { default as WidgetWrapper } from './WidgetWrapper'

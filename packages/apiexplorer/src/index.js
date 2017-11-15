@@ -7,7 +7,7 @@ import URI from 'urijs'
 import { load as loadSpec, apiConfigurations, headers } from './actions/loadActionCreators'
 import * as Loaders from './infrastructure/loaders'
 import widgetWrapper from './infrastructure/WidgetWrapper'
-import Url from './infrastructure/Url'
+import { Url } from 'apiexplorer-core'
 
 import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from './components'
 

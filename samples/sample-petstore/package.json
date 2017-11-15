@@ -12,9 +12,9 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "apiexplorer": "^0.6.0",
     "react": "^16.1.0",
-    "react-dom": "^16.1.0",
-    "apiexplorer": "^1.0.0"
+    "react-dom": "^16.1.0"
   },
   "devDependencies": {
     "nwb": "0.19.x"

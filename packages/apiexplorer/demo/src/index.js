@@ -1,7 +1,11 @@
 import './styles.css'
 import APIExplorer from './../../src'
-console.log(APIExplorer)
+
+import { CurlGeneratorTab } from 'apiexplorer-components'
 
 APIExplorer
-  .addAPI('petstore', 'swagger2', 'http://petstore.swagger.io/v2/swagger.json')
+  .addAPI('petstore', 'swagger2', 'http://petstore.swagger.io/v2/swagger.json',c => {
+    
+  })
+  .addWidgetTab('CURL', CurlGeneratorTab)
   .start('demo')
