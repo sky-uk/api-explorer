@@ -1,14 +1,10 @@
 {
-  "name": "apiexplorer-packages",
+  "name": "apiexplorer-lerna",
   "private": true,
   "scripts": {
-    "postinstall": "lerna bootstrap --concurrency=1",
-    "start": "cd packages/apiexplorer && npm start",
-    "test": "lerna run test",
-    "heroku-prebuild": "git init .",
-    "heroku-postbuild": "echo This runs afterwards."
+    "build:watch": "lerna run -- build:watch"
   },
   "devDependencies": {
-    "lerna": "^2.0.0-rc.1"
+    "lerna": "^2.5.1"
   }
 }

@@ -1,15 +1,23 @@
-import { createStore, compose, applyMiddleware } from 'redux'
-import reducers from 'reducers'
-import { reduxReactRouter } from 'redux-router'
-import createHistory from 'history/lib/createBrowserHistory' // history/lib/createHashHistory
+import reducers from './../reducers'
+import createHistory from 'history/createBrowserHistory' 
 import thunk from 'redux-thunk'
 
-const finalCreateStore = compose(
-  applyMiddleware(thunk),
-  reduxReactRouter({ createHistory }),
-)(createStore)
+// Create a history of your choosing (we're using a browser history in this case)
+const history = createHistory()
+
+// Build the middleware for intercepting and dispatching navigation actions
+const middleware = routerMiddleware(history)
+
+const composed = window.devToolsExtension
+  ? compose(
+      applyMiddleware(thunk, middleware),
+    )
+  : compose(
+      applyMiddleware(thunk, middleware)
+    )
 
 export default function configureStore (initialState) {
+  const finalCreateStore = composed(createStore)
   const store = finalCreateStore(reducers, initialState)
   return store
 }

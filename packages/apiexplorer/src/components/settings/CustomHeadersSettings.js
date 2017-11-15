@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import Form from 'react-jsonschema-form'
 import { headers } from '../../actions/loadActionCreators'
 import Immutable from 'immutable'
 import { Segment } from 'semantic-ui-react'
@@ -61,7 +60,7 @@ class CustomHeadersSettings extends Component {
     return (
       <Segment attached='bottom' >
         
-        <Form schema={schema}
+        {/* <Form schema={schema}
           uiSchema={uiSchema}
           formData={this.state}
           onChange={this.handleOnChange}
@@ -69,7 +68,7 @@ class CustomHeadersSettings extends Component {
           <div>
             <button type='submit' className='ui button primary'>Save</button>
           </div>
-        </Form>
+        </Form> */}
         <br />
         {this.state.showSuccess && <div>Settings updated with success.</div>}
       </Segment>
@@ -77,9 +76,9 @@ class CustomHeadersSettings extends Component {
   }
 }
 
-CustomHeadersSettings.propTypes = {
-  config: PropTypes.object,
-  dispatch: PropTypes.func
-}
+// CustomHeadersSettings.propTypes = {
+//   config: PropTypes.object,
+//   dispatch: PropTypes.func
+// }
 
 export default CustomHeadersSettings

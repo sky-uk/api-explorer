@@ -30,9 +30,9 @@ class Settings extends Component {
   }
 }
 
-Settings.propTypes = {
-  children: PropTypes.element,
-  history: PropTypes.object
-}
+// Settings.propTypes = {
+//   children: PropTypes.element,
+//   history: PropTypes.object
+// }
 
 export default Settings

@@ -54,9 +54,9 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
   }
 }
 
-TryOutWidgetTabHttpHeadersPanel.propTypes = {
-  requestHeaders: PropTypes.object,
-  responseHeaders: PropTypes.object
-}
+// TryOutWidgetTabHttpHeadersPanel.propTypes = {
+//   requestHeaders: PropTypes.object,
+//   responseHeaders: PropTypes.object
+// }
 
 export default TryOutWidgetTabHttpHeadersPanel

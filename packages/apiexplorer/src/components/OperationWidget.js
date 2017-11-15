@@ -73,13 +73,13 @@ class OperationWidget extends Component {
   }
 }
 
-OperationWidget.propTypes = {
-  children: PropTypes.element,
-  dispatch: PropTypes.func.isRequired,
-  operation: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
-}
+// OperationWidget.propTypes = {
+//   children: PropTypes.element,
+//   dispatch: PropTypes.func.isRequired,
+//   operation: PropTypes.object.isRequired,
+//   history: PropTypes.object.isRequired,
+//   config: PropTypes.object.isRequired
+// }
 
 export default OperationWidget
 

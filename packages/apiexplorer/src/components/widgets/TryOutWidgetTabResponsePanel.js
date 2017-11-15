@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import CodeMirror from 'codemirror'
 
@@ -128,15 +129,15 @@ class TryOutWidgetTabResponsePanel extends Component {
   }
 }
 
-TryOutWidgetTabResponsePanel.propTypes = {
-  response: PropTypes.object,
-  operations: PropTypes.object,
-  apis: PropTypes.object
-}
+// TryOutWidgetTabResponsePanel.propTypes = {
+//   response: PropTypes.object,
+//   operations: PropTypes.object,
+//   apis: PropTypes.object
+// }
 
 TryOutWidgetTabResponsePanel.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 export default TryOutWidgetTabResponsePanel

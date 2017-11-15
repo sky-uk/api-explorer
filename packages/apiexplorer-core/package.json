@@ -1,0 +1,30 @@
+{
+  "name": "apiexplorer-core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Core apiexplorer JS library",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "umd"
+  ],
+  "scripts": {
+    "build": "nwb build-web-module",
+    "build:watch": "nodemon -x 'npm run build' -w src -e '.js'",
+    "clean": "nwb clean-module",
+    "test": "nwb test",
+    "test:coverage": "nwb test --coverage",
+    "test:watch": "nwb test --server"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "nwb": "0.19.x"
+  },
+  "author": "",
+  "homepage": "",
+  "license": "MIT",
+  "repository": ""
+}

@@ -35,9 +35,9 @@ class ApplicationLoading extends Component {
   }
 }
 
-ApplicationLoading.propTypes = {
-  currentStep: PropTypes.string.isRequired,
-  progressMessages: PropTypes.array.isRequired
-}
+// ApplicationLoading.propTypes = {
+//   currentStep: PropTypes.string.isRequired,
+//   progressMessages: PropTypes.array.isRequired
+// }
 
 export default ApplicationLoading

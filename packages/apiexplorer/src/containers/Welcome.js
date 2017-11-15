@@ -31,10 +31,10 @@ class Welcome extends Component {
   }
 }
 
-Welcome.propTypes = {
-  children: PropTypes.element,
-  apis: PropTypes.object.isRequired
-}
+// Welcome.propTypes = {
+//   children: PropTypes.element,
+//   apis: PropTypes.object.isRequired
+// }
 
 export default connect(
   state => {

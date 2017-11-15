@@ -3,6 +3,8 @@
     "files.exclude": {
         "**/node_modules/": true,
         "**/dist": true,
+        "**/es": true,
+        "**/lib": true,
         "build": true,
         "packages/*/es": true,
         "packages/**/lib": true,

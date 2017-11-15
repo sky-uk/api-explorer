@@ -130,10 +130,10 @@ class LateralMenu extends Component {
 
 }
 
-LateralMenu.propTypes = {
-  operations: PropTypes.array.isRequired,
-  apis: PropTypes.object.isRequired,
-  selectedOperationId: PropTypes.string
-}
+// LateralMenu.propTypes = {
+//   operations: PropTypes.array.isRequired,
+//   apis: PropTypes.object.isRequired,
+//   selectedOperationId: PropTypes.string
+// }
 
 export default LateralMenu

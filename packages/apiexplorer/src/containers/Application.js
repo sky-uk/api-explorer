@@ -1,4 +1,4 @@
-import './Application.css'
+// import './Application.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -134,14 +134,14 @@ class Application extends Component {
 
 }
 
-Application.propTypes = {
-  children: PropTypes.element,
-  loader: PropTypes.object,
-  apis: PropTypes.object,
-  operations: PropTypes.object,
-  dispatch: PropTypes.func,
-  selectedOperationId: PropTypes.string
-}
+// Application.propTypes = {
+//   children: PropTypes.element,
+//   loader: PropTypes.object,
+//   apis: PropTypes.object,
+//   operations: PropTypes.object,
+//   dispatch: PropTypes.func,
+//   selectedOperationId: PropTypes.string
+// }
 
 export default connect(
   state => {

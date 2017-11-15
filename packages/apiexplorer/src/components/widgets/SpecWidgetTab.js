@@ -75,8 +75,8 @@ class SpecWidgetTab extends Component {
   }
 }
 
-SpecWidgetTab.propTypes = {
-  operation: PropTypes.object.isRequired
-}
+// SpecWidgetTab.propTypes = {
+//   operation: PropTypes.object.isRequired
+// }
 
 export default SpecWidgetTab

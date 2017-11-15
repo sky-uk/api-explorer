@@ -164,14 +164,14 @@ class TryOutWidgetTabParameters extends Component {
   }
 }
 
-TryOutWidgetTabParameters.propTypes = {
-  operation: PropTypes.object.isRequired,
-  definitions: PropTypes.object.isRequired,
-  headers: PropTypes.array.isRequired,
-  operationParameters: PropTypes.object,
-  operationLastParameters: PropTypes.object,
-  onHandleParametersChange: PropTypes.func.isRequired,
-  onHandleLastParametersChange: PropTypes.func.isRequired
-}
+// TryOutWidgetTabParameters.propTypes = {
+//   operation: PropTypes.object.isRequired,
+//   definitions: PropTypes.object.isRequired,
+//   headers: PropTypes.array.isRequired,
+//   operationParameters: PropTypes.object,
+//   operationLastParameters: PropTypes.object,
+//   onHandleParametersChange: PropTypes.func.isRequired,
+//   onHandleLastParametersChange: PropTypes.func.isRequired
+// }
 
 export default TryOutWidgetTabParameters

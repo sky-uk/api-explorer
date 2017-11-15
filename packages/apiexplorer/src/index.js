@@ -1,6 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
+
 import Root from './containers/Root'
+import URI from 'urijs'
 
 import { load as loadSpec, apiConfigurations, headers } from './actions/loadActionCreators'
 import * as Loaders from './infrastructure/loaders'
@@ -16,8 +18,6 @@ import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
 import APIExplorerAPIConfigurator from './APIExplorerAPIConfigurator'
 import LinkGenerator from './LinkGenerator'
 
-import URI from 'urijs'
-
 class APIExplorer {
   constructor () {
     this.SupportedLoaders = {
@@ -30,9 +30,11 @@ class APIExplorer {
       'swagger2': this.SupportedLoaders.Swagger2Loader
     }
 
-    this.Loaders = {}
-    this.Loaders[this.SupportedLoaders.Swagger1Loader] = Loaders.Swagger1Loader
-    this.Loaders[this.SupportedLoaders.Swagger2Loader] = Loaders.Swagger2Loader
+
+    this.Loaders = {
+      [this.SupportedLoaders.Swagger1Loader]: Loaders.Swagger1Loader,
+      [this.SupportedLoaders.Swagger2Loader]: Loaders.Swagger2Loader
+    }
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
@@ -82,13 +84,14 @@ class APIExplorer {
    * Adds a new Header
    * @param {[type]} name  Name of the Header
    * @param {[type]} value Value of the Header
+   * @return {APIExplorer} the APIExplorer instance
    */
   addHeader (name, value) {
     this.headers.push({ name, value })
     return this
   }
 
-  /*
+  /**
    * Method of the fluent API used to configure APIExplorer plugins
    * @param  {[object]} pluginSpec    An object describing the plugin
    * @return {[APIExplorer]}          APIExplorer instance to provide a fluent interface
@@ -103,6 +106,7 @@ class APIExplorer {
    * Adds a new Settings Pane
    * @param {[type]} name      friendly name of the Settings pane
    * @param {[type]} component Object that represents the component do add to the settings pane
+   * @return {APIExplorer} the APIExplorer instance
    */
   addSettingsPane (name, component) {
     const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
@@ -114,6 +118,7 @@ class APIExplorer {
    * Adds a new Widget
    * @param {[type]} name      friendly name of the Widget (to appear in the wodgets tab)
    * @param {[type]} component Object that represents the component do add to the widgets tab
+   * @return {APIExplorer} the APIExplorer instance
    */
   addWidgetTab (name, component) {
     const slug = name.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
@@ -124,6 +129,7 @@ class APIExplorer {
   /**
    * Configure global CORS settings
    * @param {object} config      The current HTTP Client Configuration
+   * @return {APIExplorer} the APIExplorer instance
    */
   configCORS (config) {
     this.configHttpClient(c => {
@@ -147,7 +153,7 @@ class APIExplorer {
   /**
    * Setter method to set API basePath
    * @param  {String} basePath to set as API basePath
-   * @return {[APIExplorer]} the APIExplorer instance
+   * @return {APIExplorer} the APIExplorer instance
    */
   setBasePath (basePath) {
     this.basePath = basePath
@@ -195,7 +201,7 @@ class APIExplorer {
    * Method of the fluent API used to start APIExplorer.
    * Will dispach actions to process the configurations, and render the UI
    * @param  {String} domAnchor   Alternative DOM anchor point if 'root' cannot be used
-   * @return {[APIExplorer]}      APIExplorer instance to provide a fluent interface
+   * @return {APIExplorer}        APIExplorer instance to provide a fluent interface
    */
   start (domAnchor = 'root') {
     const configureStore = require('./store/configureStore')
@@ -209,14 +215,12 @@ class APIExplorer {
 
     store.dispatch(headers(this.headers))
 
-    // Render UI
     render(<Root store={store} />, document.getElementById(domAnchor))
     return this
   }
 }
 
 const explorer = new APIExplorer()
-window.APIExplorer = explorer
 export default explorer
-
+window.APIExplorer = explorer
 

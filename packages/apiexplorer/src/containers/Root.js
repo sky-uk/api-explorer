@@ -18,6 +18,7 @@ const history = createHistory()
 export default class Root extends Component {
   render () {
     const { store } = this.props
+    
     return (
       <Provider store={store}>
         <div>
@@ -32,7 +33,6 @@ export default class Root extends Component {
               <Route component={NotFound} />
             </Switch>
           </ConnectedRouter>
-
           <ReduxToastr transitionIn='fadeIn' transitionOut='fadeOut' progressBar />
         </div>
       </Provider>
@@ -40,6 +40,6 @@ export default class Root extends Component {
   }
 }
 
-Root.propTypes = {
-  store: object.isRequired
-}
+// Root.propTypes = {
+//   store: object.isRequired
+// }

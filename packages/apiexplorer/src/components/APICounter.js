@@ -10,8 +10,8 @@ class APICounter extends Component {
   }
 }
 
-APICounter.propTypes = {
-  numberOfAPIs: PropTypes.number.isRequired
-}
+// APICounter.propTypes = {
+//   numberOfAPIs: PropTypes.number.isRequired
+// }
 
 export default APICounter

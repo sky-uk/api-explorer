@@ -224,17 +224,17 @@ class TryOutWidgetTab extends Component {
   }
 }
 
-TryOutWidgetTab.propTypes = {
-  operation: PropTypes.object.isRequired,
-  operations: PropTypes.object.isRequired,
-  operationResponse: PropTypes.object,
-  definitions: PropTypes.object.isRequired,
-  apis: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired,
-  apiConfig: PropTypes.object.isRequired,
-  dispatch: PropTypes.func,
-  operationLastParameters: PropTypes.object.isRequired,
-  operationLocalParameters: PropTypes.object.isRequired
-}
+// TryOutWidgetTab.propTypes = {
+//   operation: PropTypes.object.isRequired,
+//   operations: PropTypes.object.isRequired,
+//   operationResponse: PropTypes.object,
+//   definitions: PropTypes.object.isRequired,
+//   apis: PropTypes.object.isRequired,
+//   config: PropTypes.object.isRequired,
+//   apiConfig: PropTypes.object.isRequired,
+//   dispatch: PropTypes.func,
+//   operationLastParameters: PropTypes.object.isRequired,
+//   operationLocalParameters: PropTypes.object.isRequired
+// }
 
 export default TryOutWidgetTab

@@ -41,12 +41,12 @@ class OperationsFilter extends Component {
 
 }
 
-OperationsFilter.propTypes = {
-  onFilter: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  initialText: PropTypes.string,
-  autoUpdateTimeout: PropTypes.number
-}
+// OperationsFilter.propTypes = {
+//   onFilter: PropTypes.func.isRequired,
+//   placeholder: PropTypes.string.isRequired,
+//   initialText: PropTypes.string,
+//   autoUpdateTimeout: PropTypes.number
+// }
 
 OperationsFilter.defaultProps = {
   autoUpdateTimeout: 400

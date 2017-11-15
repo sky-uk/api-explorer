@@ -1,5 +1,4 @@
-import APIExplorer from '../../src'
-
+import APIExplorer from './../../src'
 console.log(APIExplorer)
 
 APIExplorer

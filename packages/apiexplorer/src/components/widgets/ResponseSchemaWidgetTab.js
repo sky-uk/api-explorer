@@ -138,9 +138,9 @@ class ResponseSchemaWidgetTab extends Component {
   }
 }
 
-ResponseSchemaWidgetTab.propTypes = {
-  operation: PropTypes.object.isRequired,
-  definitions: PropTypes.object.isRequired
-}
+// ResponseSchemaWidgetTab.propTypes = {
+//   operation: PropTypes.object.isRequired,
+//   definitions: PropTypes.object.isRequired
+// }
 
 export default ResponseSchemaWidgetTab

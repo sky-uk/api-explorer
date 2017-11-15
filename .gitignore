@@ -1,6 +1,5 @@
 node_modules/
-.DS_Store
 npm-debug.log
-*.sublime-workspace
-_book
 lerna-debug.log
+.DS_Store
+dist

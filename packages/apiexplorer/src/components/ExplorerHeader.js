@@ -18,13 +18,13 @@ class ExplorerHeader extends Component {
   }
 }
 
-ExplorerHeader.propTypes = {
-  api: PropTypes.shape({
-    apiName: PropTypes.string.isRequired,
-    apiVersion: PropTypes.string.isRequired,
-    productVersion: PropTypes.string
-  }).isRequired
-}
+// ExplorerHeader.propTypes = {
+//   api: PropTypes.shape({
+//     apiName: PropTypes.string.isRequired,
+//     apiVersion: PropTypes.string.isRequired,
+//     productVersion: PropTypes.string
+//   }).isRequired
+// }
 
 export default ExplorerHeader
 

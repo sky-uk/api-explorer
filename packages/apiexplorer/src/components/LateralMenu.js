@@ -108,7 +108,7 @@ class LateralMenu extends Component {
     return (
       <Menu.Item key={visibleOperations[0].apiname + tag} className='api-tag-operations'>
         <Menu.Header>
-          {apiTag.name}
+          {apiTag.name}&nbsp;
           {apiTag.description && <small className='pull-right' style={{ fontSize: 'x-small', paddingRight: 20 }}>{apiTag.description}</small>}
         </Menu.Header>
         {visibleOperations.map(this.renderOperation)}
@@ -141,11 +141,11 @@ class LateralMenu extends Component {
 
 }
 
-LateralMenu.propTypes = {
-  operations: PropTypes.array.isRequired,
-  apis: PropTypes.object.isRequired,
-  selectedOperationId: PropTypes.string
-}
+// LateralMenu.propTypes = {
+//   operations: PropTypes.array.isRequired,
+//   apis: PropTypes.object.isRequired,
+//   selectedOperationId: PropTypes.string
+// }
 
 export default LateralMenu
 
