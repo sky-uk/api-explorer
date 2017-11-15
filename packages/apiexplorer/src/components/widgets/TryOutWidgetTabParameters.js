@@ -25,7 +25,7 @@ class TryOutWidgetTabParameters extends Component {
     }
     return (
       <Input fluid required={param.required}
-        value={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
+        defaultValue={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
     )
   }
 

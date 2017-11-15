@@ -129,15 +129,15 @@ class TryOutWidgetTabResponsePanel extends Component {
   }
 }
 
-// TryOutWidgetTabResponsePanel.propTypes = {
-//   response: PropTypes.object,
-//   operations: PropTypes.object,
-//   apis: PropTypes.object
-// }
+TryOutWidgetTabResponsePanel.propTypes = {
+  response: PropTypes.object,
+  operations: PropTypes.object,
+  apis: PropTypes.object
+}
 
 TryOutWidgetTabResponsePanel.contextTypes = {
   store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object
 }
 
 export default TryOutWidgetTabResponsePanel
