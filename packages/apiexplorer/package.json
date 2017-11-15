@@ -1,6 +1,6 @@
 {
   "name": "apiexplorer",
-  "version": "1.0.0",
+  "version": "0.6.0",
   "description": "Main API Explorer package",
   "main": "lib/index.js",
   "module": "es/index.js",

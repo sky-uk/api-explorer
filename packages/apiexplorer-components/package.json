@@ -1,6 +1,6 @@
 {
   "name": "apiexplorer-components",
-  "version": "1.0.0",
+  "version": "0.6.0",
   "description": "React components for apiexplorer",
   "main": "lib/index.js",
   "module": "es/index.js",

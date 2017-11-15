@@ -1,3 +1,9 @@
+## 0.6.0 (..., 2017)
+
+### Development
+
+* Adopted [Lerna](https://lernajs.io/) project structure 
+
 ## 0.5.0 (August 30, 2017)
 
 ### Enhancement
