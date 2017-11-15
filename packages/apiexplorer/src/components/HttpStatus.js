@@ -1,4 +1,4 @@
-const HTTPStatus =  {
+const HttpStatus =  {
   "concept" : "http-status-code",
     "id" : "http:\/\/webconcepts.info\/concepts\/http-status-code\/",
     "name-singular" : "HTTP Status Code",
@@ -677,4 +677,4 @@ const HTTPStatus =  {
             "specification" : "http:\/\/webconcepts.info\/specs\/IETF\/RFC\/6585",
             "spec-name" : "RFC 6585" } ] } ] }
 
-  export default HTTPStatus
+  export default HttpStatus

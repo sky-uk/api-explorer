@@ -210,11 +210,11 @@ class TryOutWidgetTab extends Component {
             />
             {showResponse && <span>&nbsp;&nbsp;<a href='about:blank' onClick={e => this.hideResponse(e)}>Hide Response</a></span>}
 
-            {(showResponse || showLastResponse) && <div className='pull-right'>
+            {(showResponse || showLastResponse) && <span style={{ float: 'right' }}>
               <Label color={this.state.requestPanelColor}>
                 <abbr title={httpStatusInfo.details[0].description}>{response.status} {response.statusText}</abbr>
               </Label>
-            </div>}
+            </span>}
           </Segment>
           {(showResponse || showLastResponse) && <Segment attached className='no-border no-padding'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
