@@ -1,7 +1,6 @@
 export default class APIExplorerPluginConfigurator {
   constructor (apiExplorer) {
     this.apiExplorer = apiExplorer
-    this.apiExplorer.plugins = []
   }
 
   /**

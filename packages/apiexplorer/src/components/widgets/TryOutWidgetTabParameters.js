@@ -78,6 +78,10 @@ class TryOutWidgetTabParameters extends Component {
       value = this.props.headers.find(h => h.name === param.name).value
     }
 
+    if (value === undefined) {
+      value = param.default
+    }
+
     if (param.enum) {
       return this.editorForSelect(param, value)
     }
@@ -120,6 +124,12 @@ class TryOutWidgetTabParameters extends Component {
     return <div>-</div>
   }
 
+  renderParameterDescription (description) {
+    return description.startsWith('http')
+      ? (<div><small><small><a href={description} target='_blank'>Go to external docs <i className='fa fa-external-link' /></a></small></small></div>)
+      : (<div><small><small>{description}</small></small></div>)
+  }
+
   renderParameterRow = (parameter, index) => {
     return (
       <Table.Row key={index}>
@@ -127,7 +137,7 @@ class TryOutWidgetTabParameters extends Component {
         <Table.Cell width={3}>
           <span>{parameter.name}</span>
           <span title='Required field'>{parameter.required ? '*' : ''}</span>
-          {parameter.description && <div><small><small>{parameter.description}</small></small></div>}
+          {parameter.description && this.renderParameterDescription(parameter.description)}
         </Table.Cell>
         <Table.Cell >
           <div>{this.renderEditorFor(parameter)}</div>

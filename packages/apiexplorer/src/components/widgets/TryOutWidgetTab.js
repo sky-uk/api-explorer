@@ -20,6 +20,11 @@ class TryOutWidgetTab extends Component {
   httpRequest = new HttpRequest((req, resp) => this.requestCallback(req, resp))
 
   setDefaultOperationParameters (props) {
+    let newParameters = this.getDefaultOperationParameters(props)
+    this.setState({operationParameters: newParameters})
+  }
+
+  getDefaultOperationParameters (props) {
     let newParameters = {}
 
     props.operation.spec.parameters && props.operation.spec.parameters.forEach(param => {
@@ -34,13 +39,11 @@ class TryOutWidgetTab extends Component {
       }
     })
 
-    this.setState({operationParameters: newParameters})
+    return newParameters
   }
 
   setOperationParameters (props) {
-    this.setDefaultOperationParameters(props)
-
-    let newParameters = {}
+    let newParameters = this.getDefaultOperationParameters(props)
 
     // Override default parameters with the ones in global storage
     props.operationLocalParameters && Object.keys(props.operationLocalParameters).length && Object.keys(props.operationLocalParameters).forEach(key => {
@@ -178,7 +181,7 @@ class TryOutWidgetTab extends Component {
 
     const showResponse = !this.state.requestInProgress && (this.state.response && this.state.response.status)
     const showLastResponse = !showResponse && this.props.operationResponse
-    const response = !showResponse && this.props.operationResponse ? this.props.operationResponse : this.state.response
+    const response = !showResponse && this.props.operationResponse ? this.props.operationResponse.response : this.state.response
     const url = response && response.url
 
     const request = this.state.request
