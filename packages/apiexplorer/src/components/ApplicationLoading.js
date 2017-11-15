@@ -17,7 +17,7 @@ class ApplicationLoading extends Component {
         <div style={topLoadingStype} >
           <AppLogo width={128} />
           <br />
-          <h1 id='loading-documentation' style={{ fontFamily: 'verdana' }}>Loading API documentation...</h1>
+          <h1 id='loading-documentation'>Loading API documentation...</h1>
           <br />
           <br />
           <br />

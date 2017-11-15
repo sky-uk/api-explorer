@@ -1,3 +1,4 @@
+import './styles.css'
 import APIExplorer from './../../src'
 console.log(APIExplorer)
 
