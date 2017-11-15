@@ -48,8 +48,8 @@ class Application extends Component {
       <div id='content'>
         <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
           <Icon name='delete' size='large' color='grey' style={{ float: 'right' }} onClick={this.handleCloseDock} />
-          <div style={{ textAlign: 'center' }}>
-            <Link to={APIExplorer.LinkGenerator.toHome()} onClick={this.onHomeClick} ><AppLogo /></Link>
+          <div style={{ textAlign: 'center', marginTop: 10 }}>
+            <Link to={APIExplorer.LinkGenerator.toHome()} onClick={this.onHomeClick} ><AppLogo width={80} /></Link>
             </div>
           <LateralMenu
             operations={this.props.operations.toJS()}
