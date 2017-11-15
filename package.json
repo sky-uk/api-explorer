@@ -2,7 +2,8 @@
   "name": "apiexplorer-lerna",
   "private": true,
   "scripts": {
-    "build:watch": "lerna run -- build:watch"
+    "build:watch": "lerna run -- build:watch",
+    "demo": "cd packages/apiexplorer && npm start"
   },
   "devDependencies": {
     "lerna": "^2.5.1"
