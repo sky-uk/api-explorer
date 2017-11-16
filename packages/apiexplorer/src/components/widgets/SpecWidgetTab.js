@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Segment, Label } from 'semantic-ui-react'
+import Enumerable from 'linq'
 
 class SpecWidgetTab extends Component {
 
@@ -34,7 +35,17 @@ class SpecWidgetTab extends Component {
       return <abbr>{parameter.type}</abbr>
     }
     if (parameter.schema) {
-      return <abbr>{parameter.schema.$ref}</abbr>
+      console.log(parameter.schema, )
+      let definition = this.props.definitions[parameter.schema.$ref]
+      if (definition) {
+        return (
+          <div>
+            <abbr>{parameter.schema.$ref}</abbr>
+          </div>  
+        )
+      } else {
+        return <abbr>{parameter.schema.$ref}</abbr>
+      }
     }
     return <span>-</span>
   }
@@ -45,6 +56,20 @@ class SpecWidgetTab extends Component {
         <td className='col-md-2' >{statusCode}</td>
         <td className='col-md-10' >{description}</td>
       </tr>)
+  }
+
+  renderDefinitions () {
+    if (!this.props.operation.spec.parameters) return null
+
+    const definitions = Enumerable.from(this.props.operation.spec.parameters)
+      .where(parameter => parameter.schema && parameter.schema.$ref)
+      .select(parameter => parameter.schema.$ref)
+      // .distinct()
+      // .select(definitionRef => this.props.definitions[definitionRef.])
+      // .select(definition => JSON.stringify(definition, null, 2))
+      .toArray()
+
+    return JSON.stringify(definitions, null, 2)
   }
 
   render () {
@@ -80,6 +105,7 @@ class SpecWidgetTab extends Component {
               </tbody>
             </table>
           </Segment>
+          {this.renderDefinitions()}
         </div>
       </Segment>
     )

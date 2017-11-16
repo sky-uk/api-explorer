@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import Enumerable from 'linq'
 import moment from 'moment'
 import { Grid, Segment, Table, Label, Input, TextArea, Select, Dropdown, Popup } from 'semantic-ui-react'
 
@@ -36,19 +35,19 @@ class TryOutWidgetTabParameters extends Component {
   editorForSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
     const options = param.enum.map(option => ({ key: option, text: option, value: option }))
-    // TODO: VERIFY HANDLING OF ONCHANGE
     return (
-      <Dropdown fluid selection options={options} defaultValue={value} />
+      <Dropdown fluid selection options={options} defaultValue={value}
+        onChange={(event, data) => handleParametersOnChange(param.name, data.value)} />
     )
   }
 
   editorForMultipleSelect (param, value) {
     const handleParametersOnChange = this.props.onHandleParametersChange
-    value = [ value || param.items.default ]
+    if (!Array.isArray(value)) value = [ value || param.items.default ]
     const options = param.items.enum.map(option => ({ key: option, text: option, value: option }))
-    // TODO: VERIFY HANDLING OF ONCHANGE
     return (
-      <Dropdown fluid multiple selection options={options} defaultValue={value} />
+      <Dropdown fluid multiple selection options={options} value={value}
+        onChange={(event, data) => handleParametersOnChange(param.name, data.value)} />
     )
   }
 
@@ -59,8 +58,11 @@ class TryOutWidgetTabParameters extends Component {
     const defaultValue = JSON.stringify({ values: 'default' })
     const options = [{
       text: 'Default Parameters', value: defaultValue,
-    }].concat(this.props.operationLastParameters.toJS().map(parameter => ({
-      text: `Parameters ${moment(parameter.moment).fromNow()}`, value: JSON.stringify(parameter.values)
+    }].concat(this.props.operationLastParameters.toJS().map((parameter, idx) => ({
+      text: `Parameters ${moment(parameter.moment).fromNow()}`,
+      value: JSON.stringify(parameter.values),
+      title: JSON.stringify(parameter.values, null, 2),
+      key: idx
     })))
 
     return (
@@ -151,17 +153,10 @@ class TryOutWidgetTabParameters extends Component {
     const parameters = this.props.operation.spec.parameters
     if (parameters && parameters.length > 0) {
       return (
-        <Segment>
-          <Grid columns='2' >
-            <Grid.Column verticalAlign='bottom'>
-              <h4>Parameters</h4>
-            </Grid.Column>
-            <Grid.Column textAlign='right'>
-              <span className='pull-right'>{this.renderLastParametersList()}</span>
-            </Grid.Column>
-          </Grid>
-          <Table tableData={parameters} celled selectable compact size='small' striped renderBodyRow={this.renderParameterRow} />
-        </Segment>
+        <div >
+          <h4>Parameters</h4>
+          <Table basic='very' selectable compact size='small' tableData={parameters} renderBodyRow={this.renderParameterRow} />
+        </div>
       )
     } else {
       return (

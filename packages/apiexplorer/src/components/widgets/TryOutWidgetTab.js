@@ -1,7 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import URI from 'urijs'
-import HttpStatus from './../HttpStatus'
+
+import { Segment, Label } from 'semantic-ui-react'
+
+import { HttpStatus, HttpRequest } from 'apiexplorer-core'
 
 import { newParameters, localParameters, responseReceived } from '../../actions/loadActionCreators'
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
@@ -9,15 +13,10 @@ import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
 import TryOutWidgetTabHttpHeadersPanel from './TryOutWidgetTabHttpHeadersPanel'
 
-import { Segment, Label } from 'semantic-ui-react'
-
-// import { Map } from 'immutable'
-import { HttpRequest } from '../../infrastructure'
-
 class TryOutWidgetTab extends Component {
 
   state = this.makeState()
-  httpRequest = new HttpRequest((req, resp) => this.requestCallback(req, resp))
+  httpRequest = new HttpRequest(this.requestCallback.bind(this))
 
   setDefaultOperationParameters (props) {
     let newParameters = this.getDefaultOperationParameters(props)
@@ -51,23 +50,24 @@ class TryOutWidgetTab extends Component {
     })
 
     // Override newParameters with `param-*` query string overrides
-    Object.keys(props.location.query)
-          .filter(key => key.startsWith('param-'))
-          .map(key => key.replace(/^param-/, ''))
-          .forEach(key => { newParameters[key] = props.location.query[`param-${key}`] })
+    // TODO: fix location.query ----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------
+    // Object.keys(props.location.query)
+    //       .filter(key => key.startsWith('param-'))
+    //       .map(key => key.replace(/^param-/, ''))
+    //       .forEach(key => { newParameters[key] = props.location.query[`param-${key}`] })
+    // -----------------------------------------------------------------------------------------------------
 
-    this.setState({operationParameters: newParameters})
+    let newState = Object.assign({}, this.makeState(), { operationParameters: newParameters })
+    this.setState(newState)
   }
 
   componentWillMount () {
-    // TODO: REIMPLEMENT THIS - IS THROWING AN ERROR
-    // this.setOperationParameters(this.props)
+    this.setOperationParameters(this.props)
   }
-
+  
   componentWillReceiveProps (nextProps) {
-    // TODO: REIMPLEMENT THIS - IS THROWING AN ERROR
-    // this.state = this.makeState()
-    // this.setOperationParameters(nextProps)
+    this.setOperationParameters(nextProps)
   }
 
   makeState () {
@@ -227,17 +227,17 @@ class TryOutWidgetTab extends Component {
   }
 }
 
-// TryOutWidgetTab.propTypes = {
-//   operation: PropTypes.object.isRequired,
-//   operations: PropTypes.object.isRequired,
-//   operationResponse: PropTypes.object,
-//   definitions: PropTypes.object.isRequired,
-//   apis: PropTypes.object.isRequired,
-//   config: PropTypes.object.isRequired,
-//   apiConfig: PropTypes.object.isRequired,
-//   dispatch: PropTypes.func,
-//   operationLastParameters: PropTypes.object.isRequired,
-//   operationLocalParameters: PropTypes.object.isRequired
-// }
+TryOutWidgetTab.propTypes = {
+  operation: PropTypes.object.isRequired,
+  operations: PropTypes.object.isRequired,
+  operationResponse: PropTypes.object,
+  definitions: PropTypes.object.isRequired,
+  apis: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
+  apiConfig: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
+  operationLastParameters: PropTypes.object.isRequired,
+  operationLocalParameters: PropTypes.object.isRequired
+}
 
 export default TryOutWidgetTab

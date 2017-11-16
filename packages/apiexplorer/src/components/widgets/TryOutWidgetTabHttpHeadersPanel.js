@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
-import { Segment, Grid } from 'semantic-ui-react'
+import { Segment, Grid, Table, T } from 'semantic-ui-react'
 
 class TryOutWidgetTabHttpHeadersPanel extends Component {
   constructor () {
@@ -12,40 +12,42 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
     var headerMap = Map(headers)
     if (headerMap && headerMap.size > 0) {
       return (
-        <tbody>
-          {headerMap.map((value, key) => (<tr key={key}>
-            <td>{key.toUpperCase()}</td>
-            <td>{value}</td>
-          </tr>)
+        <Table.Body>
+          {headerMap.map((value, key) => (<Table.Row key={key}>
+            <Table.Cell>{key.toUpperCase()}</Table.Cell>
+            <Table.Cell>{value}</Table.Cell>
+          </Table.Row>)
         ).toList()}
-        </tbody>
+        </Table.Body>
       )
     }
-    return <tbody><tr><td colSpan={2}>No headers were found</td></tr></tbody>
+    return <Table.Body><Table.Row><Table.Cell colSpan={2}><em>No headers were found</em></Table.Cell></Table.Row></Table.Body>
   }
 
   render () {
-    const tableClass = 'ui table'
+    const tableClass = 'ui table compact'
     const responseHeaders = this.props.responseHeaders
     const requestHeaders = this.props.requestHeaders
 
     return (
-      <Segment>
-        <Grid columns='2'>
-          <Grid.Column>
-            <h5><strong>Request Headers</strong></h5>
-            <table className={tableClass} style={{ fontSize: '12px' }}>
-              {this.renderHeaders(requestHeaders)}
-            </table>
-          </Grid.Column>
-          <Grid.Column>
-            <h5><strong>Response Headers</strong></h5>
-            <table className={tableClass} style={{ fontSize: '12px' }}>
-              {this.renderHeaders(responseHeaders)}
-            </table>
-          </Grid.Column>
-        </Grid>
-      </Segment>
+      <Grid columns='2' padded='very'>
+        <Grid.Column>
+          <Table compact>
+            <Table.Header>
+              <Table.Row><Table.HeaderCell colSpan={2}>Request Headers</Table.HeaderCell></Table.Row>
+            </Table.Header>
+            {this.renderHeaders(requestHeaders)}
+          </Table>
+        </Grid.Column>
+        <Grid.Column>
+          <Table compact>
+            <Table.Header>
+              <Table.Row><Table.HeaderCell colSpan={2}>Response Headers</Table.HeaderCell></Table.Row>
+            </Table.Header>
+            {this.renderHeaders(responseHeaders)}
+          </Table>
+        </Grid.Column>
+      </Grid>
     )
   }
 }
