@@ -111,12 +111,22 @@ class TryOutWidgetTabParameters extends Component {
       return <span><abbr>{parameter.type}</abbr> of <abbr>{parameter.items.type}</abbr></span>
     }
 
-    if (parameter.schema) {
+    if (parameter.schema && parameter.schema.$ref) {
       const definition = this.props.definitions[parameter.schema.$ref]
       return (
         <Popup
           trigger={<abbr style={{ borderBottom: 'dashed gray 1px ' }}>{definition.name}</abbr>}
           content={JSON.stringify(definition, null, 2)}
+          basic
+        />
+      )
+    }
+
+    if (parameter.schema && parameter.schema.type) {
+      return (
+        <Popup
+          trigger={<abbr style={{ borderBottom: 'dashed gray 1px ' }}>{parameter.schema}</abbr>}
+          content={JSON.stringify(parameter.schema.type, null, 2)}
           basic
         />
       )
