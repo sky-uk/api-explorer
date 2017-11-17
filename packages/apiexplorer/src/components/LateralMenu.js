@@ -90,7 +90,6 @@ class LateralMenu extends Component {
       <div key={apiOperations[0].apiname} className='api-operations'>
         <Menu.Item header>
           {apiOperations[0].apiname}
-          <div><small className='text-muted' style={{ fontSize: 8 }}>{uri}</small></div>
         </Menu.Item>
         {tags.map(tag => this.renderOperationsWithTag(apiOperations, tag))}
       </div>
@@ -109,7 +108,7 @@ class LateralMenu extends Component {
       <Menu.Item key={visibleOperations[0].apiname + tag} className='api-tag-operations'>
         <Menu.Header>
           {apiTag.name}&nbsp;
-          {apiTag.description && <small className='pull-right' style={{ fontSize: 'x-small', paddingRight: 20 }}>{apiTag.description}</small>}
+          {apiTag.description && <small style={{ fontSize: '8px', paddingRight: 20 }}>{apiTag.description}</small>}
         </Menu.Header>
         {visibleOperations.map(this.renderOperation)}
       </Menu.Item>
@@ -167,8 +166,10 @@ const StyledMenu = Styled.div`
   div.api-operations .api-operation {
     padding-top: 6px;
     padding-bottom: 6px;
-    padding-left: 20px;
+    padding-left: 6em;
     position: relative;
+    font-family: "Source Code Pro", monospace;
+    font-size: 0.9rem;
   }
 
   div.api-operations .api-tag-operations a.api-operation.item:before {
@@ -187,7 +188,7 @@ const StyledMenu = Styled.div`
   /*  lock icon */
   div.api-operations .api-operation i.lock.icon {
     float: none;
-    position: absolute;
+    xposition: absolute;
     top: 6px;
     left: -2px;
   }
@@ -198,8 +199,10 @@ const StyledMenu = Styled.div`
     background-color: #222222;
     float: none;
     position: absolute;
-    right: 10px;
+    left: 0;
     top: 6px;
+    width: 5em;
+    text-align: right;
   }
 
   div.api-operations .api-operation.active.http-head .ui.label,
