@@ -64,12 +64,18 @@ class SpecWidgetTab extends Component {
     const definitions = Enumerable.from(this.props.operation.spec.parameters)
       .where(parameter => parameter.schema && parameter.schema.$ref)
       .select(parameter => parameter.schema.$ref)
-      // .distinct()
-      // .select(definitionRef => this.props.definitions[definitionRef.])
-      // .select(definition => JSON.stringify(definition, null, 2))
+      .distinct()
+      .select($ref => ({ $ref: $ref, schema: this.props.definitions[$ref] }))
       .toArray()
 
-    return JSON.stringify(definitions, null, 2)
+    return (<Segment>
+      {definitions.map(definition => (
+        <div key={definition.$ref}>
+          <h5>{definition.$ref}</h5>
+          <pre>{JSON.stringify(definition.schema, null, 2)}</pre>
+        </div>
+      ))}
+      </Segment>)
   }
 
   render () {

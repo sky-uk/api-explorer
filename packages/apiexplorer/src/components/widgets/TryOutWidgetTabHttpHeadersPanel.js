@@ -30,7 +30,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
     const requestHeaders = this.props.requestHeaders
 
     return (
-      <Grid columns='2' padded='very'>
+      <Grid columns='2'>
         <Grid.Column>
           <Table compact>
             <Table.Header>
