@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Segment, Card } from 'semantic-ui-react'
+import { Segment, Card, Table } from 'semantic-ui-react'
 // import Highlight from 'react-highlight'
 // import 'highlight.js/styles/tomorrow.css' see issue #26
 
@@ -107,20 +107,24 @@ class ResponseSchemaWidgetTab extends Component {
         <Card fluid>
           <Card.Content>
             <strong>{responseSchema.statusCode}</strong> {responseSchema.description ? '- ' + responseSchema.description : ''}
-            <code>{responseSchema.returnType}</code>
+            &nbsp;
+            <strong><code>{responseSchema.returnType}</code></strong>
           </Card.Content>
           <Card.Content>
-            <table style={{ width: '100%' }} className='table' >
-              <thead>
-                <tr><th>Sample</th><th>Schema</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></td>
-                  <td><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></td>
-                </tr>
-              </tbody>
-            </table>
+            <Table style={{ width: '100%' }} className='table' >
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell content='Sample' />
+                  <Table.HeaderCell content='Schema' />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row verticalAlign='top'>
+                  <Table.Cell style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></Table.Cell>
+                  <Table.Cell><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
           </Card.Content>
         </Card>
       </Segment>

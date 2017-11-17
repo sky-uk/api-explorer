@@ -35,7 +35,6 @@ class SpecWidgetTab extends Component {
       return <abbr>{parameter.type}</abbr>
     }
     if (parameter.schema) {
-      console.log(parameter.schema, )
       let definition = this.props.definitions[parameter.schema.$ref]
       if (definition) {
         return (
