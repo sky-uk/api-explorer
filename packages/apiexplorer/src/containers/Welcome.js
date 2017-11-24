@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import marked from 'marked'
 import { ExplorerHeader } from '../components'
@@ -8,43 +9,41 @@ import Enumerable from 'linq'
 class Welcome extends Component {
 
   render () {
-    const apisArray = this.props.apis.get('byOrder').map(a => this.props.apis.get('byName').get(a)).toArray()
+    const apisArray = this.props.apis.get('byOrder').map(name => ({
+      apiname: name,
+      spec: this.props.apis.get('byName').get(name),
+    })).toArray()
     return (
       <div>
-        {apisArray.map(api => this.renderSingleAPIContent(api))}
+        {apisArray.map(this.renderSingleAPIContent)}
       </div>
     )
   }
 
-  renderSingleAPIContent (api) {
-    if (!api) return
-
-    const { title, description, version } = api.info
+  renderSingleAPIContent = (apiInfo) => {
+    if (!apiInfo) return
+    const { title, description, version } = apiInfo.spec.info
     return (
       <div key={title}>
         <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
         <p dangerouslySetInnerHTML={this.getHtmlDescription(description)} />
-        {this.renderSummary(api)}
+        {this.renderSummary(apiInfo)}
       </div>
     )
   }
 
-  renderSummary (api) {
-    let paths = Object.keys(api.paths).map(path => Object.keys(api.paths[path]).map(method => ({
-      method: method,
-      path: path,
-      operation: api.paths[path][method]
-    }))).reduce((prev, curr) => prev.concat(curr), [])
-
-    let pathsByTags = Enumerable.from(paths).groupBy(p => p.operation.tags ? p.operation.tags[0] : '')
+  renderSummary (apiInfo) {
+    const api = apiInfo.spec
+    const apiOperations = this.props.operations.filter(o => o.get('apiname') === apiInfo.apiname).map(o => o.get('spec')).toArray()
+    let pathsByTags = Enumerable.from(apiOperations).groupBy(o => o.tags ? o.tags[0] : '')
 
     return pathsByTags.select(g => {
       let key = g.key()
-      let tag = api.tags.find(t => t.name === key) || { }
+      const tag = this.props.apis.get('byName').get(apiInfo.apiname).tags.find(t => t.name === key)
 
       return <Segment key={key}>
         <h4>{tag.description}</h4>
-        <Table tableData={g} basic compact striped>
+        <Table compact striped columns='three'>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell content= 'Operation' />
@@ -56,17 +55,21 @@ class Welcome extends Component {
             {g.select(this.renderSummaryRow).toArray()}
           </Table.Body>
         </Table>
+        <br />
       </Segment>
       }
     ).toArray()
   }
 
-  renderSummaryRow (resource, idx) {
+  renderSummaryRow (operation) {
+    const url = APIExplorer.LinkGenerator.toOperation(operation)
     return (
-      <Table.Row key={idx}>
-        <Table.Cell content={resource.method} />
-        <Table.Cell content={`${resource.method.toUpperCase()} ${resource.path}`} />
-        <Table.Cell content={resource.operation.summary} />
+      <Table.Row key={operation.httpMethod + operation.url}>
+        <Table.Cell>
+          <Link to={url} >{operation.httpMethod}</Link>
+        </Table.Cell>
+        <Table.Cell><code>{`${operation.httpMethod.toUpperCase()} ${operation.url}`}</code></Table.Cell>
+        <Table.Cell content={operation.summary} />
       </Table.Row>
     )
   } 
@@ -84,7 +87,8 @@ class Welcome extends Component {
 export default connect(
   state => {
     return {
-      apis: state.apis
+      apis: state.apis,
+      operations: state.operations
     }
   }
 )(Welcome)
