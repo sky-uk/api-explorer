@@ -8,6 +8,12 @@ export default class APIExplorerAPIConfigurator {
     this.slug = slug
     this.url = url
 
+    // Welcome page options
+    this.welcome = {
+      displaySummary: true,
+      listOperations: false
+    }
+
     this.headers = []
     this.interceptor = (config, apiSpec) => { return apiSpec }
     this.HttpClientConfigurator = c => {}
@@ -56,4 +62,17 @@ export default class APIExplorerAPIConfigurator {
 
     return this
   }
+
+  // Welcome page options ---
+
+  displaySummaryAtWelcome (active) {
+    this.welcome.displaySummary = active === undefined || active === true
+    return this
+  }
+  listOperationsAtWelcome (active) {
+    this.welcome.listOperations = active === undefined || active === true
+    return this
+  }
+
+
 }

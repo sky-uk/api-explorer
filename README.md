@@ -95,6 +95,7 @@ APIExplorer
     c.addHeader('X-Foo', 'Some Value')
     c.addHeader('X-Bar', 'Another Value')
     c.useProxy(true)
+    c.listOperationsAtWelcome(true)
   })
   .addAPI('github', 'swagger2', 'https://api.apis.guru/v2/specs/github.com/v3/swagger.json', c => {
     c.useProxy(true)

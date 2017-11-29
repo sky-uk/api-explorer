@@ -6,6 +6,12 @@ import { ExplorerHeader } from '../components'
 import { Segment, Table } from 'semantic-ui-react'
 import Enumerable from 'linq'
 
+const mapStateToProps = state => {
+  return {
+    apis: state.apis,
+    operations: state.operations
+  }
+}
 class Welcome extends Component {
 
   render () {
@@ -22,14 +28,23 @@ class Welcome extends Component {
 
   renderSingleAPIContent = (apiInfo) => {
     if (!apiInfo) return
-    const { title, description, version } = apiInfo.spec.info
+    const apiConfiguration = APIExplorer.apiConfigurations.find(c => c.friendlyName === apiInfo.apiname)
     return (
-      <div key={title}>
-        <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
-        <p dangerouslySetInnerHTML={this.getHtmlDescription(description)} />
-        {this.renderSummary(apiInfo)}
+      <div key={apiInfo.apiname}>
+        {this.renderTitle(apiInfo)}
+        {apiConfiguration.welcome.displaySummary && this.renderDescription(apiInfo)}
+        {apiConfiguration.welcome.listOperations && this.renderSummary(apiInfo)}
       </div>
     )
+  }
+
+  renderTitle (apiInfo) {
+    const { title, version } = apiInfo.spec.info
+    return <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
+  }
+
+  renderDescription (apiInfo) {
+    return <p dangerouslySetInnerHTML={this.getHtmlDescription(apiInfo.spec.info.description)} />
   }
 
   renderSummary (apiInfo) {
@@ -84,11 +99,4 @@ class Welcome extends Component {
 //   apis: PropTypes.object.isRequired
 // }
 
-export default connect(
-  state => {
-    return {
-      apis: state.apis,
-      operations: state.operations
-    }
-  }
-)(Welcome)
+export default connect(mapStateToProps)(Welcome)
