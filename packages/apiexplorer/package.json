@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "nwb build-react-component",
-    "build:watch": "nodemon -x 'npm run build' -w src -e '.js'",
+    "build:watch": "nodemon -x 'nwb build-react-component --no-demo' -w src -e '.js'",
     "clean": "nwb clean-module && nwb clean-demo",
     "start": "nwb serve-react-demo",
     "test": "nwb test-react",
