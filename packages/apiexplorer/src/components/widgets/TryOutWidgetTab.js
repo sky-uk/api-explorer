@@ -60,6 +60,11 @@ class TryOutWidgetTab extends Component {
 
     let newState = Object.assign({}, this.makeState(), { operationParameters: newParameters })
     this.setState(newState)
+    if(props.operationResponse && props.operationResponse.response && props.operationResponse.response.status)
+    {
+      this.setState({showLastResponse: true})
+      this.changeResponseStatusColor(props.operationResponse.response);
+    }
   }
 
   componentWillMount () {
@@ -150,20 +155,32 @@ class TryOutWidgetTab extends Component {
   requestCallback (request, response) {
     this.props.dispatch(responseReceived(this.props.operation, response, request))
     this.setState({requestInProgress: false, response: response, request: request})
+    this.changeResponseStatusColor(response);
+  }
+
+  changeResponseStatusColor(response) {
+    if(!response)
+    {
+      response = { status: '' };
+    }
 
     const statusCategories = {
+      '': 'grey',
       '2': 'green',
       '3': 'blue',
       '4': 'orange',
       '5': 'red'
     }
+
     const statusCategory = ('' + response.status).charAt(0)
     this.setState({ requestPanelColor: `${statusCategories[statusCategory]}` })
   }
 
   hideResponse (e) {
     e.preventDefault()
-    this.setState({response: null, requestPanelColor: 'grey' })
+    this.props.dispatch(responseReceived(this.props.operation, {}, {}))
+    this.setState({ response: null, showLastResponse: false })
+    this.changeResponseStatusColor(null)
   }
 
 // ###############################################################################################################
@@ -180,7 +197,7 @@ class TryOutWidgetTab extends Component {
     }
 
     const showResponse = !this.state.requestInProgress && (this.state.response && this.state.response.status)
-    const showLastResponse = !showResponse && this.props.operationResponse
+    const showLastResponse = this.state.showLastResponse
     const response = !showResponse && this.props.operationResponse ? this.props.operationResponse.response : this.state.response
     const url = response && response.url
 
@@ -188,6 +205,7 @@ class TryOutWidgetTab extends Component {
     const requestHeaders = request.headers
 
     const httpStatusInfo = HttpStatus.values.find(s => s.value == response.status) || { details: [{ description: '' }] }
+
     return (
       <Segment attached='bottom'>
         <TryOutWidgetTabParameters
@@ -208,7 +226,7 @@ class TryOutWidgetTab extends Component {
               onValidateParameters={() => this.onValidateParameters()}
               onExecuteRequest={requestFormat => this.onExecuteRequest(requestFormat)}
             />
-            {showResponse && <span>&nbsp;&nbsp;<a href='about:blank' onClick={e => this.hideResponse(e)}>Hide Response</a></span>}
+            {(showResponse || showLastResponse) && <span>&nbsp;&nbsp;<a href='about:blank' onClick={e => this.hideResponse(e)}>Hide Response</a></span>}
 
             {(showResponse || showLastResponse) && <span style={{ float: 'right' }}>
               <Label color={this.state.requestPanelColor}>
