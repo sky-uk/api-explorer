@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import URI from 'urijs'
 
-import { Segment, Label } from 'semantic-ui-react'
+import { Segment, Label, Loader } from 'semantic-ui-react'
 
 import { HttpStatus, HttpRequest } from 'apiexplorer-core'
 
-import { newParameters, localParameters, responseReceived } from '../../actions/loadActionCreators'
+import { newParameters, localParameters, responseReceived, sendRequest } from '../../actions/loadActionCreators'
+
 import TryOutWidgetTabParameters from './TryOutWidgetTabParameters'
 import TryOutWidgetTabExecuter from './TryOutWidgetTabExecuter'
 import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
@@ -15,8 +16,11 @@ import TryOutWidgetTabHttpHeadersPanel from './TryOutWidgetTabHttpHeadersPanel'
 
 class TryOutWidgetTab extends Component {
 
-  state = this.makeState()
-  httpRequest = new HttpRequest(this.requestCallback.bind(this))
+  constructor () {
+    super()
+    this.state = this.makeState()
+    this.httpRequest = new HttpRequest(this.preRequestCallback.bind(this), this.responseCallback.bind(this))
+  }
 
   setDefaultOperationParameters (props) {
     let newParameters = this.getDefaultOperationParameters(props)
@@ -60,27 +64,27 @@ class TryOutWidgetTab extends Component {
 
     let newState = Object.assign({}, this.makeState(), { operationParameters: newParameters })
     this.setState(newState)
-    if(props.operationResponse && props.operationResponse.response && props.operationResponse.response.status)
-    {
+
+    if (props.operationResponse && props.operationResponse.response && props.operationResponse.response.status) {
       this.setState({showLastResponse: true})
-      this.changeResponseStatusColor(props.operationResponse.response);
+      this.changeResponseStatusColor(props.operationResponse.response)
     }
   }
 
   componentWillMount () {
     this.setOperationParameters(this.props)
   }
-  
+
   componentWillReceiveProps (nextProps) {
     this.setOperationParameters(nextProps)
   }
 
   makeState () {
     return {
-      requestInProgress: false,
       operationParameters: {},
       response: {},
       request: {},
+      error: null,
       showLastResponse: false,
       requestPanelColor: 'grey'
     }
@@ -140,8 +144,6 @@ class TryOutWidgetTab extends Component {
 
     this.props.dispatch(localParameters(this.props.operation.id, this.state.operationParameters))
 
-    this.setState({requestInProgress: true, requestFormat: requestFormat})
-
     this.httpRequest.doRequest({
       url: this.getUrl(this.props.operation.spec.url),
       useProxy: this.props.config.useProxy,
@@ -153,15 +155,29 @@ class TryOutWidgetTab extends Component {
     }, this.props.config.HttpClientConfigurator, this.props.apiConfig.HttpClientConfigurator)
   }
 
-  requestCallback (request, response, error) {
-    this.props.dispatch(responseReceived(this.props.operation, response, request, error))
-    this.setState({requestInProgress: false, response: response, request: request, error: error})
-    this.changeResponseStatusColor(response);
+  preRequestCallback (request) {
+    this.props.dispatch(sendRequest(this.props.operation, request))
+
+    this.setState({
+      requestFormat: request.requestFormat
+    })
   }
 
-  changeResponseStatusColor(response) {
+  responseCallback (request, response, error) {
+    this.props.dispatch(responseReceived(this.props.operation, response, request, error))
+
+    this.setState({
+      response: response,
+      request: request,
+      error: error
+    })
+
+    this.changeResponseStatusColor(response)
+  }
+
+  changeResponseStatusColor (response) {
     if (!response) {
-      response = { status: '' };
+      response = { status: '' }
     }
 
     const statusCategories = {
@@ -196,7 +212,7 @@ class TryOutWidgetTab extends Component {
       overflow: 'hidden'
     }
 
-    const requestInProgress = this.state.requestInProgress;
+    const requestInProgress = this.props.operationResponse && this.props.operationResponse.request && this.props.operationResponse.request.inProgress
     const showResponse = !requestInProgress && (this.state.response && this.state.response.status)
     const showError = !requestInProgress && this.state.error
     const showLastResponse = this.state.showLastResponse
@@ -206,7 +222,7 @@ class TryOutWidgetTab extends Component {
     const request = this.state.request
     const requestHeaders = request.headers
 
-    const httpStatusInfo = HttpStatus.values.find(s => s.value == response.status) || { details: [{ description: '' }] }
+    const httpStatusInfo = showResponse && HttpStatus.values.find(s => s.value === response.status) || { details: [{ description: '' }] }
 
     return (
       <Segment attached='bottom'>
@@ -224,7 +240,7 @@ class TryOutWidgetTab extends Component {
             <TryOutWidgetTabExecuter
               requestFormat={this.state.requestFormat}
               requestFormats={this.props.operation.spec.consumes}
-              requestInProgress={this.state.requestInProgress}
+              requestInProgress={requestInProgress}
               onValidateParameters={() => this.onValidateParameters()}
               onExecuteRequest={requestFormat => this.onExecuteRequest(requestFormat)}
             />
@@ -236,6 +252,10 @@ class TryOutWidgetTab extends Component {
               </Label>
             </span>}
           </Segment>
+
+          {requestInProgress && <Segment style={{ minHeight: '100px' }}>
+            <Loader active content='Loading' />
+          </Segment>}
 
           {showError && <Segment attached className='no-border no-padding'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>

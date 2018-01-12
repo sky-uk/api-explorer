@@ -6,8 +6,9 @@ function getMediaType (headerValue) {
 }
 
 class HttpRequest {
-  constructor (callback, useProxy) {
-    this.callback = callback
+  constructor (preRequestCallback, postResponseCallback, useProxy) {
+    this.preRequestCallback = preRequestCallback
+    this.postResponseCallback = postResponseCallback
     this.useProxy = useProxy
   }
 
@@ -113,7 +114,8 @@ class HttpRequest {
   }
 
   doRequest (params, GlobalHttpClientConfigurator, ApiHttpClientConfigurator) {
-    const callback = this.callback
+    const postResponseCallback = this.postResponseCallback
+    const preRequestCallback = this.preRequestCallback
 
     const requestInformation = this.getRequestInformation(params)
 
@@ -141,6 +143,8 @@ class HttpRequest {
 
     var req = new Request(finalUrl, requestConfig)
 
+    preRequestCallback(Object.assign({ inProgress: true }, requestInformation))
+
     fetch(req)
     .then(response => {
       let resp = {
@@ -155,12 +159,12 @@ class HttpRequest {
       return response.text()
         .then(responseText => {
           resp.data = responseText
-          callback(Object.assign({}, requestInformation), resp)
+          postResponseCallback(Object.assign({}, requestInformation), resp)
         })
     })
     .catch(error => {
       console.warn('Fetch returned error, request failed', error)
-      callback(Object.assign({}, requestInformation), {
+      postResponseCallback(Object.assign({ inProgress: false }, requestInformation), {
         url: requestInformation.url,
         status: '',
         statusText: 'Request Failed'

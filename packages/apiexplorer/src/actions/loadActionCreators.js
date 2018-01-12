@@ -66,6 +66,10 @@ export function localParameters (operationName, parameters) {
   return { type: types.LOCAL_PARAMETERS, operationName, parameters }
 }
 
+export function sendRequest (operation, request) {
+  return { type: types.SEND_REQUEST, operation, request }
+}
+
 export function responseReceived (operation, response, request, error) {
   return { type: types.RESPONSE_RECEIVED, operation, response, request, error }
 }

@@ -11,6 +11,10 @@ export default function apisReducer (state = INITIAL_STATE, action) {
         request: action.request,
         error: action.error
       })
+    case types.SEND_REQUEST:
+      return state.set(action.operation.id, {
+        request: action.request
+      })
   }
   return state
 }

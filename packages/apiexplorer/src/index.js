@@ -30,7 +30,6 @@ class APIExplorer {
       'swagger2': this.SupportedLoaders.Swagger2Loader
     }
 
-
     this.Loaders = {
       [this.SupportedLoaders.Swagger1Loader]: Loaders.Swagger1Loader,
       [this.SupportedLoaders.Swagger2Loader]: Loaders.Swagger2Loader
