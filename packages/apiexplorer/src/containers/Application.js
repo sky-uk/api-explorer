@@ -1,18 +1,19 @@
-// import './Application.css'
-import React, { Component, PropTypes } from 'react'
+/* global APIExplorer */
+
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Dock from 'react-dock'
 import marked from 'marked'
 
-import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu, AppLogo } from '../components'
+import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu } from '../components'
 import { selectedOperation } from '../actions/loadActionCreators'
 
 import { Switch, Route } from 'react-router'
 import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'
-import { Menu, Icon, Input, Dropdown, Button } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 
 class Application extends Component {
   constructor () {
@@ -39,7 +40,7 @@ class Application extends Component {
     this.setState({ dockSize: size, dockIsVisible: true })
   }
 
-  handleCloseDock = () => {
+  handleCloseDock () {
     this.setState({ dockSize: 0, dockIsVisible: false })
   }
 
@@ -47,9 +48,9 @@ class Application extends Component {
     return (
       <div id='content'>
         <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
-          <Icon name='delete' size='large' color='grey' style={{ float: 'right' }} onClick={this.handleCloseDock} />
-          <div style={{ textAlign: 'center', color: 'white', marginTop: 10 }}>
-            <h1>API Explorer <AppLogo width={28} /> </h1>
+          <div style={{ textAlign: 'center', color: 'white', backgroundColor: '#0093de', padding: '10px', boxShadow: 'inset 0 -10px 10px -10px rgba(0,0,0,0.7)' }}>
+            <Icon name='delete' size='large' color='white' style={{ position: 'absolute', top: '15px', right: '25px', color: 'rgba(255, 255, 255, 0.5)' }} onClick={this.handleCloseDock} />
+            <h1 style={{ margin: 0 }}>API Explorer</h1>
           </div>
           <LateralMenu
             operations={this.props.operations.toJS()}
@@ -74,15 +75,6 @@ class Application extends Component {
         <Menu size='mini' inverted style={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 99999999 }}>
           <Menu.Item header>Copyright &copy; API Explorer 2015</Menu.Item>
           <Menu.Menu position='right'>
-            {/*<Menu.Item name='home'/>
-            <Menu.Item name='messages' />
-            <Dropdown item text='Language' floating className='upward'>
-              <Dropdown.Menu>
-                <Dropdown.Item>English</Dropdown.Item>
-                <Dropdown.Item>Russian</Dropdown.Item>
-                <Dropdown.Item>Spanish</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>*/}
             <Menu.Item>
               <Link to={APIExplorer.LinkGenerator.toSettings()}><Icon name='cogs' /> Settings</Link>
             </Menu.Item>
@@ -92,7 +84,7 @@ class Application extends Component {
     )
   }
 
-  onHomeClick = () => {
+  onHomeClick () {
     this.props.dispatch(selectedOperation(''))
   }
 
