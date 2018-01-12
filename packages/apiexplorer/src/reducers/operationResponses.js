@@ -8,7 +8,8 @@ export default function apisReducer (state = INITIAL_STATE, action) {
     case types.RESPONSE_RECEIVED:
       return state.set(action.operation.id, {
         response: action.response,
-        request: action.request
+        request: action.request,
+        error: action.error
       })
   }
   return state

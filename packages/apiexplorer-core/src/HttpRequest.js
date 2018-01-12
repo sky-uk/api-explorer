@@ -1,4 +1,5 @@
 /* global Request */
+/* global fetch */
 
 function getMediaType (headerValue) {
   return headerValue ? headerValue.split(';')[0] : ''
@@ -128,7 +129,7 @@ class HttpRequest {
 
     params.headers.forEach(h => { headers[h.name] = h.value })
     requestInformation.headers = Object.assign({}, headers, requestInformation.headers)
-    
+
     let requestConfig = {
       method: requestInformation.httpMethod,
       headers: requestInformation.headers,
@@ -151,11 +152,19 @@ class HttpRequest {
         contentType: getMediaType(response.headers.get('Content-Type'))
       }
 
-      return response.text().then(responseText => { resp.data = responseText; callback(Object.assign({}, requestInformation), resp) })
-      
+      return response.text()
+        .then(responseText => {
+          resp.data = responseText
+          callback(Object.assign({}, requestInformation), resp)
+        })
     })
     .catch(error => {
-      console.error('Received error', error)
+      console.warn('Fetch returned error, request failed', error)
+      callback(Object.assign({}, requestInformation), {
+        url: requestInformation.url,
+        status: '',
+        statusText: 'Request Failed'
+      }, error)
     })
   }
 }

@@ -141,6 +141,7 @@ class TryOutWidgetTab extends Component {
     this.props.dispatch(localParameters(this.props.operation.id, this.state.operationParameters))
 
     this.setState({requestInProgress: true, requestFormat: requestFormat})
+
     this.httpRequest.doRequest({
       url: this.getUrl(this.props.operation.spec.url),
       useProxy: this.props.config.useProxy,
@@ -152,15 +153,14 @@ class TryOutWidgetTab extends Component {
     }, this.props.config.HttpClientConfigurator, this.props.apiConfig.HttpClientConfigurator)
   }
 
-  requestCallback (request, response) {
-    this.props.dispatch(responseReceived(this.props.operation, response, request))
-    this.setState({requestInProgress: false, response: response, request: request})
+  requestCallback (request, response, error) {
+    this.props.dispatch(responseReceived(this.props.operation, response, request, error))
+    this.setState({requestInProgress: false, response: response, request: request, error: error})
     this.changeResponseStatusColor(response);
   }
 
   changeResponseStatusColor(response) {
-    if(!response)
-    {
+    if (!response) {
       response = { status: '' };
     }
 
@@ -178,8 +178,8 @@ class TryOutWidgetTab extends Component {
 
   hideResponse (e) {
     e.preventDefault()
-    this.props.dispatch(responseReceived(this.props.operation, {}, {}))
-    this.setState({ response: null, showLastResponse: false })
+    this.props.dispatch(responseReceived(this.props.operation, {}, {}, null))
+    this.setState({ response: null, showLastResponse: false, error: null })
     this.changeResponseStatusColor(null)
   }
 
@@ -196,7 +196,9 @@ class TryOutWidgetTab extends Component {
       overflow: 'hidden'
     }
 
-    const showResponse = !this.state.requestInProgress && (this.state.response && this.state.response.status)
+    const requestInProgress = this.state.requestInProgress;
+    const showResponse = !requestInProgress && (this.state.response && this.state.response.status)
+    const showError = !requestInProgress && this.state.error
     const showLastResponse = this.state.showLastResponse
     const response = !showResponse && this.props.operationResponse ? this.props.operationResponse.response : this.state.response
     const url = response && response.url
@@ -234,6 +236,12 @@ class TryOutWidgetTab extends Component {
               </Label>
             </span>}
           </Segment>
+
+          {showError && <Segment attached className='no-border no-padding'>
+            <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
+            <Label color='red'>Error calling API: {this.state.error.toString()}</Label>
+          </Segment>}
+
           {(showResponse || showLastResponse) && <Segment attached className='no-border no-padding'>
             <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
             <TryOutWidgetTabResponsePanel response={response} operations={this.props.operations} apis={this.props.apis} />
