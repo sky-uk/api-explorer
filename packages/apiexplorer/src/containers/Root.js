@@ -1,9 +1,10 @@
+/* global APIExplorer */
+
 import React, { Component } from 'react'
-import { object } from 'prop-types'
-import { Provider, connect } from 'react-redux'
+import { Provider } from 'react-redux'
 
 import createHistory from 'history/createBrowserHistory'
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { ConnectedRouter } from 'react-router-redux'
 
 import ReduxToastr from 'react-redux-toastr'
 import { Switch, Route } from 'react-router'
@@ -18,14 +19,15 @@ const history = createHistory()
 export default class Root extends Component {
   render () {
     const { store } = this.props
-    
+
     return (
       <Provider store={store}>
         <div>
           <Helmet>
             <title>API Explorer</title>
             <link rel='shortcut icon' type='image/png' href='/images/favicon.png' />
-            <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css'></link>
+            <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css' />
+            <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Code+Pro' />
           </Helmet>
           <ConnectedRouter history={history}>
             <Switch>
