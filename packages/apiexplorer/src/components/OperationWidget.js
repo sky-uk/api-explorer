@@ -1,9 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+/* global APIExplorer */
+
+import React, { Component } from 'react'
 import cx from 'classnames'
 import { Route, Switch } from 'react-router'
 import { Link } from 'react-router-dom'
 import { selectedOperation } from '../actions/loadActionCreators'
-import { Card, Label, Menu, Segment, Icon } from 'semantic-ui-react'
+import { Card, Label, Menu, Icon } from 'semantic-ui-react'
 import Styled from 'styled-components'
 import httpMethods from './HttpMethods'
 
@@ -97,6 +99,10 @@ const StyledWidget = Styled.div`
     float: right;
   }
 
+  abbr[title] {
+    text-decoration: none
+  }
+
   ${httpMethodStylesCard('head',    '#5bc0de', '#9bd8eb')}
   ${httpMethodStylesCard('get',     '#428bca', '#7eb0db', '#fff')}
   ${httpMethodStylesCard('delete',  '#d9534f', '#e7908e')}
@@ -121,7 +127,5 @@ function httpMethodStylesCard (method, color, lightColor, textColor = '#fff') {
   }
 
   .card.api-operation.http-${method}                        { box-shadow: 0 1px 3px 0 ${color}, 0 0 0 1px ${color}; }
-  .card.api-operation.http-${method} .content.api-header    {       background-color: ${color}; color: ${textColor}; }
-  
-}  `
+  .card.api-operation.http-${method} .content.api-header    {       background-color: ${color}; color: ${textColor}; }`
 }

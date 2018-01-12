@@ -258,7 +258,6 @@ class TryOutWidgetTab extends Component {
           </Segment>}
 
           {showError && <Segment attached className='no-border no-padding'>
-            <a href={url} target='_blank' title={url} style={textCropStyles}>{url}</a>
             <Label color='red'>Error calling API: {this.state.error.toString()}</Label>
           </Segment>}
 
