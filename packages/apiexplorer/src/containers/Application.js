@@ -14,6 +14,7 @@ import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'
 import { Menu, Icon } from 'semantic-ui-react'
+import packageJson from '../../package.json'
 
 class Application extends Component {
   constructor () {
@@ -45,6 +46,8 @@ class Application extends Component {
   }
 
   renderApplication () {
+    let packageVersion = packageJson.version
+
     return (
       <div id='content'>
         <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
@@ -74,6 +77,7 @@ class Application extends Component {
         </div>
         <Menu size='mini' inverted style={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 99999999 }}>
           <Menu.Item header>Copyright &copy; API Explorer 2015</Menu.Item>
+          <Menu.Item header>v{packageVersion}</Menu.Item>
           <Menu.Menu position='right'>
             <Menu.Item>
               <Link to={APIExplorer.LinkGenerator.toSettings()}><Icon name='cogs' /> Settings</Link>
