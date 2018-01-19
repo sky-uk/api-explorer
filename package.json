@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "lerna": "^2.5.1",
-    "snazzy": "^7.0.0"
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.3"
   }
 }
