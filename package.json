@@ -3,9 +3,12 @@
   "private": true,
   "scripts": {
     "build:watch": "lerna run -- build:watch",
-    "demo": "cd packages/apiexplorer && npm start"
+    "demo": "cd packages/apiexplorer && npm start",
+    "lint": "standard --verbose | snazzy",
+    "test": "npm run lint"
   },
   "devDependencies": {
-    "lerna": "^2.5.1"
+    "lerna": "^2.5.1",
+    "snazzy": "^7.0.0"
   }
 }
