@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {Map} from 'immutable'
-import { Segment, Grid, Table, T } from 'semantic-ui-react'
+import { Grid, Table } from 'semantic-ui-react'
 
 class TryOutWidgetTabHttpHeadersPanel extends Component {
   constructor () {
@@ -14,7 +14,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
       return (
         <Table.Body>
           {headerMap.map((value, key) => (<Table.Row key={key}>
-            <Table.Cell>{key.toUpperCase()}</Table.Cell>
+            <Table.Cell>{key}</Table.Cell>
             <Table.Cell>{value}</Table.Cell>
           </Table.Row>)
         ).toList()}
@@ -25,7 +25,6 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
   }
 
   render () {
-    const tableClass = 'ui table compact'
     const responseHeaders = this.props.responseHeaders
     const requestHeaders = this.props.requestHeaders
 

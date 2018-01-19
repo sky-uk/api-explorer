@@ -52,12 +52,12 @@ class OperationWidget extends Component {
           </Card.Content>
           <Card.Content className='api-tabs'>
             <Menu attached='top' tabular>
-            {APIExplorer.widgetTabs.map((widgetTab, i) => {
-              const url = APIExplorer.LinkGenerator.toTabOperation(this.props.operation, widgetTab)
-              const routePath = `${this.props.match.path}/${widgetTab.slug}`
-              return <Route key={widgetTab.slug} path={routePath} children={({ match }) => (
-                <Menu.Item key={i} active={match !== null} name='' as={Link} to={url} className='operation-container' >{widgetTab.name}</Menu.Item>
-                )} />
+              {APIExplorer.widgetTabs.map((widgetTab, i) => {
+                const url = APIExplorer.LinkGenerator.toTabOperation(this.props.operation, widgetTab)
+                const routePath = `${this.props.match.path}/${widgetTab.slug}`
+                return <Route key={widgetTab.slug} path={routePath} children={({ match }) => (
+                  <Menu.Item key={i} active={match !== null} name='' as={Link} to={url} className='operation-container' >{widgetTab.name}</Menu.Item>
+                  )} />
               })}
             </Menu>
             <Switch>

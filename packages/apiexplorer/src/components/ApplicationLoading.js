@@ -1,10 +1,12 @@
-import React, { PropTypes, Component } from 'react'
-import { AppLogo } from './../components'
+import React, { Component } from 'react'
+import { AppLogo } from './../components'
+import { Segment } from 'semantic-ui-react'
 
 class ApplicationLoading extends Component {
 
   render () {
     const { currentStep, progressMessages } = this.props
+
     const topLoadingStype = {
       backgroundColor: '#222',
       textAlign: 'center',
@@ -12,6 +14,7 @@ class ApplicationLoading extends Component {
       paddingTop: '10%',
       height: 2000
     }
+
     return (
       <div>
         <div style={topLoadingStype} >
@@ -24,9 +27,9 @@ class ApplicationLoading extends Component {
           <p>
             { currentStep }
           </p>
-          <pre style={{ textAlign: 'left', fontSize: 10, marginLeft: '20%', marginRight: '20%' }}>
-            { progressMessages.reverse().map(p => <div key={p}>{(new Date()).toLocaleTimeString()} {p}</div>) }
-          </pre>
+          <Segment.Group style={{ textAlign: 'left', marginLeft: '20%', marginRight: '20%', color: '#333', fontFamily: '"Source Code Pro", monospace' }}>
+            { progressMessages.reverse().map(p => <Segment key={p} style={{ fontSize: '0.8rem' }}>{(new Date()).toLocaleTimeString()} {p}</Segment>) }
+          </Segment.Group>
         </div>
         <div style={{ position: 'fixed', bottom: 10, right: 10 }} >
           <a href='#' id='btnResetExplorer'>reset explorer</a>
@@ -35,10 +38,5 @@ class ApplicationLoading extends Component {
     )
   }
 }
-
-// ApplicationLoading.propTypes = {
-//   currentStep: PropTypes.string.isRequired,
-//   progressMessages: PropTypes.array.isRequired
-// }
 
 export default ApplicationLoading
