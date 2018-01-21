@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import Enumerable from 'linq'
@@ -9,14 +9,17 @@ import { Menu, Icon, Label } from 'semantic-ui-react'
 import Styled from 'styled-components'
 
 class LateralMenu extends Component {
-  state = {
-    filter: this.getFilterState('')
+  constructor (props) {
+    super(props)
+    this.state = {
+      filter: this.getFilterState('')
+    }
   }
 
   // ----------------------------------------------------------------------------------------
   // Filtering
   // ----------------------------------------------------------------------------------------
-  getFilterState (filterText) {
+  getFilterState = (filterText) => {
     // Convert filterText into a regex
     // EX: "GET u ent    vi" -> "GETuentvi" -> /G.*E.*T.*u.*e.*n.*t.*v.*i/i
     return {
@@ -29,22 +32,22 @@ class LateralMenu extends Component {
     this.setState({ filter: this.getFilterState(text) })
   }
 
-  matchFilterRegex (text) {
+  matchFilterRegex = (text) => {
     return this.state.filter.regex.test(text)
   }
 
-  isApiVisible (api, operations) {
+  isApiVisible = (api, operations) => {
     if (this.state.filter.text === '') return true
     return operations.some(o => this.isOperationVisible(o))
   }
 
-  isTagVisible (tag, operations) {
+  isTagVisible = (tag, operations) => {
     if (this.state.filter.text === '') return true
     if (this.matchFilterRegex(tag)) return true
     return operations.some(o => this.isOperationVisible(o))
   }
 
-  isOperationVisible (operation) {
+  isOperationVisible = (operation) => {
     if (this.state.filter.text === '') return true
     if (operation.spec.tags.some(tag => this.matchFilterRegex(tag))) return true
     return this.matchFilterRegex(operation.spec.httpMethod + operation.spec.url)
@@ -52,17 +55,17 @@ class LateralMenu extends Component {
 
   onHomeClick = (evt) => {
     this.props.dispatch(selectedOperation(''))
-    
   }
 
   // ----------------------------------------------------------------------------------------
   // Render
   // ----------------------------------------------------------------------------------------
-  render () {
+  render = () => {
     const operationsByApi = this.props.apis.get('byOrder')
-                                .map(name => this.props.operations.filter(o => o.apiname === name))
-                                .toArray()
-    return  (
+      .map(name => this.props.operations.filter(o => o.apiname === name))
+      .toArray()
+
+    return (
       <StyledMenu>
         <Menu inverted vertical style={{ width: '100%', backgroundColor: 'transparent' }}>
           <Menu.Item>
@@ -75,16 +78,11 @@ class LateralMenu extends Component {
         </Menu>
       </StyledMenu>
     )
-    
   }
 
   renderAPI = (apiOperations) => {
     if (apiOperations.length === 0 || !this.isApiVisible(apiOperations[0].apiname, apiOperations)) return
     const tags = Enumerable.from(apiOperations).selectMany(o => o.spec.tags).distinct().toArray()
-
-    const api = this.props.apis.get('byName').get(apiOperations[0].apiname)
-    let scheme = api.schemes ? api.schemes[0] : this.props.config.defaultScheme
-    let uri = `${scheme}://${api.host}${api.basePath}/`
 
     return (
       <div key={apiOperations[0].apiname} className='api-operations'>
@@ -108,7 +106,7 @@ class LateralMenu extends Component {
       <Menu.Item key={visibleOperations[0].apiname + tag} className='api-tag-operations'>
         <Menu.Header>
           {apiTag.name}&nbsp;
-          {apiTag.description && <small style={{ fontSize: '8px', paddingRight: 20 }}>{apiTag.description}</small>}
+          {apiTag.description && <small style={{ fontSize: '8px' }}>{apiTag.description}</small>}
         </Menu.Header>
         {visibleOperations.map(this.renderOperation)}
       </Menu.Item>
@@ -131,20 +129,16 @@ class LateralMenu extends Component {
         as={Link}
         to={APIExplorer.LinkGenerator.toOperation(operation)}>
         <span>{operation.spec.url}</span>
-        {operation.spec.security && <Icon name='lock'
-          style={{ width: '1em', display: 'inline-block', opacity: '0.5', margin: '0px 5px', color: 'yellow' }} />}        
+        {operation.spec.security &&
+          <Icon
+            name='lock'
+            style={{ width: '1em', display: 'inline-block', opacity: '0.5', margin: '0px 5px', color: 'yellow' }} />
+        }
         <Label>{operation.spec.httpMethod.toUpperCase()}</Label>
       </Menu.Item>
     )
   }
-
 }
-
-// LateralMenu.propTypes = {
-//   operations: PropTypes.array.isRequired,
-//   apis: PropTypes.object.isRequired,
-//   selectedOperationId: PropTypes.string
-// }
 
 export default LateralMenu
 
@@ -244,8 +238,6 @@ const StyledMenu = Styled.div`
   div.api-operations .api-operation.http-trace:hover .ui.label    { background-color: #aaaaaa; color: black; border-color: black; }
   div.api-operations .api-operation.http-trace .ui.label                     { color: #aaaaaa; }
                                                               /* border-color: #aaaaaa; border-style: solid; border-width: 1px; } */
-
-
 
  /* LEGACY STYLES (OVERRIDES) /
   div.api-operations .api-operation i.lock.icon {

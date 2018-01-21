@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import expect from 'expect'
 import React from 'react'
 import {render, unmountComponentAtNode} from 'react-dom'
@@ -16,7 +18,7 @@ describe('SampleComponent', () => {
   })
 
   it('displays a welcome message', () => {
-    render(<SampleComponent/>, node, () => {
+    render(<SampleComponent />, node, () => {
       expect(node.innerHTML).toContain('Welcome to React components')
     })
   })

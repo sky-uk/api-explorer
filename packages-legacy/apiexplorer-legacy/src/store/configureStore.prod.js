@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
-  reduxReactRouter({ createHistory }),
+  reduxReactRouter({ createHistory })
 )(createStore)
 
 export default function configureStore (initialState) {

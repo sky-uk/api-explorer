@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 
 class ExplorerHeader extends Component {
-
   render () {
     const { apiName, productVersion, apiVersion } = this.props.api
     return (

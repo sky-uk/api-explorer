@@ -3,7 +3,6 @@ import { AppLogo } from './../components'
 import { Segment } from 'semantic-ui-react'
 
 class ApplicationLoading extends Component {
-
   render () {
     const { currentStep, progressMessages } = this.props
 

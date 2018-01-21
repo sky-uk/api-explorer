@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import { fromJS } from 'immutable'
 import { expect } from 'chai'
 import loaderReducer from '../../src/reducers'

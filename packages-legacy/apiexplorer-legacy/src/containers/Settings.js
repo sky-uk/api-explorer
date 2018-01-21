@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
 class Settings extends Component {
-
   render () {
     return (
       <div className='settings-panes'>
@@ -22,7 +21,6 @@ class Settings extends Component {
       </div>
     )
   }
-
 }
 
 Settings.propTypes = {

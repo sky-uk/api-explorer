@@ -6,14 +6,14 @@ import thunk from 'redux-thunk'
 
 const composed = window.devToolsExtension
   ? compose(
-      applyMiddleware(thunk),
-      reduxReactRouter({ createHistory }),
-      window.devToolsExtension()
-    )
+    applyMiddleware(thunk),
+    reduxReactRouter({ createHistory }),
+    window.devToolsExtension()
+  )
   : compose(
-      applyMiddleware(thunk),
-      reduxReactRouter({ createHistory })
-    )
+    applyMiddleware(thunk),
+    reduxReactRouter({ createHistory })
+  )
 
 export default function configureStore (initialState) {
   const finalCreateStore = composed(createStore)

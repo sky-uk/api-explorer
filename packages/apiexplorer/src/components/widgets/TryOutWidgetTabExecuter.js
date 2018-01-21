@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 const requestDefaultFormats = [
   'application/json',
@@ -75,13 +75,5 @@ class TryOutWidgetTabExecuter extends Component {
     )
   }
 }
-
-// TryOutWidgetTabExecuter.propTypes = {
-//   requestFormat: PropTypes.string,
-//   requestFormats: PropTypes.array,
-//   requestInProgress: PropTypes.bool.isRequired,
-//   onExecuteRequest: PropTypes.func.isRequired,
-//   onValidateParameters: PropTypes.func.isRequired
-// }
 
 export default TryOutWidgetTabExecuter

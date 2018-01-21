@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 
 class ApplicationLoading extends Component {
-
   render () {
     const { currentStep, progressMessages } = this.props
     const topLoadingStype = {

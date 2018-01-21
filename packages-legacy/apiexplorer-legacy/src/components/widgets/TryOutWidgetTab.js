@@ -49,9 +49,9 @@ class TryOutWidgetTab extends Component {
 
     // Override newParameters with `param-*` query string overrides
     Object.keys(props.location.query)
-          .filter(key => key.startsWith('param-'))
-          .map(key => key.replace(/^param-/, ''))
-          .forEach(key => { newParameters[key] = props.location.query[`param-${key}`] })
+      .filter(key => key.startsWith('param-'))
+      .map(key => key.replace(/^param-/, ''))
+      .forEach(key => { newParameters[key] = props.location.query[`param-${key}`] })
 
     this.setState({operationParameters: newParameters})
   }
@@ -86,9 +86,9 @@ class TryOutWidgetTab extends Component {
     return uri.toString()
   }
 
-// ###############################################################################################################
-// Events
-// ###############################################################################################################
+  // ###############################################################################################################
+  // Events
+  // ###############################################################################################################
 
   onHandleParametersChange (name, value) {
     let newParameters = this.state.operationParameters
@@ -161,9 +161,9 @@ class TryOutWidgetTab extends Component {
     this.setState({response: null, requestPanelClassName: 'panel panel-http-response panel-default'})
   }
 
-// ###############################################################################################################
-// Renderers
-// ###############################################################################################################
+  // ###############################################################################################################
+  // Renderers
+  // ###############################################################################################################
 
   render () {
     const textCropStyles = {

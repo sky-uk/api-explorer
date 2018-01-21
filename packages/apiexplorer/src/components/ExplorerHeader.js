@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import Styled from 'styled-components'
 import { Label } from 'semantic-ui-react'
 
@@ -17,14 +17,6 @@ class ExplorerHeader extends Component {
     )
   }
 }
-
-// ExplorerHeader.propTypes = {
-//   api: PropTypes.shape({
-//     apiName: PropTypes.string.isRequired,
-//     apiVersion: PropTypes.string.isRequired,
-//     productVersion: PropTypes.string
-//   }).isRequired
-// }
 
 export default ExplorerHeader
 

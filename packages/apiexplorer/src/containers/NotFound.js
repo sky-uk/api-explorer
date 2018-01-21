@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { AppLogo } from './../components'
+import { AppLogo } from './../components'
 
 class NotFound extends Component {
   render () {

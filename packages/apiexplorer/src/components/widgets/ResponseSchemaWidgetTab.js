@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Segment, Card, Table } from 'semantic-ui-react'
-// import Highlight from 'react-highlight'
-// import 'highlight.js/styles/tomorrow.css' see issue #26
 
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {

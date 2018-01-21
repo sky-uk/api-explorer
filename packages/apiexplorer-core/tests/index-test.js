@@ -1,5 +1,6 @@
-import expect from 'expect'
+/* eslint-env mocha */
 
+import expect from 'expect'
 import message from 'src/index'
 
 describe('Module template', () => {

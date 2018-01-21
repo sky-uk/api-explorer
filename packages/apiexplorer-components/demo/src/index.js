@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React, { Component } from 'react'
+import { render } from 'react-dom'
 
-import { SampleComponent } from '../../src'
+import { SampleComponent } from '../../src'
 
 class Demo extends Component {
-  render() {
+  render () {
     return <div>
       <h1>react-component-a Demo</h1>
       <SampleComponent />
@@ -12,4 +12,4 @@ class Demo extends Component {
   }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'))

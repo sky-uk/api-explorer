@@ -1,7 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 
 class APICounter extends Component {
-
   render () {
     const numberOfAPIs = this.props.numberOfAPIs
     return (
@@ -9,9 +8,5 @@ class APICounter extends Component {
     )
   }
 }
-
-// APICounter.propTypes = {
-//   numberOfAPIs: PropTypes.number.isRequired
-// }
 
 export default APICounter

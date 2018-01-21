@@ -126,7 +126,6 @@ class Application extends Component {
   getHtmlDescription (description) {
     return { __html: marked(description || '') }
   }
-
 }
 
 Application.propTypes = {

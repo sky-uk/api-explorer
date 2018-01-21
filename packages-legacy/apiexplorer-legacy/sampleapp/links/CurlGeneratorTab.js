@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 export default class CurlGeneratorTab extends Component {
-
   buildCurlCommand (request) {
     const { httpMethod, headers, url, body } = request
 

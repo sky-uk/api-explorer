@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import React from 'react/addons'
 import SpecWidgetTab from '../../../src/components/widgets/SpecWidgetTab'
 import {expect} from 'chai'

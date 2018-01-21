@@ -73,6 +73,4 @@ export default class APIExplorerAPIConfigurator {
     this.welcome.listOperations = active === undefined || active === true
     return this
   }
-
-
 }

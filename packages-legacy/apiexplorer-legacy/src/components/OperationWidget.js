@@ -2,14 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router'
 import { selectedOperation } from 'actions/loadActionCreators'
-import Styled from 'styled-components'
-
-function HTTPMethod ({ httpMethod = '' }) {
-  return <strong>{httpMethod.toUpperCase()}</strong>
-}
 
 class OperationWidget extends Component {
-
   componentDidMount () {
     this.props.dispatch(selectedOperation(this.props.operation.id))
   }
@@ -37,7 +31,7 @@ class OperationWidget extends Component {
             {(this.props.operation.spec.tags || []).map((tag, i) => <span key={i}><span key={tag} className='badge'>{tag}</span>&nbsp;</span>)}
           </div>
           <strong>{this.props.operation.spec.httpMethod.toUpperCase()}</strong>
-          {/*<HTTPMethod method={this.props.operation.spec.httpMethod} />*/}
+          { /* <HTTPMethod method={this.props.operation.spec.httpMethod} /> */ }
           &nbsp;
           <samp >{this.props.operation.spec.url}</samp>
           &nbsp;
@@ -71,7 +65,3 @@ OperationWidget.propTypes = {
 }
 
 export default OperationWidget
-
-const HTTPMethodx = Styled(HTTPMethod)`
-  color: red;
-`

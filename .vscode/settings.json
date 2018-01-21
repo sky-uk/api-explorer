@@ -30,5 +30,6 @@
     "search.useIgnoreFiles": true,
 
     "explorer.openEditors.visible": 3,
-    "explorer.openEditors.dynamicHeight": false
+    "explorer.openEditors.dynamicHeight": false,
+    "standard.usePackageJson": true
 }

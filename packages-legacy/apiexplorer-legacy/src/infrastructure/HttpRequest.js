@@ -140,21 +140,21 @@ class HttpRequest {
     var req = new Request(finalUrl, requestConfig)
 
     fetch(req)
-    .then(response => {
-      let resp = {
-        url: requestInformation.url,
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers,
-        requestFormat: requestInformation.requestFormat,
-        contentType: getMediaType(response.headers.get('Content-Type'))
-      }
+      .then(response => {
+        let resp = {
+          url: requestInformation.url,
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+          requestFormat: requestInformation.requestFormat,
+          contentType: getMediaType(response.headers.get('Content-Type'))
+        }
 
-      return response.text().then(responseText => { resp.data = responseText; callback(req, resp) })
-    })
-    .catch(error => {
-      console.error('Received error', error)
-    })
+        return response.text().then(responseText => { resp.data = responseText; callback(req, resp) })
+      })
+      .catch(error => {
+        console.error('Received error', error)
+      })
   }
 }
 

@@ -13,11 +13,12 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
     if (headerMap && headerMap.size > 0) {
       return (
         <Table.Body>
-          {headerMap.map((value, key) => (<Table.Row key={key}>
-            <Table.Cell>{key}</Table.Cell>
-            <Table.Cell>{value}</Table.Cell>
-          </Table.Row>)
-        ).toList()}
+          {headerMap.map((value, key) => (
+            <Table.Row key={key}>
+              <Table.Cell>{key}</Table.Cell>
+              <Table.Cell>{value}</Table.Cell>
+            </Table.Row>)
+          ).toList()}
         </Table.Body>
       )
     }
@@ -50,10 +51,5 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
     )
   }
 }
-
-// TryOutWidgetTabHttpHeadersPanel.propTypes = {
-//   requestHeaders: PropTypes.object,
-//   responseHeaders: PropTypes.object
-// }
 
 export default TryOutWidgetTabHttpHeadersPanel

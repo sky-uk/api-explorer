@@ -1,12 +1,12 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import Enumerable from 'linq'
 import { OperationsFilter } from '.'
 
 class LateralMenu extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = { filter: this.getFilterState('') }
   }
 
@@ -52,8 +52,8 @@ class LateralMenu extends Component {
   // ----------------------------------------------------------------------------------------
   render () {
     const operationsByApi = this.props.apis.get('byOrder')
-                                .map(name => this.props.operations.filter(o => o.apiname === name))
-                                .toArray()
+      .map(name => this.props.operations.filter(o => o.apiname === name))
+      .toArray()
     return (
       <div id='lateral-menu'>
         <ul className='nav'>
@@ -127,13 +127,6 @@ class LateralMenu extends Component {
       </li>
     )
   }
-
 }
-
-// LateralMenu.propTypes = {
-//   operations: PropTypes.array.isRequired,
-//   apis: PropTypes.object.isRequired,
-//   selectedOperationId: PropTypes.string
-// }
 
 export default LateralMenu

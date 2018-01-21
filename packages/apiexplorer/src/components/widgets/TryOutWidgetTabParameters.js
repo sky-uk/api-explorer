@@ -1,18 +1,17 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import moment from 'moment'
-import { Grid, Segment, Table, Label, Input, TextArea, Select, Dropdown, Popup } from 'semantic-ui-react'
+import { Segment, Table, Label, Input, TextArea, Dropdown, Popup } from 'semantic-ui-react'
 
 class TryOutWidgetTabParameters extends Component {
-
   componentWillReceiveProps () {
     this.setState({})
   }
 
-// ###############################################################################################################
-// Editors renders
-// ###############################################################################################################
+  // ###############################################################################################################
+  // Editors renders
+  // ###############################################################################################################
 
-  editorForInput (param, value) {
+  editorForInput = (param, value) => {
     const handleParametersOnChange = this.props.onHandleParametersChange
     if (param.in === 'body') {
       return (
@@ -28,11 +27,11 @@ class TryOutWidgetTabParameters extends Component {
     )
   }
 
-  editorForFile (param, value) {
+  editorForFile = (param, value) => {
     return <Input type='file' />
   }
 
-  editorForSelect (param, value) {
+  editorForSelect = (param, value) => {
     const handleParametersOnChange = this.props.onHandleParametersChange
     const options = param.enum.map(option => ({ key: option, text: option, value: option }))
     return (
@@ -41,7 +40,7 @@ class TryOutWidgetTabParameters extends Component {
     )
   }
 
-  editorForMultipleSelect (param, value) {
+  editorForMultipleSelect = (param, value) => {
     const handleParametersOnChange = this.props.onHandleParametersChange
     if (!Array.isArray(value)) value = [ value || param.items.default ]
     const options = param.items.enum.map(option => ({ key: option, text: option, value: option }))
@@ -51,19 +50,23 @@ class TryOutWidgetTabParameters extends Component {
     )
   }
 
-// ###############################################################################################################
-// Renders
-// ###############################################################################################################
-  renderLastParametersList () {
+  // ###############################################################################################################
+  // Renders
+  // ###############################################################################################################
+
+  renderLastParametersList = () => {
     const defaultValue = JSON.stringify({ values: 'default' })
+
     const options = [{
-      text: 'Default Parameters', value: defaultValue,
-    }].concat(this.props.operationLastParameters.toJS().map((parameter, idx) => ({
-      text: `Parameters ${moment(parameter.moment).fromNow()}`,
-      value: JSON.stringify(parameter.values),
-      title: JSON.stringify(parameter.values, null, 2),
-      key: idx
-    })))
+      text: 'Default Parameters',
+      value: defaultValue
+    }]
+      .concat(this.props.operationLastParameters.toJS().map((parameter, idx) => ({
+        text: `Parameters ${moment(parameter.moment).fromNow()}`,
+        value: JSON.stringify(parameter.values),
+        title: JSON.stringify(parameter.values, null, 2),
+        key: idx
+      })))
 
     return (
       <Dropdown selection options={options} value={defaultValue}
@@ -72,7 +75,7 @@ class TryOutWidgetTabParameters extends Component {
     )
   }
 
-  renderEditorFor (param) {
+  renderEditorFor = (param) => {
     let value = this.props.operationParameters[param.name]
 
     // for parameters of type header, use default value from headers list
@@ -99,7 +102,7 @@ class TryOutWidgetTabParameters extends Component {
     return this.editorForInput(param, value)
   }
 
-  renderParameterType (parameter) {
+  renderParameterType = (parameter) => {
     if (parameter.type === 'string' || parameter.type === 'integer' || parameter.type === 'file') {
       return <span>{parameter.type}</span>
     }
@@ -136,7 +139,7 @@ class TryOutWidgetTabParameters extends Component {
     return <div>-</div>
   }
 
-  renderParameterDescription (description) {
+  renderParameterDescription = (description) => {
     return description.startsWith('http')
       ? (<div><small><small><a href={description} target='_blank'>Go to external docs <i className='fa fa-external-link' /></a></small></small></div>)
       : (<div><small><small>{description}</small></small></div>)
@@ -178,15 +181,5 @@ class TryOutWidgetTabParameters extends Component {
     }
   }
 }
-
-// TryOutWidgetTabParameters.propTypes = {
-//   operation: PropTypes.object.isRequired,
-//   definitions: PropTypes.object.isRequired,
-//   headers: PropTypes.array.isRequired,
-//   operationParameters: PropTypes.object,
-//   operationLastParameters: PropTypes.object,
-//   onHandleParametersChange: PropTypes.func.isRequired,
-//   onHandleLastParametersChange: PropTypes.func.isRequired
-// }
 
 export default TryOutWidgetTabParameters

@@ -49,7 +49,6 @@ class OperationsFilter extends Component {
       </div>
     )
   }
-
 }
 
 OperationsFilter.propTypes = {

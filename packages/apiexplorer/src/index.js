@@ -187,8 +187,10 @@ class APIExplorer {
     let loaderType = this.LoaderFriendlyNames[specFormat]
 
     if (!loaderType) {
-      console.warn('Unsupported API specification format: ' + specFormat,
-                   'Available formats:', Object.keys(this.LoaderFriendlyNames))
+      console.warn(
+        'Unsupported API specification format: ' + specFormat,
+        'Available formats:', Object.keys(this.LoaderFriendlyNames)
+      )
 
       throw Error('Unsupported API specification format: ' + specFormat)
     }
@@ -222,4 +224,3 @@ class APIExplorer {
 const explorer = new APIExplorer()
 export default explorer
 window.APIExplorer = explorer
-

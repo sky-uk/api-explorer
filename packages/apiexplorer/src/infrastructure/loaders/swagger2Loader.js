@@ -30,32 +30,34 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
   onNewAPI(apiSpec)
 
   Object.keys(apiSpec.paths)
-        .forEach(url => {
-          Object.keys(apiSpec.paths[url])
-                .filter(key => key !== 'parameters')
-                .forEach(httpMethod => {
-                  const operation = apiSpec.paths[url][httpMethod]
-                  const urlClean = url.replace(/^\//g, '')
-                                      .replace(/\//g, '-')
-                                      .replace(/\{|\}/g, '_')
-                  const id = `${slug}-${httpMethod}-${urlClean}`
-                  if (!operation.tags || operation.tags.length === 0) {
-                    operation.tags = ['']
-                  }
-                  const operationSpec = { id, url, httpMethod, ...operation }
-                  onLoadProgress(`Processing operation ${id}`)
-                  onNewOperation(operationSpec)
-                })
+    .forEach(url => {
+      Object.keys(apiSpec.paths[url])
+        .filter(key => key !== 'parameters')
+        .forEach(httpMethod => {
+          const operation = apiSpec.paths[url][httpMethod]
+          const urlClean = url
+            .replace(/^\//g, '')
+            .replace(/\//g, '-')
+            .replace(/\{|\}/g, '_')
+
+          const id = `${slug}-${httpMethod}-${urlClean}`
+          if (!operation.tags || operation.tags.length === 0) {
+            operation.tags = ['']
+          }
+          const operationSpec = { id, url, httpMethod, ...operation }
+          onLoadProgress(`Processing operation ${id}`)
+          onNewOperation(operationSpec)
         })
+    })
 
   Object.keys(apiSpec.definitions)
-        .forEach(definitionName => {
-          const definition = apiSpec.definitions[definitionName]
-          const id = `${slug}-${definitionName.toLocaleLowerCase()}`
-          const definitionSpec = {key: `#/definitions/${definitionName}`, name: `${definitionName}`, definition}
-          onLoadProgress(`Processing definition ${id}`)
-          onNewDefinition(definitionSpec)
-        })
+    .forEach(definitionName => {
+      const definition = apiSpec.definitions[definitionName]
+      const id = `${slug}-${definitionName.toLocaleLowerCase()}`
+      const definitionSpec = {key: `#/definitions/${definitionName}`, name: `${definitionName}`, definition}
+      onLoadProgress(`Processing definition ${id}`)
+      onNewDefinition(definitionSpec)
+    })
 
   onLoadProgress(`Loading completed`)
   onLoadCompleted(apiSpec)

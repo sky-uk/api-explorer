@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import React from 'react/addons'
 import OperationWidget from '../../src/components/OperationWidget'
 import {expect} from 'chai'

@@ -52,8 +52,8 @@ class LateralMenu extends Component {
   // ----------------------------------------------------------------------------------------
   render () {
     const operationsByApi = this.props.apis.get('byOrder')
-                                .map(name => this.props.operations.filter(o => o.apiname === name))
-                                .toArray()
+      .map(name => this.props.operations.filter(o => o.apiname === name))
+      .toArray()
     return (
       <div id='lateral-menu'>
         <ul className='nav'>
@@ -127,7 +127,6 @@ class LateralMenu extends Component {
       </li>
     )
   }
-
 }
 
 LateralMenu.propTypes = {

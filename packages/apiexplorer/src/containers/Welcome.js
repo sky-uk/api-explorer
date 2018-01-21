@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import marked from 'marked'
@@ -13,11 +13,10 @@ const mapStateToProps = state => {
   }
 }
 class Welcome extends Component {
-
   render () {
     const apisArray = this.props.apis.get('byOrder').map(name => ({
       apiname: name,
-      spec: this.props.apis.get('byName').get(name),
+      spec: this.props.apis.get('byName').get(name)
     })).toArray()
     return (
       <div>
@@ -38,17 +37,16 @@ class Welcome extends Component {
     )
   }
 
-  renderTitle (apiInfo) {
+  renderTitle = (apiInfo) => {
     const { title, version } = apiInfo.spec.info
     return <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
   }
 
-  renderDescription (apiInfo) {
+  renderDescription = (apiInfo) => {
     return <p dangerouslySetInnerHTML={this.getHtmlDescription(apiInfo.spec.info.description)} />
   }
 
-  renderSummary (apiInfo) {
-    const api = apiInfo.spec
+  renderSummary = (apiInfo) => {
     const apiOperations = this.props.operations.filter(o => o.get('apiname') === apiInfo.apiname).map(o => o.get('spec')).toArray()
     let pathsByTags = Enumerable.from(apiOperations).groupBy(o => o.tags ? o.tags[0] : '')
 
@@ -61,9 +59,9 @@ class Welcome extends Component {
         <Table compact striped columns='three'>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell content= 'Operation' />
-              <Table.HeaderCell content= 'HTTP Request' />
-              <Table.HeaderCell content= 'Description' />
+              <Table.HeaderCell content='Operation' />
+              <Table.HeaderCell content='HTTP Request' />
+              <Table.HeaderCell content='Description' />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -72,11 +70,10 @@ class Welcome extends Component {
         </Table>
         <br />
       </Segment>
-      }
-    ).toArray()
+    }).toArray()
   }
 
-  renderSummaryRow (operation) {
+  renderSummaryRow = (operation) => {
     const url = APIExplorer.LinkGenerator.toOperation(operation)
     return (
       <Table.Row key={operation.httpMethod + operation.url}>
@@ -87,16 +84,11 @@ class Welcome extends Component {
         <Table.Cell content={operation.summary} />
       </Table.Row>
     )
-  } 
+  }
 
-  getHtmlDescription (description) {
+  getHtmlDescription = (description) => {
     return { __html: marked(description || '') }
   }
 }
-
-// Welcome.propTypes = {
-//   children: PropTypes.element,
-//   apis: PropTypes.object.isRequired
-// }
 
 export default connect(mapStateToProps)(Welcome)

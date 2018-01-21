@@ -1,3 +1,5 @@
+/* global fetch */
+
 import Enumerable from 'linq'
 import { swagger2JsonLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
@@ -12,12 +14,14 @@ function executeInterceptor (config, apiSpec) {
 
 function executeFetch (req, callback) {
   req.onLoadProgress(`Starting getting new api path from '${req.url}'`)
+
   fetch(req.url)
     .then(response => response.json())
     .then(apiSpec => {
       req.onLoadProgress(`New api definition from path '${decodeURIComponent(req.url)}' completed`)
       callback(null, {path: req.path, result: executeInterceptor(req.config, apiSpec)})
-    }).catch(ex => callback(`Error loading url ${req.url}: ${ex}`))
+    })
+    .catch(ex => callback(new Error(`Error loading url ${req.url}: ${ex}`)))
 }
 
 export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
@@ -34,11 +38,12 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
 
       onLoadProgress(`Loading content from '${url}' completed`)
       const apis = Enumerable
-                      .from(newApiSpec.apis)
-                      .select(api => {
-                        return { path: api.path, url: config.url.resolveChildUrl(`${apiSpec.basePath}${api.path}`), onLoadProgress: onLoadProgress, config }
-                      })
-                      .toArray()
+        .from(newApiSpec.apis)
+        .select(api => {
+          return { path: api.path, url: config.url.resolveChildUrl(`${apiSpec.basePath}${api.path}`), onLoadProgress: onLoadProgress, config }
+        })
+        .toArray()
+
       async.map(apis, executeFetch, (err, result) => {
         if (err) {
           onLoadError(`Error loading Swagger 1.x apis: ${err}`)

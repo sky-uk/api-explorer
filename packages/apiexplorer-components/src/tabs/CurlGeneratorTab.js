@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Segment } from 'semantic-ui-react'
-export default class CurlGeneratorTab extends Component {
 
+export default class CurlGeneratorTab extends Component {
   buildCurlCommand (request) {
     const { httpMethod, headers, url, body } = request
 
@@ -38,10 +38,9 @@ export default class CurlGeneratorTab extends Component {
       return <span>You need to issue a request first.</span>
     }
 
-
     const curlCommand = this.buildCurlCommand(this.props.operationResponse.request)
     return (
-        <pre>{curlCommand}</pre>
+      <pre>{curlCommand}</pre>
     )
   }
 }

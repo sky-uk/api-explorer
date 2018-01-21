@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 
 class APICounter extends Component {
-
   render () {
     const numberOfAPIs = this.props.numberOfAPIs
     return (

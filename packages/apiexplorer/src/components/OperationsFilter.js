@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Input } from 'semantic-ui-react'
 
 class OperationsFilter extends Component {
@@ -38,15 +38,7 @@ class OperationsFilter extends Component {
         placeholder={this.props.placeholder} />
     )
   }
-
 }
-
-// OperationsFilter.propTypes = {
-//   onFilter: PropTypes.func.isRequired,
-//   placeholder: PropTypes.string.isRequired,
-//   initialText: PropTypes.string,
-//   autoUpdateTimeout: PropTypes.number
-// }
 
 OperationsFilter.defaultProps = {
   autoUpdateTimeout: 400

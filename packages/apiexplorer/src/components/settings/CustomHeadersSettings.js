@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { headers } from '../../actions/loadActionCreators'
 import Immutable from 'immutable'
 import { Segment } from 'semantic-ui-react'
 
-const schema = {
+/* const schema = {
   type: 'object',
   properties: {
     headers: {
@@ -27,10 +27,9 @@ const uiSchema = {
       value: { classNames: 'column' }
     }
   }
-}
+} */
 
 class CustomHeadersSettings extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -59,7 +58,6 @@ class CustomHeadersSettings extends Component {
   render () {
     return (
       <Segment attached='bottom' >
-        
         {/* <Form schema={schema}
           uiSchema={uiSchema}
           formData={this.state}
@@ -75,10 +73,5 @@ class CustomHeadersSettings extends Component {
     )
   }
 }
-
-// CustomHeadersSettings.propTypes = {
-//   config: PropTypes.object,
-//   dispatch: PropTypes.func
-// }
 
 export default CustomHeadersSettings

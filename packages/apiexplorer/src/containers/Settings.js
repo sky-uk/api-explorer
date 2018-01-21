@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Switch, Route, Redirect } from 'react-router'
 import { Menu } from 'semantic-ui-react'
@@ -29,10 +29,5 @@ class Settings extends Component {
     )
   }
 }
-
-// Settings.propTypes = {
-//   children: PropTypes.element,
-//   history: PropTypes.object
-// }
 
 export default Settings

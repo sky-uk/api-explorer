@@ -127,17 +127,7 @@ class Application extends Component {
   getHtmlDescription (description) {
     return { __html: marked(description || '') }
   }
-
 }
-
-// Application.propTypes = {
-//   children: PropTypes.element,
-//   loader: PropTypes.object,
-//   apis: PropTypes.object,
-//   operations: PropTypes.object,
-//   dispatch: PropTypes.func,
-//   selectedOperationId: PropTypes.string
-// }
 
 export default connect(
   state => {

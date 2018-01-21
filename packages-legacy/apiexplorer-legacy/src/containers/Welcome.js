@@ -4,7 +4,6 @@ import { ExplorerHeader } from 'components'
 import marked from 'marked'
 
 class Welcome extends Component {
-
   render () {
     const apisArray = this.props.apis.get('byOrder').map(a => this.props.apis.get('byName').get(a)).toArray()
     return (

@@ -146,30 +146,30 @@ class HttpRequest {
     preRequestCallback(Object.assign({ inProgress: true }, requestInformation))
 
     fetch(req)
-    .then(response => {
-      let resp = {
-        url: requestInformation.url,
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers,
-        requestFormat: requestInformation.requestFormat,
-        contentType: getMediaType(response.headers.get('Content-Type'))
-      }
+      .then(response => {
+        let resp = {
+          url: requestInformation.url,
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+          requestFormat: requestInformation.requestFormat,
+          contentType: getMediaType(response.headers.get('Content-Type'))
+        }
 
-      return response.text()
-        .then(responseText => {
-          resp.data = responseText
-          postResponseCallback(Object.assign({}, requestInformation), resp)
-        })
-    })
-    .catch(error => {
-      console.warn('Fetch returned error, request failed', error)
-      postResponseCallback(Object.assign({ inProgress: false }, requestInformation), {
-        url: requestInformation.url,
-        status: '',
-        statusText: 'Request Failed'
-      }, error)
-    })
+        return response.text()
+          .then(responseText => {
+            resp.data = responseText
+            postResponseCallback(Object.assign({}, requestInformation), resp)
+          })
+      })
+      .catch(error => {
+        console.warn('Fetch returned error, request failed', error)
+        postResponseCallback(Object.assign({ inProgress: false }, requestInformation), {
+          url: requestInformation.url,
+          status: '',
+          statusText: 'Request Failed'
+        }, error)
+      })
   }
 }
 

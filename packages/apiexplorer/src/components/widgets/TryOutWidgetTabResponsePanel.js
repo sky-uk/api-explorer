@@ -119,13 +119,12 @@ class TryOutWidgetTabResponsePanel extends Component {
     return (
       <div>
         <textarea className='codemirror-response' ref='codemirror' value={data} readOnly />
-        <small className='text-muted'>
+        <small style={{ display: 'block', margin: '1em 0' }} className='text-muted'>
           <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
           <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;
           <strong>Fold: </strong>To fold all lines press <mark>Ctrl-Y</mark>, and <mark>Ctrl-Alt-Y</mark> to unfold.&nbsp;
           <em>Note that in OSX you should use Cmd instead of Ctrl.</em>
         </small>
-        <br />
       </div>
     )
   }

@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Segment, Label } from 'semantic-ui-react'
 import Enumerable from 'linq'
 
 class SpecWidgetTab extends Component {
-
   renderParameterDescription (description) {
     return description.startsWith('http')
       ? (<a href={description} target='_blank'>Go to external docs <i className='fa fa-external-link' /></a>)
@@ -34,18 +33,20 @@ class SpecWidgetTab extends Component {
     if (parameter.type) {
       return <abbr>{parameter.type}</abbr>
     }
+
     if (parameter.schema) {
       let definition = this.props.definitions[parameter.schema.$ref]
       if (definition) {
         return (
           <div>
             <abbr>{parameter.schema.$ref}</abbr>
-          </div>  
+          </div>
         )
       } else {
         return <abbr>{parameter.schema.$ref}</abbr>
       }
     }
+
     return <span>-</span>
   }
 
@@ -67,13 +68,14 @@ class SpecWidgetTab extends Component {
       .select($ref => ({ $ref: $ref, schema: this.props.definitions[$ref] }))
       .toArray()
 
-    return (<Segment>
-      {definitions.map(definition => (
-        <div key={definition.$ref}>
-          <h5>{definition.$ref}</h5>
-          <pre>{JSON.stringify(definition.schema, null, 2)}</pre>
-        </div>
-      ))}
+    return (
+      definitions.length > 0 && <Segment>
+        {definitions.map(definition => (
+          <div key={definition.$ref}>
+            <h5>{definition.$ref}</h5>
+            <pre>{JSON.stringify(definition.schema, null, 2)}</pre>
+          </div>
+        ))}
       </Segment>)
   }
 
@@ -116,9 +118,5 @@ class SpecWidgetTab extends Component {
     )
   }
 }
-
-// SpecWidgetTab.propTypes = {
-//   operation: PropTypes.object.isRequired
-// }
 
 export default SpecWidgetTab

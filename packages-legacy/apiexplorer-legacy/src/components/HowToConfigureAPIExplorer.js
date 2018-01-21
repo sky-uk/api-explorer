@@ -3,7 +3,6 @@ import Highlight from 'react-highlight'
 import 'highlight.js/styles/monokai.css' // see issue #26
 
 class HowToConfigureAPIExplorer extends Component {
-
   render () {
     const topLoadingStyles = {
       backgroundColor: '#222',

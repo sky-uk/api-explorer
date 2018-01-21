@@ -10,7 +10,6 @@ import Styled from 'styled-components'
 import httpMethods from './HttpMethods'
 
 class OperationWidget extends Component {
-
   componentDidMount () {
     this.props.dispatch(selectedOperation(this.props.operation.id))
   }
@@ -57,7 +56,7 @@ class OperationWidget extends Component {
                 const routePath = `${this.props.match.path}/${widgetTab.slug}`
                 return <Route key={widgetTab.slug} path={routePath} children={({ match }) => (
                   <Menu.Item key={i} active={match !== null} name='' as={Link} to={url} className='operation-container' >{widgetTab.name}</Menu.Item>
-                  )} />
+                )} />
               })}
             </Menu>
             <Switch>
@@ -74,14 +73,6 @@ class OperationWidget extends Component {
     )
   }
 }
-
-// OperationWidget.propTypes = {
-//   children: PropTypes.element,
-//   dispatch: PropTypes.func.isRequired,
-//   operation: PropTypes.object.isRequired,
-//   history: PropTypes.object.isRequired,
-//   config: PropTypes.object.isRequired
-// }
 
 export default OperationWidget
 
@@ -103,14 +94,14 @@ const StyledWidget = Styled.div`
     text-decoration: none
   }
 
-  ${httpMethodStylesCard('head',    '#5bc0de', '#9bd8eb')}
-  ${httpMethodStylesCard('get',     '#428bca', '#7eb0db', '#fff')}
-  ${httpMethodStylesCard('delete',  '#d9534f', '#e7908e')}
-  ${httpMethodStylesCard('put',     '#EB961E', '#f1b764')}
-  ${httpMethodStylesCard('patch',   '#F2C769', '#f8e1af')}
-  ${httpMethodStylesCard('post',    '#5cb85c', '#91cf91')}
+  ${httpMethodStylesCard('head', '#5bc0de', '#9bd8eb')}
+  ${httpMethodStylesCard('get', '#428bca', '#7eb0db', '#fff')}
+  ${httpMethodStylesCard('delete', '#d9534f', '#e7908e')}
+  ${httpMethodStylesCard('put', '#EB961E', '#f1b764')}
+  ${httpMethodStylesCard('patch', '#F2C769', '#f8e1af')}
+  ${httpMethodStylesCard('post', '#5cb85c', '#91cf91')}
   ${httpMethodStylesCard('options', '#dddddd', '#f7f7f7', '#000')}
-  ${httpMethodStylesCard('trace',   '#aaaaaa', '#d0d0d0', '#000')}
+  ${httpMethodStylesCard('trace', '#aaaaaa', '#d0d0d0', '#000')}
 `
 
 function httpMethodStylesCard (method, color, lightColor, textColor = '#fff') {

@@ -16,12 +16,12 @@ function getJSONLinksFor (text, operations) {
   const linkRegEx = /(https?:\/\/.*)('|")/i
   const lines = text.split('\n')
   return getLinks(lines, linkRegEx)
-            .map(toHATEOASInfo)
-            .filter(info => info.valid)
+    .map(toHATEOASInfo)
+    .filter(info => info.valid)
 
   function getLinks (lines, linkMatcher) {
     return lines.map((line, lineIdx) => ({ line, lineIdx, lineNo: lineIdx }))
-                .filter(lineInfo => linkMatcher.test(lineInfo.line))
+      .filter(lineInfo => linkMatcher.test(lineInfo.line))
   }
 
   function toHATEOASInfo (lineInfo) {

@@ -1,5 +1,5 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux'
+import { routerMiddleware } from 'react-router-redux'
 
 import reducers from './../reducers'
 import createHistory from 'history/createBrowserHistory' // history/lib/createHashHistory
@@ -12,13 +12,8 @@ const history = createHistory()
 const middleware = routerMiddleware(history)
 
 const composed = window.devToolsExtension
-  ? compose(
-      applyMiddleware(thunk, middleware),
-      window.devToolsExtension()
-    )
-  : compose(
-      applyMiddleware(thunk, middleware)
-    )
+  ? compose(applyMiddleware(thunk, middleware), window.devToolsExtension())
+  : compose(applyMiddleware(thunk, middleware))
 
 export default function configureStore (initialState) {
   const finalCreateStore = composed(createStore)

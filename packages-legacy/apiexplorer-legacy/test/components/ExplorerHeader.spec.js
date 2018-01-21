@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import React from 'react/addons'
 import ExplorerHeader from '../../src/components/ExplorerHeader'
 import {expect} from 'chai'

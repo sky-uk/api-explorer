@@ -15,7 +15,6 @@ import TryOutWidgetTabResponsePanel from './TryOutWidgetTabResponsePanel'
 import TryOutWidgetTabHttpHeadersPanel from './TryOutWidgetTabHttpHeadersPanel'
 
 class TryOutWidgetTab extends Component {
-
   constructor () {
     super()
     this.state = this.makeState()
@@ -100,9 +99,9 @@ class TryOutWidgetTab extends Component {
     return uri.toString()
   }
 
-// ###############################################################################################################
-// Events
-// ###############################################################################################################
+  // ###############################################################################################################
+  // Events
+  // ###############################################################################################################
 
   onHandleParametersChange (name, value) {
     let newParameters = this.state.operationParameters
@@ -199,9 +198,9 @@ class TryOutWidgetTab extends Component {
     this.changeResponseStatusColor(null)
   }
 
-// ###############################################################################################################
-// Renderers
-// ###############################################################################################################
+  // ###############################################################################################################
+  // Renderers
+  // ###############################################################################################################
 
   render () {
     const textCropStyles = {
@@ -222,7 +221,7 @@ class TryOutWidgetTab extends Component {
     const request = this.state.request
     const requestHeaders = request.headers
 
-    const httpStatusInfo = showResponse && HttpStatus.values.find(s => s.value === response.status) || { details: [{ description: '' }] }
+    const httpStatusInfo = showResponse && (HttpStatus.values.find(s => s.value === response.status) || { details: [{ description: '' }] })
 
     return (
       <Segment attached='bottom'>
@@ -246,7 +245,7 @@ class TryOutWidgetTab extends Component {
             />
             {(showResponse || showLastResponse) && <span>&nbsp;&nbsp;<a href='about:blank' onClick={e => this.hideResponse(e)}>Hide Response</a></span>}
 
-            {(showResponse || showLastResponse) && <span style={{ float: 'right' }}>
+            {httpStatusInfo && <span style={{ float: 'right' }}>
               <Label color={this.state.requestPanelColor}>
                 <abbr title={httpStatusInfo.details[0].description}>{response.status} {response.statusText}</abbr>
               </Label>
