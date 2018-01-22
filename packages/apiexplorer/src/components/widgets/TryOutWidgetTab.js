@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import URI from 'urijs'
-
 import { Segment, Label, Loader } from 'semantic-ui-react'
 
 import { HttpStatus, HttpRequest } from 'apiexplorer-core'
