@@ -8,6 +8,11 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
     this.state = { ...this.state }
   }
 
+  toProperCase (str) {
+    return str.toLowerCase().replace(/(?:^|[\s-/])\w/g, function (match) {
+      return match.toUpperCase()
+    })
+  }
   renderHeaders (headers) {
     var headerMap = Map(headers)
     if (headerMap && headerMap.size > 0) {
@@ -15,7 +20,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
         <Table.Body>
           {headerMap.map((value, key) => (
             <Table.Row key={key}>
-              <Table.Cell>{toProperCase(key)}</Table.Cell>
+              <Table.Cell>{this.toProperCase(key)}</Table.Cell>
               <Table.Cell>{value}</Table.Cell>
             </Table.Row>)
           ).toList()}
@@ -50,12 +55,6 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
       </Grid>
     )
   }
-}
-
-function toProperCase(str) {    
-  return str.toLowerCase().replace(/(?:^|[\s-/])\w/g, function (match) {
-    return match.toUpperCase();
-  });
 }
 
 export default TryOutWidgetTabHttpHeadersPanel
