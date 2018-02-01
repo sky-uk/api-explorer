@@ -7,6 +7,7 @@ export default class APIExplorerAPIConfigurator {
     this.loader = loader
     this.slug = slug
     this.url = url
+    this.requestTimeoutInMiliseconds = 0
 
     // Welcome page options
     this.welcome = {
@@ -37,6 +38,11 @@ export default class APIExplorerAPIConfigurator {
 
   useProxy (isProxied) {
     this.url.setProxy(isProxied)
+    return this
+  }
+
+  setRequestTimeoutInMiliseconds (requestTimeoutInMiliseconds) {
+    this.requestTimeoutInMiliseconds = requestTimeoutInMiliseconds
     return this
   }
 

@@ -145,6 +145,7 @@ class TryOutWidgetTab extends Component {
     this.httpRequest.doRequest({
       url: this.getUrl(this.props.operation.spec.url),
       useProxy: this.props.config.useProxy,
+      requestTimeoutInMiliseconds: this.props.apiConfig.requestTimeoutInMiliseconds,
       headers: this.props.config.headers.concat(this.props.apiConfig.headers),
       queryString: this.props.config.queryString,
       requestFormat: requestFormat && requestFormat !== '' ? requestFormat : this.props.operation.spec.produces[0],

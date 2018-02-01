@@ -124,6 +124,11 @@ class HttpRequest {
       finalUrl = `/proxy/?url=${encodeURIComponent(requestInformation.url)}`
     }
 
+    let requestTimeoutInMiliseconds = 0
+    if (params.requestTimeoutInMiliseconds) {
+      requestTimeoutInMiliseconds = params.requestTimeoutInMiliseconds
+    }
+
     let headers = {
       'Accept': requestInformation.requestFormat,
       'Content-Type': requestInformation.requestFormat
