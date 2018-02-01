@@ -15,7 +15,7 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
         <Table.Body>
           {headerMap.map((value, key) => (
             <Table.Row key={key}>
-              <Table.Cell>{key}</Table.Cell>
+              <Table.Cell>{toProperCase(key)}</Table.Cell>
               <Table.Cell>{value}</Table.Cell>
             </Table.Row>)
           ).toList()}
@@ -50,6 +50,12 @@ class TryOutWidgetTabHttpHeadersPanel extends Component {
       </Grid>
     )
   }
+}
+
+function toProperCase(str) {    
+  return str.toLowerCase().replace(/(?:^|[\s-/])\w/g, function (match) {
+    return match.toUpperCase();
+  });
 }
 
 export default TryOutWidgetTabHttpHeadersPanel
