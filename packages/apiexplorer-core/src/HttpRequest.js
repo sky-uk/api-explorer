@@ -113,6 +113,13 @@ class HttpRequest {
     return result
   }
 
+  timeoutPromise (timeout, err, promise) {
+    return new Promise(function (resolve, reject) {
+      promise.then(resolve, reject)
+      setTimeout(reject.bind(null, err), timeout)
+    })
+  }
+
   doRequest (params, GlobalHttpClientConfigurator, ApiHttpClientConfigurator) {
     const postResponseCallback = this.postResponseCallback
     const preRequestCallback = this.preRequestCallback
@@ -150,7 +157,7 @@ class HttpRequest {
 
     preRequestCallback(Object.assign({ inProgress: true }, requestInformation))
 
-    fetch(req)
+    this.timeoutPromise(requestTimeoutInMiliseconds, new Error('Request timed out'), fetch(req))
       .then(response => {
         let resp = {
           url: requestInformation.url,
