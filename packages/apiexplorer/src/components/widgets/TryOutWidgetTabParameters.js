@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { Segment, Table, Label, Input, TextArea, Dropdown, Popup } from 'semantic-ui-react'
+import { getSampleSchema } from './../../ObjectSamples'
 
 class TryOutWidgetTabParameters extends Component {
   componentWillReceiveProps () {
@@ -102,6 +103,10 @@ class TryOutWidgetTabParameters extends Component {
     return this.editorForInput(param, value)
   }
 
+  onClickChangeField = (param, example) => {
+    this.props.onHandleParametersChange(param.name, example)
+  }
+
   renderParameterType = (parameter) => {
     if (parameter.type === 'string' || parameter.type === 'integer' || parameter.type === 'file') {
       return <span>{parameter.type}</span>
@@ -116,12 +121,21 @@ class TryOutWidgetTabParameters extends Component {
 
     if (parameter.schema && parameter.schema.$ref) {
       const definition = this.props.definitions[parameter.schema.$ref]
+      const example = getSampleSchema(definition.schema, 'json')
       return (
-        <Popup
-          trigger={<abbr style={{ borderBottom: 'dashed gray 1px ' }}>{definition.name}</abbr>}
-          content={JSON.stringify(definition, null, 2)}
-          basic
-        />
+        <div>
+          <Popup
+            trigger={
+              <div>
+                <abbr style={{ borderBottom: 'dashed gray 1px ' }}>{definition.name}</abbr>
+                <br />
+                <a onClick={this.onClickChangeField.bind(this, parameter, example)}>Copy example to field</a>
+              </div>
+            }
+            content={<pre>{example}</pre>}
+            basic
+          />
+        </div>
       )
     }
 
@@ -129,7 +143,7 @@ class TryOutWidgetTabParameters extends Component {
       return (
         <Popup
           trigger={<abbr style={{ borderBottom: 'dashed gray 1px ' }}>{parameter.schema}</abbr>}
-          content={JSON.stringify(parameter.schema.type, null, 2)}
+          content={<pre>{JSON.stringify(parameter.schema.type, null, 2)}</pre>}
           basic
         />
       )
