@@ -45,6 +45,12 @@ class Application extends Component {
     this.setState({ dockSize: 0, dockIsVisible: false })
   }
 
+  joinUrl (base, path) {
+    return base.charAt(base.length - 1) === '/'
+      ? base + path
+      : base + '/' + path
+  }
+
   renderApplication () {
     let packageVersion = packageJson.version
 
@@ -70,8 +76,8 @@ class Application extends Component {
             {this.renderAPIExplorerOrSelectedAPI()}
             <Switch>
               <Route exact path={`${this.props.match.url}`} component={Welcome} />
-              <Route path={`${this.props.match.url}operation/:id`} component={OperationWidgetContainer} />
-              <Route path={`${this.props.match.url}settings/`} component={Settings} />
+              <Route path={`${this.joinUrl(this.props.match.url, 'operation/:id')}`} component={OperationWidgetContainer} />
+              <Route path={`${this.joinUrl(this.props.match.url, 'settings/')}`} component={Settings} />
             </Switch>
           </div>
         </div>
