@@ -52,10 +52,11 @@ class Welcome extends Component {
 
     return pathsByTags.select(g => {
       let key = g.key()
-      const tag = this.props.apis.get('byName').get(apiInfo.apiname).tags.find(t => t.name === key)
+      const api = this.props.apis.get('byName').get(apiInfo.apiname)
+      const tagDescription = api.hasOwnProperty('tags') ? api.tags.find(t => t.name === key).description : key
 
       return <Segment key={key}>
-        <h4>{tag.description}</h4>
+        <h4>{tagDescription}</h4>
         <Table compact striped columns='three'>
           <Table.Header>
             <Table.Row>

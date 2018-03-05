@@ -100,13 +100,14 @@ class LateralMenu extends Component {
     if (!this.isTagVisible(tag, visibleOperations)) return
 
     const api = this.props.apis.get('byName').get(visibleOperations[0].apiname)
-    const apiTag = api.tags.find(t => t.name === tag) || ({ name: tag, description: '' })
-
+    const apiTag = api.hasOwnProperty('tags') ? api.tags.find(t => t.name === tag) || ({ name: tag, description: '' }) : null
+    const apiName = apiTag != null && apiTag.hasOwnProperty('name') ? apiTag.name : tag
+    const apiDescription = apiTag != null && apiTag.hasOwnProperty('description') ? apiTag.description : null
     return (
       <Menu.Item key={visibleOperations[0].apiname + tag} className='api-tag-operations'>
         <Menu.Header>
-          {apiTag.name}&nbsp;
-          {apiTag.description && <small style={{ fontSize: '8px' }}>{apiTag.description}</small>}
+          {apiName}&nbsp;
+          {apiDescription && <small style={{ fontSize: '8px' }}>{apiDescription}</small>}
         </Menu.Header>
         {visibleOperations.map(this.renderOperation)}
       </Menu.Item>
