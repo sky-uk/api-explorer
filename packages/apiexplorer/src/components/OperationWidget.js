@@ -11,11 +11,13 @@ import httpMethods from './HttpMethods'
 
 class OperationWidget extends Component {
   componentDidMount () {
-    this.props.dispatch(selectedOperation(this.props.operation.id))
+    if (this.props.operation !== null) {
+      this.props.dispatch(selectedOperation(this.props.operation.id))
+    }
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.operation.id !== prevProps.operation.id) {
+    if (this.props.operation !== null && (prevProps.operation === null || this.props.operation.id !== prevProps.operation.id)) {
       this.props.dispatch(selectedOperation(this.props.operation.id))
     }
   }
