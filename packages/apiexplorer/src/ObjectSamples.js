@@ -51,7 +51,13 @@ function objectify (thing) {
   return thing
 }
 
-const sampleFromSchema = (schema, config = {}) => {
+const sampleFromSchema = (schema, definitions, config = {}) => {
+  if (schema.$ref !== undefined && definitions !== undefined && typeof definitions === 'object') {
+    const definition = definitions[schema.$ref]
+    if (definition !== undefined) {
+      schema = definition.schema
+    }
+  }
   let { type, example, properties, additionalProperties, items } = objectify(schema)
   let { includeReadOnly, includeWriteOnly } = config
 
@@ -79,14 +85,14 @@ const sampleFromSchema = (schema, config = {}) => {
       if (props[name].writeOnly && !includeWriteOnly) {
         continue
       }
-      obj[name] = sampleFromSchema(props[name], config)
+      obj[name] = sampleFromSchema(props[name], definitions, config)
     }
 
     if (additionalProperties === true) {
       obj.additionalProp1 = {}
     } else if (additionalProperties) {
       let additionalProps = objectify(additionalProperties)
-      let additionalPropVal = sampleFromSchema(additionalProps, config)
+      let additionalPropVal = sampleFromSchema(additionalProps, definitions, config)
 
       for (let i = 1; i < 4; i++) {
         obj['additionalProp' + i] = additionalPropVal
@@ -96,7 +102,7 @@ const sampleFromSchema = (schema, config = {}) => {
   }
 
   if (type === 'array') {
-    return [ sampleFromSchema(items, config) ]
+    return [ sampleFromSchema(items, definitions, config) ]
   }
 
   if (schema['enum']) {
@@ -113,6 +119,6 @@ const sampleFromSchema = (schema, config = {}) => {
   return primitive(schema)
 }
 
-export const getSampleSchema = (schema, contentType = '', config = {}) => {
-  return JSON.stringify(sampleFromSchema(schema, config), null, 2)
+export const getSampleSchema = (schema, definitions, contentType = '', config = {}) => {
+  return JSON.stringify(sampleFromSchema(schema, definitions, config), null, 2)
 }

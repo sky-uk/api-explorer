@@ -121,7 +121,7 @@ class TryOutWidgetTabParameters extends Component {
 
     if (parameter.schema && parameter.schema.$ref) {
       const definition = this.props.definitions[parameter.schema.$ref]
-      const example = getSampleSchema(definition.schema, 'json')
+      const example = getSampleSchema(parameter.schema, this.props.definitions, 'json')
       return (
         <div>
           <Popup
