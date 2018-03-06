@@ -4,7 +4,7 @@ import Enumerable from 'linq'
 
 class SpecWidgetTab extends Component {
   renderParameterDescription (description) {
-    return description.startsWith('http')
+    return description !== undefined && description.startsWith('http')
       ? (<a href={description} target='_blank'>Go to external docs <i className='fa fa-external-link' /></a>)
       : (<div>{description}</div>)
   }
