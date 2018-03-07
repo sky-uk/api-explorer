@@ -18,7 +18,7 @@ export default class LinkGenerator {
    */
   makeHref (api, operationSpec, params) {
     const {host, basePath} = api
-    const scheme = api.schemes[0]
+    const scheme = api.schemes ? api.schemes[0] : 'http'
     const path = operationSpec.url
     let href = `${scheme}://${host}${basePath}${path}`
 
