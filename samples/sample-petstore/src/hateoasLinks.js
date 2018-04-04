@@ -3,11 +3,11 @@ export default {
   key: 'addHATEOASLinks',
   name: 'addHATEOASLinks',
   decorateEditor: (cm, { operations, apis, history }, repr) => {
-    addHATEOASLinks(cm, apis, operations)
+    addHATEOASLinks(cm, apis, operations, history)
   }
 }
 
-function addHATEOASLinks (editor, apis, operations) {
+function addHATEOASLinks (editor, apis, operations, history) {
   const hateoasLinks = getLinksFor(editor.getValue(), apis, operations)
   hateoasLinks.forEach(addWidgetToEditor)
 
@@ -36,12 +36,12 @@ function addHATEOASLinks (editor, apis, operations) {
     const href = APIExplorer.LinkGenerator.toOperation(operationSpec, widgetInfo.pathParameters)
     let exploreLink = hateoasLinkObj.querySelector('a.explore-link')
     exploreLink.setAttribute('href', href)
-    // exploreLink.addEventListener('click', exploreClick, false)
+    exploreLink.addEventListener('click', exploreClick, false)
 
-    // function exploreClick (evt) {
-    //   history.pushState(null, href, null)
-    //   evt.preventDefault()
-    // }
+    function exploreClick (evt) {
+      history.push(href, null)
+      evt.preventDefault()
+    }
   }
 }
 

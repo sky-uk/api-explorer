@@ -70,7 +70,7 @@ class TryOutWidgetTabResponsePanel extends Component {
         {
           operations: this.props.operations.toJS(),
           apis: this.props.apis,
-          history: this.context.history
+          history: this.context.router.history
         },
         this.editor.getValue()))
   }
@@ -138,7 +138,7 @@ TryOutWidgetTabResponsePanel.propTypes = {
 
 TryOutWidgetTabResponsePanel.contextTypes = {
   store: PropTypes.object.isRequired,
-  history: PropTypes.object
+  router: PropTypes.func.isRequired
 }
 
 export default TryOutWidgetTabResponsePanel
