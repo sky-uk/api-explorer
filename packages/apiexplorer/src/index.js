@@ -40,7 +40,7 @@ class APIExplorer {
     this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
     this.plugins = [] // This will store all the plugins needed
-    this.queryStringLoadEnabled = false
+    this.queryStringLoadEnabled = true
     this.HttpClientConfigurator = c => {}
 
     this.addWidgetTab('Try It', TryOutWidgetTab)
@@ -65,7 +65,8 @@ class APIExplorer {
     const loader = this.Loaders[loaderType]
 
     const slug = friendlyName.replace(/([^a-zA-Z0-9]+)/g, '-').toLowerCase()
-    const conf = new APIExplorerAPIConfigurator(friendlyName, loaderType, loader, slug, new Url(url), this)
+
+    const conf = new APIExplorerAPIConfigurator(friendlyName, loaderType, loader, slug, new Url(url + window.location.search), this)
 
     configuratorFunc && configuratorFunc(conf)
     this.apiConfigurations.push(conf)
