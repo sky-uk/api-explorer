@@ -37,28 +37,47 @@ class TryOutWidgetTab extends Component {
       }
       if (value) {
         newParameters[param.name] = value
+      } else {
+        newParameters[param.name] = ''
       }
     })
 
     return newParameters
   }
 
+  getOperationParametersFromQuery (props, newParameters) {
+    const queryString = require('query-string')
+    const queryStringParsed = queryString.parse(props.location.search)
+
+    let bodyParameterName = null
+    if (props.operation.spec.parameters) {
+      const bodyParameterKey = Object.keys(props.operation.spec.parameters).find(a => props.operation.spec.parameters[a].in === 'body')
+      if (bodyParameterKey != null) {
+        bodyParameterName = props.operation.spec.parameters[bodyParameterKey].name
+      }
+    }
+
+    Object.keys(queryStringParsed)
+      .filter(queryStringkey => queryStringkey.startsWith('param-'))
+      .map(queryStringkey => queryStringkey.replace(/^param-/, ''))
+      .forEach(queryStringkey => {
+        let paramKey = queryStringkey
+        if (bodyParameterName != null && queryStringkey === 'body') {
+          paramKey = bodyParameterName
+        }
+        newParameters[paramKey] = decodeURIComponent(queryStringParsed[`param-${queryStringkey}`])
+      })
+    return newParameters
+  }
+
   setOperationParameters (props) {
     let newParameters = this.getDefaultOperationParameters(props)
+    newParameters = this.getOperationParametersFromQuery(props, newParameters)
 
     // Override default parameters with the ones in global storage
     props.operationLocalParameters && Object.keys(props.operationLocalParameters).length && Object.keys(props.operationLocalParameters).forEach(key => {
       newParameters[key] = props.operationLocalParameters[key]
     })
-
-    // Override newParameters with `param-*` query string overrides
-    // TODO: fix location.query ----------------------------------------------------------------------------
-    // -----------------------------------------------------------------------------------------------------
-    // Object.keys(props.location.query)
-    //       .filter(key => key.startsWith('param-'))
-    //       .map(key => key.replace(/^param-/, ''))
-    //       .forEach(key => { newParameters[key] = props.location.query[`param-${key}`] })
-    // -----------------------------------------------------------------------------------------------------
 
     let newState = Object.assign({}, this.makeState(), { operationParameters: newParameters })
     this.setState(newState)

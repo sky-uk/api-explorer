@@ -1,4 +1,3 @@
-
 export default {
   key: 'addHATEOASLinks',
   name: 'addHATEOASLinks',
@@ -11,8 +10,6 @@ function addHATEOASLinks (editor, apis, operations, history) {
   const hateoasLinks = getLinksFor(editor.getValue(), apis, operations)
   hateoasLinks.forEach(addWidgetToEditor)
 
-  // this.setState({hateoasLinks: hateoasLinks})
-
   function addWidgetToEditor (widgetInfo) {
     const width = widgetInfo.line.indexOf('"')
 
@@ -23,7 +20,7 @@ function addHATEOASLinks (editor, apis, operations, history) {
        <span style='font-size: 80%'>
         <span class='label label-info' style='position: relative; top:-1px'>HATEOAS</span>
         <a class='open-link'    href='${widgetInfo.href}' target='_blank' >Open link</a> |
-        <a class='copy-link'    href='#' data-clipboard-text='${widgetInfo.href}' >Copy link</a> |
+        <!--<a class='copy-link'    href='#' data-clipboard-text='${widgetInfo.href}' >Copy link</a> | -->
         <a class='explore-link' href='#' >Explore link</a>
         <small class="text-muted"><em>(${widgetInfo.operationSummary})</em></small>
       </span>`
@@ -107,7 +104,7 @@ function getJSONLinksFor (text, apis, operations) {
         linkMustacheCount += openMustacheCount
         linkMustacheCount -= closeMustacheCount
 
-        const parametersIndex = line.indexOf('\'parameters\': {')
+        const parametersIndex = line.indexOf('"parameters": {')
         if (parametersIndex !== -1) {
           containsParameters = true
           firstParametersLine = true
@@ -160,7 +157,7 @@ function findOperation (operations, url, params) {
     })
 
     if (regex.endsWith('(.*)')) {
-      regex = regex.substring(0, regex.lastIndexOf('(.*)')) + '?([^/?]*)'
+      regex = regex.substring(0, regex.lastIndexOf('(.*)')) + '([^/?]*)'
     }
     regex = RegExp(regex)
     var matches = url.match(regex)

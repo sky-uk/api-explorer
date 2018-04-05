@@ -58,7 +58,10 @@ export default class LinkGenerator {
     const baseUri = this.apiExplorer.buildAppLink(operationUrl)
     const queryParams = {}
 
-    Object.keys(params).forEach(key => { queryParams[`param-${key}`] = params[key] })
+    Object.keys(params)
+      .forEach(key => {
+        queryParams[`param-${params[key].name.replace('{', '').replace('}', '')}`] = params[key].value
+      })
 
     const newUrl = new URI(baseUri)
       .query(queryParams)

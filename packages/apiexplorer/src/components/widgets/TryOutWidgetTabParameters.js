@@ -8,6 +8,8 @@ class TryOutWidgetTabParameters extends Component {
     this.setState({})
   }
 
+  componentWillMount () {
+  }
   // ###############################################################################################################
   // Editors renders
   // ###############################################################################################################
@@ -24,7 +26,7 @@ class TryOutWidgetTabParameters extends Component {
     }
     return (
       <Input fluid required={param.required}
-        defaultValue={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
+        value={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
     )
   }
 
