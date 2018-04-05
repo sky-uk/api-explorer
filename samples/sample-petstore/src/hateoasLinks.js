@@ -8,7 +8,9 @@ export default {
 
 function addHATEOASLinks (editor, apis, operations, history) {
   const hateoasLinks = getLinksFor(editor.getValue(), apis, operations)
-  hateoasLinks.forEach(addWidgetToEditor)
+  if (hateoasLinks != null) {
+    hateoasLinks.forEach(addWidgetToEditor)
+  }
 
   function addWidgetToEditor (widgetInfo) {
     const width = widgetInfo.line.indexOf('"')
@@ -45,11 +47,11 @@ function addHATEOASLinks (editor, apis, operations, history) {
 function getLinksFor (text, apis, operations) {
   if (text.charAt(0) === '{') return getJSONLinksFor(text, apis, operations)
   else if (text.indexOf('<?xml') === 0) return getXMLLinksFor(text, apis, operations)
-  throw new Error('TEXT FORMAT NOT SUPPORTED: ', text.substring(0, 20), '...')
+  console.log('LINKS ARE ONLY SUPPORTED ON JSON FORMAT')
 }
 
 function getXMLLinksFor (text, apis, operations) {
-  throw new Error('XML LINKS LOADER NOT IMPLEMENTED')
+  console.log('XML LINKS LOADER NOT IMPLEMENTED')
 }
 
 function getJSONLinksFor (text, apis, operations) {
@@ -80,15 +82,12 @@ function getJSONLinksFor (text, apis, operations) {
       bodyContentType: 'json'
     }
 
+    const relLinePosition = 3
+    const methodLinePosition = 1
     try {
-      info.rel = /rel": "([^"]+)"/g.exec(lines[lineInfo.lineIdx - 1])[1]
-      info.method = /method": "(GET|POST|DELETE|PUT|PATCH)"/g.exec(lines[lineInfo.lineIdx + 2])[1]
+      info.rel = /rel": "([^"]+)"/g.exec(lines[lineInfo.lineIdx + relLinePosition])[1]
+      info.method = /method": "(GET|POST|DELETE|PUT|PATCH)"/g.exec(lines[lineInfo.lineIdx + methodLinePosition])[1]
 
-      let linkLines = [
-        lines[lineInfo.lineIdx - 1], // rel
-        lines[lineInfo.lineIdx], // href
-        lines[lineInfo.lineIdx + 2] // method
-      ]
       let idx = lineInfo.lineIdx + 2
       let linkMustacheCount = 1
       let parametersMustacheCount = 0
@@ -97,7 +96,6 @@ function getJSONLinksFor (text, apis, operations) {
 
       do {
         const line = lines[idx++]
-        linkLines.push(line)
         const openMustacheCount = (line.match(/\{/g) || []).length
         const closeMustacheCount = (line.match(/\}/g) || []).length
 
@@ -159,6 +157,7 @@ function findOperation (operations, url, params) {
     if (regex.endsWith('(.*)')) {
       regex = regex.substring(0, regex.lastIndexOf('(.*)')) + '([^/?]*)'
     }
+    regex += '$'
     regex = RegExp(regex)
     var matches = url.match(regex)
 
