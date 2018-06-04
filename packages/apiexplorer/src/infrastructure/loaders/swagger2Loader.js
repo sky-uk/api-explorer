@@ -4,7 +4,7 @@ export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperati
   const url = config.url.getUrl()
   onLoadProgress(`Loading API Spec from ${url}`)
 
-  return fetch(url)
+  return fetch(url, { credentials: 'include' })
     .then(response => response.json())
     .then(apiSpec => {
       let newApiSpec = apiSpec

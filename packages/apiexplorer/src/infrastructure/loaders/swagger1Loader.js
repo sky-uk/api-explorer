@@ -15,7 +15,7 @@ function executeInterceptor (config, apiSpec) {
 function executeFetch (req, callback) {
   req.onLoadProgress(`Starting getting new api path from '${req.url}'`)
 
-  fetch(req.url)
+  fetch(req.url, { credentials: 'include' })
     .then(response => response.json())
     .then(apiSpec => {
       req.onLoadProgress(`New api definition from path '${decodeURIComponent(req.url)}' completed`)
@@ -30,7 +30,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
 
   const async = require('async')
 
-  return fetch(url)
+  return fetch(url, { credentials: 'include' })
     .then(response => response.json())
     .then(apiSpec => {
       let newApiSpec = executeInterceptor(config, apiSpec)
