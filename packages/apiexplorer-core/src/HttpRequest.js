@@ -79,7 +79,7 @@ class HttpRequest {
       .forEach(param => {
         const value = params.parameters[param.name]
         if (value || param['x-defaultValue']) {
-          result.url = result.url.replace('{' + param.name + '}', value || param['x-defaultValue'])
+          result.url = result.url.replace('{' + param.name + '}', encodeURIComponent(value || param['x-defaultValue']))
         }
       })
 
@@ -157,7 +157,8 @@ class HttpRequest {
 
     preRequestCallback(Object.assign({ inProgress: true }, requestInformation))
 
-    this.timeoutPromise(requestTimeoutInMiliseconds, new Error('Request timed out'), fetch(req))
+    this.timeoutPromise(requestTimeoutInMiliseconds, new Error('Request timed out'),
+      fetch(req, { credentials: 'include' }))
       .then(response => {
         let resp = {
           url: requestInformation.url,
