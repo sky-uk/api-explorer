@@ -175,10 +175,6 @@ class TryOutWidgetTab extends Component {
 
   preRequestCallback (request) {
     this.props.dispatch(sendRequest(this.props.operation, request))
-
-    this.setState({
-      requestFormat: request.requestFormat
-    })
   }
 
   responseCallback (request, response, error) {
