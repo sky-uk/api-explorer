@@ -1,5 +1,6 @@
 /* global Request */
 /* global fetch */
+import { FormData } from 'form-data'
 
 function getMediaType (headerValue) {
   return headerValue ? headerValue.split(';')[0] : ''
