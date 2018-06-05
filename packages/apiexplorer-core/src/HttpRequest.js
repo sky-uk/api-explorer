@@ -89,11 +89,33 @@ class HttpRequest {
     }
 
     result.url = result.url
+    result.isMultiPartRequest = parameters.filter(param => param.in === 'formData').length > 0
 
-    result.body = parameters
-      .filter(param => param.in === 'body')
-      .map(param => params.parameters[param.name] || param.default)[0]
+    if (result.isMultiPartRequest) {
+      result.body = new FormData()
 
+      parameters
+        .filter(param => param.in === 'body')
+        .forEach(param => {
+          const value = params.parameters[param.name]
+          if (value || param['x-defaultValue']) {
+            result.body.append(param.name, value)
+          }
+        })
+
+      parameters
+        .filter(param => param.in === 'formData')
+        .forEach(param => {
+          const value = params.parameters[param.name]
+          if (value || param['x-defaultValue']) {
+            result.body.append(param.name, value)
+          }
+        })
+    } else {
+      result.body = parameters
+        .filter(param => param.in === 'body')
+        .map(param => params.parameters[param.name] || param.default)[0]
+    }
     result.headers = {}
     parameters
       .filter(param => param.in === 'header' && params.parameters.hasOwnProperty(param.name))
@@ -109,7 +131,6 @@ class HttpRequest {
 
     result.httpMethod = params.spec.httpMethod
     result.requestFormat = params.requestFormat
-
     return result
   }
 
@@ -136,9 +157,11 @@ class HttpRequest {
       requestTimeoutInMiliseconds = params.requestTimeoutInMiliseconds
     }
 
-    let headers = {
-      'Accept': requestInformation.requestFormat,
-      'Content-Type': requestInformation.requestFormat
+    let headers = {}
+
+    if (!requestInformation.isMultiPartRequest) {
+      headers['Accept'] = requestInformation.requestFormat
+      headers['Content-Type'] = requestInformation.requestFormat
     }
 
     params.headers.forEach(h => { headers[h.name] = h.value })
@@ -165,7 +188,6 @@ class HttpRequest {
           status: response.status,
           statusText: response.statusText,
           headers: response.headers,
-          requestFormat: requestInformation.requestFormat,
           contentType: getMediaType(response.headers.get('Content-Type'))
         }
 

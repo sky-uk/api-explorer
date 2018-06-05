@@ -20,18 +20,20 @@ class TryOutWidgetTabParameters extends Component {
       return (
         <TextArea rows={value ? Math.max(4, value.split('\n').length + 1) : 4}
           style={{ width: '100%', border: '1px solid rgba(34,36,38,.15)' }} required={param.required} value={value}
-          onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)}
+          onChange={(evt) => handleParametersOnChange(param, evt.currentTarget.value)}
         />
       )
     }
     return (
       <Input fluid required={param.required}
-        value={value} onChange={(evt) => handleParametersOnChange(param.name, evt.currentTarget.value)} />
+        value={value} onChange={(evt) => handleParametersOnChange(param, evt.currentTarget.value)} />
     )
   }
 
   editorForFile = (param, value) => {
-    return <Input type='file' />
+    const handleParametersOnChange = this.props.onHandleParametersChange
+    return (<Input type='file' fluid required={param.required}
+      onChange={(evt) => handleParametersOnChange(param, evt.currentTarget.files[0])} />)
   }
 
   editorForSelect = (param, value) => {
@@ -39,7 +41,7 @@ class TryOutWidgetTabParameters extends Component {
     const options = param.enum.map(option => ({ key: option, text: option, value: option }))
     return (
       <Dropdown fluid selection options={options} defaultValue={value}
-        onChange={(event, data) => handleParametersOnChange(param.name, data.value)} />
+        onChange={(event, data) => handleParametersOnChange(param, data.value)} />
     )
   }
 
@@ -49,7 +51,7 @@ class TryOutWidgetTabParameters extends Component {
     const options = param.items.enum.map(option => ({ key: option, text: option, value: option }))
     return (
       <Dropdown fluid multiple selection options={options} value={value}
-        onChange={(event, data) => handleParametersOnChange(param.name, data.value)} />
+        onChange={(event, data) => handleParametersOnChange(param, data.value)} />
     )
   }
 
@@ -106,7 +108,7 @@ class TryOutWidgetTabParameters extends Component {
   }
 
   onClickChangeField = (param, example) => {
-    this.props.onHandleParametersChange(param.name, example)
+    this.props.onHandleParametersChange(param, example)
   }
 
   renderParameterType = (parameter) => {
@@ -150,7 +152,7 @@ class TryOutWidgetTabParameters extends Component {
     if (parameter.schema && parameter.schema.type) {
       return (
         <Popup
-          trigger={<abbr style={{ borderBottom: 'dashed gray 1px ' }}>{parameter.schema}</abbr>}
+          trigger={<abbr style={{ borderBottom: 'dashed gray 1px ' }}>Schema</abbr>}
           content={<pre>{JSON.stringify(parameter.schema.type, null, 2)}</pre>}
           basic
         />

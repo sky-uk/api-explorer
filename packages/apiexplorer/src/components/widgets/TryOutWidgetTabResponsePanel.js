@@ -102,7 +102,7 @@ class TryOutWidgetTabResponsePanel extends Component {
       return ''
     }
 
-    if (this.props.response.requestFormat.indexOf('json') > 0) {
+    if (this.props.response.contentType && this.props.response.contentType.indexOf('json') > 0) {
       try {
         data = JSON.stringify(JSON.parse(data), null, 2)
       } catch (e) {

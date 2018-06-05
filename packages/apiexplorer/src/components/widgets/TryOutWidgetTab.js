@@ -121,9 +121,9 @@ class TryOutWidgetTab extends Component {
   // Events
   // ###############################################################################################################
 
-  onHandleParametersChange (name, value) {
+  onHandleParametersChange (param, value) {
     let newParameters = this.state.operationParameters
-    newParameters[name] = value
+    newParameters[param.name] = value
     this.setState({operationParameters: newParameters})
   }
 
@@ -250,7 +250,7 @@ class TryOutWidgetTab extends Component {
           operationParameters={this.state.operationParameters}
           operationLastParameters={this.props.operationLastParameters}
           headers={this.props.config.headers.concat(this.props.apiConfig.headers)}
-          onHandleParametersChange={(name, value) => this.onHandleParametersChange(name, value)}
+          onHandleParametersChange={(param, value) => this.onHandleParametersChange(param, value)}
           onHandleLastParametersChange={parameters => this.onHandleLastParametersChange(parameters)}
         />
         <div>
