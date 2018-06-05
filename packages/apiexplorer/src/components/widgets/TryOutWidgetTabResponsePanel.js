@@ -138,7 +138,7 @@ TryOutWidgetTabResponsePanel.propTypes = {
 
 TryOutWidgetTabResponsePanel.contextTypes = {
   store: PropTypes.object.isRequired,
-  router: PropTypes.func.isRequired
+  router: PropTypes.object.isRequired
 }
 
 export default TryOutWidgetTabResponsePanel

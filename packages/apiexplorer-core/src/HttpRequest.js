@@ -1,6 +1,5 @@
 /* global Request */
 /* global fetch */
-import { FormData } from 'form-data'
 
 function getMediaType (headerValue) {
   return headerValue ? headerValue.split(';')[0] : ''
@@ -93,7 +92,9 @@ class HttpRequest {
     result.isMultiPartRequest = parameters.filter(param => param.in === 'formData').length > 0
 
     if (result.isMultiPartRequest) {
+      /* eslint-disable */
       result.body = new FormData()
+      /* eslint-enable */
 
       parameters
         .filter(param => param.in === 'body')
