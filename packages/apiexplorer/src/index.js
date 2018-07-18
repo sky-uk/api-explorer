@@ -12,7 +12,7 @@ import { Url } from 'apiexplorer-core'
 import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from './components'
 
 import settingsPaneWrapper from './infrastructure/SettingsPaneWrapper'
-import { GeneralSettings, CustomHeadersSettings } from './components/settings'
+import { GeneralSettings, ManageHeadersSettings } from './components/settings'
 
 import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
 import APIExplorerAPIConfigurator from './APIExplorerAPIConfigurator'
@@ -48,7 +48,7 @@ class APIExplorer {
     this.addWidgetTab('Response Schema', ResponseSchemaWidgetTab)
 
     this.addSettingsPane('General', GeneralSettings)
-    this.addSettingsPane('Custom Headers', CustomHeadersSettings)
+    this.addSettingsPane('Manage Headers', ManageHeadersSettings)
 
     this.LinkGenerator = new LinkGenerator(this)
 
