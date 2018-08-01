@@ -9,6 +9,18 @@ export function headers (headers) {
   return { type: types.CONFIG_HEADERS, headers }
 }
 
+export function customizableHeaders (customizableHeaders) {
+  return { type: types.CONFIG_CUSTOMIZABLE_HEADERS, customizableHeaders }
+}
+
+export function originalCustomizableHeaders (originalCustomizableHeaders) {
+  return { type: types.CONFIG_ORIGINAL_CUSTOMIZABLE_HEADERS, originalCustomizableHeaders }
+}
+
+function newDefinition (config, definition) {
+  return { type: types.NEW_DEFINITION, config, definition }
+}
+
 export function load (config) {
   return dispatch => {
     const onLoadProgress = status => dispatch(progress(config, `[${config.friendlyName}] ${status}`))
@@ -48,10 +60,6 @@ function newAPI (config, api) {
 
 function newOperation (config, operation) {
   return { type: types.NEW_OPERATION, config, operation }
-}
-
-function newDefinition (config, definition) {
-  return { type: types.NEW_DEFINITION, config, definition }
 }
 
 export function selectedOperation (operationId) {

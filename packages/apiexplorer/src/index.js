@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import Root from './containers/Root'
 import URI from 'urijs'
 
-import { load as loadSpec, apiConfigurations, headers } from './actions/loadActionCreators'
+import { load as loadSpec, apiConfigurations, headers, customizableHeaders, originalCustomizableHeaders } from './actions/loadActionCreators'
 import * as Loaders from './infrastructure/loaders'
 import widgetWrapper from './infrastructure/WidgetWrapper'
 import { Url } from 'apiexplorer-core'
@@ -39,6 +39,8 @@ class APIExplorer {
     this.widgetTabs = [] // This will store all the api operations configured for ApiExplorer
     this.settingsPanes = [] // This will hold all the settings components
     this.headers = [] // This will store all the headers needed
+    this.customizableHeaders = []
+    this.originalCustomizableHeaders = []
     this.plugins = [] // This will store all the plugins needed
     this.queryStringLoadEnabled = true
     this.HttpClientConfigurator = c => {}
@@ -89,6 +91,20 @@ class APIExplorer {
    */
   addHeader (name, value) {
     this.headers.push({ name, value })
+    return this
+  }
+
+  /**
+   * Adds a new Customizable Header Header
+   * @param {[type]} name  Name of the Header
+   * @param {[type]} values An array of objects that represents the header value (value/description)
+   * @return {APIExplorer} the APIExplorer instance
+   */
+  addCustomizableHeader (name, values) {
+    const header = { name, values }
+    this.customizableHeaders.push(header)
+    const originalHeader = JSON.parse(JSON.stringify(header))
+    this.originalCustomizableHeaders.push(originalHeader)
     return this
   }
 
@@ -217,6 +233,8 @@ class APIExplorer {
     }
 
     store.dispatch(headers(this.headers))
+    store.dispatch(originalCustomizableHeaders(this.originalCustomizableHeaders))
+    store.dispatch(customizableHeaders(this.customizableHeaders))
 
     render(<Root store={store} />, document.getElementById(domAnchor))
     return this

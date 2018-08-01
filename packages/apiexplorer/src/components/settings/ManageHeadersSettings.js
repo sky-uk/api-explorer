@@ -6,44 +6,83 @@ class ManageHeadersSettings extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      headers: [
-        {
-          name: 'Sky-OTT-Country',
-          values: [
-            {value: 'GB', description: 'United Kingdom'},
-            {value: 'DE', description: 'Germany'},
-            {value: 'IE', description: 'Ireland'},
-            {value: 'AT', description: 'Austria'}
-          ]
-        },
-        {
-          name: 'Sky-OTT-Proposition',
-          values: [
-            {value: 'STORE', description: 'Sky Store'},
-            {value: 'NOWTV', description: 'Now TV'}
-          ]
-        }
-      ],
-      isCreatingNewHeaderValue: false
+      originalCustomizableHeaders: this.props.config.originalCustomizableHeaders,
+      customizableHeaders: this.props.config.customizableHeaders,
+
+      isCreatingNewHeaderValue: false,
+      inputValue: '',
+      inputDescription: ''
     }
 
     this.handleStartCreatingNewHeaderValue = this.handleStartCreatingNewHeaderValue.bind(this)
     this.handleCancelCreatingNewHeaderValue = this.handleCancelCreatingNewHeaderValue.bind(this)
     this.handleResetNewHeaderValue = this.handleResetNewHeaderValue.bind(this)
     this.handleCreateNewHeaderValue = this.handleCreateNewHeaderValue.bind(this)
+    this.handleValueChange = this.handleValueChange.bind(this)
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
 
-  componentDidMount () { /* DevicesStore.addChangeListener(this.handleStoreUpdate) */ }
-  componentWillUnmount () { /* DevicesStore.removeChangeListener(this.handleStoreUpdate) */ }
+  componentDidMount () { }
+  componentWillUnmount () { }
 
-  handleStartCreatingNewHeaderValue (evt) { this.setState({isCreatingNewHeaderValue: true}/*, () => React.findDOMNode(this.refs.headervalue).focus() */); evt.preventDefault() }
-  handleCancelCreatingNewHeaderValue (evt) { this.setState({isCreatingNewHeaderValue: false}); evt.preventDefault() }
-  handleResetNewHeaderValue (evt) { /* DevicesStore.reset(); */ evt.preventDefault() }
-  handleCreateNewHeaderValue (evt) {
-    // let value = React.findDOMNode(this.refs.headervalue).value
-    // let value = React.findDOMNode(this.refs.headerdescription).value
-    /* DevicesStore.addHeaderValue(value) */
+  handleStartCreatingNewHeaderValue (evt) { this.setState({isCreatingNewHeaderValue: true}) }
+  handleCancelCreatingNewHeaderValue (evt) { this.setState({isCreatingNewHeaderValue: false, inputValue: '', inputDescription: ''}) }
+  handleResetNewHeaderValue (evt, header) {
+    const originalHeader = this.getCopyOfOriginalHeaderByName(header.name)
+    header.values = originalHeader.values
+    this.setState({
+      isCreatingNewHeaderValue: false,
+      inputValue: '',
+      inputDescription: ''
+    })
     evt.preventDefault()
+  }
+
+  handleCreateNewHeaderValue (evt, headerName) {
+    let value = this.state.inputValue
+    let description = this.state.inputDescription
+    if (value && description) {
+      this.getHeaderByName(headerName).values.push({ value, description })
+      this.setState({isCreatingNewHeaderValue: false, inputValue: '', inputDescription: ''})
+    }
+  }
+
+  removeValue (headerName, headerValue) {
+    var header = this.getHeaderByName(headerName)
+    var index = header.values.map(function (h) { return h.value }).indexOf(headerValue)
+    if (index > -1) {
+      header.values.splice(index, 1)
+    }
+
+    this.setState({
+      customizableHeaders: this.state.customizableHeaders
+    })
+  }
+
+  handleValueChange (event) {
+    this.setState({inputValue: event.target.value})
+  }
+
+  handleDescriptionChange (event) {
+    this.setState({inputDescription: event.target.value})
+  }
+
+  getHeaderByName (name) {
+    var header = null
+    var index = this.state.customizableHeaders.map(function (h) { return h.name }).indexOf(name)
+    if (index > -1) {
+      header = this.state.customizableHeaders[index]
+    }
+    return header
+  }
+
+  getCopyOfOriginalHeaderByName (name) {
+    var header = null
+    var index = this.state.originalCustomizableHeaders.map(function (h) { return h.name }).indexOf(name)
+    if (index > -1) {
+      header = this.state.originalCustomizableHeaders[index]
+    }
+    return JSON.parse(JSON.stringify(header))
   }
 
   renderHeader (header) {
@@ -53,7 +92,7 @@ class ManageHeadersSettings extends Component {
           {!this.state.isCreatingNewHeaderValue &&
             <small> (
               <a href='#' onClick={this.handleStartCreatingNewHeaderValue}>add</a> | &nbsp;
-              <a href='#' onClick={this.handleResetNewHeaderValue}>reset to default</a>
+              <a href='#' onClick={(e) => this.handleResetNewHeaderValue(e, header)}>reset to default</a>
             )</small>}
         </h4>
         <p>Here you can manage the {header.name} available values:</p>
@@ -64,7 +103,7 @@ class ManageHeadersSettings extends Component {
               <Label>{headerItem.value}</Label>&nbsp;
               <code>{headerItem.description}</code>
               <List.Content floated='right'>
-                <Popup trigger={<Button><Icon style={{ margin: 0 }} name='remove' onClick={(evt) => /* DevicesStore.removeDevice(header.key) */ evt.preventDefault()} /></Button>} content='Remove this header value' />
+                <Popup trigger={<Button onClick={(e) => this.removeValue(header.name, headerItem.value)}><Icon style={{ margin: 0 }} name='remove' /></Button>} content='Remove this header value' />
               </List.Content>
             </List.Item>)}
         </List>
@@ -77,14 +116,14 @@ class ManageHeadersSettings extends Component {
           </Table.Header>
           <Table.Body>
             <Table.Row>
-              <Table.Cell><Input ref='headervalue' placeholder='Value' style={{width: '100%'}} /></Table.Cell>
-              <Table.Cell><Input ref='headerDescription' placeholder='Description' style={{width: '100%'}} /></Table.Cell>
+              <Table.Cell><Input autoFocus type='text' placeholder='Value' value={this.state.inputValue} onChange={this.handleValueChange} error={!this.state.inputValue} style={{width: '100%'}} /></Table.Cell>
+              <Table.Cell><Input type='text' placeholder='Description' value={this.state.inputDescription} onChange={this.handleDescriptionChange} error={!this.state.inputDescription} style={{width: '100%'}} /></Table.Cell>
             </Table.Row>
           </Table.Body>
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan='2'>
-                <Button onClick={this.handleCreateNewHeaderValue} floated='right' icon labelPosition='left' primary size='small'>
+                <Button onClick={() => this.handleCreateNewHeaderValue(this, header.name)} floated='right' icon labelPosition='left' primary size='small'>
                   <Icon name='save' /> Save
                 </Button>
                 <Button onClick={this.handleCancelCreatingNewHeaderValue} floated='right' icon labelPosition='left' primary size='small'>
@@ -100,7 +139,7 @@ class ManageHeadersSettings extends Component {
 
   getHeaderPanes () {
     const headerPanes = []
-    this.state.headers.map(header => headerPanes.push({ menuItem: header.name, render: () => <Tab.Pane>{this.renderHeader(header)}</Tab.Pane> }))
+    this.state.customizableHeaders.map(header => headerPanes.push({ menuItem: header.name, render: () => <Tab.Pane>{this.renderHeader(header)}</Tab.Pane> }))
     return headerPanes
   }
 
