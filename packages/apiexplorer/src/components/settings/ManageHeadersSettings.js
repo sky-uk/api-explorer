@@ -89,11 +89,11 @@ class ManageHeadersSettings extends Component {
     return (
       <div>
         <h4>Header {header.name}
-          {!this.state.isCreatingNewHeaderValue &&
-            <small> (
+          {!this.state.isCreatingNewHeaderValue && (
+            <small>
               <a href='#' onClick={this.handleStartCreatingNewHeaderValue}>add</a> | &nbsp;
               <a href='#' onClick={(e) => this.handleResetNewHeaderValue(e, header)}>reset to default</a>
-            )</small>}
+            </small>)}
         </h4>
         <p>Here you can manage the {header.name} available values:</p>
 
