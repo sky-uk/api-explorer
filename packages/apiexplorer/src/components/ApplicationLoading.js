@@ -3,9 +3,8 @@ import { AppLogo } from './../components'
 import { Segment } from 'semantic-ui-react'
 
 class ApplicationLoading extends Component {
-
   getClassName (msg) {
-    return 'loadingMessage ' + (msg.toLowerCase().indexOf("error") !== -1 ? 'error': 'info')
+    return 'loadingMessage ' + (msg.toLowerCase().indexOf('error') !== -1 ? 'error' : 'info')
   }
 
   render () {
