@@ -3,6 +3,11 @@ import { AppLogo } from './../components'
 import { Segment } from 'semantic-ui-react'
 
 class ApplicationLoading extends Component {
+
+  getClassName (msg) {
+    return 'loadingMessage ' + (msg.toLowerCase().indexOf("error") !== -1 ? 'error': 'info')
+  }
+
   render () {
     const { currentStep, progressMessages } = this.props
 
@@ -27,7 +32,7 @@ class ApplicationLoading extends Component {
             { currentStep }
           </p>
           <Segment.Group style={{ textAlign: 'left', marginLeft: '20%', marginRight: '20%', color: '#333', fontFamily: '"Source Code Pro", monospace' }}>
-            { progressMessages.reverse().map(p => <Segment key={p} style={{ fontSize: '0.8rem' }}>{(new Date()).toLocaleTimeString()} {p}</Segment>) }
+            { progressMessages.reverse().map(msg => <Segment key={msg} style={{ fontSize: '0.8rem' }}>{(new Date()).toLocaleTimeString()} <span className={this.getClassName(msg)}>{msg}</span></Segment>) }
           </Segment.Group>
         </div>
         <div style={{ position: 'fixed', bottom: 10, right: 10 }} >

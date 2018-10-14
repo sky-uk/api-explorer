@@ -27,7 +27,9 @@ class Application extends Component {
       return <HowToConfigureAPIExplorer />
     }
     const loaded = this.props.loader.get('loaded')
-    return loaded ? this.renderApplication() : this.renderLoadingScreen()
+    const loadedApis = this.props.loader.get('loadedApis')
+
+    return loaded && loadedApis > 0 ? this.renderApplication() : this.renderLoadingScreen()
   }
 
   renderLoadingScreen () {
