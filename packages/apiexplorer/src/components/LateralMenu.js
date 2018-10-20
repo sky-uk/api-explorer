@@ -203,53 +203,43 @@ const StyledMenu = Styled.div`
   div.api-operations .api-operation.active.http-head .ui.label,
   div.api-operations .api-operation.http-head:hover .ui.label     { background-color: #5bc0de; color: white; }
   div.api-operations .api-operation.http-head .ui.label                      { color: #5bc0de; }
-                                                              /* border-color: #5bc0de; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-get .ui.label,
   div.api-operations .api-operation.http-get:hover .ui.label      { background-color: #428bca; color: white; }
   div.api-operations .api-operation.http-get .ui.label                       { color: #428bca; }
-                                                              /* border-color: #428bca; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-delete .ui.label,
   div.api-operations .api-operation.http-delete:hover .ui.label   { background-color: #d9534f; color: white; }
   div.api-operations .api-operation.http-delete .ui.label                    { color: #d9534f; }
-                                                              /* border-color: #d9534f; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-put .ui.label,
   div.api-operations .api-operation.http-put:hover .ui.label      { background-color: #EB961E; color: white; }
   div.api-operations .api-operation.http-put .ui.label                       { color: #EB961E; }
-                                                              /* border-color: #EB961E; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-patch .ui.label,
   div.api-operations .api-operation.http-patch:hover .ui.label    { background-color: #F2C769; color: white; }
   div.api-operations .api-operation.http-patch .ui.label                     { color: #F2C769; }
-                                                              /* border-color: #F2C769; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-post .ui.label,
   div.api-operations .api-operation.http-post:hover .ui.label     { background-color: #5cb85c; color: white; }
   div.api-operations .api-operation.http-post .ui.label                      { color: #5cb85c; }
-                                                              /* border-color: #5cb85c; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-options .ui.label,
   div.api-operations .api-operation.http-options:hover .ui.label  { background-color: #dddddd; color: black; border-color: black; }
   div.api-operations .api-operation.http-options .ui.label                   { color: #dddddd; }
-                                                              /* border-color: #dddddd; border-style: solid; border-width: 1px; } */
 
   div.api-operations .api-operation.active.http-trace .ui.label,
   div.api-operations .api-operation.http-trace:hover .ui.label    { background-color: #aaaaaa; color: black; border-color: black; }
   div.api-operations .api-operation.http-trace .ui.label                     { color: #aaaaaa; }
-                                                              /* border-color: #aaaaaa; border-style: solid; border-width: 1px; } */
 
- /* LEGACY STYLES (OVERRIDES) /
+ /* LEGACY STYLES (OVERRIDES) */
   div.api-operations .api-operation i.lock.icon {
     float: left;
   }
   div.api-operations .api-operation .ui.label {
     float: left;
     width: 60px;
-  } 
-  //* */
-
+  }
 `
 
 /*

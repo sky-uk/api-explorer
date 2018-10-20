@@ -27,7 +27,8 @@ export default class Root extends Component {
             <title>API Explorer</title>
             <link rel='shortcut icon' type='image/png' href='/images/favicon.png' />
             <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css' />
-            <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Code+Pro' />
+            <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Code+Pro' />
+            <link rel='stylesheet' href='//diegoddox.github.io/react-redux-toastr/4.0/react-redux-toastr.min.css' />
           </Helmet>
           <ConnectedRouter history={history}>
             <Switch>

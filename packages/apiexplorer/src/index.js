@@ -7,7 +7,7 @@ import URI from 'urijs'
 import { load as loadSpec, apiConfigurations, headers, customizableHeaders, originalCustomizableHeaders } from './actions/loadActionCreators'
 import * as Loaders from './infrastructure/loaders'
 import widgetWrapper from './infrastructure/WidgetWrapper'
-import { Url } from 'apiexplorer-core'
+import { Url } from './infrastructure/core'
 
 import { TryOutWidgetTab, SpecWidgetTab, ResponseSchemaWidgetTab } from './components'
 
@@ -226,17 +226,21 @@ class APIExplorer {
     const configureStore = require('./store/configureStore')
     const store = configureStore.default()
     store.dispatch(apiConfigurations(this.apiConfigurations))
-
-    // Dispatch actions to load configurations
-    for (const config of this.apiConfigurations) {
-      store.dispatch(loadSpec(config))
-    }
-
     store.dispatch(headers(this.headers))
     store.dispatch(originalCustomizableHeaders(this.originalCustomizableHeaders))
     store.dispatch(customizableHeaders(this.customizableHeaders))
 
     render(<Root store={store} />, document.getElementById(domAnchor))
+
+    // give some time so that the css loads properly.
+    // this can be improved by waiting for a dom load event.
+    setTimeout(() => {
+      // Dispatch actions to load configurations
+      for (const config of this.apiConfigurations) {
+        store.dispatch(loadSpec(config))
+      }
+    }, 1000)
+
     return this
   }
 }

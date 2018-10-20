@@ -107,15 +107,10 @@ APIExplorer
   .start()
 ```
 
-## Sample API Explorer client
-
-You can find a sample project that depends on API Explorer in https://github.com/sky-uk/petstore-api-explorer.
-
-
 ## Core Maintainers
 
-- [Carlos Guedes](https://github.com/cguedes) - carlos.guedes@sky.uk
 - [Daniel Correia](https://github.com/danielbcorreia) - daniel.correia@sky.uk
+- [Marcos André](https://github.com/MarcosAndre) - marcos.andre@sky.uk
 
 ## Contributing
 
@@ -128,6 +123,7 @@ We keep a list of features and bugs [in the issue tracker](https://github.com/sk
 You can check all the contributors of this project [here](https://github.com/sky-uk/api-explorer/graphs/contributors). A special thanks for the following two:
 - [Nuno Silva](https://github.com/nunoas) - nuno.silva@sky.uk
 - [Pedro Félix](https://github.com/pmhsfelix) - pedro.felix@sky.uk
+- [Carlos Guedes](https://github.com/cguedes) - carlos.guedes@sky.uk
 
 
 ## Publishing
