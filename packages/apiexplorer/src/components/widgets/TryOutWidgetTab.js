@@ -4,7 +4,7 @@ import moment from 'moment'
 import URI from 'urijs'
 import { Segment, Label, Loader } from 'semantic-ui-react'
 
-import { HttpStatus, HttpRequest } from 'apiexplorer-core'
+import { HttpStatus, HttpRequest } from '../../infrastructure/core'
 
 import { newParameters, localParameters, responseReceived, sendRequest } from '../../actions/loadActionCreators'
 

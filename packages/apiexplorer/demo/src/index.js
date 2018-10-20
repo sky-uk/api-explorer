@@ -1,12 +1,10 @@
 import './styles.css'
 import APIExplorer from './../../src'
 
-import { CurlGeneratorTab } from 'apiexplorer-components'
-
 APIExplorer
-  .addAPI('petstore', 'swagger2', 'http://petstore.swagger.io/v2/swagger.json', c => {
+  .addAPI('petstore', 'swagger2', '/petstore.json', c => {
     c.displaySummaryAtWelcome(true)
-      .listOperationsAtWelcome(true)
+    c.listOperationsAtWelcome(true)
+    c.setRequestTimeoutInMiliseconds(1000)
   })
-  .addWidgetTab('CURL', CurlGeneratorTab)
   .start('demo')

@@ -20,8 +20,6 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "apiexplorer-components": "^0.6.0",
-    "apiexplorer-core": "^0.6.0",
     "classnames": "^2.2.5",
     "codemirror": "^5.31.0",
     "history": "^4.7.2",
@@ -41,9 +39,10 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.76.0",
-    "styled-components": "^2.2.3",
+    "styled-components": "^4.0.2",
     "swagger-converter": "^1.4.1",
-    "urijs": "^1.19.0"
+    "urijs": "^1.19.0",
+    "form-data": "^2.3.2"
   },
   "peerDependencies": {
     "react": "15.x"
