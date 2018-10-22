@@ -1,3 +1,36 @@
+## 0.6.0 (..., 2017)
+
+### Development
+
+* Adopted [Lerna](https://lernajs.io/) project structure 
+
+## 0.5.0 (August 30, 2017)
+
+### Enhancement
+
+* [#135](https://github.com/sky-uk/api-explorer/issues/135) - Use default parameter values when available
+* Add basic examples support for input parameters
+* CURL generator tab sample plugin in the Links sample
+
+## 0.4.0 (March 17, 2017)
+
+As part of this release we had [4 issues](https://github.com/sky-uk/api-explorer/milestone/8?closed=1) being closed.
+
+### Documentation 
+
+* [#157](https://github.com/sky-uk/api-explorer/issues/157) - Write documentation for APIExplorer API 
+
+### Enhancement 
+
+* [#172](https://github.com/sky-uk/api-explorer/issues/172) - Display custom header values in parameters of type header 
+* [#60](https://github.com/sky-uk/api-explorer/issues/60) - Keep the last response for an operation in the state 
+
+### Development 
+
+* [#170](https://github.com/sky-uk/api-explorer/issues/170) - Remove the dependency for DevTools 
+
+
+
 ## 0.3.0 (December 29, 2016)
 
 As part of this release we had [8 issues](https://github.com/sky-uk/api-explorer/milestone/6?closed=1) being closed.

@@ -1,0 +1,26 @@
+{
+  "name": "sample-petstore",
+  "version": "0.6.0",
+  "description": "APIExplorer Sample for Swagger's Pet Store",
+  "private": true,
+  "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-react-app",
+    "test": "nwb test-react",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server"
+  },
+  "dependencies": {
+    "apiexplorer": "^0.6.0",
+    "apiexplorer-components": "^0.6.0",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0"
+  },
+  "devDependencies": {
+    "nwb": "0.19.x"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

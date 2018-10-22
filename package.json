@@ -1,129 +1,23 @@
 {
-  "name": "apiexplorer",
-  "version": "0.5.0",
-  "description": "API Explorer (live documentation) for Swagger",
-  "main": "dist/APIExplorer.umd.js",
+  "name": "apiexplorer-lerna",
+  "private": true,
   "scripts": {
-    "prestart": "npm run build",
-    "build": "NODE_ENV=production webpack --config build/webpack.prod.config",
-    "start": "NODE_ENV=production node server-prod.js",
-    "dev": "npm run dev:links",
-    "dev:petstore": "cross-env APIEXPLORER_SAMPLE=petstore nodemon server/server.js",
-    "dev:links": "cross-env APIEXPLORER_SAMPLE=links nodemon server/server.js",
-    "dev:helloworld": "cross-env APIEXPLORER_SAMPLE=helloworld nodemon server/server.js",
-    "dev:basepath": "cross-env APIEXPLORER_SAMPLE=basepath nodemon server/server.js",
-    "test": "npm run lint",
-    "DISABLEDtest": "npm run lint && cross-env NODE_ENV=test mocha --recursive --compilers js:babel-core/register",
-    "DISABLEDtest:watch": "npm test -- --watch",
+    "build:watch": "lerna run -- build:watch",
+    "demo": "cd packages/apiexplorer && npm start",
     "lint": "standard --verbose | snazzy",
-    "docs:clean": "rimraf _book",
-    "docs:prepare": "gitbook install",
-    "docs:build": "npm run docs:prepare && gitbook build -g sky-uk/api-explorer",
-    "docs:watch": "npm run docs:prepare && gitbook serve",
-    "docs:publish": "npm run docs:clean && npm run docs:build && cd _book && git init && git commit --allow-empty -m 'update book' && git checkout -b gh-pages && touch .nojekyll && git add . && git commit -am 'update book' && git push git@github.com:sky-uk/api-explorer gh-pages --force",
-    "preversion": "npm test",
-    "version": "npm run build && git add -A dist",
-    "postversion": "git push && git push --tags"
+    "test": "npm run lint"
   },
-  "files": [
-    "dist"
-  ],
-  "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=3.0.0"
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "lerna": "^2.5.1",
+    "snazzy": "^7.0.0",
+    "standard": "^11.0.0-beta.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sky-uk/api-explorer.git"
-  },
-  "author": "Sky UK Limited",
-  "license": "SEE LICENSE IN LICENSE",
-  "bugs": {
-    "url": "https://github.com/sky-uk/api-explorer/issues"
-  },
-  "maintainers": [
-    {
-      "name": "Carlos Guedes",
-      "email": "carlos.guedes@sky.uk"
-    },
-    {
-      "name": "Daniel Correia",
-      "email": "daniel.correia@sky.uk"
-    }
-  ],
   "standard": {
     "parser": "babel-eslint",
     "globals": [
       "APIExplorer",
-      "fetch",
-      "describe",
-      "it"
-    ],
-    "ignore": [
-      "dist"
+      "fetch"
     ]
-  },
-  "dependencies": {
-    "async": "1.5.0",
-    "classnames": "2.1.2",
-    "codemirror": "5.8.0",
-    "history": "1.12.6",
-    "immutable": "3.7.5",
-    "isomorphic-fetch": "2.2.0",
-    "linq": "3.0.5",
-    "marked": "0.3.5",
-    "moment": "2.13.0",
-    "morgan": "1.6.1",
-    "react": "0.14.0",
-    "react-dock": "0.2.3",
-    "react-dom": "0.14.0",
-    "react-highlight": "0.9.0",
-    "react-jsonschema-form": "0.31.0",
-    "react-redux": "^4.4.6",
-    "react-redux-toastr": "4.0.3",
-    "react-router": "1.0.0-rc3",
-    "recursive-readdir": "2.0.0",
-    "redux": "^3.6.0",
-    "redux-router": "1.0.0-beta3",
-    "redux-thunk": "1.0.0",
-    "speakingurl": "7.0.0",
-    "swagger-converter": "1.0.1",
-    "urijs": "1.18.1",
-    "whatwg-fetch": "0.10.1"
-  },
-  "devDependencies": {
-    "acorn": "3.1.0",
-    "babel-core": "^5.0.0",
-    "babel-eslint": "^7.1.1",
-    "babel-loader": "^5.0.0",
-    "babel-plugin-react-transform": "1.1.0",
-    "babel-runtime": "5.8.29",
-    "chai": "3.4.0",
-    "chai-immutable": "1.4.0",
-    "cross-env": "1.0.8",
-    "esprima": "2.7.2",
-    "expect": "1.8.0",
-    "exports-loader": "0.6.2",
-    "express": "4.13.3",
-    "eslint": "^3.0.0",
-    "gitbook-cli": "0.3.4",
-    "highlight.js": "^9.6.0",
-    "html-webpack-plugin": "1.6.2",
-    "imports-loader": "0.6.5",
-    "jsdom": "7.0.2",
-    "mocha": "2.3.3",
-    "node-libs-browser": "0.5.2",
-    "nodemon": "1.8.0",
-    "raw-loader": "0.5.1",
-    "react-addons-test-utils": "0.14.0",
-    "react-transform-hmr": "1.0.0",
-    "request": "2.65.0",
-    "rimraf": "2.3.4",
-    "snazzy": "2.0.1",
-    "standard": "^8.6.0",
-    "style-loader": "0.12.3",
-    "webpack": "1.13.1",
-    "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
   }
 }
