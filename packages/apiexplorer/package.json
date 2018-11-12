@@ -42,7 +42,8 @@
     "styled-components": "^4.0.2",
     "swagger-converter": "^1.4.1",
     "urijs": "^1.19.0",
-    "form-data": "^2.3.2"
+    "form-data": "^2.3.2",
+    "swagger-parser": "^6.0.2"
   },
   "peerDependencies": {
     "react": "15.x"

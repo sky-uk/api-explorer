@@ -22,17 +22,20 @@ class APIExplorer {
   constructor () {
     this.SupportedLoaders = {
       Swagger1Loader: 'Swagger1Loader',
-      Swagger2Loader: 'Swagger2Loader'
+      Swagger2Loader: 'Swagger2Loader',
+      Swagger3Loader: 'Swagger3Loader'
     }
 
     this.LoaderFriendlyNames = {
       'swagger1': this.SupportedLoaders.Swagger1Loader,
-      'swagger2': this.SupportedLoaders.Swagger2Loader
+      'swagger2': this.SupportedLoaders.Swagger2Loader,
+      'swagger3': this.SupportedLoaders.Swagger3Loader
     }
 
     this.Loaders = {
       [this.SupportedLoaders.Swagger1Loader]: Loaders.Swagger1Loader,
-      [this.SupportedLoaders.Swagger2Loader]: Loaders.Swagger2Loader
+      [this.SupportedLoaders.Swagger2Loader]: Loaders.Swagger2Loader,
+      [this.SupportedLoaders.Swagger3Loader]: Loaders.Swagger3Loader
     }
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer

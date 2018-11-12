@@ -53,7 +53,11 @@ class Welcome extends Component {
     return pathsByTags.select(g => {
       let key = g.key()
       const api = this.props.apis.get('byName').get(apiInfo.apiname)
-      const tagDescription = api.hasOwnProperty('tags') ? api.tags.find(t => t.name === key).description : key
+      const tag = api.hasOwnProperty('tags') ? api.tags.find(t => t.name === key) : undefined
+      // console.log(tag)
+      const tagDescription = tag ? tag.description || tag.key : tag.key 
+      // console.log(tagDescription)
+
 
       return <Segment key={key}>
         <h4>{tagDescription}</h4>
