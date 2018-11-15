@@ -108,8 +108,9 @@ class TryOutWidgetTab extends Component {
   }
 
   getUrl (path) {
-    let scheme = this.props.apis.schemes ? this.props.apis.schemes[0] : this.props.config.defaultScheme
-    let uri = new URI(`${scheme}://${this.props.apis.host}${this.props.apis.basePath}${path}`)
+    // let scheme = this.props.apis.schemes ? this.props.apis.schemes[0] : this.props.config.defaultScheme
+    // let uri = new URI(`${scheme}://${this.props.apis.host}${this.props.apis.basePath}${path}`)
+    let uri = new URI(`${this.props.apis.host}${this.props.apis.basePath}${path}`)
 
     uri.normalizePath()
     uri = URI.decode(uri)

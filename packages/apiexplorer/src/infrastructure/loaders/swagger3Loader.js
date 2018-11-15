@@ -5,27 +5,17 @@ export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
   const url = config.url.getUrl()
   onLoadProgress(`Loading API Spec from ${url}`)
 
-
-
-  SwaggerParser.validate(url, function(err, api) {
-    if (err) {
-      console.error(err);
-    }
-    else {
-      console.log("API name: %s, Version: %s", api.info.title, api.info.version);
-    }
-  });
-  
-
-  return fetch(url, { credentials: 'include' })
-    .then(response => response.json())
-    .then(apiSpec => {
-      let newApiSpec =  apiSpec
+  return SwaggerParser.validate(url)
+    .then(function(api) {
+      let newApi = api
       let defaultHost = new URI(config.url.url).host()
 
-      newApiSpec = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, apiSpec)
-
-      swagger3JsonLoader(newApiSpec, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+      newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
+      swagger3JsonLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+    })
+    .catch(function(err){
+      //some error handling
+      console.error(err)
     })
 }
 
@@ -33,12 +23,16 @@ export function swagger3JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
 
+  var host = apiSpec.servers[0].url
+
   // defaults
   apiSpec = Object.assign({
     definitions: [],
     basePath: '/',
-    host: defaultHost
+    host: host //defaultHost
   }, apiSpec)
+
+
 
   onNewAPI(apiSpec)
 

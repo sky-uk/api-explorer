@@ -9,15 +9,15 @@ class ResponseSchemaWidgetTab extends Component {
         return schemaReference
       }
 
-      const definition = definitions[schemaReference]
-      if (!definition || !definition.schema) {
-        return schemaReference
-      }
+      // const definition = definitions[schemaReference]
+      // if (!definition || !definition.schema) {
+      //   return schemaReference
+      // }
 
-      if (definition.schema.type === 'object') {
+      if (responseSchema.type === 'object') {
         let model = {}
-        Object.keys(definition.schema.properties || {}).forEach(p => {
-          const propDescriptor = definition.schema.properties[p]
+        Object.keys(responseSchema.properties || {}).forEach(p => {
+          const propDescriptor = responseSchema.properties[p]
 
           // check if the type is an array
           if (propDescriptor.hasOwnProperty('type') && propDescriptor.type === 'array') {
@@ -38,9 +38,9 @@ class ResponseSchemaWidgetTab extends Component {
         return model
       }
 
-      if (definition.schema.type === 'array') {
+      if (responseSchema.type === 'array') {
         let model = []
-        let items = definition.schema.items
+        let items = responseSchema.items
         // Draw arrays with $ref objects
         if (items.hasOwnProperty('$ref')) {
           model.push(getModelFor(items.$ref, deep + 1))
@@ -55,6 +55,10 @@ class ResponseSchemaWidgetTab extends Component {
         return JSON.stringify([getModelFor(responseSchema.items.$ref)], null, 2)
       }
 
+      if (responseSchema.type === 'object') {
+        return JSON.stringify([getModelFor(responseSchema)], null, 2)
+      }
+
       return responseSchema.type
     }
 
@@ -67,32 +71,33 @@ class ResponseSchemaWidgetTab extends Component {
 
   getResponseSchemas () {
     const responses = this.props.operation.spec.responses
-    const definitions = this.props.definitions
+    // const definitions = this.props.definitions
     let responseSchemas = []
     Object.keys(responses || {}).forEach(statusCode => {
       const response = responses[statusCode]
-      if (response && response.schema) {
-        responseSchemas.push({ returnType: getSchemaName(response), statusCode, description: response.description, schema: response.schema })
+      if (response && response.content && response.content['application/json'] && response.content['application/json'].schema) {
+        responseSchemas.push({ returnType: getSchemaName(response), statusCode, description: response.description, schema: response.content['application/json'].schema })
       } else {
         responseSchemas.push({ returnType: '', statusCode, description: response.description, schema: {} })
       }
     })
 
     function getSchemaName (response) {
-      if (response.hasOwnProperty('schema')) {
-        if (response.schema.hasOwnProperty('type')) {
-          if (response.schema.type === 'array') {
-            if (response.schema.items.hasOwnProperty('$ref')) {
-              return `[${definitions[response.schema.items.$ref].name}]`
+      // if (response.hasOwnProperty('schema')) {
+        const schema = response.content['application/json'].schema
+        if (schema.hasOwnProperty('type')) {
+          if (schema.type === 'array') {
+            if (schema.items.hasOwnProperty('$ref')) {
+              return `[${definitions[schema.items.$ref].name}]`
             }
-            return `[${response.schema.items.type}]`
+            return `[${schema.items.type}]`
           }
-          return response.schema.type
+          return schema.type
         }
-        if (response.schema.hasOwnProperty('$ref')) {
-          return definitions[response.schema.$ref].name
+        if (schema.hasOwnProperty('$ref')) {
+          return definitions[schema.$ref].name
         }
-      }
+      // }
       return 'void'
     }
 
@@ -119,7 +124,7 @@ class ResponseSchemaWidgetTab extends Component {
               <Table.Body>
                 <Table.Row verticalAlign='top'>
                   <Table.Cell style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></Table.Cell>
-                  <Table.Cell><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></Table.Cell>
+                  <Table.Cell><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(responseSchema.schema, null, 2)}</pre></Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>
