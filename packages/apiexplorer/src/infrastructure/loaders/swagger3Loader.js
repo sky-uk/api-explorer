@@ -1,4 +1,3 @@
-import URI from 'urijs'
 import SwaggerParser from 'swagger-parser'
 
 export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
@@ -14,8 +13,7 @@ export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
       swagger3JsonLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     })
     .catch(function(err){
-      //some error handling
-      console.error(err)
+      onLoadError(err)
     })
 }
 

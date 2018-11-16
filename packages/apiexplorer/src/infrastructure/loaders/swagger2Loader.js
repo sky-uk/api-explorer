@@ -1,20 +1,8 @@
 import URI from 'urijs'
-import SwaggerParser from 'swagger-parser'
-
 
 export function swagger2Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   const url = config.url.getUrl()
   onLoadProgress(`Loading API Spec from ${url}`)
-
-  SwaggerParser.parse(url, function(err, api) {
-    if (err) {
-      console.error(err);
-    }
-    else {
-      console.log("API name: %s, Version: %s", api.info.title, api.info.version);
-    }
-  });
-  
 
   return fetch(url, { credentials: 'include' })
     .then(response => response.json())
@@ -32,8 +20,6 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
 
-  console.log("swagger 2")
-
   // defaults
   apiSpec = Object.assign({
     definitions: [],
@@ -41,13 +27,7 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
     host: defaultHost
   }, apiSpec)
 
-  console.log("apiSpec")
-  console.log(apiSpec)
-
   onNewAPI(apiSpec)
-
-  console.log("apiSpec")
-  console.log(apiSpec)
 
   Object.keys(apiSpec.paths)
     .forEach(url => {
@@ -70,9 +50,6 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
         })
     })
 
-  // console.log("apiSpec")
-  // console.log(apiSpec)
-
   Object.keys(apiSpec.definitions)
     .forEach(definitionName => {
       const definition = apiSpec.definitions[definitionName]
@@ -81,9 +58,6 @@ export function swagger2JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
       onLoadProgress(`Processing definition ${id}`)
       onNewDefinition(definitionSpec)
     })
-
-  // console.log("apiSpec")
-  // console.log(apiSpec)
 
   onLoadProgress(`Loading completed`)
   onLoadCompleted(apiSpec)
