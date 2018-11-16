@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { Segment, Card, Table } from 'semantic-ui-react'
 
+const contentTypeJson = 'application/json'
+
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {
-    const definitions = this.props.definitions
     function getModelFor (schemaReference, deep = 0) {
       if (deep === 5) {
         return schemaReference
       }
-
-      // const definition = definitions[schemaReference]
-      // if (!definition || !definition.schema) {
-      //   return schemaReference
-      // }
 
       if (responseSchema.type === 'object') {
         let model = {}
@@ -71,33 +67,24 @@ class ResponseSchemaWidgetTab extends Component {
 
   getResponseSchemas () {
     const responses = this.props.operation.spec.responses
-    // const definitions = this.props.definitions
     let responseSchemas = []
     Object.keys(responses || {}).forEach(statusCode => {
       const response = responses[statusCode]
-      if (response && response.content && response.content['application/json'] && response.content['application/json'].schema) {
-        responseSchemas.push({ returnType: getSchemaName(response), statusCode, description: response.description, schema: response.content['application/json'].schema })
+      if (response && response.content && response.content[contentTypeJson] && response.content[contentTypeJson].schema) {
+        responseSchemas.push({ returnType: getSchemaName(response), statusCode, description: response.description, schema: response.content[contentTypeJson].schema })
       } else {
         responseSchemas.push({ returnType: '', statusCode, description: response.description, schema: {} })
       }
     })
 
     function getSchemaName (response) {
-      // if (response.hasOwnProperty('schema')) {
-        const schema = response.content['application/json'].schema
-        if (schema.hasOwnProperty('type')) {
-          if (schema.type === 'array') {
-            if (schema.items.hasOwnProperty('$ref')) {
-              return `[${definitions[schema.items.$ref].name}]`
-            }
-            return `[${schema.items.type}]`
-          }
-          return schema.type
+      const schema = response.content[contentTypeJson].schema
+      if (schema.hasOwnProperty('type')) {
+        if (schema.type === 'array') {
+          return `[${schema.items.type}]`
         }
-        if (schema.hasOwnProperty('$ref')) {
-          return definitions[schema.$ref].name
-        }
-      // }
+        return schema.type
+      }
       return 'void'
     }
 
