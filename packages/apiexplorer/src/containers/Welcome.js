@@ -54,10 +54,7 @@ class Welcome extends Component {
       let key = g.key()
       const api = this.props.apis.get('byName').get(apiInfo.apiname)
       const tag = api.hasOwnProperty('tags') ? api.tags.find(t => t.name === key) : undefined
-      // console.log(tag)
-      const tagDescription = tag ? tag.description || tag.key : tag.key 
-      // console.log(tagDescription)
-
+      const tagDescription = tag ? tag.description || tag.key : key
 
       return <Segment key={key}>
         <h4>{tagDescription}</h4>
