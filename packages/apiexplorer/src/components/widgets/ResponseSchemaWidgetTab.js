@@ -10,56 +10,31 @@ class ResponseSchemaWidgetTab extends Component {
         return schemaReference
       }
 
-      if (responseSchema.type === 'object') {
+      if (schemaReference.type === 'object') {
         let model = {}
-        Object.keys(responseSchema.properties || {}).forEach(p => {
-          const propDescriptor = responseSchema.properties[p]
+        Object.keys(schemaReference.properties || {}).forEach(p => {
+          const propDescriptor = schemaReference.properties[p]
 
           // check if the type is an array
           if (propDescriptor.hasOwnProperty('type') && propDescriptor.type === 'array') {
-            if (propDescriptor.hasOwnProperty('items') && propDescriptor.items.hasOwnProperty('$ref')) {
-              model[p] = [ getModelFor(propDescriptor.items.$ref, deep + 1) ]
-            } else {
-              model[p] = [ getModelFor(propDescriptor.items.type, deep + 1) ]
-            }
+            model[p] = [ getModelFor(propDescriptor.items, deep + 1) ]
           } else {
-            // check if instead of a array is a known type
-            if (propDescriptor.hasOwnProperty('$ref')) {
-              model[p] = getModelFor(propDescriptor.$ref, deep + 1)
-            } else {
-              model[p] = propDescriptor.type
-            }
+            model[p] = propDescriptor.type
           }
         })
         return model
       }
 
-      if (responseSchema.type === 'array') {
-        let model = []
-        let items = responseSchema.items
-        // Draw arrays with $ref objects
-        if (items.hasOwnProperty('$ref')) {
-          model.push(getModelFor(items.$ref, deep + 1))
-        }
-        // TODO: Accept other types
-        return model
+      if (schemaReference.type === 'array') {
+        return [getModelFor(schemaReference.items, deep + 1)]
       }
     }
 
     if (responseSchema.hasOwnProperty('type')) {
-      if (responseSchema.type === 'array') {
-        return JSON.stringify([getModelFor(responseSchema.items.$ref)], null, 2)
+      if (responseSchema.type === 'array' || responseSchema.type === 'object') {
+        return JSON.stringify(getModelFor(responseSchema), null, 2)
       }
-
-      if (responseSchema.type === 'object') {
-        return JSON.stringify([getModelFor(responseSchema)], null, 2)
-      }
-
       return responseSchema.type
-    }
-
-    if (responseSchema.hasOwnProperty('$ref')) {
-      return JSON.stringify(getModelFor(responseSchema.$ref), null, 2)
     }
 
     return 'void'
