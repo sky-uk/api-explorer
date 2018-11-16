@@ -19,7 +19,6 @@ function connectFn (state, props) {
     apis: state.apis.get('byName').get(apiName),
     apiConfig: APIExplorer.getAPI(apiName),
     config: {
-      defaultScheme: state.configs.get('url').protocol,
       useProxy: state.configs.get('url').useProxy,
       headers: state.configs.get('headers'),
       queryString: state.configs.get('url').getQueryString(),

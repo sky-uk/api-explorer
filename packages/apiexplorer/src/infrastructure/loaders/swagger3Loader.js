@@ -8,10 +8,10 @@ export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
   return SwaggerParser.validate(url)
     .then(function(api) {
       let newApi = api
-      let defaultHost = new URI(config.url.url).host()
+      let defaultHost = window.location.origin
 
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
-      swagger3JsonLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+      swagger3JsonLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     })
     .catch(function(err){
       //some error handling
@@ -19,20 +19,16 @@ export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
     })
 }
 
-export function swagger3JsonLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
+export function swagger3JsonLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError }) {
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
-
-  var host = apiSpec.servers[0].url
 
   // defaults
   apiSpec = Object.assign({
     definitions: [],
     basePath: '/',
-    host: host //defaultHost
+    host: apiSpec.servers ? apiSpec.servers[0].url || defaultHost : defaultHost 
   }, apiSpec)
-
-
 
   onNewAPI(apiSpec)
 
@@ -55,15 +51,6 @@ export function swagger3JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
           onLoadProgress(`Processing operation ${id}`)
           onNewOperation(operationSpec)
         })
-    })
-
-  Object.keys(apiSpec.definitions)
-    .forEach(definitionName => {
-      const definition = apiSpec.components.schemas[definitionName]
-      const id = `${slug}-${definitionName.toLocaleLowerCase()}`
-      const definitionSpec = {key: `#/definitions/${definitionName}`, name: `${definitionName}`, definition}
-      onLoadProgress(`Processing definition ${id}`)
-      onNewDefinition(definitionSpec)
     })
 
   onLoadProgress(`Loading completed`)
