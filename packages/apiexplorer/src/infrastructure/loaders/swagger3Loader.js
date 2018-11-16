@@ -45,6 +45,16 @@ export function swagger3JsonLoader (apiSpec, friendlyName, slug, defaultHost, { 
           if (!operation.tags || operation.tags.length === 0) {
             operation.tags = ['']
           }
+
+          if (operation.responses) {
+            Object.keys(operation.responses)
+              .forEach(response => {
+                if (operation.responses[response].content && operation.responses[response].content["application/json"]) {
+                  operation.responses[response].schema = operation.responses[response].content["application/json"].schema
+                }
+              })
+          }
+
           const operationSpec = { id, url, httpMethod, ...operation }
           onLoadProgress(`Processing operation ${id}`)
           onNewOperation(operationSpec)

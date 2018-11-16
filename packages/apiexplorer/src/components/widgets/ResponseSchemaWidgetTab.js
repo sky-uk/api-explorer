@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Segment, Card, Table } from 'semantic-ui-react'
 
-const contentTypeJson = 'application/json'
-
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {
     function getModelFor (schemaReference, deep = 0) {
@@ -45,15 +43,15 @@ class ResponseSchemaWidgetTab extends Component {
     let responseSchemas = []
     Object.keys(responses || {}).forEach(statusCode => {
       const response = responses[statusCode]
-      if (response && response.content && response.content[contentTypeJson] && response.content[contentTypeJson].schema) {
-        responseSchemas.push({ returnType: getSchemaName(response), statusCode, description: response.description, schema: response.content[contentTypeJson].schema })
+      if (response && response.schema) {
+        responseSchemas.push({ returnType: getSchemaName(response), statusCode, description: response.description, schema: response.schema })
       } else {
         responseSchemas.push({ returnType: '', statusCode, description: response.description, schema: {} })
       }
     })
 
     function getSchemaName (response) {
-      const schema = response.content[contentTypeJson].schema
+      const schema = response.schema
       if (schema.hasOwnProperty('type')) {
         if (schema.type === 'array') {
           return `[${schema.items.type}]`
