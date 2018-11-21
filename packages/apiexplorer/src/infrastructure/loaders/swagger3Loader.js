@@ -49,8 +49,8 @@ export function swagger3SpecLoader (apiSpec, friendlyName, slug, defaultHost, { 
           if (operation.responses) {
             Object.keys(operation.responses)
               .forEach(response => {
-                if (operation.responses[response].content && operation.responses[response].content["application/json"]) {
-                  operation.responses[response].schema = operation.responses[response].content["application/json"].schema
+                if (operation.responses[response].content && operation.responses[response].content['application/json']) {
+                  operation.responses[response].schema = operation.responses[response].content['application/json'].schema
                 }
               })
           }

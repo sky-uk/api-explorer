@@ -26,7 +26,7 @@ export function swagger2SpecLoader (apiSpec, friendlyName, slug, defaultHost, { 
     definitions: [],
     basePath: '/'
   }, apiSpec)
-  apiSpec.host = apiSpec.schemes[0] + '://' + apiSpec.host ||  defaultHost
+  apiSpec.host = apiSpec.schemes[0] + '://' + apiSpec.host || defaultHost
 
   onNewAPI(apiSpec)
 

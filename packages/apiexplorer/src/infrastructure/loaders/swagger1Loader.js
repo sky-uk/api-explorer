@@ -59,7 +59,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
           onLoadProgress('Convertion from Swagger 1.x to Swagger 2.0 completed!')
           swagger2Document.info.title = swagger2Document.info.title === 'Title was not specified' ? 'API' : swagger2Document.info.title
 
-          swagger2JsonLoader(swagger2Document, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+          swagger2SpecLoader(swagger2Document, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
         }
       })
     })
