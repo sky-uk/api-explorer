@@ -10,14 +10,14 @@ export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
       let defaultHost = window.location.origin
 
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
-      swagger3JsonLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
+      swagger3SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     })
     .catch(function (err) {
       onLoadError(err)
     })
 }
 
-export function swagger3JsonLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError }) {
+export function swagger3SpecLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError }) {
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
 

@@ -1,7 +1,7 @@
 /* global fetch */
 
 import Enumerable from 'linq'
-import { swagger2JsonLoader } from './swagger2Loader'
+import { swagger2SpecLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
 import URI from 'urijs'
 
