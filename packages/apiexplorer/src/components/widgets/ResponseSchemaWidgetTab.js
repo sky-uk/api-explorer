@@ -26,6 +26,10 @@ class ResponseSchemaWidgetTab extends Component {
       if (schemaReference.type === 'array') {
         return [getModelFor(schemaReference.items, deep + 1)]
       }
+
+      if (schemaReference.hasOwnProperty('type')) {
+        return schemaReference.type
+      }
     }
 
     if (responseSchema.hasOwnProperty('type')) {
