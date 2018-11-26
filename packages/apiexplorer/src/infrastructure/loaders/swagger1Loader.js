@@ -4,6 +4,7 @@ import Enumerable from 'linq'
 import { swagger2SpecLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
 import URI from 'urijs'
+import Converter from 'api-spec-converter/dist/api-spec-converter'
 
 function executeInterceptor (config, apiSpec) {
   if (config.interceptor) {
@@ -30,6 +31,18 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
 
   const async = require('async')
 
+  var conversor = Converter.convert({
+    from: 'swagger_1',
+    to: 'swagger_2',
+    source: url,
+  }, function(err, converted) {
+    console.log(converted.stringify());
+    // For yaml and/or OpenApi field order output replace above line
+    // with an options object like below
+    //   var  options = {syntax: 'yaml', order: 'openapi'}
+    //   console.log(converted.stringify(options));
+  })
+
   return fetch(url, { credentials: 'include' })
     .then(response => response.json())
     .then(apiSpec => {
@@ -43,24 +56,28 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
           return { path: api.path, url: config.url.resolveChildUrl(`${apiSpec.basePath}${api.path}`), onLoadProgress: onLoadProgress, config }
         })
         .toArray()
-
-      async.map(apis, executeFetch, (err, result) => {
-        if (err) {
-          onLoadError(`Error loading Swagger 1.x apis: ${err}`)
-          console.error(err)
-        } else {
-          onLoadProgress(`Loading of Swagger spec 1.x completed.`)
-
-          let apiDeclarations = {}
-          result.forEach(element => { apiDeclarations[element.path] = element.result })
-
-          onLoadProgress('Started to convert Swagger 1.x to Swagger 2.0....')
-          const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)
-          onLoadProgress('Convertion from Swagger 1.x to Swagger 2.0 completed!')
-          swagger2Document.info.title = swagger2Document.info.title === 'Title was not specified' ? 'API' : swagger2Document.info.title
-
-          swagger2SpecLoader(swagger2Document, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
-        }
+      
+      let apiDeclarations = {}
+      apis.map(api => {
+        apiDeclarations[api.path] = api.operation
       })
+      
+      onLoadProgress('Started to convert Swagger 1.x to Swagger 2.0....')
+      const swagger2Document = SwaggerConverter.convert(apiSpec, apiDeclarations)
+      onLoadProgress('Convertion from Swagger 1.x to Swagger 2.0 completed!')
+      swagger2Document.info.title = swagger2Document.info.title === 'Title was not specified' ? 'API' : swagger2Document.info.title
+
+      SwaggerParser.validate(swagger2Document)
+        .then(function (api) {
+          let newApi = api
+          let defaultHost = window.location.origin
+  
+          newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
+          swagger2SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
+        })
+          .catch(function (err) {
+            onLoadError(err)
+        })
+
     })
 }
