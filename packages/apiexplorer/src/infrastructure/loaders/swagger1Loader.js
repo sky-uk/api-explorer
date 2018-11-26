@@ -12,7 +12,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
     from: 'swagger_1',
     to: 'swagger_2',
     source: url
-  }).then(function(converted) {
+  }).then(function (converted) {
     SwaggerParser.validate(converted.spec).then(function (api) {
       let newApi = api
       let defaultHost = window.location.origin
@@ -21,7 +21,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
     }).catch(function (err) {
       onLoadError(err)
     })
-  }).catch(function(err) {
+  }).catch(function (err) {
     onLoadError(err)
   })
 }
