@@ -11,22 +11,17 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
   return Converter.convert({
     from: 'swagger_1',
     to: 'swagger_2',
-    source: url,
-  })
-  .then(function(converted) {
-    SwaggerParser.validate(converted.spec)
-      .then(function (api) {
-        let newApi = api
-        let defaultHost = window.location.origin
-
-        newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
-        swagger2SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
-      })
-      .catch(function (err) {
-        onLoadError(err)
-      })
-  })
-  .catch(function(err) {
+    source: url
+  }).then(function(converted) {
+    SwaggerParser.validate(converted.spec).then(function (api) {
+      let newApi = api
+      let defaultHost = window.location.origin
+      newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
+      swagger2SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
+    }).catch(function (err) {
+      onLoadError(err)
+    })
+  }).catch(function(err) {
     onLoadError(err)
   })
 }
