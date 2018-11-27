@@ -1,4 +1,5 @@
 import SwaggerParser from 'swagger-parser'
+import URI from 'urijs'
 
 export function openAPI3Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   const url = config.url.getUrl()
