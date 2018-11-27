@@ -1,23 +1,22 @@
 import SwaggerParser from 'swagger-parser'
 
-export function swagger3Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
+export function openAPI3Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   const url = config.url.getUrl()
   onLoadProgress(`Loading API Spec from ${url}`)
 
   return SwaggerParser.validate(url)
     .then(function (api) {
       let newApi = api
-      let defaultHost = window.location.origin
-
+      let defaultHost = new URI(config.url.url).host()
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
-      swagger3SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
+      openAPI3SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     })
     .catch(function (err) {
       onLoadError(err)
     })
 }
 
-export function swagger3SpecLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError }) {
+export function openAPI3SpecLoader (apiSpec, friendlyName, slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError }) {
   onLoadProgress(`API Spec received with success`)
   onLoadProgress(`Starting API parsing`)
 
@@ -25,7 +24,7 @@ export function swagger3SpecLoader (apiSpec, friendlyName, slug, defaultHost, { 
   apiSpec = Object.assign({
     definitions: [],
     basePath: '/',
-    host: apiSpec.servers ? apiSpec.servers[0].url || defaultHost : defaultHost
+    host: apiSpec.servers ? apiSpec.servers[0].url : defaultHost
   }, apiSpec)
 
   onNewAPI(apiSpec)
