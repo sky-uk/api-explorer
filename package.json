@@ -19,8 +19,5 @@
       "APIExplorer",
       "fetch"
     ]
-  },
-  "dependencies": {
-    "api-spec-converter": "^2.7.18"
   }
 }
