@@ -20,8 +20,10 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "api-spec-converter": "^2.7.18",
     "classnames": "^2.2.5",
     "codemirror": "^5.31.0",
+    "form-data": "^2.3.2",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "linq": "^3.0.9",
@@ -41,9 +43,8 @@
     "semantic-ui-react": "^0.76.0",
     "styled-components": "^4.0.2",
     "swagger-converter": "^1.4.1",
-    "urijs": "^1.19.0",
-    "form-data": "^2.3.2",
-    "swagger-parser": "^6.0.2"
+    "swagger-parser": "^6.0.2",
+    "urijs": "^1.19.0"
   },
   "peerDependencies": {
     "react": "15.x"
