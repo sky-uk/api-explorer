@@ -20,7 +20,6 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "api-spec-converter": "^2.7.18",
     "classnames": "^2.2.5",
     "codemirror": "^5.31.0",
     "form-data": "^2.3.2",
