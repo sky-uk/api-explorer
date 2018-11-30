@@ -1,5 +1,4 @@
 import SwaggerParser from 'swagger-parser'
-import URI from 'urijs'
 
 export function openAPI3Loader (config, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError }) {
   const url = config.url.getUrl()
@@ -8,7 +7,8 @@ export function openAPI3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
   return SwaggerParser.validate(url)
     .then(function (api) {
       let newApi = api
-      let defaultHost = new URI(config.url.url).host()
+      let defaultHost = `${window.location.origin}/${config.basePath}`
+      
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
       openAPI3SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     })

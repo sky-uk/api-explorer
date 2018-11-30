@@ -8,6 +8,7 @@ export default class APIExplorerAPIConfigurator {
     this.slug = slug
     this.url = url
     this.requestTimeoutInMiliseconds = 0
+    this.basePath = ""
 
     // Welcome page options
     this.welcome = {
@@ -43,6 +44,11 @@ export default class APIExplorerAPIConfigurator {
 
   setRequestTimeoutInMiliseconds (requestTimeoutInMiliseconds) {
     this.requestTimeoutInMiliseconds = requestTimeoutInMiliseconds
+    return this
+  }
+
+  setBasePath(basePath) {
+    this.basePath = basePath
     return this
   }
 

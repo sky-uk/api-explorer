@@ -15,7 +15,8 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
   }).then(function (converted) {
     SwaggerParser.validate(converted.spec).then(function (api) {
       let newApi = api
-      let defaultHost = window.location.origin
+      let defaultHost = `${window.location.origin}/${config.basePath}`
+      
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
       swagger2SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     }).catch(function (err) {
