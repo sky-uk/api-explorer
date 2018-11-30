@@ -8,7 +8,6 @@ export function openAPI3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
     .then(function (api) {
       let newApi = api
       let defaultHost = `${window.location.origin}/${config.basePath}`
-      
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)
       openAPI3SpecLoader(newApi, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onLoadCompleted, onLoadError })
     })
