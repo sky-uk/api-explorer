@@ -39,7 +39,7 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.76.0",
+    "semantic-ui-react": "^0.87.1",
     "styled-components": "^4.0.2",
     "swagger-converter": "^1.4.1",
     "swagger-parser": "^6.0.2",
