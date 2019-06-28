@@ -4899,9 +4899,9 @@ levn@~0.3.0:
     type-check "~0.3.2"
 
 linq@^3.0.9:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/linq/-/linq-3.1.1.tgz#9f7d8deaab896a0033ebd3b6063b7e5cc8c2764b"
-  integrity sha512-A71Vnqe93xFkYYTuTzne1dQ+tVzXwYRrgZE3koGbXVd+3Ie5IiBgCpaFTnG+XkaSW/vPmsFAt2rG4znmJAxKlw==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/linq/-/linq-3.2.0.tgz#622bc5b47fe360e227432ff4978ff55d36929558"
+  integrity sha512-rdmaLOf2tSCzZ75scdjjN/LVHGZzRu48ql9LdxppQec/pKpPtf8jlMDlPBX3rQnLMcGPtAx8Lel6YbF7jND70g==
 
 load-json-file@^1.0.0:
   version "1.1.0"
