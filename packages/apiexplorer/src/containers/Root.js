@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory as createHistory } from 'history'
 import { ConnectedRouter } from 'react-router-redux'
 
 import ReduxToastr from 'react-redux-toastr'

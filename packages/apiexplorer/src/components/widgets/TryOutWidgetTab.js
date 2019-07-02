@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import URI from 'urijs'
+import queryString from 'query-string'
 import { Segment, Label, Loader } from 'semantic-ui-react'
 
 import { HttpStatus, HttpRequest } from '../../infrastructure/core'
@@ -46,7 +47,6 @@ class TryOutWidgetTab extends Component {
   }
 
   getOperationParametersFromQuery (props, newParameters) {
-    const queryString = require('query-string')
     const queryStringParsed = queryString.parse(props.location.search)
 
     let bodyParameterName = null
