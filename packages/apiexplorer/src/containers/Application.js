@@ -58,7 +58,7 @@ class Application extends Component {
 
     return (
       <div id='content'>
-        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{backgroundColor: '#222'}} >
+        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{ backgroundColor: '#222' }} >
           <div style={{ textAlign: 'center', color: 'white', backgroundColor: '#0093de', padding: '10px', boxShadow: 'inset 0 -10px 10px -10px rgba(0,0,0,0.7)' }}>
             <Icon name='delete' size='large' style={{ position: 'absolute', top: '15px', right: '25px', color: 'rgba(255, 255, 255, 0.5)', 'cursor': 'pointer' }} onClick={this.handleCloseDock} />
             <h1 style={{ margin: 0 }}>API Explorer</h1>

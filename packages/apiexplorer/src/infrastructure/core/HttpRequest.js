@@ -88,7 +88,6 @@ class HttpRequest {
       result.url += '?' + queryString
     }
 
-    result.url = result.url
     result.isMultiPartRequest = parameters.filter(param => param.in === 'formData').length > 0
 
     if (result.isMultiPartRequest) {

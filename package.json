@@ -5,6 +5,7 @@
     "build:watch": "lerna run -- build:watch",
     "demo": "cd packages/apiexplorer && npm start",
     "lint": "standard --verbose | snazzy",
+    "style-fix": "standard --fix",
     "test": "npm run lint"
   },
   "devDependencies": {
