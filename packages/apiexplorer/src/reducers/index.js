@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import { connectRouter } from 'connected-react-router'
 import { reducer as toastrReducer } from 'react-redux-toastr'
 
-const rootReducer = combineReducers({
-  router: routerReducer,
+export default (history) => combineReducers({
+  router: connectRouter(history),
   toastr: toastrReducer,
   loader: require('./loader').default,
   apis: require('./apis').default,
@@ -16,8 +16,6 @@ const rootReducer = combineReducers({
   operationLastParameters: require('./operationLastParameters').default,
   operationLocalParameters: require('./operationLocalParameters').default
 })
-
-export default rootReducer
 
 /*
   Anatomy of our global REDUX state

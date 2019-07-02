@@ -18,6 +18,8 @@ import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
 import APIExplorerAPIConfigurator from './APIExplorerAPIConfigurator'
 import LinkGenerator from './LinkGenerator'
 
+import configureStore, { history } from './store/configureStore'
+
 class APIExplorer {
   constructor () {
     this.SupportedLoaders = {
@@ -210,12 +212,12 @@ class APIExplorer {
    * @return {APIExplorer}        APIExplorer instance to provide a fluent interface
    */
   start (domAnchor = 'root') {
-    const configureStore = require('./store/configureStore')
-    const store = configureStore.default()
+    const store = configureStore()
+
     store.dispatch(apiConfigurations(this.apiConfigurations))
     store.dispatch(headers(this.headers))
 
-    render(<Root store={store} />, document.getElementById(domAnchor))
+    render(<Root store={store} history={history} />, document.getElementById(domAnchor))
 
     // give some time so that the css loads properly.
     // this can be improved by waiting for a dom load event.
