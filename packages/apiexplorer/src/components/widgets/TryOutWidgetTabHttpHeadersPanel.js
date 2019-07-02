@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Map} from 'immutable'
+import { Map } from 'immutable'
 import { Grid, Table } from 'semantic-ui-react'
 
 class TryOutWidgetTabHttpHeadersPanel extends Component {

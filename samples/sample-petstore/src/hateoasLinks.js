@@ -167,7 +167,7 @@ function findOperation (operations, url, params) {
 
       var splitUrl = url.split('?')
       if (splitUrl.length > 1) {
-        splitUrl[1].split('&').forEach((item) => { var parts = item.split('='); requestParameters.push({name: parts[0], value: parts.length > 1 ? parts[1].replace('+', ' ') : ''}) })
+        splitUrl[1].split('&').forEach((item) => { var parts = item.split('='); requestParameters.push({ name: parts[0], value: parts.length > 1 ? parts[1].replace('+', ' ') : '' }) })
       }
 
       if (params.postBody) {

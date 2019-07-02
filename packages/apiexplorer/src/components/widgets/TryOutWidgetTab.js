@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import URI from 'urijs'
+import queryString from 'query-string'
 import { Segment, Label, Loader } from 'semantic-ui-react'
 
 import { HttpStatus, HttpRequest } from '../../infrastructure/core'
@@ -22,7 +23,7 @@ class TryOutWidgetTab extends Component {
 
   setDefaultOperationParameters (props) {
     let newParameters = this.getDefaultOperationParameters(props)
-    this.setState({operationParameters: newParameters})
+    this.setState({ operationParameters: newParameters })
   }
 
   getDefaultOperationParameters (props) {
@@ -46,7 +47,6 @@ class TryOutWidgetTab extends Component {
   }
 
   getOperationParametersFromQuery (props, newParameters) {
-    const queryString = require('query-string')
     const queryStringParsed = queryString.parse(props.location.search)
 
     let bodyParameterName = null
@@ -83,7 +83,7 @@ class TryOutWidgetTab extends Component {
     this.setState(newState)
 
     if (props.operationResponse && props.operationResponse.response && props.operationResponse.response.status) {
-      this.setState({showLastResponse: true})
+      this.setState({ showLastResponse: true })
       this.changeResponseStatusColor(props.operationResponse.response)
     }
   }
@@ -123,7 +123,7 @@ class TryOutWidgetTab extends Component {
   onHandleParametersChange (param, value) {
     let newParameters = this.state.operationParameters
     newParameters[param.name] = value
-    this.setState({operationParameters: newParameters})
+    this.setState({ operationParameters: newParameters })
   }
 
   onValidateParameters () {
@@ -143,7 +143,7 @@ class TryOutWidgetTab extends Component {
         newParameters[key] = optionValues[key]
       })
 
-      this.setState({operationParameters: newParameters})
+      this.setState({ operationParameters: newParameters })
     }
   }
 

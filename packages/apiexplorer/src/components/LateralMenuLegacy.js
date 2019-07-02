@@ -117,7 +117,7 @@ class LateralMenu extends Component {
             &nbsp;
             {operation.spec.security && (
               <span key={`security${operation.id}`}
-                style={{width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow'}}>
+                style={{ width: '1em', display: 'inline-block', opacity: '0.5', marginRight: '0px 5px', color: 'Yellow' }}>
                 <i className='fa fa-lock' title='Secured' />
               </span>)}
             <span className='operation-url'>{operation.spec.url}</span>

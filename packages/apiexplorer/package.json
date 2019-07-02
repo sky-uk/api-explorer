@@ -34,25 +34,26 @@
     "react-highlight": "^0.10.0",
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.1.6",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.76.0",
-    "styled-components": "^4.0.2",
+    "styled-components": "^4.3.2",
     "swagger-converter": "^1.4.1",
     "swagger-parser": "^6.0.2",
-    "urijs": "^1.19.0"
+    "urijs": "^1.19.0",
+    "query-string": "^4.1.0"
   },
   "peerDependencies": {
-    "react": "15.x"
+    "react": "16.x"
   },
   "devDependencies": {
     "nodemon": "^1.12.1",
-    "nwb": "0.19.x",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "nwb": "0.23.x",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
   },
   "author": "",
   "homepage": "",

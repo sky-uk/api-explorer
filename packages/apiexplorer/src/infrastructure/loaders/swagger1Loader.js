@@ -19,7 +19,7 @@ function executeFetch (req, callback) {
     .then(response => response.json())
     .then(apiSpec => {
       req.onLoadProgress(`New api definition from path '${decodeURIComponent(req.url)}' completed`)
-      callback(null, {path: req.path, result: executeInterceptor(req.config, apiSpec)})
+      callback(null, { path: req.path, result: executeInterceptor(req.config, apiSpec) })
     })
     .catch(ex => callback(new Error(`Error loading url ${req.url}: ${ex}`)))
 }

@@ -18,14 +18,14 @@ class OperationsFilter extends Component {
     if (timer) clearTimeout(this.state.handleFilterUpdateTimer)
     timer = setTimeout(this.handleFilterUpdate, this.props.autoUpdateTimeout)
 
-    this.setState({text: e.target.value, handleFilterUpdateTimer: timer})
+    this.setState({ text: e.target.value, handleFilterUpdateTimer: timer })
   }
 
   handleFilterUpdate (e) {
     if (e) e.preventDefault()
     this.props.onFilter(this.state.text)
     if (this.state.handleFilterUpdateTimer) clearTimeout(this.state.handleFilterUpdateTimer)
-    this.setState({handleFilterUpdateTimer: 0})
+    this.setState({ handleFilterUpdateTimer: 0 })
   }
 
   render () {
