@@ -11,8 +11,8 @@ const history = createHistory()
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history)
 
-const composed = window.devToolsExtension
-  ? compose(applyMiddleware(thunk, middleware), window.devToolsExtension())
+const composed = window.__REDUX_DEVTOOLS_EXTENSION__
+  ? compose(applyMiddleware(thunk, middleware), window.__REDUX_DEVTOOLS_EXTENSION__())
   : compose(applyMiddleware(thunk, middleware))
 
 export default function configureStore (initialState) {
