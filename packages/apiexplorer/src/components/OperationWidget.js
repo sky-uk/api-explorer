@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import cx from 'classnames'
-import { Route, Switch } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { selectedOperation } from '../actions/loadActionCreators'
 import { Card, Label, Menu, Icon } from 'semantic-ui-react'

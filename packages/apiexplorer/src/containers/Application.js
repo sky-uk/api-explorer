@@ -9,7 +9,7 @@ import marked from 'marked'
 import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu } from '../components'
 import { selectedOperation } from '../actions/loadActionCreators'
 
-import { Switch, Route } from 'react-router'
+import { Switch, Route } from 'react-router-dom'
 import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'

@@ -3,22 +3,18 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 
-import { createBrowserHistory as createHistory } from 'history'
-import { ConnectedRouter } from 'react-router-redux'
+import { ConnectedRouter } from 'connected-react-router'
 
 import ReduxToastr from 'react-redux-toastr'
-import { Switch, Route } from 'react-router'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Application from '../containers/Application'
 import NotFound from '../containers/NotFound'
 
 import { Helmet } from 'react-helmet'
 
-// Create a history of your choosing (we're using a browser history in this case)
-const history = createHistory()
-
 export default class Root extends Component {
   render () {
-    const { store } = this.props
+    const { store, history } = this.props
 
     return (
       <Provider store={store}>
@@ -31,10 +27,12 @@ export default class Root extends Component {
             <link rel='stylesheet' href='//diegoddox.github.io/react-redux-toastr/4.0/react-redux-toastr.min.css' />
           </Helmet>
           <ConnectedRouter history={history}>
-            <Switch>
-              <Route path={`${APIExplorer.basePath}`} component={Application} />
-              <Route component={NotFound} />
-            </Switch>
+            <BrowserRouter>
+              <Switch>
+                <Route path={`${APIExplorer.basePath}`} component={Application} />
+                <Route component={NotFound} />
+              </Switch>
+            </BrowserRouter>
           </ConnectedRouter>
           <ReduxToastr transitionIn='fadeIn' transitionOut='fadeOut' progressBar />
         </div>
