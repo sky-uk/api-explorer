@@ -20,10 +20,10 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "semantic-ui-react": "^0.76.0"
+    "semantic-ui-react": "^0.87.2"
   },
   "peerDependencies": {
-    "react": "15.x"
+    "react": "16.x"
   },
   "devDependencies": {
     "nwb": "0.23.x",
