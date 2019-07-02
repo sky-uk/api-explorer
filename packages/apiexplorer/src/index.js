@@ -213,7 +213,7 @@ class APIExplorer {
    */
   start (domAnchor = 'root') {
     const store = configureStore()
-    
+
     store.dispatch(apiConfigurations(this.apiConfigurations))
     store.dispatch(headers(this.headers))
 

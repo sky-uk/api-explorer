@@ -16,7 +16,7 @@ export default function configureStore (initialState) {
     initialState,
     composeEnhancer(
       applyMiddleware(
-        thunk, 
+        thunk,
         routerMiddleware(history)
       )
     )
