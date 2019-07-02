@@ -40,7 +40,7 @@
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "semantic-ui-react": "^0.76.0",
+    "semantic-ui-react": "^0.87.2",
     "styled-components": "^4.3.2",
     "swagger-converter": "^1.4.1",
     "swagger-parser": "^6.0.2",
