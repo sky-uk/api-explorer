@@ -8859,9 +8859,9 @@ supports-color@^6.1.0:
     has-flag "^3.0.0"
 
 swagger-converter@^1.4.1:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/swagger-converter/-/swagger-converter-1.4.4.tgz#c497676a2f40b3734d378e9d6cdfa02bf7547001"
-  integrity sha512-ylYS/Quk3L2A5zGtS5LQFMOtSKTU7Ot8pEAzlG4G/lb7+zC4FnlbD4+CKeQVf+mSGljschOjKHejvtCRyDKbsw==
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/swagger-converter/-/swagger-converter-1.5.1.tgz#2ad8e192a57e97b9641cdc754bed38f4619f7803"
+  integrity sha512-u98/Gt+fAnS95WoUDgWuOiN8MymrNCUdcLoD4Q6szy4nAj9BPCVRzwvJauqqj7+jKcB1ZEKf9vacQKSXEr3OBw==
   dependencies:
     common-prefix "^1.1.0"
     urijs "^1.16.1"
