@@ -30,7 +30,7 @@
     "marked": "^0.6.2",
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
-    "query-string": "^4.1.0",
+    "query-string": "^6.8.1",
     "react-dock": "^0.2.4",
     "react-helmet": "^5.2.0",
     "react-highlight": "^0.10.0",
