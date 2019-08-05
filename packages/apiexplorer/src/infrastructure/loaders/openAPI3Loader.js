@@ -5,7 +5,7 @@ export function openAPI3Loader (config, { onLoadProgress, onNewAPI, onNewOperati
   onLoadProgress(`Loading API Spec from ${url}`)
 
   return SwaggerParser.validate(url)
-    .then(function (api) {
+    .then(api => {
       let newApi = api
       let defaultHost = `${window.location.origin}/${config.basePath}`
       newApi = config.interceptor({ friendlyName: config.friendlyName, url: config.url }, api)

@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "apiexplorer": "^0.6.0",
-    "apiexplorer-components": "^0.6.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0"
   },

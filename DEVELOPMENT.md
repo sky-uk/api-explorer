@@ -27,7 +27,6 @@ To run in a Sample you may either: a) only change the sample, b) also want to ch
 1. Add `build:watch` script to `packages.json` (copy from other project)
 1. Add required dependencies to the new project
 1. `$ lerna add apiexplorer --scope sample-b`
-1. `$ lerna add apiexplorer-components --scope sample-b`
 1. You may need to run `$ lerna bootstrap`
 
 
