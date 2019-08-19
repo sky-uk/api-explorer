@@ -8,11 +8,12 @@ import marked from 'marked'
 import { ExplorerHeader, ApplicationLoading, HowToConfigureAPIExplorer, LateralMenu } from '../components'
 import { selectedOperation } from '../actions/loadActionCreators'
 
-import { Link, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'
-import { Menu, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
+import Styled from 'styled-components'
 import packageJson from '../../package.json'
 
 class Application extends Component {
@@ -56,9 +57,9 @@ class Application extends Component {
     let packageVersion = packageJson.version
 
     return (
-      <div id='content'>
-        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{ backgroundColor: '#222' }} >
-          <div style={{ textAlign: 'center', color: 'white', backgroundColor: '#0093de', padding: '10px', boxShadow: 'inset 0 -10px 10px -10px rgba(0,0,0,0.7)' }}>
+      <StyledApplication id='content'>
+        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{ backgroundColor: '#263238' }} >
+          <div style={{ textAlign: 'center', color: 'white', backgroundColor: '#11171A', padding: '10px', boxShadow: 'inset 0 -10px 10px -10px rgba(0,0,0,0.7)' }}>
             <Icon name='delete' size='large' style={{ position: 'absolute', top: '15px', right: '25px', color: 'rgba(255, 255, 255, 0.5)', 'cursor': 'pointer' }} onClick={this.handleCloseDock} />
             <h1 style={{ margin: 0 }}>API Explorer</h1>
           </div>
@@ -82,16 +83,12 @@ class Application extends Component {
             </Switch>
           </div>
         </div>
-        <Menu size='mini' inverted style={{ position: 'fixed', bottom: 0, width: '100%', zIndex: 99999999 }}>
-          <Menu.Item header>Copyright &copy; API Explorer 2015</Menu.Item>
-          <Menu.Item header>v{packageVersion}</Menu.Item>
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Link to={APIExplorer.LinkGenerator.toSettings()}><Icon name='cogs' /> Settings</Link>
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
-      </div>
+
+        <div className='sidebar-footer'>
+          <div style={{ width: '60%' }}>Copyright &copy; API Explorer 2015</div>
+          <div style={{ width: '40%', textAlign: 'right' }}>v{packageVersion}</div>
+        </div>
+      </StyledApplication>
     )
   }
 
@@ -104,7 +101,7 @@ class Application extends Component {
     const selectedOperation = this.props.operations.filter(op => op.get('id') === selectedOperationId).first()
 
     if (!selectedOperation) {
-      return <h1>API Explorer</h1>
+      return ''
     }
 
     const api = this.props.apis.get('byName').get(selectedOperation.get('apiname'))
@@ -147,3 +144,22 @@ export default connect(
     }
   }
 )(Application)
+
+const StyledApplication = Styled.div`
+  .sidebar-footer {
+    font-family: Roboto, sans-serif;
+    font-size: 0.8em;
+    position: fixed;
+    bottom: 0;
+    width: 350px;
+    z-index: 99999999;
+    background-color: #11171A
+    color: #fff;
+    border-radius: 0
+  }
+
+  .sidebar-footer > div {
+    display: inline-block;
+    padding: 10px;
+  }
+`
