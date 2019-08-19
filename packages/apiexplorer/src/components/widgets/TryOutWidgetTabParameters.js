@@ -3,6 +3,29 @@ import moment from 'moment'
 import { Segment, Table, Label, Input, TextArea, Dropdown, Popup } from 'semantic-ui-react'
 import { getSampleSchema } from './../../ObjectSamples'
 
+import { Controlled as CodeMirror } from 'react-codemirror2'
+
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/material.css'
+
+import 'codemirror/addon/display/fullscreen'
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/xml/xml'
+import 'codemirror/addon/mode/overlay'
+import 'codemirror/addon/display/fullscreen.css'
+
+import 'codemirror/addon/fold/foldgutter.css'
+import 'codemirror/addon/fold/foldcode'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/brace-fold'
+import 'codemirror/addon/fold/xml-fold'
+import 'codemirror/addon/fold/comment-fold'
+
+import 'codemirror/addon/search/search'
+import 'codemirror/addon/search/searchcursor'
+import 'codemirror/addon/dialog/dialog'
+import 'codemirror/addon/dialog/dialog.css'
+
 class TryOutWidgetTabParameters extends Component {
   componentWillReceiveProps () {
     this.setState({})
@@ -18,10 +41,39 @@ class TryOutWidgetTabParameters extends Component {
     const handleParametersOnChange = this.props.onHandleParametersChange
     
     if (param.in === 'body') {
+      let options = {
+        mode: 'application/json',
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+        lineNumbers: true,
+        matchBrackets: true,
+        styleActiveLine: true,
+        lineWrapping: false,
+        foldGutter: true,
+        theme: 'material',
+        readOnly: false,
+        extraKeys: {
+          // Fullscreen
+          'F11': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+          'Ctrl-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+          'Cmd-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+          'Esc': cm => cm.getOption('fullScreen') && cm.setOption('fullScreen', false),
+          // Code Folding
+          'Ctrl-Y': cm => cm.foldAll(),
+          'Cmd-Y': cm => cm.foldAll(),
+          'Ctrl-Alt-Y': cm => cm.unfoldAll(),
+          'Shift-Ctrl-Y': cm => cm.unfoldAll(),
+          'Cmd-Shift-Y': cm => cm.unFoldAll(),
+          'Ctrl-U': cm => cm.foldCode(cm.getCursor()),
+          'Cmd-U': cm => cm.foldCode(cm.getCursor())
+        }
+      }
+
       return (
-        <TextArea rows={value ? Math.max(4, value.split('\n').length + 1) : 4}
-          style={{ width: '100%', border: '1px solid rgba(34,36,38,.15)' }} required={param.required} value={value}
-          onChange={(evt) => handleParametersOnChange(param, evt.currentTarget.value)}
+        <CodeMirror
+          value={value}
+          options={options}
+          onBeforeChange={(editor, data, newValue) => handleParametersOnChange(param, newValue)}
+          onChange={(editor, data, newValue) => handleParametersOnChange(param, newValue)}
         />
       )
     }

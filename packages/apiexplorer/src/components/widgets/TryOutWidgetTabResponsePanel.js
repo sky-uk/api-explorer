@@ -3,9 +3,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import CodeMirror from 'codemirror'
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/material.css'
 
 import 'codemirror/addon/display/fullscreen'
 import 'codemirror/mode/javascript/javascript'
@@ -25,39 +26,10 @@ import 'codemirror/addon/search/searchcursor'
 import 'codemirror/addon/dialog/dialog'
 import 'codemirror/addon/dialog/dialog.css'
 
-/*
-  import '../../vendor/codemirror/codemirror-mode-links'
-  import '../../vendor/codemirror/codemirror-extension-foldall'
-*/
-
 class TryOutWidgetTabResponsePanel extends Component {
   constructor () {
     super()
-
-    CodeMirror.defaults.lineNumbers = true
-    CodeMirror.defaults.matchBrackets = true
-    CodeMirror.defaults.styleActiveLine = true
-    CodeMirror.defaults.lineWrapping = false
-    CodeMirror.defaults.foldGutter = true
-    CodeMirror.defaults.readOnly = true
-
-    CodeMirror.defaults.extraKeys = {
-      // Fullscreen
-      'F11': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
-      'Ctrl-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
-      'Cmd-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
-      'Esc': cm => cm.getOption('fullScreen') && cm.setOption('fullScreen', false),
-      // Code Folding
-      'Ctrl-Y': cm => cm.foldAll(),
-      'Cmd-Y': cm => cm.foldAll(),
-      'Ctrl-Alt-Y': cm => cm.unfoldAll(),
-      'Shift-Ctrl-Y': cm => cm.unfoldAll(),
-      'Cmd-Shift-Y': cm => cm.unFoldAll(),
-      'Ctrl-U': cm => cm.foldCode(cm.getCursor()),
-      'Cmd-U': cm => cm.foldCode(cm.getCursor())
-    }
-
-    CodeMirror.defaults.gutters = ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
+    this.editor = null
   }
 
   applyPlugins () {
@@ -76,10 +48,6 @@ class TryOutWidgetTabResponsePanel extends Component {
   }
 
   componentDidMount () {
-    const elem = this.refs.codemirror
-
-    this.editor = CodeMirror.fromTextArea(elem, { mode: this.props.response.contentType })
-    this.editor.focus()
     this.applyPlugins()
     if (this.props.response && this.props.response.data && this.props.response.data !== '') {
       this.props.response.data = this.props.response.data.replace('\\"', '"')
@@ -90,9 +58,7 @@ class TryOutWidgetTabResponsePanel extends Component {
     if (prevProps.response.data === this.props.response.data) {
       return
     }
-    this.editor.setValue(this.getIndentedJson())
     this.applyPlugins()
-    this.editor.refresh()
   }
 
   getIndentedJson () {
@@ -116,9 +82,44 @@ class TryOutWidgetTabResponsePanel extends Component {
 
   render () {
     let data = this.getIndentedJson()
+
+    let options = {
+      mode: this.props.response.contentType,
+      gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+      lineNumbers: true,
+      matchBrackets: true,
+      styleActiveLine: true,
+      lineWrapping: false,
+      foldGutter: true,
+      theme: 'material',
+      readOnly: true,
+      extraKeys: {
+        // Fullscreen
+        'F11': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+        'Ctrl-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+        'Cmd-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+        'Esc': cm => cm.getOption('fullScreen') && cm.setOption('fullScreen', false),
+        // Code Folding
+        'Ctrl-Y': cm => cm.foldAll(),
+        'Cmd-Y': cm => cm.foldAll(),
+        'Ctrl-Alt-Y': cm => cm.unfoldAll(),
+        'Shift-Ctrl-Y': cm => cm.unfoldAll(),
+        'Cmd-Shift-Y': cm => cm.unFoldAll(),
+        'Ctrl-U': cm => cm.foldCode(cm.getCursor()),
+        'Cmd-U': cm => cm.foldCode(cm.getCursor())
+      }
+    }
+
     return (
       <div>
-        <textarea className='codemirror-response' ref='codemirror' value={data} readOnly />
+        <CodeMirror
+          value={data}
+          options={options}
+          onBeforeChange={(editor, data, newValue) => this.editor.setValue(newValue) }
+          onChange={(editor, data, newValue) => this.editor.setValue(newValue) }
+          editorDidMount={editor => { this.editor = editor }}
+        />
+
         <small style={{ display: 'block', margin: '1em 0' }} className='text-muted'>
           <strong>Fullscreen: </strong>Press <mark>F11</mark> or <mark>Ctrl-M</mark> to enter fullscreen. Press ESC to exit.&nbsp;
           <strong>Search: </strong>To start search use <mark>Ctrl-F</mark>, and to find next use <mark>Ctrl-G</mark>.&nbsp;
@@ -134,11 +135,6 @@ TryOutWidgetTabResponsePanel.propTypes = {
   response: PropTypes.object,
   operations: PropTypes.object,
   apis: PropTypes.object
-}
-
-TryOutWidgetTabResponsePanel.contextTypes = {
-  store: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired
 }
 
 export default TryOutWidgetTabResponsePanel
