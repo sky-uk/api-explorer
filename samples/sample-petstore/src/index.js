@@ -8,17 +8,15 @@ APIExplorer
     c.setRequestTimeoutInMiliseconds(1000)
   })
   .addWidgetTab('CURL', CurlGeneratorTab)
-  .addCustomizableHeader('Sky-OTT-Provider', [
-    {value: 'SKY', description: 'Sky Store'}
+  .addCustomizableHeader('X-Language', [
+    { value: 'eng', description: 'English' },
+    { value: 'por', description: 'Portuguese' },
+    { value: 'spa', description: 'Spanish' }
   ])
-  .addCustomizableHeader('Sky-OTT-Proposition', [
-    {value: 'STORE', description: 'Sky Store'},
-    {value: 'NOWTV', description: 'Now TV'}
-  ])
-  .addCustomizableHeader('Sky-OTT-Country', [
-    {value: 'GB', description: 'United Kingdom'},
-    {value: 'DE', description: 'Germany'},
-    {value: 'IE', description: 'Ireland'},
-    {value: 'AT', description: 'Austria'}
+  .addCustomizableHeader('X-Country', [
+    { value: 'PT', description: 'Portugal' },
+    { value: 'ES', description: 'Spain' },
+    { value: 'FR', description: 'France' },
+    { value: 'IT', description: 'Italy' }
   ])
   .start('app')
