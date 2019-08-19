@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Switch, Route, Redirect } from 'react-router'
+import { Link, Switch, Route, Redirect } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
 class Settings extends Component {

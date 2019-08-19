@@ -1,7 +1,7 @@
 /* global fetch */
 
 import Enumerable from 'linq'
-import { swagger2JsonLoader } from './swagger2Loader'
+import { swagger2SpecLoader } from './swagger2Loader'
 import SwaggerConverter from 'swagger-converter'
 import URI from 'urijs'
 
@@ -19,7 +19,7 @@ function executeFetch (req, callback) {
     .then(response => response.json())
     .then(apiSpec => {
       req.onLoadProgress(`New api definition from path '${decodeURIComponent(req.url)}' completed`)
-      callback(null, {path: req.path, result: executeInterceptor(req.config, apiSpec)})
+      callback(null, { path: req.path, result: executeInterceptor(req.config, apiSpec) })
     })
     .catch(ex => callback(new Error(`Error loading url ${req.url}: ${ex}`)))
 }
@@ -59,7 +59,7 @@ export default function swagger1Loader (config, { onLoadProgress, onNewAPI, onNe
           onLoadProgress('Convertion from Swagger 1.x to Swagger 2.0 completed!')
           swagger2Document.info.title = swagger2Document.info.title === 'Title was not specified' ? 'API' : swagger2Document.info.title
 
-          swagger2JsonLoader(swagger2Document, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
+          swagger2SpecLoader(swagger2Document, config.friendlyName, config.slug, defaultHost, { onLoadProgress, onNewAPI, onNewOperation, onNewDefinition, onLoadCompleted, onLoadError })
         }
       })
     })

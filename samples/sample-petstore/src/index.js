@@ -1,7 +1,6 @@
 import './index.css'
 
-import APIExplorer from 'apiexplorer'
-import { CurlGeneratorTab } from 'apiexplorer-components'
+import { APIExplorer, CurlGeneratorTab } from 'apiexplorer'
 
 APIExplorer
   .addAPI('petstore', 'swagger2', '/public/petstore.json', c => {

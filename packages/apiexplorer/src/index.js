@@ -18,21 +18,26 @@ import APIExplorerPluginConfigurator from './APIExplorerPluginConfigurator'
 import APIExplorerAPIConfigurator from './APIExplorerAPIConfigurator'
 import LinkGenerator from './LinkGenerator'
 
+import configureStore, { history } from './store/configureStore'
+
 class APIExplorer {
   constructor () {
     this.SupportedLoaders = {
       Swagger1Loader: 'Swagger1Loader',
-      Swagger2Loader: 'Swagger2Loader'
+      Swagger2Loader: 'Swagger2Loader',
+      OpenAPI3Loader: 'OpenAPI3Loader'
     }
 
     this.LoaderFriendlyNames = {
       'swagger1': this.SupportedLoaders.Swagger1Loader,
-      'swagger2': this.SupportedLoaders.Swagger2Loader
+      'swagger2': this.SupportedLoaders.Swagger2Loader,
+      'openapi3': this.SupportedLoaders.OpenAPI3Loader
     }
 
     this.Loaders = {
       [this.SupportedLoaders.Swagger1Loader]: Loaders.Swagger1Loader,
-      [this.SupportedLoaders.Swagger2Loader]: Loaders.Swagger2Loader
+      [this.SupportedLoaders.Swagger2Loader]: Loaders.Swagger2Loader,
+      [this.SupportedLoaders.OpenAPI3Loader]: Loaders.OpenAPI3Loader
     }
 
     this.apiConfigurations = [] // This will store all the configured API in APIExplorer
@@ -223,14 +228,14 @@ class APIExplorer {
    * @return {APIExplorer}        APIExplorer instance to provide a fluent interface
    */
   start (domAnchor = 'root') {
-    const configureStore = require('./store/configureStore')
-    const store = configureStore.default()
+    const store = configureStore()
+
     store.dispatch(apiConfigurations(this.apiConfigurations))
     store.dispatch(headers(this.headers))
     store.dispatch(originalCustomizableHeaders(this.originalCustomizableHeaders))
     store.dispatch(customizableHeaders(this.customizableHeaders))
 
-    render(<Root store={store} />, document.getElementById(domAnchor))
+    render(<Root store={store} history={history} />, document.getElementById(domAnchor))
 
     // give some time so that the css loads properly.
     // this can be improved by waiting for a dom load event.

@@ -5,7 +5,6 @@ export default function settingsPaneWrapper (settingsPane) {
     (state) => {
       return {
         config: {
-          defaultScheme: state.configs.get('url').protocol,
           useProxy: state.configs.get('url').useProxy,
           headers: state.configs.get('headers'),
           customizableHeaders: state.configs.get('customizableHeaders'),

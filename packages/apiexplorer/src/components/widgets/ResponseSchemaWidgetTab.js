@@ -3,63 +3,40 @@ import { Segment, Card, Table } from 'semantic-ui-react'
 
 class ResponseSchemaWidgetTab extends Component {
   getDefinitions (responseSchema) {
-    const definitions = this.props.definitions
     function getModelFor (schemaReference, deep = 0) {
       if (deep === 5) {
         return schemaReference
       }
 
-      const definition = definitions[schemaReference]
-      if (!definition || !definition.schema) {
-        return schemaReference
-      }
-
-      if (definition.schema.type === 'object') {
+      if (schemaReference.type === 'object') {
         let model = {}
-        Object.keys(definition.schema.properties || {}).forEach(p => {
-          const propDescriptor = definition.schema.properties[p]
+        Object.keys(schemaReference.properties || {}).forEach(p => {
+          const propDescriptor = schemaReference.properties[p]
 
           // check if the type is an array
           if (propDescriptor.hasOwnProperty('type') && propDescriptor.type === 'array') {
-            if (propDescriptor.hasOwnProperty('items') && propDescriptor.items.hasOwnProperty('$ref')) {
-              model[p] = [ getModelFor(propDescriptor.items.$ref, deep + 1) ]
-            } else {
-              model[p] = [ getModelFor(propDescriptor.items.type, deep + 1) ]
-            }
+            model[p] = [ getModelFor(propDescriptor.items, deep + 1) ]
           } else {
-            // check if instead of a array is a known type
-            if (propDescriptor.hasOwnProperty('$ref')) {
-              model[p] = getModelFor(propDescriptor.$ref, deep + 1)
-            } else {
-              model[p] = propDescriptor.type
-            }
+            model[p] = propDescriptor.type
           }
         })
         return model
       }
 
-      if (definition.schema.type === 'array') {
-        let model = []
-        let items = definition.schema.items
-        // Draw arrays with $ref objects
-        if (items.hasOwnProperty('$ref')) {
-          model.push(getModelFor(items.$ref, deep + 1))
-        }
-        // TODO: Accept other types
-        return model
+      if (schemaReference.type === 'array') {
+        return [getModelFor(schemaReference.items, deep + 1)]
+      }
+
+      if (schemaReference.hasOwnProperty('type')) {
+        return schemaReference.type
       }
     }
 
     if (responseSchema.hasOwnProperty('type')) {
-      if (responseSchema.type === 'array') {
-        return JSON.stringify([getModelFor(responseSchema.items.$ref)], null, 2)
+      if (responseSchema.type === 'array' || responseSchema.type === 'object') {
+        return JSON.stringify(getModelFor(responseSchema), null, 2)
       }
-
       return responseSchema.type
-    }
-
-    if (responseSchema.hasOwnProperty('$ref')) {
-      return JSON.stringify(getModelFor(responseSchema.$ref), null, 2)
     }
 
     return 'void'
@@ -67,7 +44,6 @@ class ResponseSchemaWidgetTab extends Component {
 
   getResponseSchemas () {
     const responses = this.props.operation.spec.responses
-    const definitions = this.props.definitions
     let responseSchemas = []
     Object.keys(responses || {}).forEach(statusCode => {
       const response = responses[statusCode]
@@ -79,19 +55,12 @@ class ResponseSchemaWidgetTab extends Component {
     })
 
     function getSchemaName (response) {
-      if (response.hasOwnProperty('schema')) {
-        if (response.schema.hasOwnProperty('type')) {
-          if (response.schema.type === 'array') {
-            if (response.schema.items.hasOwnProperty('$ref')) {
-              return `[${definitions[response.schema.items.$ref].name}]`
-            }
-            return `[${response.schema.items.type}]`
-          }
-          return response.schema.type
+      const schema = response.schema
+      if (schema.hasOwnProperty('type')) {
+        if (schema.type === 'array') {
+          return `[${schema.items.type}]`
         }
-        if (response.schema.hasOwnProperty('$ref')) {
-          return definitions[response.schema.$ref].name
-        }
+        return schema.type
       }
       return 'void'
     }
@@ -119,7 +88,7 @@ class ResponseSchemaWidgetTab extends Component {
               <Table.Body>
                 <Table.Row verticalAlign='top'>
                   <Table.Cell style={{ width: '50%' }}><pre style={{ border: 'none' }}>{this.getDefinitions(responseSchema.schema)}</pre></Table.Cell>
-                  <Table.Cell><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(this.props.definitions[responseSchema.schema.$ref], null, 2)}</pre></Table.Cell>
+                  <Table.Cell><pre style={{ border: 'none', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{JSON.stringify(responseSchema.schema, null, 2)}</pre></Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>
