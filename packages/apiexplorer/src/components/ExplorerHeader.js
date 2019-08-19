@@ -29,9 +29,8 @@ const Header = Styled.h1`
   font-size: 1.8em;
   line-height: 1.6em;
   color: #11171A;
-  margin-top: 20px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 0;
 
   .beta-label {
     background-color: #f0ad4e;

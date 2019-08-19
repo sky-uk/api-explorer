@@ -16,6 +16,7 @@ class TryOutWidgetTabParameters extends Component {
 
   editorForInput = (param, value) => {
     const handleParametersOnChange = this.props.onHandleParametersChange
+    
     if (param.in === 'body') {
       return (
         <TextArea rows={value ? Math.max(4, value.split('\n').length + 1) : 4}
@@ -188,6 +189,7 @@ class TryOutWidgetTabParameters extends Component {
 
   render () {
     const parameters = this.props.operation.spec.parameters
+
     if (parameters && parameters.length > 0) {
       return (
         <div >
