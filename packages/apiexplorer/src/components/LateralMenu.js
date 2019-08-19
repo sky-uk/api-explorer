@@ -53,7 +53,7 @@ class LateralMenu extends Component {
     return this.matchFilterRegex(operation.spec.httpMethod + operation.spec.url)
   }
 
-  onHomeClick = (evt) => {
+  resetSelectedOperation = (evt) => {
     this.props.dispatch(selectedOperation(''))
   }
 
@@ -68,9 +68,13 @@ class LateralMenu extends Component {
     return (
       <StyledMenu>
         <Menu inverted vertical style={{ width: '100%', backgroundColor: 'transparent' }}>
-          <Menu.Item>
-            <Link to={APIExplorer.LinkGenerator.toHome()} onClick={this.onHomeClick} ><Icon name='home' /> Home</Link>
+          <Menu.Item as={Link} to={APIExplorer.LinkGenerator.toHome()} onClick={this.resetSelectedOperation} className='special-option'>
+            <div><Icon name='home' /> Home</div>
           </Menu.Item>
+          <Menu.Item as={Link} to={APIExplorer.LinkGenerator.toSettings()} onClick={this.resetSelectedOperation} className='special-option'>
+            <div><Icon name='cogs' /> Settings</div>
+          </Menu.Item>
+
           <Menu.Item>
             <OperationsFilter placeholder='e.g. getusersession' onFilter={this.handleFilterUpdate} />
           </Menu.Item>
@@ -239,6 +243,17 @@ const StyledMenu = Styled.div`
   div.api-operations .api-operation .ui.label {
     float: left;
     width: 60px;
+  }
+
+  .ui.menu .item.special-option {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    border-radius: 0 !important;
+  }
+
+  .ui.menu .item.special-option:hover {
+    background-color: rgba(255,255,255,0.1)
   }
 `
 
