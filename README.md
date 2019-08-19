@@ -120,7 +120,7 @@ We keep a list of features and bugs [in the issue tracker](https://github.com/sk
 
 ## Contributors
 
-You can check all the contributors of this project [here](https://github.com/sky-uk/api-explorer/graphs/contributors). A special thanks for the following two:
+You can check all the contributors of this project [here](https://github.com/sky-uk/api-explorer/graphs/contributors). A special thanks to:
 - [Nuno Silva](https://github.com/nunoas) - nuno.silva@sky.uk
 - [Pedro Félix](https://github.com/pmhsfelix) - pedro.felix@sky.uk
 - [Carlos Guedes](https://github.com/cguedes) - carlos.guedes@sky.uk
