@@ -59,20 +59,19 @@ class Application extends Component {
 
     return (
       <StyledApplication id='content'>
-        <Dock isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{ backgroundColor: '#263238' }} >
-          <div style={{ textAlign: 'center', color: 'white', backgroundColor: '#11171A', padding: '10px', boxShadow: 'inset 0 -10px 10px -10px rgba(0,0,0,0.7)' }}>
-            <Icon name='delete' size='large' style={{ position: 'absolute', top: '15px', right: '25px', color: 'rgba(255, 255, 255, 0.5)', 'cursor': 'pointer' }} onClick={this.handleCloseDock} />
-            <h1 style={{ margin: 0 }}>API Explorer</h1>
+        <Dock className='sidebar' isVisible={this.state.dockIsVisible} onSizeChange={size => this.handleDockResize(size)} fluid={false} defaultSize={350} size={this.state.dockSize} dimMode='none' dockStyle={{ backgroundColor: '#263238' }} >
+          <div className='sidebar-header'>
+            <Icon name='delete' size='large' onClick={_ => this.handleCloseDock()} />
+            <small>{packageVersion}</small>
+            <h1>API Explorer</h1>
           </div>
+
           <LateralMenu
             operations={this.props.operations.toJS()}
             apis={this.props.apis}
             selectedOperationId={this.props.selectedOperationId}
             dispatch={this.props.dispatch}
           />
-          <br />
-          <br />
-          <br />
         </Dock>
         <div style={{ marginLeft: this.state.dockSize, padding: 10 }}>
           <div className='container-fluid'>
@@ -84,11 +83,6 @@ class Application extends Component {
               <Route path={`${this.joinUrl(this.props.match.url, 'viewspec/:apiSlug')}`} component={SpecViewer} />
             </Switch>
           </div>
-        </div>
-
-        <div className='sidebar-footer'>
-          <div style={{ width: '60%' }}>Copyright &copy; API Explorer 2015</div>
-          <div style={{ width: '40%', textAlign: 'right' }}>v{packageVersion}</div>
         </div>
       </StyledApplication>
     )
@@ -148,20 +142,28 @@ export default connect(
 )(Application)
 
 const StyledApplication = Styled.div`
-  .sidebar-footer {
-    font-family: Roboto, sans-serif;
-    font-size: 0.8em;
-    position: fixed;
-    bottom: 0;
-    width: 350px;
-    z-index: 99999999;
-    background-color: #11171A
+  & .sidebar-header {
+    text-align: center;
     color: #fff;
-    border-radius: 0
+    background-color: #11171A;
+    padding: 10px;
+    box-shadow: inset 0 -10px 10px -10px rgba(0,0,0,0.7);
   }
 
-  .sidebar-footer > div {
-    display: inline-block;
-    padding: 10px;
+  & .sidebar-header h1 {
+    margin: 0;
+  }
+
+  & .sidebar-header small {
+    float: left;
+    opacity: 0.5;
+    margin: 8px 0 0 10px;
+  }
+
+  & .sidebar-header .delete.icon {
+    float: right;
+    margin: 8px 10px 0 0;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
   }
 `
