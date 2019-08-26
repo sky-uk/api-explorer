@@ -49,9 +49,31 @@ export function openAPI3SpecLoader (apiSpec, friendlyName, slug, defaultHost, { 
             Object.keys(operation.responses)
               .forEach(response => {
                 if (operation.responses[response].content && operation.responses[response].content['application/json']) {
+                  operation.produces = [ 'application/json' ]
                   operation.responses[response].schema = operation.responses[response].content['application/json'].schema
                 }
               })
+          }
+
+          // in openapi3 the request body is a separate concept from parameters
+          // this will create a 'virtual parameter' as supported by swagger2
+          //
+          // this is actually a limitation with the current approach as the body can have a separate schema for each media type,
+          // but we are currently restricting it to application/json
+          if (operation.requestBody && operation.requestBody.content['application/json']) {
+            operation.consumes = [ 'application/json' ]
+
+            operation.parameters.push(
+              {
+                "name": "Body",
+                "in": "body",
+                "required": true,
+                "schema": Object.assign(
+                  { type: 'object' },
+                  operation.requestBody.content['application/json'].schema
+                )
+              }
+            )
           }
 
           const operationSpec = { id, url, httpMethod, ...operation }

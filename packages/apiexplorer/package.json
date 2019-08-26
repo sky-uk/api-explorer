@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "codemirror": "^5.31.0",
+    "codemirror": "^5.48.4",
     "connected-react-router": "^6.5.0",
     "form-data": "^2.3.2",
     "history": "^4.7.2",
@@ -31,6 +31,7 @@
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
     "query-string": "^6.8.1",
+    "react-codemirror2": "^6.0.0",
     "react-dock": "^0.2.4",
     "react-helmet": "^5.2.0",
     "react-highlight": "^0.12.0",

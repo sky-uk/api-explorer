@@ -5,6 +5,7 @@ import marked from 'marked'
 import { ExplorerHeader } from '../components'
 import { Segment, Table } from 'semantic-ui-react'
 import Enumerable from 'linq'
+import Styled from 'styled-components'
 
 const mapStateToProps = state => {
   return {
@@ -29,17 +30,19 @@ class Welcome extends Component {
     if (!apiInfo) return
     const apiConfiguration = APIExplorer.apiConfigurations.find(c => c.friendlyName === apiInfo.apiname)
     return (
-      <div key={apiInfo.apiname}>
-        {this.renderTitle(apiInfo)}
+      <ApiBlock className='apiBlock' key={apiInfo.apiname}>
+        {this.renderTitle(apiInfo, apiConfiguration)}
         {apiConfiguration.welcome.displaySummary && this.renderDescription(apiInfo)}
         {apiConfiguration.welcome.listOperations && this.renderSummary(apiInfo)}
-      </div>
+      </ApiBlock>
     )
   }
 
-  renderTitle = (apiInfo) => {
+  renderTitle = (apiInfo, apiConfiguration) => {
     const { title, version } = apiInfo.spec.info
-    return <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version }} />
+    const { slug } = apiConfiguration
+
+    return <ExplorerHeader api={{ apiName: title, apiVersion: version, productVersion: version, slug }} />
   }
 
   renderDescription = (apiInfo) => {
@@ -92,5 +95,11 @@ class Welcome extends Component {
     return { __html: marked(description || '') }
   }
 }
+
+const ApiBlock = Styled.div`
+  &.apiBlock {
+    margin-bottom: 30px;
+  }
+`
 
 export default connect(mapStateToProps)(Welcome)
