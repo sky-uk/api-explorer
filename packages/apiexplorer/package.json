@@ -43,7 +43,7 @@
     "semantic-ui-react": "^0.87.2",
     "styled-components": "^4.3.2",
     "swagger-converter": "^1.4.1",
-    "swagger-parser": "^6.0.2",
+    "swagger-parser": "^8.0.0",
     "urijs": "^1.19.0"
   },
   "peerDependencies": {
