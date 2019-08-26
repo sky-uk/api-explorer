@@ -12,6 +12,7 @@ import { Switch, Route } from 'react-router-dom'
 import Welcome from '../containers/Welcome'
 import OperationWidgetContainer from '../containers/OperationWidgetContainer'
 import Settings from '../containers/Settings'
+import SpecViewer from '../containers/SpecViewer'
 import { Icon } from 'semantic-ui-react'
 import Styled from 'styled-components'
 import packageJson from '../../package.json'
@@ -80,6 +81,7 @@ class Application extends Component {
               <Route exact path={`${this.props.match.url}`} component={Welcome} />
               <Route path={`${this.joinUrl(this.props.match.url, 'operation/:id')}`} component={OperationWidgetContainer} />
               <Route path={`${this.joinUrl(this.props.match.url, 'settings/')}`} component={Settings} />
+              <Route path={`${this.joinUrl(this.props.match.url, 'viewspec/:apiSlug')}`} component={SpecViewer} />
             </Switch>
           </div>
         </div>
