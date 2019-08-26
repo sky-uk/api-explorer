@@ -27,7 +27,7 @@
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "linq": "^3.0.9",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
     "query-string": "^6.8.1",
