@@ -11,7 +11,7 @@
   "devDependencies": {
     "babel-eslint": "^10.0.2",
     "lerna": "^3.16.4",
-    "snazzy": "^7.0.0",
+    "snazzy": "^8.0.0",
     "standard": "^13.1.0"
   },
   "standard": {

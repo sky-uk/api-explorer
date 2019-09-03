@@ -92,4 +92,14 @@ export default class LinkGenerator {
     const settingsUrl = `/settings/${paneSlug}`
     return this.apiExplorer.buildAppLink(settingsUrl)
   }
+
+  /**
+   * Generate a link to the spec viewer
+   *
+   * @return String
+   */
+  toSpecViewer (apiName) {
+    const url = `/viewSpec/${apiName}`
+    return this.apiExplorer.buildAppLink(url)
+  }
 }

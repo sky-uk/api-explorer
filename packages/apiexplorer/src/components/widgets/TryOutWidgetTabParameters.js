@@ -3,6 +3,8 @@ import moment from 'moment'
 import { Segment, Table, Label, Input, TextArea, Dropdown, Popup } from 'semantic-ui-react'
 import { getSampleSchema } from './../../ObjectSamples'
 
+import { Controlled as CodeMirror } from 'react-codemirror2'
+
 class TryOutWidgetTabParameters extends Component {
   componentWillReceiveProps () {
     this.setState({})
@@ -16,11 +18,19 @@ class TryOutWidgetTabParameters extends Component {
 
   editorForInput = (param, value) => {
     const handleParametersOnChange = this.props.onHandleParametersChange
+    
     if (param.in === 'body') {
+      const editorOptions = Object.assign({
+        mode: 'application/json',
+        readOnly: false
+      }, APIExplorer.editor.options)
+
       return (
-        <TextArea rows={value ? Math.max(4, value.split('\n').length + 1) : 4}
-          style={{ width: '100%', border: '1px solid rgba(34,36,38,.15)' }} required={param.required} value={value}
-          onChange={(evt) => handleParametersOnChange(param, evt.currentTarget.value)}
+        <CodeMirror
+          value={value}
+          options={editorOptions}
+          onBeforeChange={(editor, data, newValue) => handleParametersOnChange(param, newValue)}
+          onChange={(editor, data, newValue) => handleParametersOnChange(param, newValue)}
         />
       )
     }
@@ -188,6 +198,7 @@ class TryOutWidgetTabParameters extends Component {
 
   render () {
     const parameters = this.props.operation.spec.parameters
+
     if (parameters && parameters.length > 0) {
       return (
         <div >

@@ -20,6 +20,29 @@ import LinkGenerator from './LinkGenerator'
 
 import configureStore, { history } from './store/configureStore'
 
+// editor imports
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/material.css'
+
+import 'codemirror/addon/display/fullscreen'
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/xml/xml'
+import 'codemirror/addon/mode/overlay'
+import 'codemirror/addon/display/fullscreen.css'
+
+import 'codemirror/addon/fold/foldgutter.css'
+import 'codemirror/addon/fold/foldcode'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/brace-fold'
+import 'codemirror/addon/fold/xml-fold'
+import 'codemirror/addon/fold/comment-fold'
+
+import 'codemirror/addon/search/search'
+import 'codemirror/addon/search/searchcursor'
+import 'codemirror/addon/dialog/dialog'
+import 'codemirror/addon/dialog/dialog.css'
+// end editor imports
+
 class APIExplorer {
   constructor () {
     this.SupportedLoaders = {
@@ -60,6 +83,33 @@ class APIExplorer {
     this.LinkGenerator = new LinkGenerator(this)
 
     this.basePath = ''
+
+    // this could eventually be overriden by the global configuration, we just need a DSL
+    this.editor = { type: 'CodeMirror', options: {} }
+    this.editor.options = {
+      gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+      lineNumbers: true,
+      matchBrackets: true,
+      styleActiveLine: true,
+      lineWrapping: true,
+      foldGutter: true,
+      theme: 'material',
+      extraKeys: {
+        // Fullscreen
+        'F11': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+        'Ctrl-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+        'Cmd-M': cm => cm.setOption('fullScreen', !cm.getOption('fullScreen')),
+        'Esc': cm => cm.getOption('fullScreen') && cm.setOption('fullScreen', false),
+        // Code Folding
+        'Ctrl-Y': cm => cm.foldAll(),
+        'Cmd-Y': cm => cm.foldAll(),
+        'Ctrl-Alt-Y': cm => cm.unfoldAll(),
+        'Shift-Ctrl-Y': cm => cm.unfoldAll(),
+        'Cmd-Shift-Y': cm => cm.unFoldAll(),
+        'Ctrl-U': cm => cm.foldCode(cm.getCursor()),
+        'Cmd-U': cm => cm.foldCode(cm.getCursor())
+      }
+    }
   }
 
   /**
