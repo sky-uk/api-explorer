@@ -56,15 +56,16 @@ This are the steps to get API Explorer working for some API that is described in
 * To build this project you need to clone the repository and do the following. Note that you can change the port number using the `PORT` environment variable.
 
 ```
-yarn install
-yarn run dev
+$ npm install -D
+$ cd packages/api-explorer
+$ npm run demo
 open http://localhost:3000
 ```
 
 * This project uses [StandardJS](http://standardjs.com/) for linting the code.
 
 ```
-yarn run lint
+npm run lint
 ```
 
 * To generate a production build you need to run the following commands:
