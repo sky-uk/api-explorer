@@ -1,6 +1,6 @@
 {
   "name": "sample-petstore",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "APIExplorer Sample for Swagger's Pet Store",
   "private": true,
   "scripts": {
