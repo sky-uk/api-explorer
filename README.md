@@ -4,7 +4,7 @@ API Explorer [![js-standard-style](https://img.shields.io/badge/code%20style-sta
 API Explorer is a live documentation client for HTTP APIs that provides a nice and highly customizable UI.
 
 
-* **Extensible**: API Explorer provides a extensible system, based on plugins, that allow you to control several
+* **Extensible**: API Explorer provides an extensible system, based on plugins, that allow you to control several
    aspects of the UI, interactions with your API endpoints and the API Specification. 
 * **API Specification loaders**: It is pre-bundled with Swagger (v1, v2) API specification loaded, but can be extended
   to handle other specifications.
@@ -12,16 +12,16 @@ API Explorer is a live documentation client for HTTP APIs that provides a nice a
 * **Developer friendly**: We provide a built-in development server to test your plugins and settings, 
   with features such as a proxy for bypass CORS restrictions
 * **Clean UI and user friendly**: The UI is focused in the API operation, making it a first class citizen in the UI.
-  Some user friendly aspect are also implemented, like: deep-link to api operations with pre-filled parameters; history for 
+  Some user friendly aspects are also implemented, like: deep-link to api operations with pre-filled parameters; history for 
   API request responses; API deprecation indicator; custom headers.
 
 
 ## How To Use
 
-Since API Explorer is distributed as a library, so it won't work out of the box without some configuration.
+Since API Explorer is distributed as a library it won't work out of the box without some configuration.
 You can opt-in for the following minimum configuration or use an advanced configuration explained in the [advanced configuration section](#advanced-configuration).
 
-This are the steps to get API Explorer working for some API that is described in Swagger v2.
+These are the steps to get API Explorer working for some API that is described in Swagger v2.
 
 - Download the `API.Explorer.*.zip` file from the [releases](https://github.com/sky-uk/api-explorer/releases) page for this project.
 - Expand the file to get the `APIExplorer.umd.js` and `index.html` files
@@ -88,7 +88,7 @@ You can also use a local server to run this application using `npm start`
 APIExplorer uses a fluent API to specify the internal behaviour.
 The following example configures two distinct APIs in the same API Explorer instance, with a custom widget `HATEOAS`, 
 and a plugin `samplePlugin`. It also configure how to handle credentials in a CORS scenario.
-At the bottom, the `start` method trigger the API Specification download and subsequent UI render.
+At the bottom, the `start` method triggers the API Specification download and subsequent UI render.
 
 ```javascript
 APIExplorer
